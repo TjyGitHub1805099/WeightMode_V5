@@ -1,0 +1,7 @@
+--create .\Objects\firmware_wm_00_hal.lib
+.\objects\hal_clock.o
+.\objects\hal_delay.o
+.\objects\hal_gpio.o
+.\objects\hal_timer.o
+.\objects\hal_uart.o
+..\STM32F303DriverLib\Objects\STM32F303DriverLib.lib

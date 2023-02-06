@@ -1,0 +1,20 @@
+--cpu Cortex-M4.fp
+"..\STM32F303DriverLib\Objects\STM32F303DriverLib.lib"
+"..\firm_wm_00_hal\Objects\firmware_wm_00_hal.lib"
+".\objects\app_main.o"
+".\objects\app_main_task.o"
+".\objects\app_led_ctrl.o"
+".\objects\app_hx711_ctrl.o"
+".\objects\app_sdwe_ctrl.o"
+".\objects\app_key_ctrl.o"
+".\objects\app_crc.o"
+".\objects\app_modbus_rtu_ctrl.o"
+".\objects\app_password.o"
+".\objects\app_syspara.o"
+".\objects\app_systest.o"
+".\objects\app_t5l_ctrl.o"
+".\objects\startup_stm32f30x.o"
+--strict --scatter ".\Objects\firmware_wm_00_app.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\firmware_wm_00_app.map" -o .\Objects\firmware_wm_00_app.axf

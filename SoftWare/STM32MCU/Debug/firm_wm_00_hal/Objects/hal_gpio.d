@@ -1,0 +1,17 @@
+.\objects\hal_gpio.o: src\hal_gpio.c
+.\objects\hal_gpio.o: ..\STM32F303DriverLib\reg\typedefine.h
+.\objects\hal_gpio.o: ..\STM32F303DriverLib\inc\Stm32F303xC_Vect_Tab.h
+.\objects\hal_gpio.o: .\inc\hal_irq_priority.h
+.\objects\hal_gpio.o: ..\STM32F303DriverLib\inc\drv_exti.h
+.\objects\hal_gpio.o: ..\STM32F303DriverLib\reg\reg_stm32f303_exti.h
+.\objects\hal_gpio.o: ..\STM32F303DriverLib\reg\reg_stm32f303_address.h
+.\objects\hal_gpio.o: ..\STM32F303DriverLib\inc\drv_syscfg.h
+.\objects\hal_gpio.o: ..\STM32F303DriverLib\reg\reg_stm32f303_syscfg.h
+.\objects\hal_gpio.o: ..\STM32F303DriverLib\inc\drv_rcc.h
+.\objects\hal_gpio.o: ..\STM32F303DriverLib\reg\reg_stm32f303_rcc.h
+.\objects\hal_gpio.o: ..\STM32F303DriverLib\reg\reg_stm32f303_flash.h
+.\objects\hal_gpio.o: ..\STM32F303DriverLib\inc\drv_nvic.h
+.\objects\hal_gpio.o: ..\STM32F303DriverLib\reg\reg_stm32f303_nvic.h
+.\objects\hal_gpio.o: .\inc\hal_gpio.h
+.\objects\hal_gpio.o: ..\STM32F303DriverLib\inc\drv_gpio.h
+.\objects\hal_gpio.o: ..\STM32F303DriverLib\reg\reg_stm32f303_gpio.h

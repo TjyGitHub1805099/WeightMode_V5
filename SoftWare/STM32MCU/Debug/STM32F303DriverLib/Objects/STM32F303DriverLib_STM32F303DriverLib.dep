@@ -1,0 +1,136 @@
+Dependencies for Project 'STM32F303DriverLib', Target 'STM32F303DriverLib': (DO NOT MODIFY !)
+F (.\inc\drv_comp.h)(0x6060A52D)()
+F (.\inc\drv_cpu.h)(0x6060A52D)()
+F (.\inc\drv_dac.h)(0x6060A52D)()
+F (.\inc\drv_dbgmcu.h)(0x6060A52D)()
+F (.\inc\drv_delay.h)(0x6060A52D)()
+F (.\inc\drv_dma.h)(0x6060A52D)()
+F (.\inc\drv_exti.h)(0x6060A52D)()
+F (.\inc\drv_flash.h)(0x6060A52D)()
+F (.\inc\drv_gpio.h)(0x6060A52D)()
+F (.\inc\drv_iwdg.h)(0x6060A52D)()
+F (.\inc\drv_nvic.h)(0x6060A52D)()
+F (.\inc\drv_opamp.h)(0x6060A52D)()
+F (.\inc\drv_rcc.h)(0x6060A52D)()
+F (.\inc\drv_syscfg.h)(0x6060A52D)()
+F (.\inc\drv_timer.h)(0x6060A52D)()
+F (.\inc\drv_uart.h)(0x6060A52D)()
+F (.\src\drv_comp.c)(0x6060A52D)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I.\inc -I.\reg-I D:\WorkSpace\GitWorkSpace\WeightModeGit\mcu_firmware_v3\WeightMode\STM32F303DriverLib\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\1.3.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="516" -DSTM32F303xC-o .\objects\drv_comp.o --omf_browse .\objects\drv_comp.crf --depend .\objects\drv_comp.d)
+I (.\inc\drv_comp.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_comp.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_address.h)(0x6060A52D)
+I (.\reg\typedefine.h)(0x60CDF217)
+F (.\src\drv_cpu.c)(0x6060A52D)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I.\inc -I.\reg-I D:\WorkSpace\GitWorkSpace\WeightModeGit\mcu_firmware_v3\WeightMode\STM32F303DriverLib\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\1.3.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="516" -DSTM32F303xC-o .\objects\drv_cpu.o --omf_browse .\objects\drv_cpu.crf --depend .\objects\drv_cpu.d)
+I (.\reg\reg_stm32f303_nvic.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_address.h)(0x6060A52D)
+I (.\reg\typedefine.h)(0x60CDF217)
+I (.\inc\drv_cpu.h)(0x6060A52D)
+I (.\inc\drv_rcc.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_rcc.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_flash.h)(0x6060A52D)
+F (.\src\drv_dac.c)(0x6060A52D)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I.\inc -I.\reg-I D:\WorkSpace\GitWorkSpace\WeightModeGit\mcu_firmware_v3\WeightMode\STM32F303DriverLib\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\1.3.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="516" -DSTM32F303xC-o .\objects\drv_dac.o --omf_browse .\objects\drv_dac.crf --depend .\objects\drv_dac.d)
+I (.\inc\drv_dac.h)(0x6060A52D)
+I (.\inc\drv_rcc.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_rcc.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_address.h)(0x6060A52D)
+I (.\reg\typedefine.h)(0x60CDF217)
+I (.\reg\reg_stm32f303_flash.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_dac.h)(0x6060A52D)
+F (.\src\drv_dbgmcu.c)(0x6060A52D)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I.\inc -I.\reg-I D:\WorkSpace\GitWorkSpace\WeightModeGit\mcu_firmware_v3\WeightMode\STM32F303DriverLib\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\1.3.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="516" -DSTM32F303xC-o .\objects\drv_dbgmcu.o --omf_browse .\objects\drv_dbgmcu.crf --depend .\objects\drv_dbgmcu.d)
+I (.\inc\drv_dbgmcu.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_dbg.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_address.h)(0x6060A52D)
+I (.\reg\typedefine.h)(0x60CDF217)
+F (.\src\drv_delay.c)(0x6060A52D)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I.\inc -I.\reg-I D:\WorkSpace\GitWorkSpace\WeightModeGit\mcu_firmware_v3\WeightMode\STM32F303DriverLib\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\1.3.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="516" -DSTM32F303xC-o .\objects\drv_delay.o --omf_browse .\objects\drv_delay.crf --depend .\objects\drv_delay.d)
+I (.\inc\drv_rcc.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_rcc.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_address.h)(0x6060A52D)
+I (.\reg\typedefine.h)(0x60CDF217)
+I (.\reg\reg_stm32f303_flash.h)(0x6060A52D)
+I (.\inc\drv_delay.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_systick.h)(0x6060A52D)
+F (.\src\drv_dma.c)(0x6060A52D)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I.\inc -I.\reg-I D:\WorkSpace\GitWorkSpace\WeightModeGit\mcu_firmware_v3\WeightMode\STM32F303DriverLib\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\1.3.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="516" -DSTM32F303xC-o .\objects\drv_dma.o --omf_browse .\objects\drv_dma.crf --depend .\objects\drv_dma.d)
+I (.\inc\drv_dma.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_dma.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_address.h)(0x6060A52D)
+I (.\reg\typedefine.h)(0x60CDF217)
+F (.\src\drv_exti.c)(0x6060A52D)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I.\inc -I.\reg-I D:\WorkSpace\GitWorkSpace\WeightModeGit\mcu_firmware_v3\WeightMode\STM32F303DriverLib\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\1.3.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="516" -DSTM32F303xC-o .\objects\drv_exti.o --omf_browse .\objects\drv_exti.crf --depend .\objects\drv_exti.d)
+I (.\inc\drv_exti.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_exti.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_address.h)(0x6060A52D)
+I (.\reg\typedefine.h)(0x60CDF217)
+F (.\src\drv_flash.c)(0x6060A52D)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I.\inc -I.\reg-I D:\WorkSpace\GitWorkSpace\WeightModeGit\mcu_firmware_v3\WeightMode\STM32F303DriverLib\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\1.3.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="516" -DSTM32F303xC-o .\objects\drv_flash.o --omf_browse .\objects\drv_flash.crf --depend .\objects\drv_flash.d)
+I (.\inc\drv_flash.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_flash.h)(0x6060A52D)
+I (.\reg\typedefine.h)(0x60CDF217)
+I (.\reg\reg_stm32f303_address.h)(0x6060A52D)
+F (.\src\drv_gpio.c)(0x6060A52D)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I.\inc -I.\reg-I D:\WorkSpace\GitWorkSpace\WeightModeGit\mcu_firmware_v3\WeightMode\STM32F303DriverLib\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\1.3.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="516" -DSTM32F303xC-o .\objects\drv_gpio.o --omf_browse .\objects\drv_gpio.crf --depend .\objects\drv_gpio.d)
+I (.\inc\drv_gpio.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_gpio.h)(0x6060A52D)
+I (.\reg\typedefine.h)(0x60CDF217)
+I (.\reg\reg_stm32f303_address.h)(0x6060A52D)
+F (.\src\drv_iwdg.c)(0x6060A52D)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I.\inc -I.\reg-I D:\WorkSpace\GitWorkSpace\WeightModeGit\mcu_firmware_v3\WeightMode\STM32F303DriverLib\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\1.3.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="516" -DSTM32F303xC-o .\objects\drv_iwdg.o --omf_browse .\objects\drv_iwdg.crf --depend .\objects\drv_iwdg.d)
+I (.\inc\drv_iwdg.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_iwdg.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_address.h)(0x6060A52D)
+I (.\reg\typedefine.h)(0x60CDF217)
+F (.\src\drv_nvic.c)(0x6060A52D)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I.\inc -I.\reg-I D:\WorkSpace\GitWorkSpace\WeightModeGit\mcu_firmware_v3\WeightMode\STM32F303DriverLib\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\1.3.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="516" -DSTM32F303xC-o .\objects\drv_nvic.o --omf_browse .\objects\drv_nvic.crf --depend .\objects\drv_nvic.d)
+I (.\inc\drv_nvic.h)(0x6060A52D)
+I (.\inc\Stm32F303xC_Vect_Tab.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_nvic.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_address.h)(0x6060A52D)
+I (.\reg\typedefine.h)(0x60CDF217)
+F (.\src\drv_opamp.c)(0x6060A52D)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I.\inc -I.\reg-I D:\WorkSpace\GitWorkSpace\WeightModeGit\mcu_firmware_v3\WeightMode\STM32F303DriverLib\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\1.3.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="516" -DSTM32F303xC-o .\objects\drv_opamp.o --omf_browse .\objects\drv_opamp.crf --depend .\objects\drv_opamp.d)
+I (.\inc\drv_opamp.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_opamp.h)(0x6060A52D)
+I (.\reg\typedefine.h)(0x60CDF217)
+I (.\reg\reg_stm32f303_address.h)(0x6060A52D)
+F (.\src\drv_rcc.c)(0x6060A52D)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I.\inc -I.\reg-I D:\WorkSpace\GitWorkSpace\WeightModeGit\mcu_firmware_v3\WeightMode\STM32F303DriverLib\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\1.3.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="516" -DSTM32F303xC-o .\objects\drv_rcc.o --omf_browse .\objects\drv_rcc.crf --depend .\objects\drv_rcc.d)
+I (.\inc\drv_rcc.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_rcc.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_address.h)(0x6060A52D)
+I (.\reg\typedefine.h)(0x60CDF217)
+I (.\reg\reg_stm32f303_flash.h)(0x6060A52D)
+I (.\inc\drv_nvic.h)(0x6060A52D)
+I (.\inc\Stm32F303xC_Vect_Tab.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_nvic.h)(0x6060A52D)
+F (.\src\drv_syscfg.c)(0x6060A52D)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I.\inc -I.\reg-I D:\WorkSpace\GitWorkSpace\WeightModeGit\mcu_firmware_v3\WeightMode\STM32F303DriverLib\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\1.3.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="516" -DSTM32F303xC-o .\objects\drv_syscfg.o --omf_browse .\objects\drv_syscfg.crf --depend .\objects\drv_syscfg.d)
+I (.\inc\drv_rcc.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_rcc.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_address.h)(0x6060A52D)
+I (.\reg\typedefine.h)(0x60CDF217)
+I (.\reg\reg_stm32f303_flash.h)(0x6060A52D)
+I (.\inc\drv_syscfg.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_syscfg.h)(0x6060A52D)
+F (.\src\drv_timer.c)(0x6060A52D)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I.\inc -I.\reg-I D:\WorkSpace\GitWorkSpace\WeightModeGit\mcu_firmware_v3\WeightMode\STM32F303DriverLib\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\1.3.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="516" -DSTM32F303xC-o .\objects\drv_timer.o --omf_browse .\objects\drv_timer.crf --depend .\objects\drv_timer.d)
+I (.\inc\drv_rcc.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_rcc.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_address.h)(0x6060A52D)
+I (.\reg\typedefine.h)(0x60CDF217)
+I (.\reg\reg_stm32f303_flash.h)(0x6060A52D)
+I (.\inc\drv_timer.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_timer.h)(0x6060A52D)
+F (.\src\drv_uart.c)(0x6060A52D)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I.\inc -I.\reg-I D:\WorkSpace\GitWorkSpace\WeightModeGit\mcu_firmware_v3\WeightMode\STM32F303DriverLib\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\1.3.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="516" -DSTM32F303xC-o .\objects\drv_uart.o --omf_browse .\objects\drv_uart.crf --depend .\objects\drv_uart.d)
+I (.\inc\drv_rcc.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_rcc.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_address.h)(0x6060A52D)
+I (.\reg\typedefine.h)(0x60CDF217)
+I (.\reg\reg_stm32f303_flash.h)(0x6060A52D)
+I (.\inc\drv_uart.h)(0x6060A52D)
+I (.\reg\reg_stm32f303_uart.h)(0x6060A52D)
+F (.\reg\reg_stm32f303_address.h)(0x6060A52D)()
+F (.\reg\reg_stm32f303_comp.h)(0x6060A52D)()
+F (.\reg\reg_stm32f303_dbg.h)(0x6060A52D)()
+F (.\reg\reg_stm32f303_dma.h)(0x6060A52D)()
+F (.\reg\reg_stm32f303_exti.h)(0x6060A52D)()
+F (.\reg\reg_stm32f303_flash.h)(0x6060A52D)()
+F (.\reg\reg_stm32f303_gpio.h)(0x6060A52D)()
+F (.\reg\reg_stm32f303_iwdg.h)(0x6060A52D)()
+F (.\reg\reg_stm32f303_nvic.h)(0x6060A52D)()
+F (.\reg\reg_stm32f303_opamp.h)(0x6060A52D)()
+F (.\reg\reg_stm32f303_rcc.h)(0x6060A52D)()
+F (.\reg\reg_stm32f303_spi.h)(0x6060A52D)()
+F (.\reg\reg_stm32f303_syscfg.h)(0x6060A52D)()
+F (.\reg\reg_stm32f303_timer.h)(0x6060A52D)()
+F (.\reg\reg_stm32f303_uart.h)(0x6060A52D)()
+F (.\reg\typedefine.h)(0x60CDF217)()
