@@ -1207,8 +1207,8 @@ Image Symbol Table
     x$fpl$usenofp                            0x08008114   Section        0  usenofp.o(x$fpl$usenofp)
     .constdata                               0x0800813c   Section      512  app_crc.o(.constdata)
     .constdata                               0x0800833c   Section       44  app_t5l_ctrl.o(.constdata)
-    .constdata                               0x08008368   Section      164  hal_gpio.o(.constdata)
-    .constdata                               0x0800840c   Section      124  hal_uart.o(.constdata)
+    .constdata                               0x08008368   Section      150  hal_gpio.o(.constdata)
+    .constdata                               0x08008400   Section      124  hal_uart.o(.constdata)
     .data                                    0x20000000   Section        5  app_main_task.o(.data)
     removeWeight                             0x20000004   Data           1  app_main_task.o(.data)
     .data                                    0x20000005   Section       11  app_led_ctrl.o(.data)
@@ -1269,26 +1269,26 @@ Image Symbol Table
     .data                                    0x2000069c   Section        4  drv_delay.o(.data)
     g_DelayUsFac                             0x2000069c   Data           2  drv_delay.o(.data)
     g_DelayMsFac                             0x2000069e   Data           2  drv_delay.o(.data)
-    .data                                    0x200006a0   Section      108  hal_gpio.o(.data)
-    .data                                    0x2000070c   Section      176  hal_uart.o(.data)
-    .data                                    0x200007bc   Section       28  drv_rcc.o(.data)
-    l_AhbPrescTable                          0x200007bc   Data          16  drv_rcc.o(.data)
-    l_ApbPrescTable                          0x200007cc   Data           8  drv_rcc.o(.data)
-    .bss                                     0x200007d8   Section     1446  app_hx711_ctrl.o(.bss)
-    u32OnLineNormalCnt                       0x20000d60   Data          12  app_hx711_ctrl.o(.bss)
-    u8HX711CheckPassStatus                   0x20000d6c   Data          18  app_hx711_ctrl.o(.bss)
-    .bss                                     0x20000d7e   Section       12  app_key_ctrl.o(.bss)
-    .bss                                     0x20000d8c   Section       12  app_password.o(.bss)
-    .bss                                     0x20000d98   Section     1144  app_syspara.o(.bss)
-    .bss                                     0x20001210   Section      964  app_t5l_ctrl.o(.bss)
-    g_t5l_triger_data                        0x20001240   Data         560  app_t5l_ctrl.o(.bss)
-    .bss                                     0x200015d4   Section       36  drv_rcc.o(.bss)
-    .bss                                     0x200015f8   Section       96  libspace.o(.bss)
-    HEAP                                     0x20001658   Section     3072  startup_stm32f30x.o(HEAP)
-    Heap_Mem                                 0x20001658   Data        3072  startup_stm32f30x.o(HEAP)
-    STACK                                    0x20002258   Section     3072  startup_stm32f30x.o(STACK)
-    Stack_Mem                                0x20002258   Data        3072  startup_stm32f30x.o(STACK)
-    __initial_sp                             0x20002e58   Data           0  startup_stm32f30x.o(STACK)
+    .data                                    0x200006a0   Section      100  hal_gpio.o(.data)
+    .data                                    0x20000704   Section      176  hal_uart.o(.data)
+    .data                                    0x200007b4   Section       28  drv_rcc.o(.data)
+    l_AhbPrescTable                          0x200007b4   Data          16  drv_rcc.o(.data)
+    l_ApbPrescTable                          0x200007c4   Data           8  drv_rcc.o(.data)
+    .bss                                     0x200007d0   Section     1446  app_hx711_ctrl.o(.bss)
+    u32OnLineNormalCnt                       0x20000d58   Data          12  app_hx711_ctrl.o(.bss)
+    u8HX711CheckPassStatus                   0x20000d64   Data          18  app_hx711_ctrl.o(.bss)
+    .bss                                     0x20000d76   Section       12  app_key_ctrl.o(.bss)
+    .bss                                     0x20000d84   Section       12  app_password.o(.bss)
+    .bss                                     0x20000d90   Section     1144  app_syspara.o(.bss)
+    .bss                                     0x20001208   Section      964  app_t5l_ctrl.o(.bss)
+    g_t5l_triger_data                        0x20001238   Data         560  app_t5l_ctrl.o(.bss)
+    .bss                                     0x200015cc   Section       36  drv_rcc.o(.bss)
+    .bss                                     0x200015f0   Section       96  libspace.o(.bss)
+    HEAP                                     0x20001650   Section     3072  startup_stm32f30x.o(HEAP)
+    Heap_Mem                                 0x20001650   Data        3072  startup_stm32f30x.o(HEAP)
+    STACK                                    0x20002250   Section     3072  startup_stm32f30x.o(STACK)
+    Stack_Mem                                0x20002250   Data        3072  startup_stm32f30x.o(STACK)
+    __initial_sp                             0x20002e50   Data           0  startup_stm32f30x.o(STACK)
 
     Global Symbols
 
@@ -1674,28 +1674,28 @@ Image Symbol Table
     defaultChanelSamplePoint                 0x08008114   Data          40  app_hx711_ctrl.o(.constdata)
     g_CrcHTable                              0x0800813c   Data         256  app_crc.o(.constdata)
     g_CrcLTable                              0x0800823c   Data         256  app_crc.o(.constdata)
-    DO_GPIO_CLK                              0x08008368   Data          52  hal_gpio.o(.constdata)
-    DO_GPIO_PIN                              0x0800839c   Data          26  hal_gpio.o(.constdata)
-    DI_GPIO_CLK                              0x080083b8   Data          56  hal_gpio.o(.constdata)
-    DI_GPIO_PIN                              0x080083f0   Data          28  hal_gpio.o(.constdata)
-    UART_PORT_CLK                            0x0800840c   Data           8  hal_uart.o(.constdata)
-    UART_PORT_IRQn                           0x08008414   Data           2  hal_uart.o(.constdata)
-    UART_PORT_GPIO_AF                        0x08008416   Data           2  hal_uart.o(.constdata)
-    UART_TX_GPIO_CLK                         0x08008418   Data           8  hal_uart.o(.constdata)
-    UART_TX_GPIO_PIN                         0x08008420   Data           4  hal_uart.o(.constdata)
-    UART_TX_PIN_SOURCE                       0x08008424   Data           4  hal_uart.o(.constdata)
-    UART_RX_GPIO_CLK                         0x08008428   Data           8  hal_uart.o(.constdata)
-    UART_RX_GPIO_PIN                         0x08008430   Data           4  hal_uart.o(.constdata)
-    UART_RX_PIN_SOURCE                       0x08008434   Data           4  hal_uart.o(.constdata)
-    UART_DEA_GPIO_CLK                        0x08008438   Data           8  hal_uart.o(.constdata)
-    UART_DEA_GPIO_PIN                        0x08008440   Data           4  hal_uart.o(.constdata)
-    UART_TX_DMA_CLK                          0x08008444   Data           8  hal_uart.o(.constdata)
-    UART_TX_DMA_IRQn                         0x0800844c   Data           2  hal_uart.o(.constdata)
-    UART_TX_DMA_IT_TCIF                      0x08008450   Data           8  hal_uart.o(.constdata)
-    UART_RX_DMA_CLK                          0x08008458   Data           8  hal_uart.o(.constdata)
-    g_UartBaudTab                            0x08008460   Data          40  hal_uart.o(.constdata)
-    Region$$Table$$Base                      0x08008488   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x080084a8   Number         0  anon$$obj.o(Region$$Table)
+    DO_GPIO_CLK                              0x08008368   Data          56  hal_gpio.o(.constdata)
+    DO_GPIO_PIN                              0x080083a0   Data          28  hal_gpio.o(.constdata)
+    DI_GPIO_CLK                              0x080083bc   Data          44  hal_gpio.o(.constdata)
+    DI_GPIO_PIN                              0x080083e8   Data          22  hal_gpio.o(.constdata)
+    UART_PORT_CLK                            0x08008400   Data           8  hal_uart.o(.constdata)
+    UART_PORT_IRQn                           0x08008408   Data           2  hal_uart.o(.constdata)
+    UART_PORT_GPIO_AF                        0x0800840a   Data           2  hal_uart.o(.constdata)
+    UART_TX_GPIO_CLK                         0x0800840c   Data           8  hal_uart.o(.constdata)
+    UART_TX_GPIO_PIN                         0x08008414   Data           4  hal_uart.o(.constdata)
+    UART_TX_PIN_SOURCE                       0x08008418   Data           4  hal_uart.o(.constdata)
+    UART_RX_GPIO_CLK                         0x0800841c   Data           8  hal_uart.o(.constdata)
+    UART_RX_GPIO_PIN                         0x08008424   Data           4  hal_uart.o(.constdata)
+    UART_RX_PIN_SOURCE                       0x08008428   Data           4  hal_uart.o(.constdata)
+    UART_DEA_GPIO_CLK                        0x0800842c   Data           8  hal_uart.o(.constdata)
+    UART_DEA_GPIO_PIN                        0x08008434   Data           4  hal_uart.o(.constdata)
+    UART_TX_DMA_CLK                          0x08008438   Data           8  hal_uart.o(.constdata)
+    UART_TX_DMA_IRQn                         0x08008440   Data           2  hal_uart.o(.constdata)
+    UART_TX_DMA_IT_TCIF                      0x08008444   Data           8  hal_uart.o(.constdata)
+    UART_RX_DMA_CLK                          0x0800844c   Data           8  hal_uart.o(.constdata)
+    g_UartBaudTab                            0x08008454   Data          40  hal_uart.o(.constdata)
+    Region$$Table$$Base                      0x0800847c   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x0800849c   Number         0  anon$$obj.o(Region$$Table)
     g_sys_ms_tick                            0x20000000   Data           4  app_main_task.o(.data)
     g_led_ctrl_data                          0x20000005   Data           3  app_led_ctrl.o(.data)
     g_ModbusRtu                              0x20000028   Data         852  app_modbus_rtu_ctrl.o(.data)
@@ -1709,40 +1709,40 @@ Image Symbol Table
     u8T5LVoiceBuffPop_i                      0x20000671   Data           1  app_t5l_ctrl.o(.data)
     u8T5LVoiceBuffStoreNum                   0x20000672   Data           1  app_t5l_ctrl.o(.data)
     g_u8Read00A1_Data                        0x20000673   Data           1  app_t5l_ctrl.o(.data)
-    DO_GPIO_PORT                             0x200006a0   Data          52  hal_gpio.o(.data)
-    DI_GPIO_PORT                             0x200006d4   Data          56  hal_gpio.o(.data)
-    UART_PORT                                0x2000070c   Data           8  hal_uart.o(.data)
-    UART_TX_GPIO_PORT                        0x20000714   Data           8  hal_uart.o(.data)
-    UART_RX_GPIO_PORT                        0x2000071c   Data           8  hal_uart.o(.data)
-    UART_DEA_GPIO_PORT                       0x20000724   Data           8  hal_uart.o(.data)
-    UART_TX_DMA                              0x2000072c   Data           8  hal_uart.o(.data)
-    UART_TX_DMA_CHANNEL                      0x20000734   Data           8  hal_uart.o(.data)
-    UART_RX_DMA                              0x2000073c   Data           8  hal_uart.o(.data)
-    UART_RX_DMA_CHANNEL                      0x20000744   Data           8  hal_uart.o(.data)
-    g_UartDevice                             0x2000074c   Data         112  hal_uart.o(.data)
-    l_RccWiteTimeOut                         0x200007d4   Data           4  drv_rcc.o(.data)
-    HX711Chanel                              0x200007d8   Data        1416  app_hx711_ctrl.o(.bss)
-    SysKey                                   0x20000d7e   Data          12  app_key_ctrl.o(.bss)
-    STM32McuId                               0x20000d8c   Data          12  app_password.o(.bss)
-    flashStoreDataBuf                        0x20000d98   Data        1060  app_syspara.o(.bss)
-    flashStoreDataBuf_3030                   0x200011bc   Data          84  app_syspara.o(.bss)
-    g_t5l_dis_data                           0x20001210   Data          24  app_t5l_ctrl.o(.bss)
-    g_t5l_dis_data_buff                      0x20001228   Data          24  app_t5l_ctrl.o(.bss)
-    g_T5L_VoiceBuff                          0x20001470   Data          18  app_t5l_ctrl.o(.bss)
-    g_i16DataBuff                            0x20001482   Data          24  app_t5l_ctrl.o(.bss)
-    g_i16DataBuffPre                         0x2000149a   Data          24  app_t5l_ctrl.o(.bss)
-    g_i16ColorBuff                           0x200014b2   Data          24  app_t5l_ctrl.o(.bss)
-    g_i16ColorBuffPre                        0x200014ca   Data          24  app_t5l_ctrl.o(.bss)
-    g_i16ColorOtherChanel                    0x200014e2   Data          24  app_t5l_ctrl.o(.bss)
-    g_fDataBuffCaculate                      0x200014fc   Data          48  app_t5l_ctrl.o(.bss)
-    g_i16OtherChanelCaculate                 0x2000152c   Data          24  app_t5l_ctrl.o(.bss)
-    g_i16HelpDataBuff                        0x20001544   Data          36  app_t5l_ctrl.o(.bss)
-    g_i16HelpDataBuffPre                     0x20001568   Data          36  app_t5l_ctrl.o(.bss)
-    g_i16HelpDataSort                        0x2000158c   Data          48  app_t5l_ctrl.o(.bss)
-    g_i16HelpDataChnSort                     0x200015bc   Data          24  app_t5l_ctrl.o(.bss)
-    g_ClockFrequency                         0x200015d4   Data          36  drv_rcc.o(.bss)
-    __libspace_start                         0x200015f8   Data          96  libspace.o(.bss)
-    __temporary_stack_top$libspace           0x20001658   Data           0  libspace.o(.bss)
+    DO_GPIO_PORT                             0x200006a0   Data          56  hal_gpio.o(.data)
+    DI_GPIO_PORT                             0x200006d8   Data          44  hal_gpio.o(.data)
+    UART_PORT                                0x20000704   Data           8  hal_uart.o(.data)
+    UART_TX_GPIO_PORT                        0x2000070c   Data           8  hal_uart.o(.data)
+    UART_RX_GPIO_PORT                        0x20000714   Data           8  hal_uart.o(.data)
+    UART_DEA_GPIO_PORT                       0x2000071c   Data           8  hal_uart.o(.data)
+    UART_TX_DMA                              0x20000724   Data           8  hal_uart.o(.data)
+    UART_TX_DMA_CHANNEL                      0x2000072c   Data           8  hal_uart.o(.data)
+    UART_RX_DMA                              0x20000734   Data           8  hal_uart.o(.data)
+    UART_RX_DMA_CHANNEL                      0x2000073c   Data           8  hal_uart.o(.data)
+    g_UartDevice                             0x20000744   Data         112  hal_uart.o(.data)
+    l_RccWiteTimeOut                         0x200007cc   Data           4  drv_rcc.o(.data)
+    HX711Chanel                              0x200007d0   Data        1416  app_hx711_ctrl.o(.bss)
+    SysKey                                   0x20000d76   Data          12  app_key_ctrl.o(.bss)
+    STM32McuId                               0x20000d84   Data          12  app_password.o(.bss)
+    flashStoreDataBuf                        0x20000d90   Data        1060  app_syspara.o(.bss)
+    flashStoreDataBuf_3030                   0x200011b4   Data          84  app_syspara.o(.bss)
+    g_t5l_dis_data                           0x20001208   Data          24  app_t5l_ctrl.o(.bss)
+    g_t5l_dis_data_buff                      0x20001220   Data          24  app_t5l_ctrl.o(.bss)
+    g_T5L_VoiceBuff                          0x20001468   Data          18  app_t5l_ctrl.o(.bss)
+    g_i16DataBuff                            0x2000147a   Data          24  app_t5l_ctrl.o(.bss)
+    g_i16DataBuffPre                         0x20001492   Data          24  app_t5l_ctrl.o(.bss)
+    g_i16ColorBuff                           0x200014aa   Data          24  app_t5l_ctrl.o(.bss)
+    g_i16ColorBuffPre                        0x200014c2   Data          24  app_t5l_ctrl.o(.bss)
+    g_i16ColorOtherChanel                    0x200014da   Data          24  app_t5l_ctrl.o(.bss)
+    g_fDataBuffCaculate                      0x200014f4   Data          48  app_t5l_ctrl.o(.bss)
+    g_i16OtherChanelCaculate                 0x20001524   Data          24  app_t5l_ctrl.o(.bss)
+    g_i16HelpDataBuff                        0x2000153c   Data          36  app_t5l_ctrl.o(.bss)
+    g_i16HelpDataBuffPre                     0x20001560   Data          36  app_t5l_ctrl.o(.bss)
+    g_i16HelpDataSort                        0x20001584   Data          48  app_t5l_ctrl.o(.bss)
+    g_i16HelpDataChnSort                     0x200015b4   Data          24  app_t5l_ctrl.o(.bss)
+    g_ClockFrequency                         0x200015cc   Data          36  drv_rcc.o(.bss)
+    __libspace_start                         0x200015f0   Data          96  libspace.o(.bss)
+    __temporary_stack_top$libspace           0x20001650   Data           0  libspace.o(.bss)
 
 
 
@@ -1752,9 +1752,9 @@ Memory Map of the image
 
   Image Entry point : 0x08000189
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x00008c80, Max: 0x00030000, ABSOLUTE, COMPRESSED[0x00008570])
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x00008c6c, Max: 0x00030000, ABSOLUTE, COMPRESSED[0x00008564])
 
-    Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x000084a8, Max: 0x00030000, ABSOLUTE)
+    Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x0000849c, Max: 0x00030000, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -2031,12 +2031,13 @@ Memory Map of the image
     0x08008114   0x00000028   Data   RO          258    .constdata          app_hx711_ctrl.o
     0x0800813c   0x00000200   Data   RO          413    .constdata          app_crc.o
     0x0800833c   0x0000002c   Data   RO          687    .constdata          app_t5l_ctrl.o
-    0x08008368   0x000000a4   Data   RO         1248    .constdata          firmware_wm_00_hal.lib(hal_gpio.o)
-    0x0800840c   0x0000007c   Data   RO         1418    .constdata          firmware_wm_00_hal.lib(hal_uart.o)
-    0x08008488   0x00000020   Data   RO         2900    Region$$Table       anon$$obj.o
+    0x08008368   0x00000096   Data   RO         1248    .constdata          firmware_wm_00_hal.lib(hal_gpio.o)
+    0x080083fe   0x00000002   PAD
+    0x08008400   0x0000007c   Data   RO         1418    .constdata          firmware_wm_00_hal.lib(hal_uart.o)
+    0x0800847c   0x00000020   Data   RO         2900    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x00002e58, Max: 0x0000c000, ABSOLUTE, COMPRESSED[0x000000c8])
+    Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x00002e50, Max: 0x0000c000, ABSOLUTE, COMPRESSED[0x000000c8])
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -2050,19 +2051,19 @@ Memory Map of the image
     0x200003b0   0x00000058   Data   RW          584    .data               app_syspara.o
     0x20000408   0x00000294   Data   RW          688    .data               app_t5l_ctrl.o
     0x2000069c   0x00000004   Data   RW         1029    .data               STM32F303DriverLib.lib(drv_delay.o)
-    0x200006a0   0x0000006c   Data   RW         1249    .data               firmware_wm_00_hal.lib(hal_gpio.o)
-    0x2000070c   0x000000b0   Data   RW         1419    .data               firmware_wm_00_hal.lib(hal_uart.o)
-    0x200007bc   0x0000001c   Data   RW         1776    .data               STM32F303DriverLib.lib(drv_rcc.o)
-    0x200007d8   0x000005a6   Zero   RW          257    .bss                app_hx711_ctrl.o
-    0x20000d7e   0x0000000c   Zero   RW          380    .bss                app_key_ctrl.o
-    0x20000d8a   0x00000002   PAD
-    0x20000d8c   0x0000000c   Zero   RW          556    .bss                app_password.o
-    0x20000d98   0x00000478   Zero   RW          583    .bss                app_syspara.o
-    0x20001210   0x000003c4   Zero   RW          686    .bss                app_t5l_ctrl.o
-    0x200015d4   0x00000024   Zero   RW         1775    .bss                STM32F303DriverLib.lib(drv_rcc.o)
-    0x200015f8   0x00000060   Zero   RW         2774    .bss                c_w.l(libspace.o)
-    0x20001658   0x00000c00   Zero   RW         1018    HEAP                startup_stm32f30x.o
-    0x20002258   0x00000c00   Zero   RW         1017    STACK               startup_stm32f30x.o
+    0x200006a0   0x00000064   Data   RW         1249    .data               firmware_wm_00_hal.lib(hal_gpio.o)
+    0x20000704   0x000000b0   Data   RW         1419    .data               firmware_wm_00_hal.lib(hal_uart.o)
+    0x200007b4   0x0000001c   Data   RW         1776    .data               STM32F303DriverLib.lib(drv_rcc.o)
+    0x200007d0   0x000005a6   Zero   RW          257    .bss                app_hx711_ctrl.o
+    0x20000d76   0x0000000c   Zero   RW          380    .bss                app_key_ctrl.o
+    0x20000d82   0x00000002   PAD
+    0x20000d84   0x0000000c   Zero   RW          556    .bss                app_password.o
+    0x20000d90   0x00000478   Zero   RW          583    .bss                app_syspara.o
+    0x20001208   0x000003c4   Zero   RW          686    .bss                app_t5l_ctrl.o
+    0x200015cc   0x00000024   Zero   RW         1775    .bss                STM32F303DriverLib.lib(drv_rcc.o)
+    0x200015f0   0x00000060   Zero   RW         2774    .bss                c_w.l(libspace.o)
+    0x20001650   0x00000c00   Zero   RW         1018    HEAP                startup_stm32f30x.o
+    0x20002250   0x00000c00   Zero   RW         1017    STACK               startup_stm32f30x.o
 
 
 ==============================================================================
@@ -2076,7 +2077,7 @@ Image component sizes
       2534        162         40         19       1446      13977   app_hx711_ctrl.o
        456         32          0          3         12       3036   app_key_ctrl.o
        466         18          0         11          0       6499   app_led_ctrl.o
-       100          8          0          0          0      31077   app_main.o
+       100          8          0          0          0      30877   app_main.o
        120         20          0          5          0       1748   app_main_task.o
       5298         76          0        852          0      16596   app_modbus_rtu_ctrl.o
        116         24          0         52         12       2478   app_password.o
@@ -2085,7 +2086,7 @@ Image component sizes
         72         28        392          0       6144        896   startup_stm32f30x.o
 
     ----------------------------------------------------------------------
-     23900       1126       1020       1692       9724     140656   Object Totals
+     23900       1126       1020       1692       9724     140456   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         12          0          0          2          2          0   (incl. Padding)
 
@@ -2093,16 +2094,16 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Library Member Name
 
-        16          4          0          0          0        526   drv_dbgmcu.o
-       212         24          0          4          0       3903   drv_delay.o
-       696         38          0          0          0      16063   drv_dma.o
-       372         34          0          0          0       5583   drv_flash.o
-       602          0          0          0          0      14317   drv_gpio.o
-        36          4          0          0          0        520   drv_iwdg.o
-        86          8          0          0          0       1230   drv_nvic.o
-      1108         92          0         28         36      12653   drv_rcc.o
-       408         60          0          0          0      13269   drv_timer.o
-       656         28          0          0          0      13372   drv_uart.o
+        16          4          0          0          0        522   drv_dbgmcu.o
+       212         24          0          4          0       3883   drv_delay.o
+       696         38          0          0          0      16007   drv_dma.o
+       372         34          0          0          0       5559   drv_flash.o
+       602          0          0          0          0      14305   drv_gpio.o
+        36          4          0          0          0        516   drv_iwdg.o
+        86          8          0          0          0       1226   drv_nvic.o
+      1108         92          0         28         36      12613   drv_rcc.o
+       408         60          0          0          0      13249   drv_timer.o
+       656         28          0          0          0      13328   drv_uart.o
         90          0          0          0          0          0   __dczerorl2.o
          8          0          0          0          0         68   __main.o
          0          0          0          0          0          0   __rtentry.o
@@ -2126,7 +2127,7 @@ Image component sizes
          2          0          0          0          0         68   use_no_semi.o
         24          0          0          0          0       2633   hal_clock.o
          8          0          0          0          0        489   hal_delay.o
-       220         54        164        108          0      18826   hal_gpio.o
+       220         54        150        100          0      18626   hal_gpio.o
         96         14          0          0          0       7615   hal_timer.o
       2810        284        124        176          0      25913   hal_uart.o
         98          4          0          0          0        140   d2f.o
@@ -2142,20 +2143,20 @@ Image component sizes
          0          0          0          0          0          0   usenofp.o
 
     ----------------------------------------------------------------------
-      8752        684        288        316        132     138972   Library Totals
-        22          0          0          0          0          0   (incl. Padding)
+      8752        684        276        308        132     138544   Library Totals
+        22          0          2          0          0          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Library Name
 
-      4192        292          0         32         36      81436   STM32F303DriverLib.lib
+      4192        292          0         32         36      81208   STM32F303DriverLib.lib
        418         16          0          0         96        664   c_w.l
-      3158        352        288        284          0      55476   firmware_wm_00_hal.lib
+      3158        352        274        276          0      55276   firmware_wm_00_hal.lib
        962         24          0          0          0       1396   fz_wm.l
 
     ----------------------------------------------------------------------
-      8752        684        288        316        132     138972   Library Totals
+      8752        684        276        308        132     138544   Library Totals
 
     ----------------------------------------------------------------------
 
@@ -2164,15 +2165,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     32652       1810       1308       2008       9856     260720   Grand Totals
-     32652       1810       1308        200       9856     260720   ELF Image Totals (compressed)
-     32652       1810       1308        200          0          0   ROM Totals
+     32652       1810       1296       2000       9856     260092   Grand Totals
+     32652       1810       1296        200       9856     260092   ELF Image Totals (compressed)
+     32652       1810       1296        200          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                33960 (  33.16kB)
-    Total RW  Size (RW Data + ZI Data)             11864 (  11.59kB)
-    Total ROM Size (Code + RO Data + RW Data)      34160 (  33.36kB)
+    Total RO  Size (Code + RO Data)                33948 (  33.15kB)
+    Total RW  Size (RW Data + ZI Data)             11856 (  11.58kB)
+    Total ROM Size (Code + RO Data + RW Data)      34148 (  33.35kB)
 
 ==============================================================================
 

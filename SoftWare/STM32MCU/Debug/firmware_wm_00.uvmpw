@@ -14,12 +14,11 @@
 
   <project>
     <PathAndName>.\firm_wm_00_hal\firmware_wm_00_hal.uvprojx</PathAndName>
-    <NodeIsActive>1</NodeIsActive>
-    <NodeIsExpanded>1</NodeIsExpanded>
   </project>
 
   <project>
     <PathAndName>.\firm_wm_00_app\firmware_wm_00_app.uvprojx</PathAndName>
+    <NodeIsActive>1</NodeIsActive>
     <NodeIsExpanded>1</NodeIsExpanded>
   </project>
 

@@ -39,6 +39,7 @@ DO9_GPIO_PORT, \
 DO10_GPIO_PORT, \
 DO11_GPIO_PORT, \
 DO12_GPIO_PORT, \
+DO13_GPIO_PORT, \
 };
 const UINT32  DO_GPIO_CLK[]  = { \
 DO0_GPIO_CLK, \
@@ -54,6 +55,7 @@ DO9_GPIO_CLK, \
 DO10_GPIO_CLK, \
 DO11_GPIO_CLK, \
 DO12_GPIO_CLK, \
+DO13_GPIO_CLK, \
 };
 const UINT16  DO_GPIO_PIN[]  = { \
 DO0_GPIO_PIN, \
@@ -69,6 +71,7 @@ DO9_GPIO_PIN, \
 DO10_GPIO_PIN, \
 DO11_GPIO_PIN, \
 DO12_GPIO_PIN, \
+DO13_GPIO_PIN, \
 };
 /*
 	INPUT
@@ -85,9 +88,6 @@ DI7_GPIO_PORT, \
 DI8_GPIO_PORT, \
 DI9_GPIO_PORT, \
 DI10_GPIO_PORT, \
-DI11_GPIO_PORT, \
-DI12_GPIO_PORT, \
-DI13_GPIO_PORT, \
 };
 const UINT32  DI_GPIO_CLK[]  = { \
 DI0_GPIO_CLK, \
@@ -101,9 +101,6 @@ DI7_GPIO_CLK, \
 DI8_GPIO_CLK, \
 DI9_GPIO_CLK, \
 DI10_GPIO_CLK, \
-DI11_GPIO_CLK, \
-DI12_GPIO_CLK, \
-DI13_GPIO_CLK, \
 };
 const UINT16  DI_GPIO_PIN[]  = { \
 DI0_GPIO_PIN, \
@@ -117,9 +114,6 @@ DI7_GPIO_PIN, \
 DI8_GPIO_PIN, \
 DI9_GPIO_PIN, \
 DI10_GPIO_PIN, \
-DI11_GPIO_PIN, \
-DI12_GPIO_PIN, \
-DI13_GPIO_PIN, \
 };
 
 //weight mode gpio init
@@ -138,7 +132,7 @@ void wm_hal_gpio_init()
 	for ( i = 0; i < DO_GPIO_NUMBER; i++ )
 	{
 		drv_rcc_ahb1_clk_enable( DO_GPIO_CLK[i] );
-    drv_gpio_output_init( DO_GPIO_PORT[i], DO_GPIO_PIN[i], GPIO_PUPD_PULL, GPIO_OTYPE_PP, GPIO_SPEED_LOW );
+    	drv_gpio_output_init( DO_GPIO_PORT[i], DO_GPIO_PIN[i], GPIO_PUPD_PULL, GPIO_OTYPE_PP, GPIO_SPEED_LOW );
 	}
 	
 }
