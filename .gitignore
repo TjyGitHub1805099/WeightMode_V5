@@ -1,5 +1,5 @@
-**/Listings
-**/Objects
-!*.lib
-!*.map
-!*.hex
+SoftWare/STM32MCU/**/Listings
+SoftWare/STM32MCU/**/Objects
+!SoftWare/STM32MCU/*.lib
+!SoftWare/STM32MCU/*.map
+!SoftWare/STM32MCU/*.hex
