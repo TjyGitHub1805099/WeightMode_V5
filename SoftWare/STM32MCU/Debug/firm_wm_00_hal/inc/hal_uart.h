@@ -61,31 +61,31 @@
 #define UART1_DEA_GPIO_PIN					GPIO_PIN_2
 
 
-// UART2 接DIWEN显示屏 , 实际是 STM32F303 UASRT2 , 带DMA功能
-#define UART2_PORT							USART2
-#define UART2_PORT_CLK						RCC_APB1ENR_USART2EN
-#define UART2_PORT_IRQn						USART2_IRQn
-#define UART2_PORT_GPIO_AF					GPIO_AF7_USART2
+// UART2 接DIWEN显示屏 , 实际是 STM32F303 UASRT1 , 带DMA功能
+#define UART2_PORT							USART1
+#define UART2_PORT_CLK						RCC_APB2ENR_USART1EN
+#define UART2_PORT_IRQn						USART1_IRQn
+#define UART2_PORT_GPIO_AF					GPIO_AF7_USART1
 
-#define UART2_TX_GPIO_PORT					GPIOA
-#define UART2_TX_GPIO_CLK					RCC_AHBENR_GPIOAEN
-#define UART2_TX_GPIO_PIN					GPIO_PIN_2
-#define UART2_TX_PIN_SOURCE					GPIO_PINSOURCE2
+#define UART2_TX_GPIO_PORT					GPIOC
+#define UART2_TX_GPIO_CLK					RCC_AHBENR_GPIOCEN
+#define UART2_TX_GPIO_PIN					GPIO_PIN_4
+#define UART2_TX_PIN_SOURCE					GPIO_PINSOURCE4
 
-#define UART2_RX_GPIO_PORT					GPIOA
-#define UART2_RX_GPIO_CLK					RCC_AHBENR_GPIOAEN
-#define UART2_RX_GPIO_PIN					GPIO_PIN_3
-#define UART2_RX_PIN_SOURCE					GPIO_PINSOURCE3
+#define UART2_RX_GPIO_PORT					GPIOC
+#define UART2_RX_GPIO_CLK					RCC_AHBENR_GPIOCEN
+#define UART2_RX_GPIO_PIN					GPIO_PIN_5
+#define UART2_RX_PIN_SOURCE					GPIO_PINSOURCE5
 
 #define UART2_TX_DMA						DMA1
 #define UART2_TX_DMA_CLK					RCC_AHBENR_DMA1EN
-#define UART2_TX_DMA_CHANNEL            	DMA1_Channel7
-#define UART2_TX_DMA_IRQn              	 	DMA1_Channel7_IRQn
-#define UART2_TX_DMA_IT_TCIF				DMA1_IT_TC7
+#define UART2_TX_DMA_CHANNEL            	DMA1_Channel4
+#define UART2_TX_DMA_IRQn              	 	DMA1_Channel4_IRQn
+#define UART2_TX_DMA_IT_TCIF				DMA1_IT_TC4
 
 #define UART2_RX_DMA						DMA1
 #define UART2_RX_DMA_CLK					RCC_AHBENR_DMA1EN
-#define UART2_RX_DMA_CHANNEL            	DMA1_Channel6
+#define UART2_RX_DMA_CHANNEL            	DMA1_Channel5
 
 /** RS485总线使能口线定义 */
 #define UART2_DEA_GPIO_PORT					(0)//GPIOB
@@ -96,8 +96,8 @@
 #define uart_com_isr						USART3_IRQHandler
 #define uart_com_tx_dma_isr					DMA1_Channel2_IRQHandler
 
-#define uart_extern_isr						USART2_IRQHandler
-#define uart_extern_tx_dma_isr				DMA1_Channel7_IRQHandler
+#define uart_extern_isr						USART1_IRQHandler
+#define uart_extern_tx_dma_isr				DMA1_Channel4_IRQHandler
 
 /** UART硬件端口定义 */
 typedef enum UartPortType

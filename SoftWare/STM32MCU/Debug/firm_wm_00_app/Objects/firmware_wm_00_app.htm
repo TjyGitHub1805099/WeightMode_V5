@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\firmware_wm_00_app.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\firmware_wm_00_app.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060020: Last Updated: Mon Feb 06 22:50:52 2023
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060020: Last Updated: Tue Mar 21 21:18:32 2023
 <BR><P>
 <H3>Maximum Stack Usage =       1124 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -45,10 +45,10 @@ Function Pointers
  <LI><a href="#[1d]">DMA1_Channel1_IRQHandler</a> from startup_stm32f30x.o(.text) referenced from startup_stm32f30x.o(RESET)
  <LI><a href="#[1e]">DMA1_Channel2_IRQHandler</a> from hal_uart.o(i.DMA1_Channel2_IRQHandler) referenced from startup_stm32f30x.o(RESET)
  <LI><a href="#[1f]">DMA1_Channel3_IRQHandler</a> from startup_stm32f30x.o(.text) referenced from startup_stm32f30x.o(RESET)
- <LI><a href="#[20]">DMA1_Channel4_IRQHandler</a> from startup_stm32f30x.o(.text) referenced from startup_stm32f30x.o(RESET)
+ <LI><a href="#[20]">DMA1_Channel4_IRQHandler</a> from hal_uart.o(i.DMA1_Channel4_IRQHandler) referenced from startup_stm32f30x.o(RESET)
  <LI><a href="#[21]">DMA1_Channel5_IRQHandler</a> from startup_stm32f30x.o(.text) referenced from startup_stm32f30x.o(RESET)
  <LI><a href="#[22]">DMA1_Channel6_IRQHandler</a> from startup_stm32f30x.o(.text) referenced from startup_stm32f30x.o(RESET)
- <LI><a href="#[23]">DMA1_Channel7_IRQHandler</a> from hal_uart.o(i.DMA1_Channel7_IRQHandler) referenced from startup_stm32f30x.o(RESET)
+ <LI><a href="#[23]">DMA1_Channel7_IRQHandler</a> from startup_stm32f30x.o(.text) referenced from startup_stm32f30x.o(RESET)
  <LI><a href="#[47]">DMA2_Channel1_IRQHandler</a> from startup_stm32f30x.o(.text) referenced from startup_stm32f30x.o(RESET)
  <LI><a href="#[48]">DMA2_Channel2_IRQHandler</a> from startup_stm32f30x.o(.text) referenced from startup_stm32f30x.o(RESET)
  <LI><a href="#[49]">DMA2_Channel3_IRQHandler</a> from startup_stm32f30x.o(.text) referenced from startup_stm32f30x.o(RESET)
@@ -98,8 +98,8 @@ Function Pointers
  <LI><a href="#[3e]">TIM8_UP_IRQHandler</a> from startup_stm32f30x.o(.text) referenced from startup_stm32f30x.o(RESET)
  <LI><a href="#[43]">UART4_IRQHandler</a> from startup_stm32f30x.o(.text) referenced from startup_stm32f30x.o(RESET)
  <LI><a href="#[44]">UART5_IRQHandler</a> from startup_stm32f30x.o(.text) referenced from startup_stm32f30x.o(RESET)
- <LI><a href="#[37]">USART1_IRQHandler</a> from startup_stm32f30x.o(.text) referenced from startup_stm32f30x.o(RESET)
- <LI><a href="#[38]">USART2_IRQHandler</a> from hal_uart.o(i.USART2_IRQHandler) referenced from startup_stm32f30x.o(RESET)
+ <LI><a href="#[37]">USART1_IRQHandler</a> from hal_uart.o(i.USART1_IRQHandler) referenced from startup_stm32f30x.o(RESET)
+ <LI><a href="#[38]">USART2_IRQHandler</a> from startup_stm32f30x.o(.text) referenced from startup_stm32f30x.o(RESET)
  <LI><a href="#[39]">USART3_IRQHandler</a> from hal_uart.o(i.USART3_IRQHandler) referenced from startup_stm32f30x.o(RESET)
  <LI><a href="#[3c]">USBWakeUp_IRQHandler</a> from startup_stm32f30x.o(.text) referenced from startup_stm32f30x.o(RESET)
  <LI><a href="#[52]">USBWakeUp_RMP_IRQHandler</a> from startup_stm32f30x.o(.text) referenced from startup_stm32f30x.o(RESET)
@@ -354,13 +354,13 @@ Global Symbols
 <P><STRONG><a name="[1f]"></a>DMA1_Channel3_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f30x.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f30x.o(RESET)
 </UL>
-<P><STRONG><a name="[20]"></a>DMA1_Channel4_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f30x.o(.text))
-<BR>[Address Reference Count : 1]<UL><LI> startup_stm32f30x.o(RESET)
-</UL>
 <P><STRONG><a name="[21]"></a>DMA1_Channel5_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f30x.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f30x.o(RESET)
 </UL>
 <P><STRONG><a name="[22]"></a>DMA1_Channel6_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f30x.o(.text))
+<BR>[Address Reference Count : 1]<UL><LI> startup_stm32f30x.o(RESET)
+</UL>
+<P><STRONG><a name="[23]"></a>DMA1_Channel7_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f30x.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f30x.o(RESET)
 </UL>
 <P><STRONG><a name="[47]"></a>DMA2_Channel1_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f30x.o(.text))
@@ -483,7 +483,7 @@ Global Symbols
 <P><STRONG><a name="[44]"></a>UART5_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f30x.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f30x.o(RESET)
 </UL>
-<P><STRONG><a name="[37]"></a>USART1_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f30x.o(.text))
+<P><STRONG><a name="[38]"></a>USART2_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f30x.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f30x.o(RESET)
 </UL>
 <P><STRONG><a name="[3c]"></a>USBWakeUp_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f30x.o(.text))
@@ -591,8 +591,8 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f30x.o(RESET)
 </UL>
-<P><STRONG><a name="[23]"></a>DMA1_Channel7_IRQHandler</STRONG> (Thumb, 44 bytes, Stack size 8 bytes, hal_uart.o(i.DMA1_Channel7_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = DMA1_Channel7_IRQHandler &rArr; drv_dma_stream_get_it_status
+<P><STRONG><a name="[20]"></a>DMA1_Channel4_IRQHandler</STRONG> (Thumb, 44 bytes, Stack size 8 bytes, hal_uart.o(i.DMA1_Channel4_IRQHandler))
+<BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = DMA1_Channel4_IRQHandler &rArr; drv_dma_stream_get_it_status
 </UL>
 <BR>[Calls]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv_uart_it_enable
 <LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv_dma_stream_get_it_status
@@ -752,8 +752,8 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f30x.o(RESET)
 </UL>
-<P><STRONG><a name="[38]"></a>USART2_IRQHandler</STRONG> (Thumb, 226 bytes, Stack size 16 bytes, hal_uart.o(i.USART2_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 92<LI>Call Chain = USART2_IRQHandler &rArr; hal_uart_port_init &rArr; hal_uart_gpio_init &rArr; drv_gpio_output_init
+<P><STRONG><a name="[37]"></a>USART1_IRQHandler</STRONG> (Thumb, 226 bytes, Stack size 16 bytes, hal_uart.o(i.USART1_IRQHandler))
+<BR><BR>[Stack]<UL><LI>Max Depth = 92<LI>Call Chain = USART1_IRQHandler &rArr; hal_uart_port_init &rArr; hal_uart_gpio_init &rArr; drv_gpio_output_init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_uart_extern_msg_packet_process
 <LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv_uart_clear_it_pending_bit
@@ -805,7 +805,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[88]"></a>app_uart_extern_msg_packet_process</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, app_t5l_ctrl.o(i.app_uart_extern_msg_packet_process))
-<BR><BR>[Called By]<UL><LI><a href="#[38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
+<BR><BR>[Called By]<UL><LI><a href="#[37]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
 </UL>
 
 <P><STRONG><a name="[95]"></a>balaningColorClear</STRONG> (Thumb, 26 bytes, Stack size 8 bytes, app_led_ctrl.o(i.balaningColorClear))
@@ -874,7 +874,7 @@ Global Symbols
 
 <P><STRONG><a name="[89]"></a>drv_dma_set_mem_addr_length</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, drv_dma.o(i.drv_dma_set_mem_addr_length))
 <BR><BR>[Called By]<UL><LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_IRQHandler
-<LI><a href="#[38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
+<LI><a href="#[37]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
 </UL>
 
 <P><STRONG><a name="[ca]"></a>drv_dma_stream_clear_flag_status</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, drv_dma.o(i.drv_dma_stream_clear_flag_status))
@@ -883,7 +883,7 @@ Global Symbols
 
 <P><STRONG><a name="[6c]"></a>drv_dma_stream_clear_it_pending_bit</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, drv_dma.o(i.drv_dma_stream_clear_it_pending_bit))
 <BR><BR>[Called By]<UL><LI><a href="#[2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hal_uart_port_init
-<LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA1_Channel7_IRQHandler
+<LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA1_Channel4_IRQHandler
 <LI><a href="#[1e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA1_Channel2_IRQHandler
 </UL>
 
@@ -893,20 +893,20 @@ Global Symbols
 
 <P><STRONG><a name="[6a]"></a>drv_dma_stream_disable</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, drv_dma.o(i.drv_dma_stream_disable))
 <BR><BR>[Called By]<UL><LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_IRQHandler
-<LI><a href="#[38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
-<LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA1_Channel7_IRQHandler
+<LI><a href="#[37]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
+<LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA1_Channel4_IRQHandler
 <LI><a href="#[1e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA1_Channel2_IRQHandler
 </UL>
 
 <P><STRONG><a name="[8a]"></a>drv_dma_stream_enable</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, drv_dma.o(i.drv_dma_stream_enable))
 <BR><BR>[Called By]<UL><LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_IRQHandler
-<LI><a href="#[38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
+<LI><a href="#[37]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
 </UL>
 
 <P><STRONG><a name="[69]"></a>drv_dma_stream_get_it_status</STRONG> (Thumb, 90 bytes, Stack size 20 bytes, drv_dma.o(i.drv_dma_stream_get_it_status))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = drv_dma_stream_get_it_status
 </UL>
-<BR>[Called By]<UL><LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA1_Channel7_IRQHandler
+<BR>[Called By]<UL><LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA1_Channel4_IRQHandler
 <LI><a href="#[1e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA1_Channel2_IRQHandler
 </UL>
 
@@ -915,7 +915,7 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hal_uart_tx_bytes
 <LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_IRQHandler
-<LI><a href="#[38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
+<LI><a href="#[37]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
 </UL>
 
 <P><STRONG><a name="[9b]"></a>drv_dma_stream_init</STRONG> (Thumb, 108 bytes, Stack size 32 bytes, drv_dma.o(i.drv_dma_stream_init))
@@ -1125,7 +1125,7 @@ Global Symbols
 <LI><a href="#[2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hal_uart_port_init
 <LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hal_uart_dma_rx_start
 <LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_IRQHandler
-<LI><a href="#[38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
+<LI><a href="#[37]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
 </UL>
 
 <P><STRONG><a name="[a8]"></a>drv_uart_deinit</STRONG> (Thumb, 124 bytes, Stack size 8 bytes, drv_uart.o(i.drv_uart_deinit))
@@ -1173,7 +1173,7 @@ Global Symbols
 <LI><a href="#[6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hal_uart_rx_irq_enable
 <LI><a href="#[2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hal_uart_port_init
 <LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_IRQHandler
-<LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA1_Channel7_IRQHandler
+<LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA1_Channel4_IRQHandler
 <LI><a href="#[1e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA1_Channel2_IRQHandler
 </UL>
 
@@ -1320,7 +1320,7 @@ Global Symbols
 <LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hal_uart_dma_rx_start
 </UL>
 <BR>[Called By]<UL><LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_IRQHandler
-<LI><a href="#[38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
+<LI><a href="#[37]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> hal_uart.o(.data)
 </UL>
@@ -1351,7 +1351,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hal_uart_tx_bytes
 <LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hal_uart_gpio_init
 <LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_IRQHandler
-<LI><a href="#[38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
+<LI><a href="#[37]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
 </UL>
 
 <P><STRONG><a name="[4]"></a>hal_uart_set_timeout</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, hal_uart.o(i.hal_uart_set_timeout))

@@ -390,8 +390,8 @@ Section Cross References
     startup_stm32f30x.o(RESET) refers to startup_stm32f30x.o(STACK) for __initial_sp
     startup_stm32f30x.o(RESET) refers to startup_stm32f30x.o(.text) for Reset_Handler
     startup_stm32f30x.o(RESET) refers to hal_uart.o(i.DMA1_Channel2_IRQHandler) for DMA1_Channel2_IRQHandler
-    startup_stm32f30x.o(RESET) refers to hal_uart.o(i.DMA1_Channel7_IRQHandler) for DMA1_Channel7_IRQHandler
-    startup_stm32f30x.o(RESET) refers to hal_uart.o(i.USART2_IRQHandler) for USART2_IRQHandler
+    startup_stm32f30x.o(RESET) refers to hal_uart.o(i.DMA1_Channel4_IRQHandler) for DMA1_Channel4_IRQHandler
+    startup_stm32f30x.o(RESET) refers to hal_uart.o(i.USART1_IRQHandler) for USART1_IRQHandler
     startup_stm32f30x.o(RESET) refers to hal_uart.o(i.USART3_IRQHandler) for USART3_IRQHandler
     startup_stm32f30x.o(RESET) refers to hal_timer.o(i.TIM6_DAC_IRQHandler) for TIM6_DAC_IRQHandler
     startup_stm32f30x.o(.text) refers (Special) to heapauxi.o(.text) for __use_two_region_memory
@@ -445,21 +445,21 @@ Section Cross References
     hal_uart.o(i.DMA1_Channel2_IRQHandler) refers to drv_dma.o(i.drv_dma_stream_clear_it_pending_bit) for drv_dma_stream_clear_it_pending_bit
     hal_uart.o(i.DMA1_Channel2_IRQHandler) refers to hal_uart.o(.constdata) for UART_TX_DMA_IT_TCIF
     hal_uart.o(i.DMA1_Channel2_IRQHandler) refers to hal_uart.o(.data) for UART_TX_DMA_CHANNEL
-    hal_uart.o(i.DMA1_Channel7_IRQHandler) refers to drv_dma.o(i.drv_dma_stream_get_it_status) for drv_dma_stream_get_it_status
-    hal_uart.o(i.DMA1_Channel7_IRQHandler) refers to drv_dma.o(i.drv_dma_stream_disable) for drv_dma_stream_disable
-    hal_uart.o(i.DMA1_Channel7_IRQHandler) refers to drv_uart.o(i.drv_uart_it_enable) for drv_uart_it_enable
-    hal_uart.o(i.DMA1_Channel7_IRQHandler) refers to drv_dma.o(i.drv_dma_stream_clear_it_pending_bit) for drv_dma_stream_clear_it_pending_bit
-    hal_uart.o(i.DMA1_Channel7_IRQHandler) refers to hal_uart.o(.constdata) for UART_TX_DMA_IT_TCIF
-    hal_uart.o(i.DMA1_Channel7_IRQHandler) refers to hal_uart.o(.data) for UART_TX_DMA_CHANNEL
-    hal_uart.o(i.USART2_IRQHandler) refers to drv_uart.o(i.drv_uart_clear_it_pending_bit) for drv_uart_clear_it_pending_bit
-    hal_uart.o(i.USART2_IRQHandler) refers to drv_dma.o(i.drv_dma_stream_disable) for drv_dma_stream_disable
-    hal_uart.o(i.USART2_IRQHandler) refers to drv_dma.o(i.drv_dma_stream_get_left_length) for drv_dma_stream_get_left_length
-    hal_uart.o(i.USART2_IRQHandler) refers to app_t5l_ctrl.o(i.app_uart_extern_msg_packet_process) for app_uart_extern_msg_packet_process
-    hal_uart.o(i.USART2_IRQHandler) refers to drv_dma.o(i.drv_dma_set_mem_addr_length) for drv_dma_set_mem_addr_length
-    hal_uart.o(i.USART2_IRQHandler) refers to drv_dma.o(i.drv_dma_stream_enable) for drv_dma_stream_enable
-    hal_uart.o(i.USART2_IRQHandler) refers to hal_uart.o(i.hal_uart_set_rx_mode) for hal_uart_set_rx_mode
-    hal_uart.o(i.USART2_IRQHandler) refers to hal_uart.o(i.hal_uart_port_init) for hal_uart_port_init
-    hal_uart.o(i.USART2_IRQHandler) refers to hal_uart.o(.data) for UART_PORT
+    hal_uart.o(i.DMA1_Channel4_IRQHandler) refers to drv_dma.o(i.drv_dma_stream_get_it_status) for drv_dma_stream_get_it_status
+    hal_uart.o(i.DMA1_Channel4_IRQHandler) refers to drv_dma.o(i.drv_dma_stream_disable) for drv_dma_stream_disable
+    hal_uart.o(i.DMA1_Channel4_IRQHandler) refers to drv_uart.o(i.drv_uart_it_enable) for drv_uart_it_enable
+    hal_uart.o(i.DMA1_Channel4_IRQHandler) refers to drv_dma.o(i.drv_dma_stream_clear_it_pending_bit) for drv_dma_stream_clear_it_pending_bit
+    hal_uart.o(i.DMA1_Channel4_IRQHandler) refers to hal_uart.o(.constdata) for UART_TX_DMA_IT_TCIF
+    hal_uart.o(i.DMA1_Channel4_IRQHandler) refers to hal_uart.o(.data) for UART_TX_DMA_CHANNEL
+    hal_uart.o(i.USART1_IRQHandler) refers to drv_uart.o(i.drv_uart_clear_it_pending_bit) for drv_uart_clear_it_pending_bit
+    hal_uart.o(i.USART1_IRQHandler) refers to drv_dma.o(i.drv_dma_stream_disable) for drv_dma_stream_disable
+    hal_uart.o(i.USART1_IRQHandler) refers to drv_dma.o(i.drv_dma_stream_get_left_length) for drv_dma_stream_get_left_length
+    hal_uart.o(i.USART1_IRQHandler) refers to app_t5l_ctrl.o(i.app_uart_extern_msg_packet_process) for app_uart_extern_msg_packet_process
+    hal_uart.o(i.USART1_IRQHandler) refers to drv_dma.o(i.drv_dma_set_mem_addr_length) for drv_dma_set_mem_addr_length
+    hal_uart.o(i.USART1_IRQHandler) refers to drv_dma.o(i.drv_dma_stream_enable) for drv_dma_stream_enable
+    hal_uart.o(i.USART1_IRQHandler) refers to hal_uart.o(i.hal_uart_set_rx_mode) for hal_uart_set_rx_mode
+    hal_uart.o(i.USART1_IRQHandler) refers to hal_uart.o(i.hal_uart_port_init) for hal_uart_port_init
+    hal_uart.o(i.USART1_IRQHandler) refers to hal_uart.o(.data) for UART_PORT
     hal_uart.o(i.USART3_IRQHandler) refers to drv_uart.o(i.drv_uart_clear_it_pending_bit) for drv_uart_clear_it_pending_bit
     hal_uart.o(i.USART3_IRQHandler) refers to drv_dma.o(i.drv_dma_stream_disable) for drv_dma_stream_disable
     hal_uart.o(i.USART3_IRQHandler) refers to drv_dma.o(i.drv_dma_stream_get_left_length) for drv_dma_stream_get_left_length
@@ -998,7 +998,7 @@ Image Symbol Table
     i.BubbleSort                             0x08000378   Section        0  app_crc.o(i.BubbleSort)
     i.BubbleSortINT32                        0x0800040c   Section        0  app_crc.o(i.BubbleSortINT32)
     i.DMA1_Channel2_IRQHandler               0x08000460   Section        0  hal_uart.o(i.DMA1_Channel2_IRQHandler)
-    i.DMA1_Channel7_IRQHandler               0x0800049c   Section        0  hal_uart.o(i.DMA1_Channel7_IRQHandler)
+    i.DMA1_Channel4_IRQHandler               0x0800049c   Section        0  hal_uart.o(i.DMA1_Channel4_IRQHandler)
     i.GetFloatBalancingModelData             0x080004d8   Section        0  app_t5l_ctrl.o(i.GetFloatBalancingModelData)
     i.LedCtrlSendPulse                       0x08000514   Section        0  app_led_ctrl.o(i.LedCtrlSendPulse)
     i.LedDataSet                             0x0800056c   Section        0  app_led_ctrl.o(i.LedDataSet)
@@ -1018,7 +1018,7 @@ Image Symbol Table
     i.STM32CheckPassWord                     0x08001a84   Section        0  app_password.o(i.STM32CheckPassWord)
     i.STM32MCUIDGet                          0x08001ad0   Section        0  app_password.o(i.STM32MCUIDGet)
     i.TIM6_DAC_IRQHandler                    0x08001af8   Section        0  hal_timer.o(i.TIM6_DAC_IRQHandler)
-    i.USART2_IRQHandler                      0x08001b0c   Section        0  hal_uart.o(i.USART2_IRQHandler)
+    i.USART1_IRQHandler                      0x08001b0c   Section        0  hal_uart.o(i.USART1_IRQHandler)
     i.USART3_IRQHandler                      0x08001c04   Section        0  hal_uart.o(i.USART3_IRQHandler)
     i.app_main_init                          0x08001d7c   Section        0  app_main_task.o(i.app_main_init)
     i.app_main_task                          0x08001dac   Section        0  app_main_task.o(i.app_main_task)
@@ -1396,9 +1396,9 @@ Image Symbol Table
     COMP7_IRQHandler                         0x08000289   Thumb Code     0  startup_stm32f30x.o(.text)
     DMA1_Channel1_IRQHandler                 0x08000289   Thumb Code     0  startup_stm32f30x.o(.text)
     DMA1_Channel3_IRQHandler                 0x08000289   Thumb Code     0  startup_stm32f30x.o(.text)
-    DMA1_Channel4_IRQHandler                 0x08000289   Thumb Code     0  startup_stm32f30x.o(.text)
     DMA1_Channel5_IRQHandler                 0x08000289   Thumb Code     0  startup_stm32f30x.o(.text)
     DMA1_Channel6_IRQHandler                 0x08000289   Thumb Code     0  startup_stm32f30x.o(.text)
+    DMA1_Channel7_IRQHandler                 0x08000289   Thumb Code     0  startup_stm32f30x.o(.text)
     DMA2_Channel1_IRQHandler                 0x08000289   Thumb Code     0  startup_stm32f30x.o(.text)
     DMA2_Channel2_IRQHandler                 0x08000289   Thumb Code     0  startup_stm32f30x.o(.text)
     DMA2_Channel3_IRQHandler                 0x08000289   Thumb Code     0  startup_stm32f30x.o(.text)
@@ -1439,7 +1439,7 @@ Image Symbol Table
     TIM8_UP_IRQHandler                       0x08000289   Thumb Code     0  startup_stm32f30x.o(.text)
     UART4_IRQHandler                         0x08000289   Thumb Code     0  startup_stm32f30x.o(.text)
     UART5_IRQHandler                         0x08000289   Thumb Code     0  startup_stm32f30x.o(.text)
-    USART1_IRQHandler                        0x08000289   Thumb Code     0  startup_stm32f30x.o(.text)
+    USART2_IRQHandler                        0x08000289   Thumb Code     0  startup_stm32f30x.o(.text)
     USBWakeUp_IRQHandler                     0x08000289   Thumb Code     0  startup_stm32f30x.o(.text)
     USBWakeUp_RMP_IRQHandler                 0x08000289   Thumb Code     0  startup_stm32f30x.o(.text)
     USB_HP_CAN1_TX_IRQHandler                0x08000289   Thumb Code     0  startup_stm32f30x.o(.text)
@@ -1467,7 +1467,7 @@ Image Symbol Table
     BubbleSort                               0x08000379   Thumb Code   144  app_crc.o(i.BubbleSort)
     BubbleSortINT32                          0x0800040d   Thumb Code    82  app_crc.o(i.BubbleSortINT32)
     DMA1_Channel2_IRQHandler                 0x08000461   Thumb Code    44  hal_uart.o(i.DMA1_Channel2_IRQHandler)
-    DMA1_Channel7_IRQHandler                 0x0800049d   Thumb Code    44  hal_uart.o(i.DMA1_Channel7_IRQHandler)
+    DMA1_Channel4_IRQHandler                 0x0800049d   Thumb Code    44  hal_uart.o(i.DMA1_Channel4_IRQHandler)
     GetFloatBalancingModelData               0x080004d9   Thumb Code    52  app_t5l_ctrl.o(i.GetFloatBalancingModelData)
     LedCtrlSendPulse                         0x08000515   Thumb Code    88  app_led_ctrl.o(i.LedCtrlSendPulse)
     LedDataSet                               0x0800056d   Thumb Code   132  app_led_ctrl.o(i.LedDataSet)
@@ -1487,7 +1487,7 @@ Image Symbol Table
     STM32CheckPassWord                       0x08001a85   Thumb Code    58  app_password.o(i.STM32CheckPassWord)
     STM32MCUIDGet                            0x08001ad1   Thumb Code    34  app_password.o(i.STM32MCUIDGet)
     TIM6_DAC_IRQHandler                      0x08001af9   Thumb Code    16  hal_timer.o(i.TIM6_DAC_IRQHandler)
-    USART2_IRQHandler                        0x08001b0d   Thumb Code   226  hal_uart.o(i.USART2_IRQHandler)
+    USART1_IRQHandler                        0x08001b0d   Thumb Code   226  hal_uart.o(i.USART1_IRQHandler)
     USART3_IRQHandler                        0x08001c05   Thumb Code   348  hal_uart.o(i.USART3_IRQHandler)
     app_main_init                            0x08001d7d   Thumb Code    38  app_main_task.o(i.app_main_init)
     app_main_task                            0x08001dad   Thumb Code    62  app_main_task.o(i.app_main_task)
@@ -1820,7 +1820,7 @@ Memory Map of the image
     0x0800040c   0x00000052   Code   RO          411    i.BubbleSortINT32   app_crc.o
     0x0800045e   0x00000002   PAD
     0x08000460   0x0000003c   Code   RO         1406    i.DMA1_Channel2_IRQHandler  firmware_wm_00_hal.lib(hal_uart.o)
-    0x0800049c   0x0000003c   Code   RO         1407    i.DMA1_Channel7_IRQHandler  firmware_wm_00_hal.lib(hal_uart.o)
+    0x0800049c   0x0000003c   Code   RO         1407    i.DMA1_Channel4_IRQHandler  firmware_wm_00_hal.lib(hal_uart.o)
     0x080004d8   0x0000003c   Code   RO          625    i.GetFloatBalancingModelData  app_t5l_ctrl.o
     0x08000514   0x00000058   Code   RO          172    i.LedCtrlSendPulse  app_led_ctrl.o
     0x0800056c   0x00000088   Code   RO          173    i.LedDataSet        app_led_ctrl.o
@@ -1842,7 +1842,7 @@ Memory Map of the image
     0x08001a84   0x0000004c   Code   RO          554    i.STM32CheckPassWord  app_password.o
     0x08001ad0   0x00000028   Code   RO          555    i.STM32MCUIDGet     app_password.o
     0x08001af8   0x00000014   Code   RO         1321    i.TIM6_DAC_IRQHandler  firmware_wm_00_hal.lib(hal_timer.o)
-    0x08001b0c   0x000000f8   Code   RO         1408    i.USART2_IRQHandler  firmware_wm_00_hal.lib(hal_uart.o)
+    0x08001b0c   0x000000f8   Code   RO         1408    i.USART1_IRQHandler  firmware_wm_00_hal.lib(hal_uart.o)
     0x08001c04   0x00000178   Code   RO         1409    i.USART3_IRQHandler  firmware_wm_00_hal.lib(hal_uart.o)
     0x08001d7c   0x00000030   Code   RO          145    i.app_main_init     app_main_task.o
     0x08001dac   0x00000048   Code   RO          146    i.app_main_task     app_main_task.o
