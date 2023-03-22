@@ -1,2 +1,5 @@
-*.o
-*.d
+**/Listings
+**/Objects
+!*.lib
+!*.map
+!*.hex
