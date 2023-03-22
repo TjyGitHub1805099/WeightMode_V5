@@ -1,305 +1,0 @@
-Dependencies for Project 'firmware_wm_00_app', Target 'app': (DO NOT MODIFY !)
-F (..\STM32F303DriverLib\Objects\STM32F303DriverLib.lib)(0x641B02B6)()
-F (..\firm_wm_00_hal\Objects\firmware_wm_00_hal.lib)(0x641B02D4)()
-F (.\src\app_main.c)(0x60D6DE04)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I..\STM32F303DriverLib\reg -I..\STM32F303DriverLib\inc -I..\firm_wm_00_hal\inc -I.\inc-I D:\WorkSpace\GitWorkSpace\WeightMode_V5\SoftWare\STM32MCU\Debug\firm_wm_00_app\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\1.3.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="516" -DSTM32F303xC-o .\objects\app_main.o --omf_browse .\objects\app_main.crf --depend .\objects\app_main.d)
-I (..\STM32F303DriverLib\reg\typedefine.h)(0x60CDF217)
-I (..\firm_wm_00_hal\inc\hal_clock.h)(0x6060A52E)
-I (..\firm_wm_00_hal\inc\hal_delay.h)(0x6060A52E)
-I (..\STM32F303DriverLib\inc\drv_delay.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_systick.h)(0x6060A52D)
-I (..\firm_wm_00_hal\inc\hal_timer.h)(0x6060A52E)
-I (..\STM32F303DriverLib\inc\drv_rcc.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_rcc.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_address.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_flash.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_nvic.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\Stm32F303xC_Vect_Tab.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_nvic.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_timer.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_timer.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_dbgmcu.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_dbg.h)(0x6060A52D)
-I (..\firm_wm_00_hal\inc\hal_gpio.h)(0x63E113A6)
-I (..\STM32F303DriverLib\inc\drv_gpio.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_gpio.h)(0x6060A52D)
-I (..\firm_wm_00_hal\inc\hal_uart.h)(0x6419AE8F)
-I (..\STM32F303DriverLib\inc\drv_dma.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_dma.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_uart.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_uart.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_cpu.h)(0x6060A52D)
-I (.\inc\app_main_task.h)(0x61F2A093)
-I (.\inc\app_led_ctrl.h)(0x60D6F9C3)
-I (.\inc\app_sdwe_ctrl.h)(0x60CE0DE6)
-I (.\inc\app_hx711_ctrl.h)(0x616D613A)
-I (.\inc\app_key_ctrl.h)(0x6060A52D)
-I (.\inc\app_modbus_rtu_ctrl.h)(0x61F2A0B4)
-I (.\inc\app_password.h)(0x60CDF13A)
-I (.\inc\app_syspara.h)(0x61EFF32C)
-I (.\inc\app_t5l_ctrl.h)(0x61E967ED)
-I (..\STM32F303DriverLib\inc\drv_iwdg.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_iwdg.h)(0x6060A52D)
-F (.\src\app_main_task.c)(0x61E81AB9)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I..\STM32F303DriverLib\reg -I..\STM32F303DriverLib\inc -I..\firm_wm_00_hal\inc -I.\inc-I D:\WorkSpace\GitWorkSpace\WeightMode_V5\SoftWare\STM32MCU\Debug\firm_wm_00_app\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\1.3.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="516" -DSTM32F303xC-o .\objects\app_main_task.o --omf_browse .\objects\app_main_task.crf --depend .\objects\app_main_task.d)
-I (..\firm_wm_00_hal\inc\hal_gpio.h)(0x63E113A6)
-I (..\STM32F303DriverLib\inc\drv_gpio.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_gpio.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\typedefine.h)(0x60CDF217)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_address.h)(0x6060A52D)
-I (.\inc\app_led_ctrl.h)(0x60D6F9C3)
-I (.\inc\app_main_task.h)(0x61F2A093)
-I (.\inc\app_hx711_ctrl.h)(0x616D613A)
-I (.\inc\app_key_ctrl.h)(0x6060A52D)
-I (.\inc\app_sdwe_ctrl.h)(0x60CE0DE6)
-I (.\inc\app_modbus_rtu_ctrl.h)(0x61F2A0B4)
-I (..\firm_wm_00_hal\inc\hal_uart.h)(0x6419AE8F)
-I (..\STM32F303DriverLib\inc\drv_rcc.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_rcc.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_flash.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_nvic.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\Stm32F303xC_Vect_Tab.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_nvic.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_dma.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_dma.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_timer.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_timer.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_dbgmcu.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_dbg.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_uart.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_uart.h)(0x6060A52D)
-I (.\inc\app_t5l_ctrl.h)(0x61E967ED)
-I (..\STM32F303DriverLib\inc\drv_iwdg.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_iwdg.h)(0x6060A52D)
-F (.\src\app_led_ctrl.c)(0x60D6F887)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I..\STM32F303DriverLib\reg -I..\STM32F303DriverLib\inc -I..\firm_wm_00_hal\inc -I.\inc-I D:\WorkSpace\GitWorkSpace\WeightMode_V5\SoftWare\STM32MCU\Debug\firm_wm_00_app\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\1.3.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="516" -DSTM32F303xC-o .\objects\app_led_ctrl.o --omf_browse .\objects\app_led_ctrl.crf --depend .\objects\app_led_ctrl.d)
-I (..\firm_wm_00_hal\inc\hal_gpio.h)(0x63E113A6)
-I (..\STM32F303DriverLib\inc\drv_gpio.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_gpio.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\typedefine.h)(0x60CDF217)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_address.h)(0x6060A52D)
-I (.\inc\app_led_ctrl.h)(0x60D6F9C3)
-I (.\inc\app_main_task.h)(0x61F2A093)
-I (.\inc\app_hx711_ctrl.h)(0x616D613A)
-I (.\inc\app_sdwe_ctrl.h)(0x60CE0DE6)
-I (.\inc\app_crc.h)(0x60F27AC9)
-I (.\inc\app_syspara.h)(0x61EFF32C)
-I (.\inc\app_t5l_ctrl.h)(0x61E967ED)
-I (..\firm_wm_00_hal\inc\hal_uart.h)(0x6419AE8F)
-I (..\STM32F303DriverLib\inc\drv_rcc.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_rcc.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_flash.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_nvic.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\Stm32F303xC_Vect_Tab.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_nvic.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_dma.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_dma.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_timer.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_timer.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_dbgmcu.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_dbg.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_uart.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_uart.h)(0x6060A52D)
-F (.\src\app_hx711_ctrl.c)(0x61506DD7)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I..\STM32F303DriverLib\reg -I..\STM32F303DriverLib\inc -I..\firm_wm_00_hal\inc -I.\inc-I D:\WorkSpace\GitWorkSpace\WeightMode_V5\SoftWare\STM32MCU\Debug\firm_wm_00_app\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\1.3.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="516" -DSTM32F303xC-o .\objects\app_hx711_ctrl.o --omf_browse .\objects\app_hx711_ctrl.crf --depend .\objects\app_hx711_ctrl.d)
-I (..\firm_wm_00_hal\inc\hal_gpio.h)(0x63E113A6)
-I (..\STM32F303DriverLib\inc\drv_gpio.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_gpio.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\typedefine.h)(0x60CDF217)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_address.h)(0x6060A52D)
-I (..\firm_wm_00_hal\inc\hal_delay.h)(0x6060A52E)
-I (..\STM32F303DriverLib\inc\drv_delay.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_systick.h)(0x6060A52D)
-I (.\inc\app_main_task.h)(0x61F2A093)
-I (.\inc\app_led_ctrl.h)(0x60D6F9C3)
-I (.\inc\app_hx711_ctrl.h)(0x616D613A)
-I (.\inc\app_sdwe_ctrl.h)(0x60CE0DE6)
-I (.\inc\app_syspara.h)(0x61EFF32C)
-I (.\inc\app_t5l_ctrl.h)(0x61E967ED)
-I (..\firm_wm_00_hal\inc\hal_uart.h)(0x6419AE8F)
-I (..\STM32F303DriverLib\inc\drv_rcc.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_rcc.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_flash.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_nvic.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\Stm32F303xC_Vect_Tab.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_nvic.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_dma.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_dma.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_timer.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_timer.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_dbgmcu.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_dbg.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_uart.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_uart.h)(0x6060A52D)
-I (.\inc\app_crc.h)(0x60F27AC9)
-F (.\src\app_sdwe_ctrl.c)(0x60CE0C6A)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I..\STM32F303DriverLib\reg -I..\STM32F303DriverLib\inc -I..\firm_wm_00_hal\inc -I.\inc-I D:\WorkSpace\GitWorkSpace\WeightMode_V5\SoftWare\STM32MCU\Debug\firm_wm_00_app\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\1.3.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="516" -DSTM32F303xC-o .\objects\app_sdwe_ctrl.o --omf_browse .\objects\app_sdwe_ctrl.crf --depend .\objects\app_sdwe_ctrl.d)
-F (.\src\app_key_ctrl.c)(0x60D5E174)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I..\STM32F303DriverLib\reg -I..\STM32F303DriverLib\inc -I..\firm_wm_00_hal\inc -I.\inc-I D:\WorkSpace\GitWorkSpace\WeightMode_V5\SoftWare\STM32MCU\Debug\firm_wm_00_app\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\1.3.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="516" -DSTM32F303xC-o .\objects\app_key_ctrl.o --omf_browse .\objects\app_key_ctrl.crf --depend .\objects\app_key_ctrl.d)
-I (.\inc\app_main_task.h)(0x61F2A093)
-I (..\STM32F303DriverLib\reg\typedefine.h)(0x60CDF217)
-I (.\inc\app_led_ctrl.h)(0x60D6F9C3)
-I (.\inc\app_key_ctrl.h)(0x6060A52D)
-I (..\firm_wm_00_hal\inc\hal_gpio.h)(0x63E113A6)
-I (..\STM32F303DriverLib\inc\drv_gpio.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_gpio.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_address.h)(0x6060A52D)
-I (.\inc\app_hx711_ctrl.h)(0x616D613A)
-I (.\inc\app_sdwe_ctrl.h)(0x60CE0DE6)
-I (.\inc\app_t5l_ctrl.h)(0x61E967ED)
-I (..\firm_wm_00_hal\inc\hal_uart.h)(0x6419AE8F)
-I (..\STM32F303DriverLib\inc\drv_rcc.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_rcc.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_flash.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_nvic.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\Stm32F303xC_Vect_Tab.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_nvic.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_dma.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_dma.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_timer.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_timer.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_dbgmcu.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_dbg.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_uart.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_uart.h)(0x6060A52D)
-I (.\inc\app_modbus_rtu_ctrl.h)(0x61F2A0B4)
-F (.\src\app_crc.c)(0x60F27C9A)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I..\STM32F303DriverLib\reg -I..\STM32F303DriverLib\inc -I..\firm_wm_00_hal\inc -I.\inc-I D:\WorkSpace\GitWorkSpace\WeightMode_V5\SoftWare\STM32MCU\Debug\firm_wm_00_app\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\1.3.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="516" -DSTM32F303xC-o .\objects\app_crc.o --omf_browse .\objects\app_crc.crf --depend .\objects\app_crc.d)
-I (..\STM32F303DriverLib\reg\typedefine.h)(0x60CDF217)
-I (.\inc\app_hx711_ctrl.h)(0x616D613A)
-I (.\inc\app_led_ctrl.h)(0x60D6F9C3)
-I (.\inc\app_main_task.h)(0x61F2A093)
-F (.\src\app_modbus_rtu_ctrl.c)(0x61F2A180)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I..\STM32F303DriverLib\reg -I..\STM32F303DriverLib\inc -I..\firm_wm_00_hal\inc -I.\inc-I D:\WorkSpace\GitWorkSpace\WeightMode_V5\SoftWare\STM32MCU\Debug\firm_wm_00_app\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\1.3.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="516" -DSTM32F303xC-o .\objects\app_modbus_rtu_ctrl.o --omf_browse .\objects\app_modbus_rtu_ctrl.crf --depend .\objects\app_modbus_rtu_ctrl.d)
-I (..\STM32F303DriverLib\inc\drv_flash.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_flash.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\typedefine.h)(0x60CDF217)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_address.h)(0x6060A52D)
-I (.\inc\app_main_task.h)(0x61F2A093)
-I (.\inc\app_led_ctrl.h)(0x60D6F9C3)
-I (.\inc\app_modbus_rtu_ctrl.h)(0x61F2A0B4)
-I (..\firm_wm_00_hal\inc\hal_uart.h)(0x6419AE8F)
-I (..\STM32F303DriverLib\inc\drv_rcc.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_rcc.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_nvic.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\Stm32F303xC_Vect_Tab.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_nvic.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_gpio.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_gpio.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_dma.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_dma.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_timer.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_timer.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_dbgmcu.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_dbg.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_uart.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_uart.h)(0x6060A52D)
-I (.\inc\app_hx711_ctrl.h)(0x616D613A)
-I (.\inc\app_crc.h)(0x60F27AC9)
-I (..\firm_wm_00_hal\inc\hal_delay.h)(0x6060A52E)
-I (..\STM32F303DriverLib\inc\drv_delay.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_systick.h)(0x6060A52D)
-I (.\inc\app_sdwe_ctrl.h)(0x60CE0DE6)
-I (.\inc\app_syspara.h)(0x61EFF32C)
-I (.\inc\app_t5l_ctrl.h)(0x61E967ED)
-F (.\src\app_password.c)(0x60CDF2C7)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I..\STM32F303DriverLib\reg -I..\STM32F303DriverLib\inc -I..\firm_wm_00_hal\inc -I.\inc-I D:\WorkSpace\GitWorkSpace\WeightMode_V5\SoftWare\STM32MCU\Debug\firm_wm_00_app\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\1.3.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="516" -DSTM32F303xC-o .\objects\app_password.o --omf_browse .\objects\app_password.crf --depend .\objects\app_password.d)
-I (..\STM32F303DriverLib\reg\typedefine.h)(0x60CDF217)
-I (.\inc\app_syspara.h)(0x61EFF32C)
-I (.\inc\app_led_ctrl.h)(0x60D6F9C3)
-I (.\inc\app_main_task.h)(0x61F2A093)
-I (.\inc\app_sdwe_ctrl.h)(0x60CE0DE6)
-I (.\inc\app_password.h)(0x60CDF13A)
-F (.\src\app_syspara.c)(0x61979AFD)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I..\STM32F303DriverLib\reg -I..\STM32F303DriverLib\inc -I..\firm_wm_00_hal\inc -I.\inc-I D:\WorkSpace\GitWorkSpace\WeightMode_V5\SoftWare\STM32MCU\Debug\firm_wm_00_app\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\1.3.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="516" -DSTM32F303xC-o .\objects\app_syspara.o --omf_browse .\objects\app_syspara.crf --depend .\objects\app_syspara.d)
-I (..\STM32F303DriverLib\reg\typedefine.h)(0x60CDF217)
-I (.\inc\app_crc.h)(0x60F27AC9)
-I (..\STM32F303DriverLib\inc\drv_flash.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_flash.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_address.h)(0x6060A52D)
-I (.\inc\app_syspara.h)(0x61EFF32C)
-I (.\inc\app_led_ctrl.h)(0x60D6F9C3)
-I (.\inc\app_main_task.h)(0x61F2A093)
-I (.\inc\app_sdwe_ctrl.h)(0x60CE0DE6)
-I (.\inc\app_password.h)(0x60CDF13A)
-I (.\inc\app_hx711_ctrl.h)(0x616D613A)
-I (.\inc\app_t5l_ctrl.h)(0x61E967ED)
-I (..\firm_wm_00_hal\inc\hal_uart.h)(0x6419AE8F)
-I (..\STM32F303DriverLib\inc\drv_rcc.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_rcc.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_nvic.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\Stm32F303xC_Vect_Tab.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_nvic.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_gpio.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_gpio.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_dma.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_dma.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_timer.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_timer.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_dbgmcu.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_dbg.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_uart.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_uart.h)(0x6060A52D)
-F (.\src\app_systest.c)(0x60D49DD4)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I..\STM32F303DriverLib\reg -I..\STM32F303DriverLib\inc -I..\firm_wm_00_hal\inc -I.\inc-I D:\WorkSpace\GitWorkSpace\WeightMode_V5\SoftWare\STM32MCU\Debug\firm_wm_00_app\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\1.3.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="516" -DSTM32F303xC-o .\objects\app_systest.o --omf_browse .\objects\app_systest.crf --depend .\objects\app_systest.d)
-I (..\STM32F303DriverLib\reg\typedefine.h)(0x60CDF217)
-I (.\inc\app_systest.h)(0x60D48487)
-I (..\firm_wm_00_hal\inc\hal_gpio.h)(0x63E113A6)
-I (..\STM32F303DriverLib\inc\drv_gpio.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_gpio.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_address.h)(0x6060A52D)
-I (.\inc\app_led_ctrl.h)(0x60D6F9C3)
-I (.\inc\app_main_task.h)(0x61F2A093)
-I (.\inc\app_hx711_ctrl.h)(0x616D613A)
-I (.\inc\app_key_ctrl.h)(0x6060A52D)
-I (.\inc\app_sdwe_ctrl.h)(0x60CE0DE6)
-I (.\inc\app_modbus_rtu_ctrl.h)(0x61F2A0B4)
-I (..\firm_wm_00_hal\inc\hal_uart.h)(0x6419AE8F)
-I (..\STM32F303DriverLib\inc\drv_rcc.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_rcc.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_flash.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_nvic.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\Stm32F303xC_Vect_Tab.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_nvic.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_dma.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_dma.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_timer.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_timer.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_dbgmcu.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_dbg.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_uart.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_uart.h)(0x6060A52D)
-F (.\src\app_t5l_ctrl.c)(0x61F2A60A)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I..\STM32F303DriverLib\reg -I..\STM32F303DriverLib\inc -I..\firm_wm_00_hal\inc -I.\inc-I D:\WorkSpace\GitWorkSpace\WeightMode_V5\SoftWare\STM32MCU\Debug\firm_wm_00_app\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\1.3.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="516" -DSTM32F303xC-o .\objects\app_t5l_ctrl.o --omf_browse .\objects\app_t5l_ctrl.crf --depend .\objects\app_t5l_ctrl.d)
-I (..\STM32F303DriverLib\inc\drv_flash.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_flash.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\typedefine.h)(0x60CDF217)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_address.h)(0x6060A52D)
-I (.\inc\app_main_task.h)(0x61F2A093)
-I (.\inc\app_led_ctrl.h)(0x60D6F9C3)
-I (.\inc\app_sdwe_ctrl.h)(0x60CE0DE6)
-I (.\inc\app_crc.h)(0x60F27AC9)
-I (.\inc\app_hx711_ctrl.h)(0x616D613A)
-I (..\firm_wm_00_hal\inc\hal_delay.h)(0x6060A52E)
-I (..\STM32F303DriverLib\inc\drv_delay.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_systick.h)(0x6060A52D)
-I (.\inc\app_modbus_rtu_ctrl.h)(0x61F2A0B4)
-I (..\firm_wm_00_hal\inc\hal_uart.h)(0x6419AE8F)
-I (..\STM32F303DriverLib\inc\drv_rcc.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_rcc.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_nvic.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\Stm32F303xC_Vect_Tab.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_nvic.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_gpio.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_gpio.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_dma.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_dma.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_timer.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_timer.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_dbgmcu.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_dbg.h)(0x6060A52D)
-I (..\STM32F303DriverLib\inc\drv_uart.h)(0x6060A52D)
-I (..\STM32F303DriverLib\reg\reg_stm32f303_uart.h)(0x6060A52D)
-I (.\inc\app_syspara.h)(0x61EFF32C)
-I (.\inc\app_password.h)(0x60CDF13A)
-I (.\inc\app_t5l_ctrl.h)(0x61E967ED)
-F (.\inc\app_led_ctrl.h)(0x60D6F9C3)()
-F (.\inc\app_sdwe_ctrl.h)(0x60CE0DE6)()
-F (.\inc\app_hx711_ctrl.h)(0x616D613A)()
-F (.\inc\app_key_ctrl.h)(0x6060A52D)()
-F (.\inc\app_main_task.h)(0x61F2A093)()
-F (.\inc\app_crc.h)(0x60F27AC9)()
-F (.\inc\app_modbus_rtu_ctrl.h)(0x61F2A0B4)()
-F (.\inc\app_password.h)(0x60CDF13A)()
-F (.\inc\app_syspara.h)(0x61EFF32C)()
-F (.\inc\app_systest.h)(0x60D48487)()
-F (.\inc\app_t5l_ctrl.h)(0x61E967ED)()
-F (.\startup\startup_stm32f30x.s)(0x60D0839C)(--cpu Cortex-M4.fp -g --apcs=interwork -I D:\WorkSpace\GitWorkSpace\WeightMode_V5\SoftWare\STM32MCU\Debug\firm_wm_00_app\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\1.3.0\Device\Include-I C:\Keil_v5\ARM\CMSIS\Include--pd "__UVISION_VERSION SETA 516" --pd "STM32F303xC SETA 1"--list .\listings\startup_stm32f30x.lst --xref -o .\objects\startup_stm32f30x.o --depend .\objects\startup_stm32f30x.d)
