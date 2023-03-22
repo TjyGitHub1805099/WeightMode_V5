@@ -1,9 +1,0 @@
-.\objects\drv_rcc.o: src\drv_rcc.c
-.\objects\drv_rcc.o: .\inc\drv_rcc.h
-.\objects\drv_rcc.o: .\reg\reg_stm32f303_rcc.h
-.\objects\drv_rcc.o: .\reg\reg_stm32f303_address.h
-.\objects\drv_rcc.o: .\reg\typedefine.h
-.\objects\drv_rcc.o: .\reg\reg_stm32f303_flash.h
-.\objects\drv_rcc.o: .\inc\drv_nvic.h
-.\objects\drv_rcc.o: .\inc\Stm32F303xC_Vect_Tab.h
-.\objects\drv_rcc.o: .\reg\reg_stm32f303_nvic.h
