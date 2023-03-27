@@ -4,5 +4,9 @@
 			"path": "SoftWare/STM32MCU/Debug"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"files.associations": {
+			"app_t5l_ctrl.h": "c"
+		}
+	}
 }
