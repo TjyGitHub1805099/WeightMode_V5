@@ -162,7 +162,17 @@
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>g_sysLocked</ItemText>
+          <ItemText>varAdd</ItemText>
+        </Ww>
+        <Ww>
+          <count>1</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>varData</ItemText>
+        </Ww>
+        <Ww>
+          <count>2</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>gSystemPara</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
