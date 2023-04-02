@@ -4,22 +4,24 @@
 #include "typedefine.h"
 #include "app_led_ctrl.h"
 
-#define COLOR_ALT_20210328_DEFINE	(FALSE)
-#define COLOR_ALT_20210414_DEFINE	(FALSE)
-#define COLOR_ALT_20210427_DEFINE	(FALSE)
-#define COLOR_ALT_20210606_DEFINE	(FALSE)
-
 #define SYS_HX711_ONLINE_CHECK_TIME	(2000)//when power on 2000ms start check HX711
 #define SYS_REMOVE_WEIGHT_TIME		(3300)//when power on 3300ms remove weight
 #define SYS_POWER_REDAY_TIME		(3500)//when power on 3500ms send data to T5L , do not change
-#define MCU_VERSION			        (51)//2023.04.01
-#define DIWEN_VERSION		        (51)//2023.04.01
-//5.1版本
-/*
-1、添加小数控制参数、ml/g比率参数、大屏开关参数
+#define MCU_VERSION			        (52)//2023.04.01
+#define DIWEN_VERSION		        (52)//2023.04.01
 
+//version 52 & 52
+/*
+1、modified the DW screan weight vlu type len was 4 byte
+2、remove not used logic 
 */
 
+//version 51 & 51
+/*
+1、add disimal point
+2、add ml/g lilv
+3、add larger sreen open/close para
+*/
 
 //#define MCU_VERSION			    (50)//2023.03.27
 //#define DIWEN_VERSION		        (50)//2023.03.27

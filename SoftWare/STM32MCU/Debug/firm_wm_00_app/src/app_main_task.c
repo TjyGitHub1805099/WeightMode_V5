@@ -38,9 +38,9 @@ void app_main_task()
 	UINT8 hx711DataUpgrade = 0 ;
 	(void)hx711DataUpgrade;
 	
+	//feed watch dog
 	drv_iwdg_feed();
 
-	
 	//sys tick add
 	g_sys_ms_tick++;
 
@@ -56,18 +56,6 @@ void app_main_task()
 		hx711DataUpgrade = hx711_MainFunction();
 	}
 	
-	#if (TRUE == COLOR_ALT_20210328_DEFINE)
-		useWeightUpdataOutColor(hx711DataUpgrade);
-	#endif	
-	
-	#if (TRUE == COLOR_ALT_20210414_DEFINE)
-		useWeightUpdataOutColor_20210414(hx711DataUpgrade);
-	#endif
-
-	#if (TRUE == COLOR_ALT_20210606_DEFINE)
-		useWeightUpdataOutColor_20210606(hx711DataUpgrade);
-	#endif
-
 	//LED control test
 	#if (TRUE == LED_CTRL_TEST)
 		LedSysTest(g_sys_ms_tick);

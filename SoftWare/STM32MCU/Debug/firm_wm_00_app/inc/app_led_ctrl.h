@@ -60,10 +60,7 @@ typedef struct BalancingGroupDataType
 void led_init(void);
 extern void led_MainFunction(void);
 UINT8 LedDataSet(enumLedSeqType seq , enumLedColorType color);
-void useWeightUpdateLedAndSdweColor(UINT8 hx711DataUpgrade);
 void useWeightCompareOutColor(UINT8 hx711DataUpgrade);
-extern void useWeightUpdataOutColor(UINT8 hx711DataUpgrade);
-extern void useWeightUpdataOutColor_3030(UINT8 hx711DataUpgrade);
 void LedSysTest(UINT32 ms_tick);
 extern UINT8 led_test_flag ;
 extern void balaningColorClear(void);

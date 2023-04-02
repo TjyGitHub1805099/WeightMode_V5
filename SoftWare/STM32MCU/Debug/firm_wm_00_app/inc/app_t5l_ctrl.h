@@ -48,10 +48,10 @@
 //==(update:20210328):address of triger sample back to DMG : (0~9)-> COLOR of point of chanel set triger(val=0x00:white(not triger),val=0x01green(triger))
 #define DMG_FUNC_ASK_CHANEL_POINT_TRIG_SAMPLE_DATA_ADDRESS	(0X2400)//0x2400~0x2409
 
-//==(update:20210328):address of weight back to DMG : (0~5)-> weight of chanel(val:g)
-#define DMG_FUNC_ASK_CHANEL_WEIGHT_ADDRESS		(0X3000)//0x3000~0x3005
-//==(update:20210328):address of color back to DMG : (0~5)-> color of chanel(val:g)
-#define DMG_FUNC_ASK_CHANEL_COLOR_ADDRESS		(0X3100)//0x3100~0x3105
+//==(update:20210328):address of weight back to DMG : (0~7)-> weight of chanel(val:g)
+#define DMG_FUNC_ASK_CHANEL_WEIGHT_ADDRESS		(0X3000)//0x3000~0x300F 4byte each chanel
+//==(update:20210328):address of color back to DMG : (0~7)-> color of chanel(val:g)
+#define DMG_FUNC_ASK_CHANEL_COLOR_ADDRESS		(0X3100)//0x3100~0x3107
 
 
 //==(update:20210411):address of unit min max ...
@@ -108,13 +108,9 @@
 //1.find out the remaining chanel
 //2.find out the closed group(minus was smallest)
 //3.send to DIWEN Screen to display
-#define DIFF_JUDGE_GROUP_NUM	(2)//2 group display 
-#define DIFF_JUDGE_DATA_NUM		(3)//num1 num2 minus
 
-
-#define DIFF_JUDGE_GROUP_NUM_SLAVE1	(6)//2 group display 
+#define DIFF_JUDGE_GROUP_NUM_SLAVE1	(4)//2 group display 
 #define DIFF_JUDGE_DATA_NUM_SLAVE1	(3)//num1 num2 minus
-
 #define DIFF_TO_DIWEN_DATA_LEN		(DIFF_JUDGE_GROUP_NUM_SLAVE1*DIFF_JUDGE_DATA_NUM_SLAVE1)
 
 typedef enum
@@ -307,7 +303,7 @@ extern T5LType g_T5L;
 	0,\
 	}
 #define T5L_INITIAL_COMPLETE		(0X12)
-#define T5L_MAX_CHANEL_LEN			(HX711_CHANEL_NUM+HX711_CHANEL_NUM)
+#define T5L_MAX_CHANEL_LEN			(HX711_CHANEL_NUM)
 #define T5L_CHANEL_WEIGHT_NOT_EQUAL	(0XFF)
 	
 	
@@ -316,7 +312,6 @@ extern INT16 g_i16ColorOtherChanel[T5L_MAX_CHANEL_LEN];//T5L_CHANEL_WEIGHT_NOT_E
 	
 extern void color_clearAllColor(void);
 extern void screenT5L_Init(void);
-extern void sdweSetWeightBackColor(UINT8 seq,UINT8 color);
 extern void pointSampleTrigerDataSet(UINT8 localChanel , UINT8 point , INT16 value);
 extern void pointWeightTrigerDataSet(UINT8 localChanel , UINT8 point , INT16 value);
 extern void sdwe_VoicePrintfPush(tT5LVoinceType u8Voice1 ,tT5LVoinceType u8Voice2);

@@ -379,7 +379,7 @@ void hx711_setAllRemoveWeight(void)
 	{
 		pChanel[chanel_i].weightRemove = pChanel[chanel_i].weight;
 	}
-	//clear all clor
+	//clear all color
 	color_clearAllColor();
 	//
 	balaningColorClear();

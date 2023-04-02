@@ -943,18 +943,6 @@ void ModbusRtu_MainFunction(void)
 	//
 	pContex->sysTick++;
 	//
-#if 0//before 20211119
-	if(0 != gSystemPara.isCascade)//not cascade , only one
-	{
-		if(ModbusAdd_Master == gSystemPara.isCascade)//cascade : master Device
-		{
-			ModbusRtu_MasterMainFunction(pContex);
-		}else if ((gSystemPara.isCascade >= ModbusAdd_Slave_1) && (gSystemPara.isCascade < ModbusAdd_Slave_Max))////cascade : slave Device
-		{
-			ModbusRtu_SlaveMainFunction(pContex);
-		}
-	}
-#else
 	if(0 != gSystemPara.isCascade)//not cascade , only one
 	{
 		switch(gSystemPara.isCascade)
@@ -973,6 +961,6 @@ void ModbusRtu_MainFunction(void)
 			break;
 		}
 	}
-#endif
+
 }
 
