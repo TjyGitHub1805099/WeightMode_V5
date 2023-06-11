@@ -125,5 +125,8 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* spiHandle)
 }
 
 /* USER CODE BEGIN 1 */
-
+HAL_StatusTypeDef SPI_TX_RX(uint8_t *pTxData, uint8_t *pRxData, uint16_t Size,uint32_t Timeout)
+{
+  HAL_SPI_TransmitReceive(&hspi2, pTxData, pRxData, Size,Timeout);
+}
 /* USER CODE END 1 */

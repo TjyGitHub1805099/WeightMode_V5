@@ -21,7 +21,19 @@
 #include "tim.h"
 
 /* USER CODE BEGIN 0 */
+ void delay_us(uint16_t us)
+ {
+     uint16_t differ=0xffff-us-5; 
 
+      __HAL_TIM_SetCounter(&htim7,differ);
+     HAL_TIM_Base_Start(&htim7);
+     while(differ < 0xffff-5)
+     {
+         differ = __HAL_TIM_GetCounter(&htim7);
+     }
+     HAL_TIM_Base_Stop(&htim7);
+ 
+ }
 /* USER CODE END 0 */
 
 TIM_HandleTypeDef htim7;

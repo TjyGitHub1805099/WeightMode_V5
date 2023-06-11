@@ -25,7 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "usart.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -131,6 +131,16 @@ void StartDefaultTask(void const * argument)
   for(;;)
   {
     osDelay(1);
+    if(UsartType1.receive_flag)//如果产生了空闲中断
+		{
+			UsartType1.receive_flag=0;//清零标记
+			//串口打印收到的数据
+			Usart1SendData_DMA(UsartType1.usartDMA_rxBuf,UsartType1.rx_len);
+			//HAL_Delay(10);
+      osDelay(100);
+			//串口打印收到的数据的数据长度
+			UART1_printf_DMA("Len is %d \r\n",UsartType1.rx_len);
+		}
   }
   /* USER CODE END StartDefaultTask */
 }
@@ -141,6 +151,15 @@ void StartDefaultTask(void const * argument)
 * @param argument: Not used
 * @retval None
 */
+
+uint32_t testFlag = 0 ;
+#define SPI_TX_RX_LEN 5
+uint8_t spiTx[SPI_TX_RX_LEN],spiRx[SPI_TX_RX_LEN];
+
+
+extern HAL_StatusTypeDef SPI_TX_RX(uint8_t *pTxData, uint8_t *pRxData, uint16_t Size,uint32_t Timeout);
+uint32_t tick_test = 0 ,tick_test_total=10000000,tick_test_single=1000,tick_test_cycle=10000;
+
 /* USER CODE END Header_StartTask02 */
 void StartTask02(void const * argument)
 {
@@ -148,7 +167,17 @@ void StartTask02(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    if(1 == testFlag)
+    {
+      testFlag = 0 ;
+      SPI_TX_RX(spiTx,spiRx,SPI_TX_RX_LEN,999);
+    }
+    HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_15);
+    //osDelay(1000);
+    for(tick_test = 0 ;tick_test<tick_test_cycle;tick_test++)
+    {
+      delay_us(tick_test_single);
+    }
   }
   /* USER CODE END StartTask02 */
 }

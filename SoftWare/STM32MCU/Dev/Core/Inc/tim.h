@@ -35,6 +35,7 @@ extern "C" {
 extern TIM_HandleTypeDef htim7;
 
 /* USER CODE BEGIN Private defines */
+extern void delay_us(uint16_t us);
 
 /* USER CODE END Private defines */
 
