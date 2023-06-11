@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"tim.h": "c",
+			"usart.h": "c"
+		}
+	}
+}
