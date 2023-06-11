@@ -1,8 +1,8 @@
 #忽略所有SoftWare/STM32MCU下的Listings Objects
 #忽略所有*.axf *.dep *.htm
 #但是不忽略*.lib *.map *.hex
-SoftWare/STM32MCU/**/Listings/*
-SoftWare/STM32MCU/**/Objects/*
-!SoftWare/STM32MCU/**/Objects/*.lib
-!SoftWare/STM32MCU/**/Objects/*.hex
-!SoftWare/STM32MCU/**/Listings/*.map
+SoftWare/STM32MCU/**/MDK-ARM/SoftWare/*
+SoftWare/STM32MCU/**/MDK-ARM/SoftWare/*
+!SoftWare/STM32MCU/**/MDK-ARM/SoftWare/*.lib
+!SoftWare/STM32MCU/**/MDK-ARM/SoftWare/*.hex
+!SoftWare/STM32MCU/**/MDK-ARM/SoftWare/*.map
