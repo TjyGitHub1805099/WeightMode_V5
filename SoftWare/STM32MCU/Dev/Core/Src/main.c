@@ -74,8 +74,8 @@ int main(void)
   1.系统单线下载模式
   2.系统是FreeRTOS CMSIS_V1 
     https://blog.csdn.net/qq_32348883/article/details/126829395
-    CMSIS_V1 : 用于实时操作系统的通用API以及基于RTX的参考实现。它使软件组件能够跨多个RTOS系统工作。
-    CMSIS_V2 : 扩展CMSIS-RTOS v1，支持Armv8-M，动态对象创建，提供多核系统，二进制兼容接口。
+    CMSIS_V1 : 用于实时操作系统的�?�用API以及基于RTX的参考实现�?�它使软件组件能够跨多个RTOS系统工作�?
+    CMSIS_V2 : 扩展CMSIS-RTOS v1，支持Armv8-M，动态对象创建，提供多核系统，二进制兼容接口�?
   3.系统已占用TIM6作为系统tick
  */
   /* USER CODE END 1 */
@@ -102,9 +102,18 @@ int main(void)
   MX_TIM7_Init();
   MX_SPI2_Init();
   MX_USART3_UART_Init();
+  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
+  //PB6 : USART1_TX_SCREEN1_RX
+  //PB7 : USART1_RX_SCREEN1_TX
+  HAL_UART_Receive_DMA(&huart1, Usart1AsScreen1Type.usartDMA_rxBuf, RECEIVELEN);//串口1DMA
+  __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
+
+
+  #if 0
   HAL_UART_Receive_DMA(&huart3, UsartType1.usartDMA_rxBuf, RECEIVELEN);//串口1DMA
   __HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);
+  #endif
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */

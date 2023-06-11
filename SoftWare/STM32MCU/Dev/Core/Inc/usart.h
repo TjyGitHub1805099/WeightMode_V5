@@ -33,6 +33,8 @@ extern "C" {
 #include "stdio.h"
 /* USER CODE END Includes */
 
+extern UART_HandleTypeDef huart1;
+
 extern UART_HandleTypeDef huart3;
 
 /* USER CODE BEGIN Private defines */
@@ -52,23 +54,24 @@ extern UART_HandleTypeDef huart3;
 
 /* 构建用于UART数据接收的结构体USART_RECEIVETYPE */
 #define RECEIVELEN 1024  
-#define USART_DMA_SENDING 1//发生未完成
+#define USART_DMA_SENDING 1//发生未完�?
 #define USART_DMA_SENDOVER 0//发生完成 
 
 typedef struct  
 {  
   uint8_t receive_flag:1;//空闲接收完成 
-  uint8_t dmaSend_flag:1;//发送完成  
+  uint8_t dmaSend_flag:1;//发�?�完�?  
   uint16_t rx_len;//接收长度	
   uint8_t usartDMA_rxBuf[RECEIVELEN];//DMA接收缓存  
 }USART_RECEIVETYPE;  
    
-extern USART_RECEIVETYPE UsartType1;
+extern USART_RECEIVETYPE Usart1AsScreen1Type;
 extern uint8_t u_buf[256];
 extern uint8_t Rx_buff[50];
 
 /* USER CODE END Private defines */
 
+void MX_USART1_UART_Init(void);
 void MX_USART3_UART_Init(void);
 
 /* USER CODE BEGIN Prototypes */

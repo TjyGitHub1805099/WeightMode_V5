@@ -131,15 +131,15 @@ void StartDefaultTask(void const * argument)
   for(;;)
   {
     osDelay(1);
-    if(UsartType1.receive_flag)//如果产生了空闲中断
+    if(Usart1AsScreen1Type.receive_flag)//如果产生了空闲中
 		{
-			UsartType1.receive_flag=0;//清零标记
-			//串口打印收到的数据
-			Usart1SendData_DMA(UsartType1.usartDMA_rxBuf,UsartType1.rx_len);
+			Usart1AsScreen1Type.receive_flag=0;//清零标记
+			//串口打印收到的数
+			Usart1AsScreen1SendData_DMA(Usart1AsScreen1Type.usartDMA_rxBuf,Usart1AsScreen1Type.rx_len);
 			//HAL_Delay(10);
       osDelay(100);
 			//串口打印收到的数据的数据长度
-			UART1_printf_DMA("Len is %d \r\n",UsartType1.rx_len);
+			UART1_printf_DMA("Len is %d \r\n",Usart1AsScreen1Type.rx_len);
 		}
   }
   /* USER CODE END StartDefaultTask */
