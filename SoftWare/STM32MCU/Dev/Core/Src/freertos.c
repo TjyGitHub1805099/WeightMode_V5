@@ -45,10 +45,11 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
+uint32_t tick_test = 0 ,tick_test_total=10000000,tick_test_single=1000,tick_test_cycle=10000;
 
 /* USER CODE END Variables */
 osThreadId defaultTaskHandle;
-osThreadId myTask02Handle;
+osThreadId appTask1MsHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -56,7 +57,7 @@ osThreadId myTask02Handle;
 /* USER CODE END FunctionPrototypes */
 
 void StartDefaultTask(void const * argument);
-void StartTask02(void const * argument);
+void StartappTask1Ms(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -107,9 +108,9 @@ void MX_FREERTOS_Init(void) {
   osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
-  /* definition and creation of myTask02 */
-  osThreadDef(myTask02, StartTask02, osPriorityIdle, 0, 128);
-  myTask02Handle = osThreadCreate(osThread(myTask02), NULL);
+  /* definition and creation of appTask1Ms */
+  osThreadDef(appTask1Ms, StartappTask1Ms, osPriorityIdle, 0, 1024);
+  appTask1MsHandle = osThreadCreate(osThread(appTask1Ms), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -131,6 +132,33 @@ void StartDefaultTask(void const * argument)
   for(;;)
   {
     osDelay(1);
+    #if 0
+	    HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_15);
+	    //osDelay(1000);
+	    for(tick_test = 0 ;tick_test<tick_test_cycle;tick_test++)
+	    {
+	      delay_us(tick_test_single);
+	    }
+	  #endif
+  }
+  /* USER CODE END StartDefaultTask */
+}
+
+/* USER CODE BEGIN Header_StartappTask1Ms */
+/**
+* @brief Function implementing the appTask1Ms thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartappTask1Ms */
+void StartappTask1Ms(void const * argument)
+{
+  /* USER CODE BEGIN StartappTask1Ms */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+    //
     if(Usart1AsScreen1Type.receive_flag)//如果产生了空闲中
 		{
 			Usart1AsScreen1Type.receive_flag=0;//清零标记
@@ -142,44 +170,7 @@ void StartDefaultTask(void const * argument)
 			UART1_printf_DMA("Len is %d \r\n",Usart1AsScreen1Type.rx_len);
 		}
   }
-  /* USER CODE END StartDefaultTask */
-}
-
-/* USER CODE BEGIN Header_StartTask02 */
-/**
-* @brief Function implementing the myTask02 thread.
-* @param argument: Not used
-* @retval None
-*/
-
-uint32_t testFlag = 0 ;
-#define SPI_TX_RX_LEN 5
-uint8_t spiTx[SPI_TX_RX_LEN],spiRx[SPI_TX_RX_LEN];
-
-
-extern HAL_StatusTypeDef SPI_TX_RX(uint8_t *pTxData, uint8_t *pRxData, uint16_t Size,uint32_t Timeout);
-uint32_t tick_test = 0 ,tick_test_total=10000000,tick_test_single=1000,tick_test_cycle=10000;
-
-/* USER CODE END Header_StartTask02 */
-void StartTask02(void const * argument)
-{
-  /* USER CODE BEGIN StartTask02 */
-  /* Infinite loop */
-  for(;;)
-  {
-    if(1 == testFlag)
-    {
-      testFlag = 0 ;
-      SPI_TX_RX(spiTx,spiRx,SPI_TX_RX_LEN,999);
-    }
-    HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_15);
-    //osDelay(1000);
-    for(tick_test = 0 ;tick_test<tick_test_cycle;tick_test++)
-    {
-      delay_us(tick_test_single);
-    }
-  }
-  /* USER CODE END StartTask02 */
+  /* USER CODE END StartappTask1Ms */
 }
 
 /* Private application code --------------------------------------------------*/

@@ -20,7 +20,6 @@
 #include "main.h"
 #include "cmsis_os.h"
 #include "dma.h"
-#include "spi.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -74,8 +73,8 @@ int main(void)
   1.系统单线下载模式
   2.系统是FreeRTOS CMSIS_V1 
     https://blog.csdn.net/qq_32348883/article/details/126829395
-    CMSIS_V1 : 用于实时操作系统的�?�用API以及基于RTX的参考实现�?�它使软件组件能够跨多个RTOS系统工作�?
-    CMSIS_V2 : 扩展CMSIS-RTOS v1，支持Armv8-M，动态对象创建，提供多核系统，二进制兼容接口�?
+    CMSIS_V1 : 用于实时操作系统的用API以及基于RTX的参考实现它使软件组件能够跨多个RTOS系统工作
+    CMSIS_V2 : 扩展CMSIS-RTOS v1，支持Armv8-M，动态对象创建，提供多核系统，二进制兼容接口
   3.系统已占用TIM6作为系统tick
  */
   /* USER CODE END 1 */
@@ -100,7 +99,6 @@ int main(void)
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_TIM7_Init();
-  MX_SPI2_Init();
   MX_USART3_UART_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */

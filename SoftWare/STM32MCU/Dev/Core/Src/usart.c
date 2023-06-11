@@ -22,7 +22,7 @@
 
 /* USER CODE BEGIN 0 */
 USART_RECEIVETYPE Usart1AsScreen1Type;
-uint8_t u_buf[256];
+uint8_t u_SprintfBuf[256];
 uint8_t Rx_buff[50];
 /* USER CODE END 0 */
 
@@ -109,7 +109,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     PB6     ------> USART1_TX
     PB7     ------> USART1_RX
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_7;
+    GPIO_InitStruct.Pin = USART1_TX_SCREEN1_RX_Pin|USART1_RX_SCREEN1_TX_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
@@ -173,7 +173,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     PD8     ------> USART3_TX
     PD9     ------> USART3_RX
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_9;
+    GPIO_InitStruct.Pin = UART4_TX_SMQ1_RX_Pin|UART4_RX_SMQ1_TX_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
@@ -241,7 +241,7 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
     PB6     ------> USART1_TX
     PB7     ------> USART1_RX
     */
-    HAL_GPIO_DeInit(GPIOB, GPIO_PIN_6|GPIO_PIN_7);
+    HAL_GPIO_DeInit(GPIOB, USART1_TX_SCREEN1_RX_Pin|USART1_RX_SCREEN1_TX_Pin);
 
     /* USART1 DMA DeInit */
     HAL_DMA_DeInit(uartHandle->hdmarx);
@@ -265,7 +265,7 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
     PD8     ------> USART3_TX
     PD9     ------> USART3_RX
     */
-    HAL_GPIO_DeInit(GPIOD, GPIO_PIN_8|GPIO_PIN_9);
+    HAL_GPIO_DeInit(GPIOD, UART4_TX_SMQ1_RX_Pin|UART4_RX_SMQ1_TX_Pin);
 
     /* USART3 DMA DeInit */
     HAL_DMA_DeInit(uartHandle->hdmarx);
@@ -280,10 +280,6 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 }
 
 /* USER CODE BEGIN 1 */
-
-void Usart1AsScreen1SendData_DMA(uint8_t *pdata, uint16_t Length);
-void Usart1AsScreen1Receive_IDLE(UART_HandleTypeDef *huart);
-
 void Usart1AsScreen1SendData_DMA(uint8_t *pdata, uint16_t Length)  
 {  
   while(Usart1AsScreen1Type.dmaSend_flag == USART_DMA_SENDING);
