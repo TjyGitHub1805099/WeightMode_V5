@@ -26,6 +26,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "usart.h"
+#include "app_main_task.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -169,6 +170,8 @@ void StartappTask1Ms(void const * argument)
 			//串口打印收到的数据的数据长度
 			UART1_printf_DMA("Len is %d \r\n",Usart1AsScreen1Type.rx_len);
 		}
+    // 调用主任务函数
+    app_main_task();
   }
   /* USER CODE END StartappTask1Ms */
 }

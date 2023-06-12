@@ -26,6 +26,14 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "app_led_ctrl.h"
+#include "app_hx711_ctrl.h"
+#include "app_main_task.h"
+#include "app_key_ctrl.h"
+#include "app_sdwe_ctrl.h"
+#include "app_modbus_rtu_ctrl.h"
+#include "app_t5l_ctrl.h"
+#include "app_syspara.h"
 
 /* USER CODE END Includes */
 
@@ -112,6 +120,18 @@ int main(void)
   HAL_UART_Receive_DMA(&huart3, UsartType1.usartDMA_rxBuf, RECEIVELEN);//串口1DMA
   __HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);
   #endif
+
+#if 1
+	key_init();
+	led_init();
+	hx711_init();
+	screenT5L_Init();
+	ModbusRtu_init();
+	readSysDataFromFlash();
+	readSysDataFromFlash_3030();
+#endif
+
+
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */

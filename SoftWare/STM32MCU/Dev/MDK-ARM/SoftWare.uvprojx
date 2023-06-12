@@ -373,7 +373,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;..\WeightMode_app\Inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -620,6 +620,86 @@
               <FileName>port.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/port.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>WeightMode_app</GroupName>
+          <Files>
+            <File>
+              <FileName>app_crc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\WeightMode_app\Src\app_crc.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_hx711_ctrl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\WeightMode_app\Src\app_hx711_ctrl.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_key_ctrl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\WeightMode_app\Src\app_key_ctrl.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_led_ctrl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\WeightMode_app\Src\app_led_ctrl.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_main_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\WeightMode_app\Src\app_main_task.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_modbus_rtu_ctrl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\WeightMode_app\Src\app_modbus_rtu_ctrl.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_password.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\WeightMode_app\Src\app_password.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_sdwe_ctrl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\WeightMode_app\Src\app_sdwe_ctrl.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_syspara.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\WeightMode_app\Src\app_syspara.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_systest.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\WeightMode_app\Src\app_systest.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_t5l_ctrl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\WeightMode_app\Src\app_t5l_ctrl.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\WeightMode_app\Src\drv_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>hal_delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\WeightMode_app\Src\hal_delay.c</FilePath>
+            </File>
+            <File>
+              <FileName>hal_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\WeightMode_app\Src\hal_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>hal_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\WeightMode_app\Src\hal_uart.c</FilePath>
             </File>
           </Files>
         </Group>
