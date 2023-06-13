@@ -73,6 +73,12 @@ void Error_Handler(void);
 #define M_HX711_CLK_7_GPIO_Port GPIOC
 #define M_HX711_CLK_8_Pin GPIO_PIN_2
 #define M_HX711_CLK_8_GPIO_Port GPIOC
+#define EPS_RST_Pin GPIO_PIN_3
+#define EPS_RST_GPIO_Port GPIOC
+#define STM32_KEY_1_Pin GPIO_PIN_3
+#define STM32_KEY_1_GPIO_Port GPIOA
+#define STM32_KEY_2_Pin GPIO_PIN_4
+#define STM32_KEY_2_GPIO_Port GPIOA
 #define M_LED_QH3_Pin GPIO_PIN_10
 #define M_LED_QH3_GPIO_Port GPIOE
 #define M_LED_ALL_RCLK_Pin GPIO_PIN_11
@@ -89,6 +95,10 @@ void Error_Handler(void);
 #define UART4_TX_SMQ1_RX_GPIO_Port GPIOD
 #define UART4_RX_SMQ1_TX_Pin GPIO_PIN_9
 #define UART4_RX_SMQ1_TX_GPIO_Port GPIOD
+#define LED_RUN0_Pin GPIO_PIN_15
+#define LED_RUN0_GPIO_Port GPIOD
+#define STM32_RS485_EN_Pin GPIO_PIN_10
+#define STM32_RS485_EN_GPIO_Port GPIOA
 #define M_HX711_DATA_1_Pin GPIO_PIN_0
 #define M_HX711_DATA_1_GPIO_Port GPIOD
 #define M_HX711_DATA_2_Pin GPIO_PIN_1

@@ -4,10 +4,10 @@
 #include "typedefine.h"
 #include "app_main_task.h"
 
-#define LED_CTRL_DATA_LEN 		(4)
+#define LED_CTRL_DATA_LEN 			(4)
 
-#define SYS_COLOR_GROUP_NUM		(4)//sys max color num
-#define SYS_COLOR_USED_FLAG		(0X123)//color used
+#define SYS_COLOR_GROUP_NUM			(4)//sys max color num
+#define SYS_COLOR_USED_FLAG			(0X123)//color used
 #define SYS_COLOR_NOT_USED_FLAG		(0)//color not used
 
 //main task status
@@ -26,8 +26,8 @@ typedef enum LedSeqType
 
 typedef enum LedColorType
 {
-	LED_COLOR_NONE = 0,		/**< LED 无 控制 */
-	LED_COLOR_REG ,	/**< LED 红 控制 */
+	LED_COLOR_NONE = 0,	/**< LED 无 控制 */
+	LED_COLOR_REG ,		/**< LED 红 控制 */
 	LED_COLOR_GREEN,	/**< LED 绿 控制 */
 	LED_COLOR_BLUE, 	/**< LED 蓝 控制 */
 	LED_COLOR_WHITE,	/**< LED 白 控制 */

@@ -23,138 +23,113 @@
 #define TEST_GPIO_CLK				RCC_AHBENR_GPIOBEN
 #define TEST_GPIO_PIN				GPIO_PIN_8
 
-//=============================================LED DO口线配置 (uodate to v5:2023.02.06)
+//=============================================LED DO口线配置 (uodate to v55:2023.06.13)
 //LED_SER0
-#define DO0_GPIO_PORT				GPIOC
-#define DO0_GPIO_CLK				RCC_AHBENR_GPIOCEN
-#define DO0_GPIO_PIN				GPIO_PIN_7
+#define DO0_GPIO_PORT				GPIOE
+#define DO0_GPIO_PIN				GPIO_PIN_12
 
 //LED_OE
-#define DO1_GPIO_PORT				GPIOB
-#define DO1_GPIO_CLK				RCC_AHBENR_GPIOBEN
-#define DO1_GPIO_PIN				GPIO_PIN_14
+#define DO1_GPIO_PORT				GPIOE
+#define DO1_GPIO_PIN				GPIO_PIN_13
 
 //LED_RCLK
-#define DO2_GPIO_PORT				GPIOB
-#define DO2_GPIO_CLK				RCC_AHBENR_GPIOBEN
-#define DO2_GPIO_PIN				GPIO_PIN_15
+#define DO2_GPIO_PORT				GPIOE
+#define DO2_GPIO_PIN				GPIO_PIN_11
 
 //LED_SRCLK
-#define DO3_GPIO_PORT				GPIOB
-#define DO3_GPIO_CLK				RCC_AHBENR_GPIOBEN
-#define DO3_GPIO_PIN				GPIO_PIN_12
+#define DO3_GPIO_PORT				GPIOE
+#define DO3_GPIO_PIN				GPIO_PIN_15
 
 //LED_SRCLR
-#define DO4_GPIO_PORT				GPIOB
-#define DO4_GPIO_CLK				RCC_AHBENR_GPIOBEN
-#define DO4_GPIO_PIN				GPIO_PIN_13
+#define DO4_GPIO_PORT				GPIOE
+#define DO4_GPIO_PIN				GPIO_PIN_14
 
-//=============================================HX711 CLK DO口线配置 (uodate to v5:2023.03.06)
+//=============================================HX711 CLK DO口线配置 (uodate to v55:2023.06.13)
 //HX711_CLK_1
-#define DO5_GPIO_PORT				GPIOA
-#define DO5_GPIO_CLK				RCC_AHBENR_GPIOAEN
-#define DO5_GPIO_PIN				GPIO_PIN_15
+#define DO5_GPIO_PORT				GPIOE
+#define DO5_GPIO_PIN				GPIO_PIN_2
 
 //HX711_CLK_2
-#define DO6_GPIO_PORT				GPIOD
-#define DO6_GPIO_CLK				RCC_AHBENR_GPIODEN
-#define DO6_GPIO_PIN				GPIO_PIN_2
+#define DO6_GPIO_PORT				GPIOE
+#define DO6_GPIO_PIN				GPIO_PIN_3
 
 //HX711_CLK_3
-#define DO7_GPIO_PORT				GPIOB
-#define DO7_GPIO_CLK				RCC_AHBENR_GPIOBEN
-#define DO7_GPIO_PIN				GPIO_PIN_6
+#define DO7_GPIO_PORT				GPIOE
+#define DO7_GPIO_PIN				GPIO_PIN_4
 
 //HX711_CLK_4
-#define DO8_GPIO_PORT				GPIOB
-#define DO8_GPIO_CLK				RCC_AHBENR_GPIOBEN
-#define DO8_GPIO_PIN				GPIO_PIN_4
+#define DO8_GPIO_PORT				GPIOE
+#define DO8_GPIO_PIN				GPIO_PIN_5
 
 //HX711_CLK_5
-#define DO9_GPIO_PORT				GPIOA
-#define DO9_GPIO_CLK				RCC_AHBENR_GPIOAEN
+#define DO9_GPIO_PORT				GPIOE
 #define DO9_GPIO_PIN				GPIO_PIN_6
 
 //HX711_CLK_6
-#define DO10_GPIO_PORT				GPIOA
-#define DO10_GPIO_CLK				RCC_AHBENR_GPIOAEN
-#define DO10_GPIO_PIN				GPIO_PIN_4
+#define DO10_GPIO_PORT				GPIOC
+#define DO10_GPIO_PIN				GPIO_PIN_13
 
 //HX711_CLK_7
 #define DO11_GPIO_PORT				GPIOC
-#define DO11_GPIO_CLK				RCC_AHBENR_GPIOCEN
-#define DO11_GPIO_PIN				GPIO_PIN_8
+#define DO11_GPIO_PIN				GPIO_PIN_0
 
 //HX711_CLK_8
-#define DO12_GPIO_PORT				GPIOB
-#define DO12_GPIO_CLK				RCC_AHBENR_GPIOBEN
-#define DO12_GPIO_PIN				GPIO_PIN_0
+#define DO12_GPIO_PORT				GPIOC
+#define DO12_GPIO_PIN				GPIO_PIN_2
 
 //hx711 minus from 8->6,and add 2 len RUN 
-//=============================================SYS_RUN DO口线配置 (uodate to v5:2023.02.06)
+//=============================================SYS_RUN DO口线配置 (uodate to v55:2023.06.13)
 //SYS RUN0
-#define DO13_GPIO_PORT				GPIOA
-#define DO13_GPIO_CLK				RCC_AHBENR_GPIOAEN
-#define DO13_GPIO_PIN				GPIO_PIN_0
+#define DO13_GPIO_PORT				GPIOD
+#define DO13_GPIO_PIN				GPIO_PIN_15
 
 
-//=============================================LED_QH3 DI口线配置 (uodate to v5:2023.02.06)
+//=============================================LED_QH3 DI口线配置 (uodate to v55:2023.06.13)
 //LED_QH3
-#define DI0_GPIO_PORT				GPIOC
-#define DI0_GPIO_CLK				RCC_AHBENR_GPIOCEN
-#define DI0_GPIO_PIN				GPIO_PIN_6
+#define DI0_GPIO_PORT				GPIOE
+#define DI0_GPIO_PIN				GPIO_PIN_10
 
-//=============================================HX711 DATA DI口线配置(uodate to v5:2023.02.06)
+//=============================================HX711 DATA DI口线配置(uodate to v55:2023.06.13)
 //HX711_DATA_1
-#define DI1_GPIO_PORT				GPIOC
-#define DI1_GPIO_CLK				RCC_AHBENR_GPIOCEN
-#define DI1_GPIO_PIN				GPIO_PIN_12
+#define DI1_GPIO_PORT				GPIOD
+#define DI1_GPIO_PIN				GPIO_PIN_0
 
 //HX711_DATA_2
-#define DI2_GPIO_PORT				GPIOB
-#define DI2_GPIO_CLK				RCC_AHBENR_GPIOBEN
-#define DI2_GPIO_PIN				GPIO_PIN_3
+#define DI2_GPIO_PORT				GPIOD
+#define DI2_GPIO_PIN				GPIO_PIN_1
 
 //HX711_DATA_3
-#define DI3_GPIO_PORT				GPIOB
-#define DI3_GPIO_CLK				RCC_AHBENR_GPIOBEN
-#define DI3_GPIO_PIN				GPIO_PIN_7
+#define DI3_GPIO_PORT				GPIOD
+#define DI3_GPIO_PIN				GPIO_PIN_2
 
 //HX711_DATA_4
-#define DI4_GPIO_PORT				GPIOB
-#define DI4_GPIO_CLK				RCC_AHBENR_GPIOBEN
-#define DI4_GPIO_PIN				GPIO_PIN_5
+#define DI4_GPIO_PORT				GPIOD
+#define DI4_GPIO_PIN				GPIO_PIN_3
 
 //HX711_DATA_5
-#define DI5_GPIO_PORT				GPIOA
-#define DI5_GPIO_CLK				RCC_AHBENR_GPIOAEN
-#define DI5_GPIO_PIN				GPIO_PIN_7
+#define DI5_GPIO_PORT				GPIOD
+#define DI5_GPIO_PIN				GPIO_PIN_4
 
 //HX711_DATA_6
-#define DI6_GPIO_PORT				GPIOA
-#define DI6_GPIO_CLK				RCC_AHBENR_GPIOAEN
-#define DI6_GPIO_PIN				GPIO_PIN_5
+#define DI6_GPIO_PORT				GPIOD
+#define DI6_GPIO_PIN				GPIO_PIN_7
 
 //HX711_DATA_7
-#define DI7_GPIO_PORT				GPIOC
-#define DI7_GPIO_CLK				RCC_AHBENR_GPIOCEN
-#define DI7_GPIO_PIN				GPIO_PIN_9
+#define DI7_GPIO_PORT				GPIOE
+#define DI7_GPIO_PIN				GPIO_PIN_0
 
 //HX711_DATA_8
-#define DI8_GPIO_PORT				GPIOB
-#define DI8_GPIO_CLK				RCC_AHBENR_GPIOBEN
+#define DI8_GPIO_PORT				GPIOE
 #define DI8_GPIO_PIN				GPIO_PIN_1
 
-//=============================================KEY (uodate to v3:2021.03.26)
+//=============================================KEY (uodate to v55:2021.06.13)
 //KEY1
-#define DI9_GPIO_PORT				GPIOC
-#define DI9_GPIO_CLK				RCC_AHBENR_GPIOCEN
-#define DI9_GPIO_PIN				GPIO_PIN_0
+#define DI9_GPIO_PORT				GPIOA
+#define DI9_GPIO_PIN				GPIO_PIN_3
 
 //KEY2
-#define DI10_GPIO_PORT				GPIOC
-#define DI10_GPIO_CLK				RCC_AHBENR_GPIOCEN
-#define DI10_GPIO_PIN				GPIO_PIN_1
+#define DI10_GPIO_PORT				GPIOA
+#define DI10_GPIO_PIN				GPIO_PIN_4
 
 //output gpio type (uodate to v5:2023.02.06)
 typedef enum DoLineType
