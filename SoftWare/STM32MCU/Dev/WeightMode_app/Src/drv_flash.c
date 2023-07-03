@@ -18,7 +18,48 @@
 
 #define SECTOR_MASK               ((UINT32)0xFFFFFF07)
 
+/*
+//参见 https://blog.51cto.com/u_15830484/5761606
 
+uint16_t WriteFlash(uint32_t start_Add,uint32_t end_Add,uint32_t *data)
+{ 
+  uint32_t i;
+  uint8_t j=0;
+  uint32_t PageError;
+  FLASH_EraseInitTypeDef f;
+  
+  f.TypeErase = FLASH_TYPEERASE_PAGES;
+  f.PageAddress = START_ADDRESS;
+  f.NbPages = 1;
+  PageError = 0;
+  
+  HAL_FLASH_Unlock();  
+  HAL_FLASHEx_Erase(&f, &PageError);
+  data = (uint32_t*)(&Saved_Param);
+  
+  for(i = START_ADDRESS; i < END_ADDRESS; i += 4)
+  {
+      HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, i, data[j++]);
+  }
+  
+  HAL_FLASH_Lock();
+
+}
+
+uint8_t ReadFlash (uint32_t start_Add,uint32_t end_Add,uint32_t *data)
+{
+    uint32_t i;
+    uint8_t j=0;
+
+    for(i = start_Add; i < end_Add; i += 4)
+    {
+        data[j++]=*(uint32_t *)(i);
+    }
+    return HAL_OK;
+ 
+}
+
+*/
 /**
 * @brief  解锁FLASH，允许访问控制寄存器
 * @retval 无

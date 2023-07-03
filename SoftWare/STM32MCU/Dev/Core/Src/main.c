@@ -112,8 +112,15 @@ int main(void)
   /* USER CODE BEGIN 2 */
   //PB6 : USART1_TX_SCREEN1_RX
   //PB7 : USART1_RX_SCREEN1_TX
+  #if 0
   HAL_UART_Receive_DMA(&huart1, Usart1AsScreen1Type.usartDMA_rxBuf, RECEIVELEN);//串口1DMA
   __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
+#else
+  HAL_UART_Receive_DMA(&huart1, g_T5L.rxData, T5L_DMG_UART_DATA_LEN);//串口1DMA
+  __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
+#endif
+
+  
 
 
   #if 0
@@ -172,7 +179,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLM = 8;
+  RCC_OscInitStruct.PLL.PLLM = 25;
   RCC_OscInitStruct.PLL.PLLN = 336;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = 4;

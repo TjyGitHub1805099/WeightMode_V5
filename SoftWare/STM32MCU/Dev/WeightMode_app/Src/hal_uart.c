@@ -15,6 +15,7 @@
   */
 #include "hal_delay.h"
 #include "hal_uart.h"
+#include "usart.h"
 
   // UART 外设
 USART_TypeDef* UART_PORT[] = { UART1_PORT, UART2_PORT };
@@ -343,6 +344,8 @@ UINT8 hal_uart_tx_bytes( UartDeviceType *pUartDevice, UINT8 *pTxData, UINT16 TxL
 		}
 		pUartDevice->TxBusyFlag = 1;
 	}
+	#else
+	HAL_UART_Transmit_DMA(&huart1, pTxData, TxLength); 
 	#endif
 	return 0;
 }

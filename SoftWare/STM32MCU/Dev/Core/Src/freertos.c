@@ -160,6 +160,7 @@ void StartappTask1Ms(void const * argument)
   {
     osDelay(1);
     //
+    #if 0
     if(Usart1AsScreen1Type.receive_flag)//如果产生了空闲中
 		{
 			Usart1AsScreen1Type.receive_flag=0;//清零标记
@@ -170,6 +171,7 @@ void StartappTask1Ms(void const * argument)
 			//串口打印收到的数据的数据长度
 			UART1_printf_DMA("Len is %d \r\n",Usart1AsScreen1Type.rx_len);
 		}
+    #endif
     // 调用主任务函数
     app_main_task();
   }

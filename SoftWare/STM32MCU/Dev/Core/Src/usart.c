@@ -21,6 +21,8 @@
 #include "usart.h"
 
 /* USER CODE BEGIN 0 */
+#include "app_t5l_ctrl.h"
+
 USART_RECEIVETYPE Usart1AsScreen1Type;
 uint8_t u_SprintfBuf[256];
 uint8_t Rx_buff[50];
@@ -316,10 +318,15 @@ void Usart1AsScreen1Receive_IDLE(UART_HandleTypeDef *huart)
 				HAL_UART_DMAStop(&huart1); 
 			
 				temp = huart1.hdmarx->Instance->NDTR;  
+        #if 0
 				Usart1AsScreen1Type.rx_len =  RECEIVELEN - temp;
 				Usart1AsScreen1Type.receive_flag = 1;
-							
 				HAL_UART_Receive_DMA(&huart1,Usart1AsScreen1Type.usartDMA_rxBuf,RECEIVELEN);  
+				#else
+        g_T5L.RxFinishFlag = 1;
+        g_T5L.RxLength = T5L_DMG_UART_DATA_LEN -temp; 
+        HAL_UART_Receive_DMA(&huart1, g_T5L.rxData, T5L_DMG_UART_DATA_LEN);//串口1DMA
+        #endif
 		}  
 	}
 }  

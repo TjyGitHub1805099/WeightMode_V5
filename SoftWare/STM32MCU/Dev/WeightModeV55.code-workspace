@@ -18,7 +18,8 @@
 			"hal_delay.h": "c",
 			"hal_uart.h": "c",
 			"drv_flash.h": "c",
-			"app_password.h": "c"
+			"app_password.h": "c",
+			"app_t5l_ctrl.h": "c"
 		}
 	}
 }

@@ -34,6 +34,7 @@ void app_main_init(void)
 //==sys main function
 void app_main_task(void)
 {
+	static UINT8 test = 0 ;
 	UINT8 hx711DataUpgrade = 0 ;
 	(void)hx711DataUpgrade;
 	
@@ -68,15 +69,31 @@ void app_main_task(void)
 	#if (TRUE == T5L_WEIGHT_COLOR_TEST)
 		sdwe_MainFunctionTest();
 	#endif
-
+#if 1
 	//data comm contrl mainfunction
 	ModbusRtu_MainFunction();
 	
 	//T5L contrl mainfunction
 	sreenT5L_MainFunction();
-
+#endif
 	//led contrl mainfunction
 	led_MainFunction();
 	
+
+	if(g_sys_ms_tick%1000 ==0)
+	{
+		if(test)
+		{
+			test = 0 ;
+			hal_gpio_set_do_high( (enumDoLineType)(SYS_RUN0) );
+			test = 0 ;
+		}
+		else
+		{
+			hal_gpio_set_do_low( (enumDoLineType)(SYS_RUN0) );
+			test = 1;
+		}
+	}
+
 }
 
