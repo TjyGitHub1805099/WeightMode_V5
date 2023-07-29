@@ -3,6 +3,7 @@
 #include "typedefine.h"
 #include "app_led_ctrl.h"
 #include "app_sdwe_ctrl.h"
+#include "app_i2c.h"
 
 //==(update:20210606):the SYS data need store : SECTOR1 and SECTOR2
 #define DMG_TRIGER_SAVE_SECOTOR_1			(0X01)
@@ -48,7 +49,9 @@ typedef enum HX711SystemParaType
 //start of on board flash store address
 //0X0803E000 ~ 0X0803E7FF
 //start of on board sys para flash store address
-#define FLASH_SYS_PARA_STORE_ADDRESS_START	(0X0803E000)
+//#define FLASH_SYS_PARA_STORE_ADDRESS_START	(0x08040000)
+#define FLASH_SYS_PARA_STORE_ADDRESS_START	(EXT_EEPROM_FLASH_SYS_PARA_STORE_ADDRESS_START)//AT24C128
+
 #define FLASH_SYS_PASSWORD_ADDRESS_START	FLASH_SYS_PARA_STORE_ADDRESS_START
 #define FLASH_SYS_PASSWORD_ADDRESS_LED		(4)
 #define FLASH_SYS_PASSWORD_ADDRESS_END		(FLASH_SYS_PASSWORD_ADDRESS_START+FLASH_SYS_PASSWORD_ADDRESS_LED)
@@ -68,7 +71,8 @@ typedef enum HX711SystemParaType
 //start of on board flash store address
 //0X0803F000 ~ 0X0803F7FF
 //start of on board flash store address
-#define FLASH_STORE_ADDRESS_START				(0X0803F000)
+//#define FLASH_STORE_ADDRESS_START				(0x08060000)
+#define FLASH_STORE_ADDRESS_START				(EXT_EEPROM_FLASH_STORE_ADDRESS_START)//AT24C128(0x08060000)
 
 //each chanel have 10 point : HX711_CHANEL_NUM*10*8(sample + weight value) byte
 #define FLASH_CHANEL_POINT_ADDRESS_START		(FLASH_STORE_ADDRESS_START)

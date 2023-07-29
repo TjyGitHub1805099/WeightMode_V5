@@ -18,65 +18,24 @@
 
 #define SECTOR_MASK               ((UINT32)0xFFFFFF07)
 
-/*
-//参见 https://blog.51cto.com/u_15830484/5761606
+FLASH_SectorTypeDef FLASH_SectorInfo[8] = {
+{0,0x08000000,0x08003FFF,16},//扇区 0 0x0800 0000 - 0x0800 3FFF 16 KB
+{1,0x08004000,0x08007FFF,16},//扇区 1 0x0800 4000 - 0x0800 7FFF 16 KB
+{2,0x08008000,0x0800BFFF,16},//扇区 2 0x0800 8000 - 0x0800 BFFF 16 KB
+{3,0x0800C000,0x0800FFFF,16},//扇区 3 0x0800 C000 - 0x0800 FFFF 16 KB
+{4,0x08010000,0x0801FFFF,64},//扇区 4 0x0801 0000 - 0x0801 FFFF 64 KB
+{5,0x08020000,0x0803FFFF,128},//扇区 5 0x0802 0000 - 0x0803 FFFF 128 KB
+{6,0x08040000,0x0805FFFF,128},//扇区 6 0x0804 0000 - 0x0805 FFFF 128 KB
+{7,0x08060000,0x0807FFFF,128},//扇区 7 0x0806 0000 - 0x0807 FFFF 128 KB
+};
 
-uint16_t WriteFlash(uint32_t start_Add,uint32_t end_Add,uint32_t *data)
-{ 
-  uint32_t i;
-  uint8_t j=0;
-  uint32_t PageError;
-  FLASH_EraseInitTypeDef f;
-  
-  f.TypeErase = FLASH_TYPEERASE_PAGES;
-  f.PageAddress = START_ADDRESS;
-  f.NbPages = 1;
-  PageError = 0;
-  
-  HAL_FLASH_Unlock();  
-  HAL_FLASHEx_Erase(&f, &PageError);
-  data = (uint32_t*)(&Saved_Param);
-  
-  for(i = START_ADDRESS; i < END_ADDRESS; i += 4)
-  {
-      HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, i, data[j++]);
-  }
-  
-  HAL_FLASH_Lock();
-
-}
-
-uint8_t ReadFlash (uint32_t start_Add,uint32_t end_Add,uint32_t *data)
-{
-    uint32_t i;
-    uint8_t j=0;
-
-    for(i = start_Add; i < end_Add; i += 4)
-    {
-        data[j++]=*(uint32_t *)(i);
-    }
-    return HAL_OK;
- 
-}
-
-*/
 /**
 * @brief  解锁FLASH，允许访问控制寄存器
 * @retval 无
 */
 void drv_flash_unlock( void )
 { 
-	#if 0
-	UINT32 l_Cr;
-	
-	l_Cr = (UINT32)FLASH->CR.all;
-	
-	if( ( l_Cr & 0x00000080 ) != 0 )
-	{
-		FLASH->KEYR = FLASH_KEY1;
-		FLASH->KEYR = FLASH_KEY2;
-	}
-	#endif
+	HAL_FLASH_Unlock();
 }
 
 /**
@@ -85,9 +44,7 @@ void drv_flash_unlock( void )
 */
 void drv_flash_lock( void )
 { 
-	#if 0
-	FLASH->CR.bit.LOCK = 1;
-	#endif
+	HAL_FLASH_Lock();
 }
 
 /**
@@ -97,20 +54,35 @@ void drv_flash_lock( void )
 */
 FLASH_Status drv_flash_erase_sector( UINT32 PageAddress )
 {
-	
 	FLASH_Status status = FLASH_COMPLETE;
-	#if 0
-	status = drv_flash_wait_last_operation( );
+	FLASH_EraseInitTypeDef FLASH_EraseInit;
+	uint32_t SectorError = 0,i=0;
 
-	if(status == FLASH_COMPLETE)
-	{ 
-		FLASH->CR.bit.PER = 1;		//页擦除，选择擦除的页
-		FLASH->AR = PageAddress;	//页地址
-		FLASH->CR.bit.STRT = 1;		//开始擦除
-		status = drv_flash_wait_last_operation( );
-		FLASH->CR.bit.PER = 0;
+	for(i = 0 ; i < FLASH_SECTOR_TOTAL ; i++)
+	{
+		if(PageAddress == FLASH_SectorInfo[i].SectorStartAdd)
+		{
+			break;
+		}
 	}
-	#endif
+
+	if( i < FLASH_SECTOR_TOTAL )
+	{
+		FLASH_EraseInit.TypeErase = FLASH_TYPEERASE_SECTORS;
+		FLASH_EraseInit.VoltageRange = FLASH_VOLTAGE_RANGE_3;
+		FLASH_EraseInit.Sector = i;
+		FLASH_EraseInit.NbSectors = 1;
+
+		if(HAL_FLASHEx_Erase(&FLASH_EraseInit,&SectorError) != HAL_OK)
+		{
+			status = FLASH_ERROR_PROGRAM;
+		}
+	}
+	else
+	{
+		status = FLASH_ADDRESS_OUT;
+	}
+
 	return status;
 }
 
@@ -208,6 +180,7 @@ FLASH_Status drv_flash_write_word( UINT32 Address, UINT32 Data )
 FLASH_Status drv_flash_write_words( UINT32 Address, UINT32 *pData, UINT16 Length )
 {
 	FLASH_Status status = FLASH_COMPLETE;
+	uint16_t i=0;
 	#if 0
 	UINT32 tmp = 0;
 
@@ -239,7 +212,10 @@ FLASH_Status drv_flash_write_words( UINT32 Address, UINT32 *pData, UINT16 Length
 		FLASH->CR.bit.PG = 0;
 	}
 	#endif
-
+	for( i = 0 ; i < Length ; i++)
+	{
+		HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, i, pData[i]);
+	}
 	return status;
 }
 
@@ -295,7 +271,6 @@ void drv_flash_read_half_words( UINT32 Address, UINT16 *pData, UINT16 Length )
 */
 void drv_flash_read_words( UINT32 Address, UINT32 *pData, UINT16 Length )
 {
-	#if 0
 	UINT16 l_TempData = 0;
 	
 	while( Length -- )
@@ -305,7 +280,7 @@ void drv_flash_read_words( UINT32 Address, UINT32 *pData, UINT16 Length )
 		*(pData++) = l_TempData | ( *( (UINT16 *)Address ) << 16 );
 		Address += 2;
 	}
-	#endif
+
 }
 
 /**
@@ -411,4 +386,53 @@ FLASH_Status drv_flash_wait_last_operation( void )
 	#endif
 	return status;
 }
+
+
+
+
+
+/*
+//参见 https://blog.51cto.com/u_15830484/5761606
+
+uint16_t WriteFlash(uint32_t start_Add,uint32_t end_Add,uint32_t *data)
+{ 
+  uint32_t i;
+  uint8_t j=0;
+  uint32_t PageError;
+  FLASH_EraseInitTypeDef f;
+  
+  f.TypeErase = FLASH_TYPEERASE_PAGES;
+  f.PageAddress = START_ADDRESS;
+  f.NbPages = 1;
+  PageError = 0;
+  
+  HAL_FLASH_Unlock();  
+  HAL_FLASHEx_Erase(&f, &PageError);
+  data = (uint32_t*)(&Saved_Param);
+  
+  for(i = START_ADDRESS; i < END_ADDRESS; i += 4)
+  {
+      HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, i, data[j++]);
+  }
+  
+  HAL_FLASH_Lock();
+
+}
+
+uint8_t ReadFlash (uint32_t start_Add,uint32_t end_Add,uint32_t *data)
+{
+    uint32_t i;
+    uint8_t j=0;
+
+    for(i = start_Add; i < end_Add; i += 4)
+    {
+        data[j++]=*(uint32_t *)(i);
+    }
+    return HAL_OK;
+ 
+}
+
+*/
+
+
 

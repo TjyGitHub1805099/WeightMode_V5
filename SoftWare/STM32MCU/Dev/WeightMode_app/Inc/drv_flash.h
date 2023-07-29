@@ -18,12 +18,27 @@
 #define __DRV_FLASH_H__
 #include "stm32f4xx.h"
 #include "typedefine.h"
+#include "stm32f4xx_hal_flash.h"
+#include "stm32f4xx_hal_flash_ex.h"
+
+//STM32F407VET6 512kB flash
+
+
+
 
 
 #define FLASH_PAGE_SIZE                     ((UINT32)0x00000800)
 #define FLASH_START_ADDRESS                 ((UINT32)0x08000000)
 #define FLASH_END_ADDRESS                   ((UINT32)0x08000000 + FLASH_PAGE_SIZE * 128)
 
+
+typedef struct
+{
+  uint32_t SectorNum;
+  uint32_t SectorStartAdd;
+  uint32_t SectorEndAdd;
+  uint32_t SectorSize;
+} FLASH_SectorTypeDef;
 
 
 //#define OB_WRP_Pages0to1               		((UINT32)0x00000001) /* Write protection of page 0 to 1 */

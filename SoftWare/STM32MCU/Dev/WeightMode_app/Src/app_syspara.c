@@ -24,7 +24,8 @@ void readSysDataFromFlash(void)
 	UINT16 chanel_i = 0 ,start_i = 0 , end_i = 0;
 	UINT8 point_i = 0 ;
 	//read data from flash
-	drv_flash_read_words( FLASH_STORE_ADDRESS_START, (UINT32 *)(&readflashDataBuf[0].i_value), FLASH_STORE_MAX_LEN);
+	//drv_flash_read_words( FLASH_STORE_ADDRESS_START, (UINT32 *)(&readflashDataBuf[0].i_value), FLASH_STORE_MAX_LEN);
+	app_HAL_I2C_Master_Read(EXT_EEPROM_SLAVE_ADDRESS,FLASH_STORE_ADDRESS_START,(UINT8 *)&readflashDataBuf[0].u_value[0],(4*FLASH_STORE_MAX_LEN),100);
 
 	//crc
 	crc = readflashDataBuf[FLASH_STORE_MAX_LEN-1].i_value;
@@ -103,6 +104,8 @@ void storeSysDataToFlash(void)
 	float *pFloat = 0;
 	UINT32 crc = 0 ;
 	UINT16 chanel_i = 0 ,start_i = 0 , end_i = 0;
+	HAL_StatusTypeDef ret = HAL_OK;
+
 	//get ram buf
 	for(chanel_i=0;chanel_i<HX711_CHANEL_NUM;chanel_i++)
 	{
@@ -184,10 +187,18 @@ void storeSysDataToFlash(void)
 	if(start_i <= FLASH_STORE_MAX_LEN)
 	{	
 		storeTick++;
+		#if 0
 		drv_flash_unlock();
 		drv_flash_erase_sector(FLASH_STORE_ADDRESS_START);
 		drv_flash_write_words( FLASH_STORE_ADDRESS_START, (UINT32 *)(&pWordInt32Float[0].i_value), (start_i) );
 		drv_flash_lock();
+		#else
+		ret = app_HAL_I2C_Master_Transmit(EXT_EEPROM_SLAVE_ADDRESS,FLASH_STORE_ADDRESS_START,(UINT8 *)&pWordInt32Float[0].u_value[0],(4*start_i),100);
+		if(HAL_OK != ret)
+		{
+			storeTick++;
+		}
+		#endif
 	}
 }
 
@@ -198,8 +209,10 @@ void readSysDataFromFlash_3030(void)
 	UINT32 crc = 0 ;
 	UINT16 start_i = 0 , end_i = 0;
 	UINT8 point_i = 0 ;
+	HAL_StatusTypeDef ret = HAL_OK;
 	//read data from flash
-	drv_flash_read_words( FLASH_SYS_PARA_STORE_ADDRESS_START, (UINT32 *)(&readflashDataBuf[0].i_value), FLASH_SYS_PARA_STORE_MAX_LEN);
+	//drv_flash_read_words( FLASH_SYS_PARA_STORE_ADDRESS_START, (UINT32 *)(&readflashDataBuf[0].i_value), FLASH_SYS_PARA_STORE_MAX_LEN);
+	ret = app_HAL_I2C_Master_Read(EXT_EEPROM_SLAVE_ADDRESS,FLASH_SYS_PARA_STORE_ADDRESS_START,(UINT8 *)&readflashDataBuf[0].u_value[0],(4*FLASH_SYS_PARA_STORE_MAX_LEN),100);
 
 	//crc
 	crc = readflashDataBuf[FLASH_SYS_PARA_STORE_MAX_LEN-1].i_value;
@@ -246,6 +259,7 @@ void storeSysDataToFlash_3030(void)
 	float *pFloat = 0;
 	UINT32 crc = 0 ;
 	UINT16 start_i = 0 , end_i = 0;
+	HAL_StatusTypeDef ret = HAL_OK;
 
 	//Flash Erase Times
 	gSystemPara.FlashEraseTimes++;
@@ -421,10 +435,18 @@ void storeSysDataToFlash_3030(void)
 	if(start_i <= FLASH_SYS_PARA_STORE_MAX_LEN)
 	{	
 		storeTick++;
+		#if 0
 		drv_flash_unlock();
 		drv_flash_erase_sector(FLASH_SYS_PARA_STORE_ADDRESS_START);
 		drv_flash_write_words( FLASH_SYS_PARA_STORE_ADDRESS_START, (UINT32 *)(&pWordInt32Float[0].i_value), (start_i) );
 		drv_flash_lock();
+		#else
+		ret = app_HAL_I2C_Master_Transmit(EXT_EEPROM_SLAVE_ADDRESS,FLASH_SYS_PARA_STORE_ADDRESS_START,(UINT8 *)&pWordInt32Float[0].u_value[0],(4*start_i),100);
+		if(HAL_OK != ret)
+		{
+			storeTick++;
+		}
+		#endif
 	}
 }
 

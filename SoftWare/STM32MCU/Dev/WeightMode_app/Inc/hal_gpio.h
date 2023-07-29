@@ -83,6 +83,9 @@
 #define DO13_GPIO_PORT				GPIOD
 #define DO13_GPIO_PIN				GPIO_PIN_15
 
+//SYS STM32_I2C1_WP
+#define DO14_GPIO_PORT				GPIOB
+#define DO14_GPIO_PIN				GPIO_PIN_5
 
 //=============================================LED_QH3 DI口线配置 (uodate to v55:2023.06.13)
 //LED_QH3
@@ -148,6 +151,7 @@ typedef enum DoLineType
 		HX711_CLK_7,
 		HX711_CLK_8,
 		SYS_RUN0,
+		EX_EEPROM_I2C1_WP,
 		DO_GPIO_NUMBER
 }enumDoLineType;
 

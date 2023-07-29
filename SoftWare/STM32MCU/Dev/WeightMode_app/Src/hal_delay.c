@@ -15,3 +15,12 @@ void hal_delay_ms( UINT32 Nms )
 		hal_delay_us(1000);
 	}
 }
+extern UINT32 sys_tick;
+void hal_delay_ms_use_sys_tick(UINT32 Nms)
+{
+	UINT32 curMs = sys_tick;
+	while((sys_tick - curMs) < Nms)
+	{
+		curMs = sys_tick;
+	}
+}

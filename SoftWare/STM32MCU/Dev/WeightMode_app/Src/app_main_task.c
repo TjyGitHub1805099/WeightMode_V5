@@ -9,6 +9,7 @@
 #include "app_sdwe_ctrl.h"
 #include "app_modbus_rtu_ctrl.h"
 #include "app_t5l_ctrl.h"
+#include "app_i2c.h"
 
 /*******************************************************************************
  * Definitions
@@ -38,6 +39,8 @@ void app_main_task(void)
 	UINT8 hx711DataUpgrade = 0 ;
 	(void)hx711DataUpgrade;
 	
+	app_i2c_test();
+
 	//feed watch dog
 	//drv_iwdg_feed();
 
@@ -80,7 +83,11 @@ void app_main_task(void)
 	led_MainFunction();
 	
 
-	if(g_sys_ms_tick%1000 ==0)
+
+
+
+	//if(g_sys_ms_tick%1000 ==0)
+	if(sys_tick%1000 ==0)
 	{
 		if(test)
 		{

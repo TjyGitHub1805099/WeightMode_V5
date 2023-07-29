@@ -11,6 +11,8 @@
 #define DIWEN_VERSION		        (55)//2023.04.07
 
 extern void app_main_task(void);
+extern UINT32 sys_tick;
+
 //version 55 & 55
 /*
 1.optimize after weight send to screen then judge color

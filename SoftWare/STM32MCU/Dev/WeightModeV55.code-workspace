@@ -19,7 +19,14 @@
 			"hal_uart.h": "c",
 			"drv_flash.h": "c",
 			"app_password.h": "c",
-			"app_t5l_ctrl.h": "c"
+			"app_t5l_ctrl.h": "c",
+			"app_i2c.h": "c",
+			"i2c.h": "c",
+			"stm32f4xx_hal_flash.h": "c",
+			"cstdint": "c",
+			"stm32f4xx_hal_flash_ex.h": "c",
+			"limits": "c",
+			"app_syspara.h": "c"
 		}
 	}
 }
