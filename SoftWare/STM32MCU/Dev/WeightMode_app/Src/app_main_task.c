@@ -38,8 +38,6 @@ void app_main_task(void)
 	static UINT8 test = 0 ;
 	UINT8 hx711DataUpgrade = 0 ;
 	(void)hx711DataUpgrade;
-	
-	app_i2c_test();
 
 	//feed watch dog
 	//drv_iwdg_feed();
@@ -62,6 +60,10 @@ void app_main_task(void)
 	//LED control test
 	#if (TRUE == LED_CTRL_TEST)
 		LedSysTest(g_sys_ms_tick);
+	#endif
+	
+	#ifdef EXT_EEPROM_TEST_EN
+		app_i2c_test();
 	#endif
 
 	//T5L Screen Voice Pritf test
@@ -87,7 +89,7 @@ void app_main_task(void)
 
 
 	//if(g_sys_ms_tick%1000 ==0)
-	if(sys_tick%1000 ==0)
+	if(get_SysTick_ByTimer()%1000 ==0)
 	{
 		if(test)
 		{

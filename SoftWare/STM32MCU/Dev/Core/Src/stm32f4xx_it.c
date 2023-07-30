@@ -42,7 +42,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-uint32_t sys_tick;
+uint32_t sys_tick = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -267,5 +267,8 @@ void DMA2_Stream7_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
-
+uint32_t get_SysTick_ByTimer(void)
+{
+  return sys_tick;
+}
 /* USER CODE END 1 */

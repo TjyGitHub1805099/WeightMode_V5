@@ -1,4 +1,6 @@
 #include "hal_delay.h"
+#include "stm32f4xx_it.h"
+#include "app_main_task.h"
 void hal_delay_us(UINT32 us)
 {
 	UINT32 cnt_us = us*40;//1个机器周期运行 1/210 DMIPS = 4.8ns , 1us = 4.8*210
@@ -15,12 +17,11 @@ void hal_delay_ms( UINT32 Nms )
 		hal_delay_us(1000);
 	}
 }
-extern UINT32 sys_tick;
 void hal_delay_ms_use_sys_tick(UINT32 Nms)
 {
-	UINT32 curMs = sys_tick;
-	while((sys_tick - curMs) < Nms)
+	volatile UINT32 curMs = get_SysTick_ByTimer();
+	while((get_SysTick_ByTimer() - curMs) < Nms)
 	{
-		curMs = sys_tick;
+		curMs = get_SysTick_ByTimer();
 	}
 }
