@@ -97,6 +97,10 @@ void Error_Handler(void);
 #define UART4_RX_SMQ1_TX_GPIO_Port GPIOD
 #define LED_RUN0_Pin GPIO_PIN_15
 #define LED_RUN0_GPIO_Port GPIOD
+#define USART6_TX_WX_RX_Pin GPIO_PIN_6
+#define USART6_TX_WX_RX_GPIO_Port GPIOC
+#define USART6_RX_WX_TX_Pin GPIO_PIN_7
+#define USART6_RX_WX_TX_GPIO_Port GPIOC
 #define STM32_RS485_EN_Pin GPIO_PIN_10
 #define STM32_RS485_EN_GPIO_Port GPIOA
 #define M_HX711_DATA_1_Pin GPIO_PIN_0

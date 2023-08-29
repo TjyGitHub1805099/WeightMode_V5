@@ -111,18 +111,23 @@ int main(void)
   MX_USART3_UART_Init();
   MX_USART1_UART_Init();
   MX_I2C1_Init();
+  MX_USART6_UART_Init();
   /* USER CODE BEGIN 2 */
   //PB6 : USART1_TX_SCREEN1_RX
   //PB7 : USART1_RX_SCREEN1_TX
   #if 0
-  HAL_UART_Receive_DMA(&huart1, Usart1AsScreen1Type.usartDMA_rxBuf, RECEIVELEN);//串口1DMA
-  __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
-#else
-  HAL_UART_Receive_DMA(&huart1, g_T5L.rxData, T5L_DMG_UART_DATA_LEN);//串口1DMA
-  __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
-#endif
+    HAL_UART_Receive_DMA(&huart1, Usart1AsScreen1Type.usartDMA_rxBuf, RECEIVELEN);//串口1DMA
+    __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
+  #else
+    HAL_UART_Receive_DMA(&huart1, g_T5L.rxData, T5L_DMG_UART_DATA_LEN);//串口1DMA
+    __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
+  #endif
 
-  
+  //PC6 : USART6_TX_WX_RX
+  //PC7 : USART6_RX_WX_TX
+  //HAL_UART_Receive_DMA(&huart6, g_T5L.rxData, T5L_DMG_UART_DATA_LEN);//串口6DMA
+  //__HAL_UART_ENABLE_IT(&huart6, UART_IT_IDLE);
+
 
 
   #if 0

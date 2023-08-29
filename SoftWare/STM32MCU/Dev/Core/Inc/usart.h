@@ -38,6 +38,8 @@ extern UART_HandleTypeDef huart1;
 
 extern UART_HandleTypeDef huart3;
 
+extern UART_HandleTypeDef huart6;
+
 /* USER CODE BEGIN Private defines */
 #define UART1_printf_Tr(...) HAL_UART_Transmit(&huart3,\
 											  (uint8_t *)u_SprintfBuf,\
@@ -71,10 +73,12 @@ extern uint8_t u_SprintfBuf[256];//用于sprintf函数存放字符串数据
 
 void MX_USART1_UART_Init(void);
 void MX_USART3_UART_Init(void);
+void MX_USART6_UART_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 void Usart1AsScreen1SendData_DMA(uint8_t *pdata, uint16_t Length);
 void Usart1AsScreen1Receive_IDLE(UART_HandleTypeDef *huart);
+void Usart3WithRS485Receive_IDLE(UART_HandleTypeDef *huart);
 
 /* USER CODE END Prototypes */
 

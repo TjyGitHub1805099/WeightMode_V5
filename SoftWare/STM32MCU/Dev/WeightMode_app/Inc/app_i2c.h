@@ -21,7 +21,7 @@
 #define EXT_EEPROM_FLASH_STORE_ADDRESS_START            (0)
 
 //==================SECTOR1:system control of unit , min , max , err , cascade
-#define EXT_EEPROM_FLASH_SYS_PARA_STORE_ADDRESS_START   (64*10)
+#define EXT_EEPROM_FLASH_SYS_PARA_STORE_ADDRESS_START   (64*24)// SYS K B was nees 1412 byte
 
 #define EXT_EEPROM_WRITE_PROTECT_DISABLE    hal_gpio_set_do_low(EX_EEPROM_I2C1_WP);//关闭写保护：可写
 #define EXT_EEPROM_WRITE_PROTECT_ENABLE     hal_gpio_set_do_high(EX_EEPROM_I2C1_WP);//打开写保护：不可写
