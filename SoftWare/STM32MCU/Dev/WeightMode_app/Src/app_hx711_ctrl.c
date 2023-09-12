@@ -458,14 +458,14 @@ void hx711_DataSampleCtrl(void)
 }
 
 //==hx711 senser check
-UINT8 hx711_SenserCheck(void)
+UINT8 hx711_SenserCheck(UINT32 maxWaitTime)
 {
 	static enumHX711CtrlType status = HX711_CTRL_INIT;
 	static UINT16 u32SenserCheckTotalTick = 0 , u32PowerOffWait = 0 , u32OnLineCheckCnt = 0 ,u32OnLineNormalCnt[HX711_CHANEL_NUM] = {0} ;
 	static UINT8 u8HX711CheckPassStatus[HX711_CHANEL_NUM][HX711_ON_LINE_CHECK_TOTAL_TIME]={0}, u8HX711CheckPassIdx = 0;
 	UINT8 u8HX711CheckPassNum = 0 ,i = 0 , j = 0 ,ret = 0;
 	
-	if(u32SenserCheckTotalTick <= HX711_ON_LINE_CHECK_TIME)
+	if(u32SenserCheckTotalTick <= maxWaitTime)
 	{
 		u32SenserCheckTotalTick++;
 		//
@@ -558,6 +558,7 @@ UINT8 hx711_SenserCheck(void)
 				status = HX711_CTRL_NUM;
 			break;
 			default:
+				ret = 1;
 			break;
 		}
 	}
@@ -569,13 +570,13 @@ UINT8 hx711_SenserCheck(void)
 }
 
 
-//==hx711 main function
-UINT8 hx711_MainFunction(void)
+//==hx711 sample function
+UINT8 hx711_SampleFunction(void)
 {
 	static enumHX711CtrlType status = HX711_CTRL_INIT;
 	static UINT16 l_max_wait_time = 0;
 	UINT8 i = 0 ,stillWait = 0 , retn = 0 ;
-	static UINT8 u8H711LowLevelWait = 0 ; 
+	static UINT8 u8H711LowLevelWait = 0; 
 	//
 	switch(status)
 	{
@@ -599,7 +600,7 @@ UINT8 hx711_MainFunction(void)
 		break;
 		case HX711_CTRL_WAIT:
 			l_max_wait_time+=1;
-			if( l_max_wait_time >= HX711_MAX_WAIT_TIME)
+			if( l_max_wait_time >= HX711_MAX_WAIT_TIME)//if wait time larger than HX711 data from 1->0 need power off 
 			{
 				l_max_wait_time = 0 ;
 				u8H711LowLevelWait = 0;
@@ -607,7 +608,6 @@ UINT8 hx711_MainFunction(void)
 			}
 			else
 			{
-				//for(i=0;i<1;i++)
 				for(i=0;i<HX711_CHANEL_NUM;i++)
 				{
 					if(TRUE == u8HX711OnLineStatus[i])
@@ -626,7 +626,7 @@ UINT8 hx711_MainFunction(void)
 					status = HX711_CTRL_WAIT;
 					u8H711LowLevelWait = 0 ;
 				}
-				else
+				else//all data from 1->0 , then wait 10ms start sample
 				{
 					if(u8H711LowLevelWait++ > 10)//10ms low level start sample
 					{
@@ -651,3 +651,26 @@ UINT8 hx711_MainFunction(void)
 	return retn;
 }
 
+//==hx711 main function
+void hx711_MainFunction(void)
+{
+	static UINT8 u8AllreadySampleTimes = 0 , u8RemoveWeightWhenPowerOn = FALSE;
+	//when power on sernser check
+	if(TRUE == hx711_SenserCheck(SYS_HX711_ONLINE_CHECK_TIME))
+	{
+		//waite single sample complete
+		if(TRUE == hx711_SampleFunction())
+		{
+			if((FALSE == u8RemoveWeightWhenPowerOn) && (++u8AllreadySampleTimes >= CHANEL_FILTER_NUM))
+			{
+				//when sample x times match remove weight
+				hx711_setAllRemoveWeight();
+				t5lDisPlayDataClear();
+				u8RemoveWeightWhenPowerOn = TRUE;
+				u8AllreadySampleTimes = CHANEL_FILTER_NUM;
+				//
+				g_T5L.sdweHX711FirstSampleCoplt = TRUE;
+			}	
+		}
+	}
+}

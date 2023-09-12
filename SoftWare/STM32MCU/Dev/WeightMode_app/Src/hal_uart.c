@@ -345,7 +345,15 @@ UINT8 hal_uart_tx_bytes( UartDeviceType *pUartDevice, UINT8 *pTxData, UINT16 TxL
 		pUartDevice->TxBusyFlag = 1;
 	}
 	#else
-	HAL_UART_Transmit_DMA(&huart1, pTxData, TxLength); 
+	if(UART_EXTERN == pUartDevice->Port)
+	{
+		HAL_UART_Transmit_DMA(&huart1, pTxData, TxLength); 
+	}
+	else if(UART_COM == pUartDevice->Port)
+	{
+		HAL_GPIO_WritePin(STM32_RS485_EN_GPIO_Port, STM32_RS485_EN_Pin, GPIO_PIN_SET);
+		HAL_UART_Transmit_DMA(&huart3, pTxData, TxLength); 
+	}
 	#endif
 	return 0;
 }

@@ -49,6 +49,10 @@ UINT8 g_u8Read00A1_Data = 0XFF;
 /*******************************************************************************
  * Functions
  ******************************************************************************/
+
+void screenT5L_HelpDataMainFunction(void);
+
+
 //==sdwe->mcu rx callback ,not used
 void app_uart_extern_msg_packet_process( UartDeviceType *pUartDevice )
 {
@@ -122,46 +126,52 @@ void t5lWriteVarible(UINT16 varAdd, INT16 *pData ,UINT16 varlen ,UINT8 crcEn)
 {
 	//A5 5A 05 82 00 03 00 01:向0x0003地址写入数据0x0001
 	UINT16 i = 0 ,l_data = 0 , total_len = 0 , crc = 0;
-	if(varAdd < 0xFFFF)
+	if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+		((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 	{
-		if(((varAdd+varlen)>0)&&((varAdd+varlen)<0xFFFF))
+		if(varAdd < 0xFFFF)
 		{
-			//head
-			g_T5L.txData[cmdPosHead1]=T5L_RX_FUN_HEAD1;
-			g_T5L.txData[cmdPosHead2]=T5L_RX_FUN_HEAD2;
-			//data len
-			g_T5L.txData[cmdPosDataLen]=0X03+2*varlen;
-			//order:write
-			g_T5L.txData[cmdPosCommand]=cmdWriteSWDEVariable;
-			//varAdd
-			g_T5L.txData[cmdPosVarWriteAddress1]=0xff&(varAdd>>8);
-			g_T5L.txData[cmdPosVarWriteAddress2]=0xff&(varAdd>>0);
-			//data
-			for(i=0;i<varlen;i++)
+			if(((varAdd+varlen)>0)&&((varAdd+varlen)<0xFFFF))
 			{
-				l_data = *pData++;
-				g_T5L.txData[cmdPosVarWriteData+2*i+0] = 0xff&(l_data>>8);
-				g_T5L.txData[cmdPosVarWriteData+2*i+1] = 0xff&(l_data>>0);
+				//head
+				g_T5L.txData[cmdPosHead1]=T5L_RX_FUN_HEAD1;
+				g_T5L.txData[cmdPosHead2]=T5L_RX_FUN_HEAD2;
+				//data len
+				g_T5L.txData[cmdPosDataLen]=0X03+2*varlen;
+				//order:write
+				g_T5L.txData[cmdPosCommand]=cmdWriteSWDEVariable;
+				//varAdd
+				g_T5L.txData[cmdPosVarWriteAddress1]=0xff&(varAdd>>8);
+				g_T5L.txData[cmdPosVarWriteAddress2]=0xff&(varAdd>>0);
+				//data
+				for(i=0;i<varlen;i++)
+				{
+					l_data = *pData++;
+					g_T5L.txData[cmdPosVarWriteData+2*i+0] = 0xff&(l_data>>8);
+					g_T5L.txData[cmdPosVarWriteData+2*i+1] = 0xff&(l_data>>0);
+				}
+				//crc
+				if(TRUE == crcEn)
+				{
+					crc = cal_crc16(&g_T5L.txData[cmdPosCommand],(3+2*varlen));
+					g_T5L.txData[cmdPosVarWriteData+2*varlen+0] = 0xff&(crc>>8);
+					g_T5L.txData[cmdPosVarWriteData+2*varlen+1] = 0xff&(crc>>0);
+					//total len
+					total_len = cmdPosVarWriteData+2*varlen+2;
+				}
+				else
+				{
+					//total len
+					total_len = cmdPosVarWriteData+2*varlen;
+				}
+				//send
+				g_T5L.pUartDevice->tx_bytes(g_T5L.pUartDevice,&g_T5L.txData[0],total_len);
+				g_T5L.LastSendTick = g_T5L.CurTick;
+				//
+				#ifndef T5L_DMG_UART_TX_USE_DMA
+					hal_delay_ms(1);
+				#endif
 			}
-			//crc
-			if(TRUE == crcEn)
-			{
-				crc = cal_crc16(&g_T5L.txData[cmdPosCommand],(3+2*varlen));
-				g_T5L.txData[cmdPosVarWriteData+2*varlen+0] = 0xff&(crc>>8);
-				g_T5L.txData[cmdPosVarWriteData+2*varlen+1] = 0xff&(crc>>0);
-				//total len
-				total_len = cmdPosVarWriteData+2*varlen+2;
-			}
-			else
-			{
-				//total len
-				total_len = cmdPosVarWriteData+2*varlen;
-			}
-			//send
-			g_T5L.pUartDevice->tx_bytes(g_T5L.pUartDevice,&g_T5L.txData[0],total_len);
-			g_T5L.LastSendTick = g_T5L.CurTick;
-			//
-			hal_delay_ms(1);
 		}
 	}
 }
@@ -171,41 +181,47 @@ void t5lReadVarible(UINT16 varAdd,UINT16 varlen ,UINT8 crcEn)
 {
 	//A5 5A 04 83 00 A1 01:读系统变量0x00A1长度为1
 	UINT16 total_len = 0 , crc = 0;
-	if(varAdd < 0xFFFF)
+	if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+		((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 	{
-		if(((varAdd+varlen)>0)&&((varAdd+varlen)<0xFFFF))
+		if(varAdd < 0xFFFF)
 		{
-			//head
-			g_T5L.txData[cmdPosHead1]=T5L_RX_FUN_HEAD1;
-			g_T5L.txData[cmdPosHead2]=T5L_RX_FUN_HEAD2;
-			//data len
-			g_T5L.txData[cmdPosDataLen]=0X04;
-			//order:write
-			g_T5L.txData[cmdPosCommand]=cmdReadSWDEVariable;
-			//varAdd
-			g_T5L.txData[cmdPosVarWriteAddress1]=0xff&(varAdd>>8);
-			g_T5L.txData[cmdPosVarWriteAddress2]=0xff&(varAdd>>0);
-			//len
-			g_T5L.txData[cmdPosVarReadLen]=varlen&0xff;
-			//crc
-			if(TRUE == crcEn)
+			if(((varAdd+varlen)>0)&&((varAdd+varlen)<0xFFFF))
 			{
-				crc = cal_crc16(&g_T5L.txData[cmdPosCommand],4);
-				g_T5L.txData[cmdPosVarReadLen+1+0] = 0xff&(crc>>8);
-				g_T5L.txData[cmdPosVarReadLen+1+1] = 0xff&(crc>>0);
-				//total len
-				total_len = cmdPosVarReadLen+1+2;
+				//head
+				g_T5L.txData[cmdPosHead1]=T5L_RX_FUN_HEAD1;
+				g_T5L.txData[cmdPosHead2]=T5L_RX_FUN_HEAD2;
+				//data len
+				g_T5L.txData[cmdPosDataLen]=0X04;
+				//order:write
+				g_T5L.txData[cmdPosCommand]=cmdReadSWDEVariable;
+				//varAdd
+				g_T5L.txData[cmdPosVarWriteAddress1]=0xff&(varAdd>>8);
+				g_T5L.txData[cmdPosVarWriteAddress2]=0xff&(varAdd>>0);
+				//len
+				g_T5L.txData[cmdPosVarReadLen]=varlen&0xff;
+				//crc
+				if(TRUE == crcEn)
+				{
+					crc = cal_crc16(&g_T5L.txData[cmdPosCommand],4);
+					g_T5L.txData[cmdPosVarReadLen+1+0] = 0xff&(crc>>8);
+					g_T5L.txData[cmdPosVarReadLen+1+1] = 0xff&(crc>>0);
+					//total len
+					total_len = cmdPosVarReadLen+1+2;
+				}
+				else
+				{
+					//total len
+					total_len = cmdPosVarReadLen+1;
+				}
+				//send
+				g_T5L.pUartDevice->tx_bytes(g_T5L.pUartDevice,&g_T5L.txData[0],total_len);
+				g_T5L.LastSendTick = g_T5L.CurTick;
+				//
+				#ifndef T5L_DMG_UART_TX_USE_DMA
+					hal_delay_ms(1);
+				#endif
 			}
-			else
-			{
-				//total len
-				total_len = cmdPosVarReadLen+1;
-			}
-			//send
-			g_T5L.pUartDevice->tx_bytes(g_T5L.pUartDevice,&g_T5L.txData[0],total_len);
-			g_T5L.LastSendTick = g_T5L.CurTick;
-			//
-			hal_delay_ms(1);
 		}
 	}
 }
@@ -500,7 +516,12 @@ UINT8 sdweAskVaribleData(UINT16 varAdd, UINT16 varData)
 	if(0xffff != pSdwe->SetAdd)
 	{
 		//==(update:20210411):sys para
-		if(((pSdwe->SetAdd >= DMG_FUNC_SET_UNIT_ADDRESS)&&(pSdwe->SetAdd <= (DMG_FUNC_SET_ZERO_RANGE_ADDRESS)))
+		if(DMG_SYS_VERSION_GET_ADD == pSdwe->SetAdd)
+		{
+			g_T5L.sdwePowerOn = TRUE;//if recived version , indicate allready power on
+			t5lDisPlayDataClear();
+		}
+		else if(((pSdwe->SetAdd >= DMG_FUNC_SET_UNIT_ADDRESS)&&(pSdwe->SetAdd <= (DMG_FUNC_SET_ZERO_RANGE_ADDRESS)))
 			|| (pSdwe->SetAdd == DMG_FUNC_SET_VOICE_SWITCH_ADDRESS)
 			|| (pSdwe->SetAdd == DMG_FUNC_SET_CAST_SWITCH_ADDRESS)
 			|| (pSdwe->SetAdd == DMG_FUNC_PASSORD_SET_ADDRESS)
@@ -1788,10 +1809,10 @@ UINT8 preColorDataAndJudgeIfNeedSend(INT32 *pData,INT16 *pColor,INT16 *pColorPre
 	}
 	return ret;	
 }
-void sendBalancingWeightAndColor_Slave_1(void)
+UINT8 sendBalancingWeightAndColor_Slave_1(void)
 {
 	static UINT8 dataSendFlag = FALSE,colorSendFlag = FALSE;
-	UINT8 data_i = 0 ,chn_i = 0;
+	UINT8 data_i = 0 ,chn_i = 0 , ret = 0;
 	//
 	INT32 *pData = &g_i16DataBuff[0];
 	INT32 *pDataPre = &g_i16DataBuffPre[0];
@@ -1831,6 +1852,7 @@ void sendBalancingWeightAndColor_Slave_1(void)
 			if(TRUE ==t5lWriteData(DMG_FUNC_ASK_CHANEL_COLOR_ADDRESS,pColor,T5L_MAX_CHANEL_LEN,0))
 			{
 				colorSendFlag = FALSE;
+				ret = 1;
 			}
 		}
 	}
@@ -1840,11 +1862,14 @@ void sendBalancingWeightAndColor_Slave_1(void)
 		//LED : display
 		LedDataSet((enumLedSeqType)chn_i, (enumLedColorType)(pColor[HX711_CHANEL_NUM+chn_i]));
 	}
+
+	return ret;
 }
 
-void preBalancingWeightAndColorIfNotNeedSendToSreen(INT32 *pData , INT16 *pDataSendToDiWen , INT32 *pDataPre, \
+UINT16 preBalancingWeightAndColorIfNotNeedSendToSreen(INT32 *pData , INT16 *pDataSendToDiWen , INT32 *pDataPre, \
 INT16 *pColor , INT16 *pColorPre , INT16 *pColorOtherCh , UINT8 chanel_len)
 {
+	UINT16 ret = 0 ;
 	static UINT16 handleStatus = 0 ;
 	static UINT16 u16WeightHoldOn = 0 ;//when DMG_DATA_HOLD_TIME data not changed send to screen
 	//
@@ -1890,15 +1915,17 @@ INT16 *pColor , INT16 *pColorPre , INT16 *pColorOtherCh , UINT8 chanel_len)
 			{
 				handleStatus = 0x00;//go to check weigth if not need send
 				handleWeightColorWasSend(pColor,pColorPre,chanel_len);
+				ret = 1;
 			}
 		break;
 		default :
 			handleStatus = 0;//go to check weigth if not need send
 		break;
 	}
+	return ret;
 }
 
-void sendBalancingWeightAndColor_Master()
+UINT16 sendBalancingWeightAndColor_Master()
 {
 	INT32 *pData = &g_i16DataBuff[0];
 	INT32 *pDataPre = &g_i16DataBuffPre[0];
@@ -1908,7 +1935,7 @@ void sendBalancingWeightAndColor_Master()
 	INT16 *pColorPre = &g_i16ColorBuffPre[0];
 	INT16 *pColorOtherCh = &g_i16ColorOtherChanel[0];
 	//
-	UINT8 chanel_len = 0 ;
+	UINT8 chanel_len = 0 , ret = 0;
 	//
 	if(0 == gSystemPara.isCascade)
 	{
@@ -1923,11 +1950,15 @@ void sendBalancingWeightAndColor_Master()
 	//3.send weight wo screen
 	//4.prepare color data and judge if not need sent to screen
 	//5.if need send to screen , otherwise back to judge data
-	preBalancingWeightAndColorIfNotNeedSendToSreen(pData,pDataSendToDiWen,pDataPre,pColor,pColorPre,pColorOtherCh,chanel_len);
+	ret = preBalancingWeightAndColorIfNotNeedSendToSreen(pData,pDataSendToDiWen,pDataPre,pColor,pColorPre,pColorOtherCh,chanel_len);
+	return ret;
 }
 
-void sendBalancingWeightAndColor20220125_FuncA_Master()
+UINT8 sendBalancingWeightAndColor20220125_FuncA_Master()
 {
+	//
+	UINT8 ret = 0 ;
+	//
 	static UINT8 dataSendFlag = FALSE , colorSendFlag = FALSE;
 	//
 	INT32 *pData = &g_i16DataBuff[0];
@@ -1976,14 +2007,16 @@ void sendBalancingWeightAndColor20220125_FuncA_Master()
 			if(TRUE ==t5lWriteData(DMG_FUNC_ASK_CHANEL_COLOR_ADDRESS,pColor,T5L_MAX_CHANEL_LEN,0))
 			{
 				colorSendFlag = FALSE;
+				ret = 1;
 			}
 		}
 	}
+	return ret;
 }
-void sendBalancingWeightAndColor20220125_FuncA_Slave(void)
+UINT8 sendBalancingWeightAndColor20220125_FuncA_Slave(void)
 {
 	static UINT8 dataSendFlag = FALSE,colorSendFlag = FALSE;
-	UINT8 data_i = 0 ,chn_i = 0;
+	UINT8 data_i = 0 ,chn_i = 0 , ret = 0;
 	//
 	INT32 *pData = &g_i16DataBuff[0];
 	INT32 *pDataPre = &g_i16DataBuffPre[0];
@@ -2023,6 +2056,7 @@ void sendBalancingWeightAndColor20220125_FuncA_Slave(void)
 			if(TRUE ==t5lWriteData(DMG_FUNC_ASK_CHANEL_COLOR_ADDRESS,&pColor[HX711_CHANEL_NUM],HX711_CHANEL_NUM,0))
 			{
 				colorSendFlag = FALSE;
+				ret = 1;
 			}
 		}
 	}
@@ -2032,6 +2066,8 @@ void sendBalancingWeightAndColor20220125_FuncA_Slave(void)
 		//LED : display
 		LedDataSet((enumLedSeqType)chn_i, (enumLedColorType)(pColor[HX711_CHANEL_NUM+chn_i]));
 	}
+
+	return ret;
 }
 
 static INT16 int16_ChangeDisplayPosition = 0 ,int16_ChangeDisplayPosition_i = 0 ,int16_ChangeDisplayPosition_switch =0;
@@ -2193,11 +2229,43 @@ UINT8 screen_ChangeDisplayPosition(void)
 	return ret;
 }
 
-
+void screenT5L_CurPageGet(void)
+{
+	t5lReadVarible(DMG_SYS_CUR_PAGE_GET_ADD,1,0);//get cur page
+}
+void screenT5L_VersionGet(void)
+{
+	t5lReadVarible(DMG_SYS_VERSION_GET_ADD,1,0);//get version
+}
+//
+UINT8 sendBalancingWeightAndColorAndHelpDataToScreen(void)
+{
+	UINT8 ret = 0 ;
+	switch(gSystemPara.isCascade)
+	{
+		case 0:
+		case ModbusAdd_Master:
+			ret = sendBalancingWeightAndColor_Master();
+		break;
+		case ModbusAdd_Slave_1:
+			ret = sendBalancingWeightAndColor_Slave_1();
+		break;
+		case ModbusFuncA_Master:
+			ret = sendBalancingWeightAndColor20220125_FuncA_Master();
+		break;
+		case ModbusFuncA_Slave:
+			ret = sendBalancingWeightAndColor20220125_FuncA_Slave();
+		break;
+		default:
+		break;
+	}
+	screenT5L_HelpDataMainFunction();
+	return ret;
+}
 //if sreen chanel changed
 UINT8 sendSysParaDataToDiwen(void)
 {
-	static UINT8 inerStatus = 0;	
+	static UINT8 inerStatus = 0x80;	
 	INT16 sendData[64],len=0;
 	UINT8 result = FALSE ;
 	
@@ -2217,6 +2285,28 @@ UINT8 sendSysParaDataToDiwen(void)
 
 	switch(inerStatus)
 	{
+		case 0x80://获取系统版本 若获取回则代表 屏已上电
+			if(FALSE == g_T5L.sdwePowerOn)
+			{
+				if(0 == (g_T5L.CurTick %500))//every 500ms send order to get version
+				{
+					screenT5L_VersionGet();
+				}
+			}
+			else
+			{
+				inerStatus = 0x81;
+			}
+		break;
+		case 0x81://发送配平页面的数据 规整为0
+			if(TRUE == g_T5L.sdweHX711FirstSampleCoplt)
+			{
+				if(TRUE == sendBalancingWeightAndColorAndHelpDataToScreen())
+				{
+					inerStatus = 0 ;
+				}
+			}
+		break;
 		case 0://send 0x1000 单位
 			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
 				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
@@ -2558,7 +2648,6 @@ void screenT5L_VoicePrintfMainfunction(void)
 		break;
 	}
 }
-
 UINT8 screenT5L_VoicePrintfMainfunction_WaitSuccess(UINT16 maxWait)
 {
 	UINT8 ret = 0 ;
@@ -2705,26 +2794,9 @@ void screenT5L_HelpDataMainFunction(void)
 	}
 		
 }
-
 //==prepare TX data
 void screenT5L_TxFunction(void)
 {
-	//voice printf mainfunction
-	if(TRUE == gSystemPara.ScreenVoiceSwitch)
-	{
-		switch(gSystemPara.isCascade)
-		{
-			//master
-			case 0:
-			case ModbusAdd_Master:
-			case ModbusFuncA_Master:
-				screenT5L_VoicePrintfMainfunction();
-			break;
-			default:
-			break;
-		}
-	}
-
 	//==send initial data to DIWEN to display
 	if(T5L_INITIAL_COMPLETE != g_T5L.sendSdweInit)
 	{
@@ -2774,7 +2846,7 @@ void screenT5L_TxFunction(void)
 		{
 			g_T5L.sdweFreshScreenLight = FALSE;
 		}
-	}//==M7 event arrive:修改小数娴熟
+	}//==M7 event arrive:修改小数点
 	else if(TRUE == g_T5L.sdweChangeDescriblePoint)
 	{
 		if(0 != screen_ChangeDisplayPosition())
@@ -2860,8 +2932,22 @@ void screenT5L_TxFunction(void)
 		screenT5L_HelpDataMainFunction();
 	}	
 
+	//voice printf mainfunction
+	if(TRUE == gSystemPara.ScreenVoiceSwitch)
+	{
+		switch(gSystemPara.isCascade)
+		{
+			//master
+			case 0:
+			case ModbusAdd_Master:
+			case ModbusFuncA_Master:
+				screenT5L_VoicePrintfMainfunction();
+			break;
+			default:
+			break;
+		}
+	}
 }
-
 
 //==SDWE UART data deal
 void screenT5L_RxFunction(void)
@@ -2962,16 +3048,14 @@ void screenT5L_RxFunction(void)
 void sreenT5L_MainFunction(void)
 {
 	g_T5L.CurTick++;
-	if(g_T5L.CurTick > SYS_POWER_REDAY_TIME)//this time not overview !!!
-	{
-		//deal rx data from SDWE
-		screenT5L_RxFunction();
-		
-		//prepare data and send to SDWE
-		screenT5L_TxFunction();
 
-		//slave data valid
-		setModbusDataValid(SLAVE_DATA_VALID);
-	}
+	//handle rx data from SDWE
+	screenT5L_RxFunction();
+	
+	//prepare data and send to SDWE
+	screenT5L_TxFunction();
+
+	//slave data valid
+	setModbusDataValid(SLAVE_DATA_VALID);
 }
 

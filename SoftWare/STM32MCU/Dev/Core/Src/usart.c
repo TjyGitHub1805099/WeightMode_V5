@@ -203,17 +203,17 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     /* USART3 clock enable */
     __HAL_RCC_USART3_CLK_ENABLE();
 
-    __HAL_RCC_GPIOD_CLK_ENABLE();
+    __HAL_RCC_GPIOC_CLK_ENABLE();
     /**USART3 GPIO Configuration
-    PD8     ------> USART3_TX
-    PD9     ------> USART3_RX
+    PC10     ------> USART3_TX
+    PC11     ------> USART3_RX
     */
-    GPIO_InitStruct.Pin = UART4_TX_SMQ1_RX_Pin|UART4_RX_SMQ1_TX_Pin;
+    GPIO_InitStruct.Pin = USART3_TX_RS485_RX_Pin|USART3_RX_RS485_TX_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF7_USART3;
-    HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
     /* USART3 DMA Init */
     /* USART3_RX Init */
@@ -361,10 +361,10 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
     __HAL_RCC_USART3_CLK_DISABLE();
 
     /**USART3 GPIO Configuration
-    PD8     ------> USART3_TX
-    PD9     ------> USART3_RX
+    PC10     ------> USART3_TX
+    PC11     ------> USART3_RX
     */
-    HAL_GPIO_DeInit(GPIOD, UART4_TX_SMQ1_RX_Pin|UART4_RX_SMQ1_TX_Pin);
+    HAL_GPIO_DeInit(GPIOC, USART3_TX_RS485_RX_Pin|USART3_RX_RS485_TX_Pin);
 
     /* USART3 DMA DeInit */
     HAL_DMA_DeInit(uartHandle->hdmarx);
@@ -416,6 +416,10 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
   if(huart->Instance == huart1.Instance)//USART1 connected Screen1
   {
     Usart1AsScreen1Type.dmaSend_flag = USART_DMA_SENDOVER; 
+  }
+  else if(huart->Instance == huart3.Instance)//USART1 connected Screen1
+  {
+    HAL_GPIO_WritePin(STM32_RS485_EN_GPIO_Port, STM32_RS485_EN_Pin, GPIO_PIN_RESET);
   }
 }
 
@@ -473,7 +477,11 @@ void Usart3WithRS485Receive_IDLE(UART_HandleTypeDef *huart)
         g_ModbusRtu.RxLength = MODBUS_RTU_UART_DATA_LEN -temp; 
         HAL_UART_Receive_DMA(&huart3, g_ModbusRtu.rxDataUart, MODBUS_RTU_UART_DATA_LEN);//串口1DMA
         #endif
-		}  
+		} 
+    else if((__HAL_UART_GET_FLAG(huart,UART_FLAG_TC) != RESET) || (__HAL_UART_GET_FLAG(huart,UART_FLAG_TXE) != RESET))  
+		{   
+				__HAL_UART_CLEAR_IDLEFLAG(&huart3); 
+    }
 	}
 }
 /* USER CODE END 1 */

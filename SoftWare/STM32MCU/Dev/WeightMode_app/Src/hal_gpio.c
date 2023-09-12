@@ -125,3 +125,14 @@ void hal_gpio_set_do_low( enumDoLineType Do )
     //drv_gpio_set_pins_low( DO_GPIO_PORT[Do], DO_GPIO_PIN[Do] );
 	HAL_GPIO_WritePin(DO_GPIO_PORT[Do] ,  DO_GPIO_PIN[Do] , GPIO_PIN_RESET);
 }
+
+/**
+* @brief  DO输出反转电平
+* @param  Do: 要设置的口线
+* @retval 无
+*/
+void hal_gpio_TogglePin( enumDoLineType Do )
+{
+    //drv_gpio_set_pins_low( DO_GPIO_PORT[Do], DO_GPIO_PIN[Do] );
+	HAL_GPIO_TogglePin(DO_GPIO_PORT[Do] ,  DO_GPIO_PIN[Do]);
+}

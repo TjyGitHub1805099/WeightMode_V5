@@ -6,6 +6,7 @@
 #include "hal_uart.h"
 #include "app_hx711_ctrl.h"
 
+#define T5L_DMG_UART_TX_USE_DMA	(1)
 
 #define T5L_DMG_UART_DATA_LEN	(0X100)
 
@@ -102,6 +103,9 @@
 #define DMG_FUNC_HELP_TO_JUDGE_SET_ADDRESS	(0X1201)//0x1201
 
 #define DMG_SYS_STATUS_OF_VOICE_PRINTF_00A1	(0X00A1)
+
+#define DMG_SYS_CUR_PAGE_GET_ADD			(0X0014)
+#define DMG_SYS_VERSION_GET_ADD				(0X000E)
 
 //at BALANCING Page , auto to judge the remaining chanel weight minus
 //to help user to caculate
@@ -224,10 +228,15 @@ typedef enum
 	cmdPosVarData1= 7 ,//val address two byte position
 }enumSDWEcmdPosType;
 
-
+typedef enum
+{
+	SCREEN_STATUS_GET_VERSION = 0 ,
+	SCREEN_STATUS_SEND_BANLING_DATA,
+}enumSDWEStatusType;
 /** 定义从机串口设备类型 */
 typedef struct structSdweType
 {
+	enumSDWEStatusType status;/**< sdwe 状态 */
 	UINT8 	sendSdweInit;
 	UINT8 	readSdweInit;
 	UartDeviceType *pUartDevice;        /**< 串口设备 */
@@ -263,11 +272,14 @@ typedef struct structSdweType
 	UINT16 	sdweJumpToSysParaPage;/**< 跳转至参数页面 */
 	UINT16 	sdweFreshScreenLight;/**< 刷新背光亮度 */
 	UINT16  sdweChangeDescriblePoint;/**< 修改小数显示 */
+	UINT16  sdwePowerOn;/**< 屏幕已经上电 */
+	UINT16  sdweHX711FirstSampleCoplt;/**< HX711数据采集完成 */
 }T5LType;
 extern T5LType g_T5L;
 
 /** ModbusRtu设备默认配置 */
 #define T5LDataDefault   { \
+	SCREEN_STATUS_GET_VERSION,\
 	0,\
 	0,\
 	&g_UartDevice[UART_EXTERN], \
@@ -301,9 +313,11 @@ extern T5LType g_T5L;
 	0,\
 	0,\
 	0,\
+	0,\
+	0,\
 	}
 #define T5L_INITIAL_COMPLETE		(0X12)
-#define T5L_MAX_CHANEL_LEN			(HX711_CHANEL_NUM)
+#define T5L_MAX_CHANEL_LEN			(2*HX711_CHANEL_NUM)
 #define T5L_CHANEL_WEIGHT_NOT_EQUAL	(0XFF)
 	
 	

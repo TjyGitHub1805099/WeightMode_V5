@@ -134,12 +134,24 @@ void balaningColorClear(void)
 	}
 }
 
+//==led cycle indicate
+void led_RunIndicate(void)
+{
+	if(get_SysTick_ByTimer()%1000 ==0)
+	{
+		hal_gpio_TogglePin((enumDoLineType)(SYS_RUN0));
+	}
+}
+
+
 //==led cycle contrl
 void led_MainFunction(void)
 {
 	static UINT8 led_data[LED_CTRL_DATA_LEN]={0};
 	UINT8 *pData=&g_led_ctrl_data[0];
 	UINT8 i = 0,j = 0,set = 0,l_data = 0;
+	//run led indicate
+	led_RunIndicate();
 	//led indicate was open
 	if(1 == gSystemPara.isLedIndicate)
 	{

@@ -64,7 +64,7 @@ void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(LED_RUN0_GPIO_Port, LED_RUN0_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(STM32_RS485_EN_GPIO_Port, STM32_RS485_EN_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(STM32_RS485_EN_GPIO_Port, STM32_RS485_EN_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(STM32_I2C1_WP_GPIO_Port, STM32_I2C1_WP_Pin, GPIO_PIN_SET);

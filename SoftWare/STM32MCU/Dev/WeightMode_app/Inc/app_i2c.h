@@ -6,7 +6,7 @@
 #include "stm32f4xx_hal.h"
 
 //是否使能测试
-#define EXT_EEPROM_TEST_EN
+//#define EXT_EEPROM_TEST_EN
 
 //AT24C128C-SSHM-T相关信息
 #define EXT_EEPROM_SLAVE_SIZE       (128)//共可存储：128KBit = 16384 Byte

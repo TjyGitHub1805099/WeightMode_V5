@@ -42,8 +42,8 @@
 #define UART1_RX_DMA_CHANNEL            	DMA1_Channel3
 
 /** RS485总线使能口线定义 */
-#define UART1_DEA_GPIO_PORT					GPIOB
-#define UART1_DEA_GPIO_PIN					GPIO_PIN_2
+#define UART1_DEA_GPIO_PORT					GPIOA
+#define UART1_DEA_GPIO_PIN					GPIO_PIN_10
 
 
 // UART2 接DIWEN显示屏 , 实际是 STM32F303 UASRT1 , 带DMA功能

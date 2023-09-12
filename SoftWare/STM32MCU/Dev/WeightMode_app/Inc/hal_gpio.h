@@ -196,4 +196,5 @@ typedef union
 extern UINT8 hal_di_get( UINT8 offset );
 extern void hal_gpio_set_do_high( enumDoLineType Do );
 extern void hal_gpio_set_do_low( enumDoLineType Do );
+extern void hal_gpio_TogglePin( enumDoLineType Do );
 #endif

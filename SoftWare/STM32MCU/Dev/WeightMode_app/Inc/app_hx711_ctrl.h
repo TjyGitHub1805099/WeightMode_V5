@@ -42,7 +42,7 @@ typedef enum HX711ChanelType
 #define HX711_NEGATIVE_DATA		(0X1000000)//if lager than this data ,it's negative data
 
 
-#define CHANEL_FILTER_NUM	(7)
+#define CHANEL_FILTER_NUM	(7)//sample 7 times and remove 2 lower and 2 larger , remain 3 times
 
 #define CHANEL_POINT_NUM	(10)//must lager than 2 , used to cal k & b
 
@@ -117,8 +117,8 @@ typedef enum HX711CtrlType
 extern const INT32 defaultChanelSamplePoint[CHANEL_POINT_NUM];
 
 extern void hx711_init(void);
-extern UINT8 hx711_SenserCheck(void);
-extern UINT8 hx711_MainFunction(void);
+extern UINT8 hx711_SenserCheck(UINT32 maxWaitTime);
+extern void hx711_MainFunction(void);
 extern float hx711_getWeight(enumHX711ChanelType chanel);
 extern INT32 hx711_getAvgSample(enumHX711ChanelType chanel);
 extern void setSampleWeightValue(UINT8 chanel,UINT8 point,INT32 weight);
