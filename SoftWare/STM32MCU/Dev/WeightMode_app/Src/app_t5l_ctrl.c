@@ -1377,15 +1377,21 @@ void writeHelpDataFromCom(UINT8 *pHelpData,UINT8 len)
 void writeWeightDataFromCom(UINT8 *pWeightData,UINT8 len)
 {
 	UINT8 i = 0 ;
-	if(len <= DIFF_TO_DIWEN_DATA_LEN)
+	if(len <= T5L_MAX_CHANEL_LEN)
 	{
 		for(i=0;i<len;i++)
 		{
 			g_i32DataBuff[i] = 0 ;
-			g_i32DataBuff[i] = pWeightData[2*i+0];
+			g_i32DataBuff[i] = pWeightData[4*i+0];
 			g_i32DataBuff[i] <<= 8;
-			g_i32DataBuff[i] &= 0XFF00;
-			g_i32DataBuff[i] += pWeightData[2*i+1];
+			g_i32DataBuff[i] &= 0X0000FF00;
+			g_i32DataBuff[i] += pWeightData[4*i+1];
+			g_i32DataBuff[i] <<= 8 ;
+			g_i32DataBuff[i] &= 0X00FFFF00;
+			g_i32DataBuff[i] += pWeightData[4*i+2];
+			g_i32DataBuff[i] <<= 8;
+			g_i32DataBuff[i] &= 0XFFFFFF00;
+			g_i32DataBuff[i] += pWeightData[4*i+3];		
 		}
 	}
 }
@@ -1393,7 +1399,7 @@ void writeWeightDataFromCom(UINT8 *pWeightData,UINT8 len)
 void writeColorDataFromCom(UINT8 *pColorData,UINT8 len)
 {
 	UINT8 i = 0 ;
-	if(len <= DIFF_TO_DIWEN_DATA_LEN)
+	if(len <= T5L_MAX_CHANEL_LEN)
 	{
 		for(i=0;i<len;i++)
 		{
@@ -1421,19 +1427,21 @@ void readHelpDataFromSys(UINT8 *pHelpData,UINT8 len)
 void readWeightDataFromSys(UINT8 *pWeightData,UINT8 len)
 {
 	UINT8 i = 0 ;
-	if(len <= DIFF_TO_DIWEN_DATA_LEN)
+	if(len <= T5L_MAX_CHANEL_LEN)
 	{
 		for(i=0;i<len;i++)
 		{
-			pWeightData[2*i+0] = (g_i32DataBuff[i]>>8)&0xff;
-			pWeightData[2*i+1] = (g_i32DataBuff[i]>>0)&0xff;
+			pWeightData[4*i+0] = (g_i32DataBuff[i]>>24)&0xff;
+			pWeightData[4*i+1] = (g_i32DataBuff[i]>>16)&0xff;
+			pWeightData[4*i+2] = (g_i32DataBuff[i]>>8)&0xff;
+			pWeightData[4*i+3] = (g_i32DataBuff[i]>>0)&0xff;
 		}
 	}
 }
 void readColorDataFromSys(UINT8 *pColorData,UINT8 len)
 {
 	UINT8 i = 0 ;
-	if(len <= DIFF_TO_DIWEN_DATA_LEN)
+	if(len <= T5L_MAX_CHANEL_LEN)
 	{
 		for(i=0;i<len;i++)
 		{

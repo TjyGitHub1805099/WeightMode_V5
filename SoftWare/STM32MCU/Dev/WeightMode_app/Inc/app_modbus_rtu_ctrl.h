@@ -25,8 +25,8 @@
 #define MODBUS_RTU_DATA_LEN_POS		(3)//data len
 #define MODBUS_RTU_DATA_STAR_POS	(4)//data start position
 
-//changed at 20220119
-//FuncA:seqence num was continuous but only display six block 
+//changed at 20231014
+//FuncA:seqence num was continuous but only display eight block 
 #define ModbusFuncA_Master			(11)
 #define ModbusFuncA_Slave			(12)
 
@@ -37,59 +37,31 @@ typedef enum ModbusAddType
 	ModbusAdd_Slave_1	= 2 ,//other:was the slave ID
 	ModbusAdd_Slave_Max
 }enumModbusAddType;
+
 //function code def address type
 typedef enum ModbusFuncCodeType
 {
-	MFC_Mater_Ask_1 = 0x01 ,//: CycleReadWeightFloat
-	MFC_Slave_Ans_1 = 0x81 ,
-	
-	MFC_Mater_Ask_2 = 0x02 ,//: CycleReadWeightInit
-	MFC_Slave_Ans_2 = 0x82 ,
-	
-	MFC_Mater_Ask_3 = 0x03 ,//: CycleReadWeightFloat + SetHelpDataToSlave1
-	MFC_Slave_Ans_3 = 0x83 ,
-	
-	MFC_Mater_Ask_4 = 0x04 ,//: CycleReadWeightFloat + SetHelpDataToSlave1 + SendRemoveFlag 
-	MFC_Slave_Ans_4 = 0x84 ,
-//before 20211229 used
-	MFC_Mater_Ask_5 = 0x05 ,//: CycleReadWeightFloat + SetHelpDataToSlave1 + SendRemoveFlag  + 12chan data + 12chanel color
-	MFC_Slave_Ans_5 = 0x85 ,
-//changed at 20220119
-	MFC_Mater_Ask_6 = 0x06 ,//: CycleReadWeightFloat + SetHelpDataToSlave1 + SendRemoveFlag  + 12chan data + 12chanel color
-	MFC_Slave_Ans_6 = 0x86 
+	MFC_Mater_Ask_6 = 0x06 ,//: MFC_Mater_Ask_6(1) + SetHelpDataToSlave1(2*group*num) + SendRemoveFlag(1)  + SendAllChnData(4*chn_num) + SendAllChnDataColor(2*chn_num)
+	MFC_Slave_Ans_6 = 0x86  //: MFC_Slave_Ans_6(1) + SendRemoveFlag(1) + SelfAllChnData(4*sel_chn_num)
 }enumModbusFuncCodeType;
-	
+
+//valid data len of master
+#define MFC_MASTER_SEND_DATA_TOTAL_LEN_NO_CRC	(MODBUS_RTU_DATA_STAR_POS + 1 + 2*DIFF_TO_DIWEN_DATA_LEN + 1 + 4*T5L_MAX_CHANEL_LEN + 2*T5L_MAX_CHANEL_LEN)
+
+//evern handle timer define
 //======MasterTimer
-#define MasterTimer_TxOrderDlay			(15)//15ms   : the diff time of two order Dlay
-#define MasterTimer_RxTimeOut			(60)//50ms   : the timeout of master recv slave ans data
-#define MasterTimer_EventTriger_TX_T1	(200)//200ms : CycleReadWeightFloat
-#define MasterTimer_EventTriger_TX_T2	(200)//200ms : CycleReadWeightInit
-#define MasterTimer_EventTriger_TX_T3	(200)//200ms : CycleReadWeightFloat + SetHelpDataToSlave1
-#define MasterTimer_EventTriger_TX_T4	(200)//200ms : CycleReadWeightFloat + SetHelpDataToSlave1 + SendRemoveFlag
-//before 20211229 used MasterTimer_EventTriger_TX_T5
-#define MasterTimer_EventTriger_TX_T5	(200)//200ms : CycleReadWeightFloat + SetHelpDataToSlave1 + SendRemoveFlag  + 12chan data + 12chanel color
-//changed at 20220119
-#define MasterTimer_EventTriger_TX_T6	(200)//200ms : CycleReadWeightFloat + SetHelpDataToSlave1 + SendRemoveFlag  + 12chan data + 12chanel color
+#define MasterTimer_TxOrderDlay			(15)//15ms   : the diff time of two master order Delay
+#define MasterTimer_RxTimeOut			(60)//60ms   : the timeout of master recv slave answer data , if timeouted retriger
+#define MasterTimer_EventTriger_TX_T6	(200)//200ms : the diff time of master send order to slave
 
 //======SlaveTimer
-#define SlaveTimer_TxOrderDlay			(15)//15ms
-#define SlaveTimer_RxTimeOut			(60)//60ms
+#define SlaveTimer_TxOrderDlay			(10)//10ms must leas than MasterTimer_TxOrderDlay
 
-
-#define MFC_ASK_MAJID_LEN				(1)
-
-
+//even handle mask define
 //======MasterEvent:TX
 typedef UINT16 MasterEventTxMaskType;
 #define MasterEvent_Tx_IDLE	(MasterEventTxMaskType)(0x0000)
-#define MasterEvent_Tx_E1	(MasterEventTxMaskType)(0x0001)//ReadWeightFloat
-#define MasterEvent_Tx_E2	(MasterEventTxMaskType)(0x0002)//ReadWeightInt32
-#define MasterEvent_Tx_E3	(MasterEventTxMaskType)(0x0004)//ReadWeightFloat + SetHelpDataToSlave1
-#define MasterEvent_Tx_E4	(MasterEventTxMaskType)(0x0008)//CycleReadWeightFloat + SetHelpDataToSlave1 + SendRemoveFlag
-//before 20211229 used MasterEvent_Tx_E5
-#define MasterEvent_Tx_E5	(MasterEventTxMaskType)(0x0010)//CycleReadWeightFloat + SetHelpDataToSlave1 + SendRemoveFlag + 12chan data + 12chanel color
-//changed at 20220119
-#define MasterEvent_Tx_E6	(MasterEventTxMaskType)(0x0020)//CycleReadWeightFloat + SetHelpDataToSlave1 + SendRemoveFlag + 12chan data + 12chanel color
+#define MasterEvent_Tx_E6	(MasterEventTxMaskType)(0x0020)//MFC_Mater_Ask_6
 
 //======MasterEvent:RX
 typedef UINT16 MasterEventRxMaskType;
@@ -98,26 +70,12 @@ typedef UINT16 MasterEventRxMaskType;
 //======SlaveEvent:TX
 typedef UINT16 SlaveEventTxMaskType;
 #define SlaveEvent_Tx_IDLE	(SlaveEventTxMaskType)(0x0000)
-#define SlaveEvent_Tx_E1	(SlaveEventTxMaskType)(0x0001)//ReadWeightFloat
-#define SlaveEvent_Tx_E2	(SlaveEventTxMaskType)(0x0002)//ReadWeightInt32
-#define SlaveEvent_Tx_E3	(SlaveEventTxMaskType)(0x0004)//ReadWeightFloat + SetHelpDataToSlave1
-#define SlaveEvent_Tx_E4	(SlaveEventTxMaskType)(0x0008)//CycleReadWeightFloat + SetHelpDataToSlave1 + SendRemoveFlag
-//before 20211229 used SlaveEvent_Tx_E5
-#define SlaveEvent_Tx_E5	(SlaveEventTxMaskType)(0x0010)//CycleReadWeightFloat + SetHelpDataToSlave1 + SendRemoveFlag + 12chan data + 12chanel color
-//changed at 20220119
-#define SlaveEvent_Tx_E6	(SlaveEventTxMaskType)(0x0020)//CycleReadWeightFloat + SetHelpDataToSlave1 + SendRemoveFlag + 12chan data + 12chanel color
+#define SlaveEvent_Tx_E6	(SlaveEventTxMaskType)(0x0020)//MFC_Slave_Ans_6
 
 //======SlaveEvent:RX
 typedef UINT16 SlaveEventRxMaskType;
 #define SlaveEvent_Rx_Idle	(SlaveEventRxMaskType)(0x0000)
-#define SlaveEvent_Rx_E1	(SlaveEventRxMaskType)(0x0001)//ReadWeightFloat
-#define SlaveEvent_Rx_E2	(SlaveEventRxMaskType)(0x0002)//ReadWeightInt32
-#define SlaveEvent_Rx_E3	(SlaveEventRxMaskType)(0x0004)//ReadWeightFloat + SetHelpDataToSlave1
-#define SlaveEvent_Rx_E4	(SlaveEventRxMaskType)(0x0008)//CycleReadWeightFloat + SetHelpDataToSlave1 + SendRemoveFlag
-//before 20211229 used SlaveEvent_Rx_E5
-#define SlaveEvent_Rx_E5	(SlaveEventRxMaskType)(0x0010)//CycleReadWeightFloat + SetHelpDataToSlave1 + SendRemoveFlag + 12chan data + 12chanel color
-//changed at 20220119
-#define SlaveEvent_Rx_E6	(SlaveEventRxMaskType)(0x0020)//CycleReadWeightFloat + SetHelpDataToSlave1 + SendRemoveFlag + 12chan data + 12chanel color
+#define SlaveEvent_Rx_E6	(SlaveEventRxMaskType)(0x0020)
 
 typedef enum MasterStateType
 {

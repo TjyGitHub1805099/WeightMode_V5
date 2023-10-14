@@ -113,7 +113,7 @@
 //2.find out the closed group(minus was smallest)
 //3.send to DIWEN Screen to display
 
-#define DIFF_JUDGE_GROUP_NUM_SLAVE1	(4)//2 group display 
+#define DIFF_JUDGE_GROUP_NUM_SLAVE1	(4)//4 group help data display 
 #define DIFF_JUDGE_DATA_NUM_SLAVE1	(3)//num1 num2 minus
 #define DIFF_TO_DIWEN_DATA_LEN		(DIFF_JUDGE_GROUP_NUM_SLAVE1*DIFF_JUDGE_DATA_NUM_SLAVE1)
 

@@ -108,7 +108,7 @@ typedef struct SystemParaType
 	INT32	minWeight;/**< 最小量程 */
 	INT32	maxWeight;/**< 最大量程 */
 	float	errRange;/**< 误差范围 */
-	INT32	isCascade;/**< 是否级联 0:不级联 1:master 2~n:slave*/
+	INT32	isCascade;/**< 是否级联 0:不级联 , 1 or 11:master , 2~n or 12:slave*/
 	INT32	isLedIndicate;/**< 是否LED指示 */
 	INT32	userColorSet[SYS_COLOR_GROUP_NUM];/**< 配平色1~4 */
 	float	zeroRange;/**< 零点范围 */
