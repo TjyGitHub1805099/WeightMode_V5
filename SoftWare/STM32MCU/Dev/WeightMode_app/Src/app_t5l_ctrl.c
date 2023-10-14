@@ -734,6 +734,21 @@ UINT8 sdweAskVaribleData(UINT16 varAdd, UINT16 varData)
 	}
 	return needStore;
 }
+//if need jump to startup page 
+UINT8 jumpToStartUpPage(INT16 curPage)
+{
+	UINT8 result = 0 ;
+	//5A A5 07 82 0084 5A01 page
+	INT16 pageChangeOrderAndData[2]={0x5A01,1};//1 page
+	pageChangeOrderAndData[1] = curPage;
+	if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+		((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+	{
+		t5lWriteVarible((0X0084),pageChangeOrderAndData,2,0);
+		result = 1;
+	}
+	return result;
+}
 //if need jump to active page 
 UINT8 jumpToActivePage()
 {
@@ -2280,21 +2295,8 @@ UINT8 sendSysParaDataToDiwen(void)
 	static UINT8 inerStatus = 0x80;	
 	INT16 sendData[64],len=0;
 	UINT8 result = FALSE ;
-	
-	//0x1000	4096	10	单位
-	//0X100A	4106	1	最小量程
-	//0X100B	4107	1	最大量程
-	//0X100C	4108	1	误差范围
-	//0X100D	4109	1	是否级联
-	//0X100E	4110	1	LED开关
-	//0X100F	4111	1	配平色1
-	//0X1010	4112	1	配平色2
-	//0X1011	4113	1	配平色3
-	//0X1012	4114	1	配平色4
-	//0X1013	4115	1	零点范围
-	//0X1501				MCU设备ID
-	//0X1510				密码
-
+	static INT16 curPage = 0 , curPageDelay_time = 0 , curPageDelay_offset = 40;
+	//
 	switch(inerStatus)
 	{
 		case 0x80://获取系统版本 若获取回则代表 屏已上电
@@ -2310,7 +2312,27 @@ UINT8 sendSysParaDataToDiwen(void)
 				inerStatus = 0x81;
 			}
 		break;
-		case 0x81://发送配平页面的数据 规整为0
+		case 0x81:
+			if(curPageDelay_time++ >= curPageDelay_offset)
+			{	
+				curPageDelay_time = curPageDelay_offset;
+				if(TRUE ==jumpToStartUpPage(curPage))//触发屏幕播放开机动画
+				{
+					curPageDelay_time = 0 ;
+					if(curPage++ >= 25)
+					{
+						inerStatus = 0x82;
+					}				
+				}			
+			}
+		break;
+		case 0x82://发送配平页面的数据 规整为0 等待HX711采集到一轮完整数据后在继续往后
+			if(TRUE == g_T5L.sdweHX711FirstSampleCoplt)
+			{
+				inerStatus = 0 ;//准备配平页面的数据 后在发送相关参数
+			}
+		break;
+		case 0x83://发送配平页面的数据 规整为0
 			if(TRUE == g_T5L.sdweHX711FirstSampleCoplt)
 			{
 				if(TRUE == sendBalancingWeightAndColorAndHelpDataToScreen())
@@ -2328,7 +2350,7 @@ UINT8 sendSysParaDataToDiwen(void)
 				inerStatus++;
 			}
 		break;
-		case 1://send 0x3000 DMG_FUNC_ASK_CHANEL_WEIGHT_ADDRESS
+		case 1://send weight data to DW
 			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
 				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{
@@ -2337,7 +2359,7 @@ UINT8 sendSysParaDataToDiwen(void)
 				{
 					sendData[len] = 0;
 				}
-				t5lWriteVarible(DMG_FUNC_ASK_CHANEL_WEIGHT_ADDRESS,sendData,len,0);/**< 通道重量 */  //3000
+				t5lWriteVarible(DMG_FUNC_ASK_CHANEL_WEIGHT_ADDRESS,sendData,len,0);/**< 通道重量 */
 				inerStatus++;
 			}
 		break;
@@ -2354,7 +2376,45 @@ UINT8 sendSysParaDataToDiwen(void)
 				inerStatus++;
 			}
 		break;
-		case 3://jump to Banling page
+		case 3://send help data to DW
+			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			{
+				len=0;
+				for(len=0;len<DIFF_TO_DIWEN_DATA_LEN;len++)
+				{
+					sendData[len] = 0;
+				}
+				t5lWriteVarible(DMG_FUNC_HELP_TO_JUDGE_SET_ADDRESS,sendData,len,0);/**< 通道差值，帮助信息 */  //1201
+				inerStatus++;
+			}
+		break;
+		case 4://小数显示相关描述指针变量发送
+			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			{		
+				if(0 != screen_ChangeDisplayPosition())//根据小数是否打开 发送相关数据
+				{
+					inerStatus++;
+				}
+			}
+		break;
+		case 5://changed at 20220119 , FuncA Module special , send num
+			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			{
+				if(gSystemPara.isCascade == ModbusFuncA_Slave)//only FuncA Module and Slave , need change block num to 9~16
+				{
+					for(len = 0 ; len < HX711_CHANEL_NUM ; len++)
+					{
+						sendData[len] = HX711_CHANEL_NUM + len;
+					}					
+					t5lWriteVarible((0x3901),sendData,len,0);
+				}			
+				inerStatus++;
+			}
+		break;
+		case 6://jump to Banling page
 			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
 				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{
@@ -2363,7 +2423,7 @@ UINT8 sendSysParaDataToDiwen(void)
 				inerStatus++;
 			}
 		break;	
-		case 4://send 0x1000 单位
+		case 7://send 0x1000 单位
 			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
 				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{
@@ -2373,7 +2433,7 @@ UINT8 sendSysParaDataToDiwen(void)
 				inerStatus++;
 			}
 		break;
-		case 5://send 0X100A~0X101E 系统参数
+		case 8://send 0X100A~0X101E 系统参数
 			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
 				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{
@@ -2407,9 +2467,10 @@ UINT8 sendSysParaDataToDiwen(void)
 				sendData[len++] = gSystemPara.daPinXianShi;		/**< 大屏显示 0x101e*/			//101E
 
 				t5lWriteVarible((0x100A),sendData,len,0);
-				inerStatus++;
+				inerStatus = 8;
 			}
 		break;
+		#if 0
 		case 6://send 0X1501 password ID
 			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
 				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
@@ -2430,7 +2491,8 @@ UINT8 sendSysParaDataToDiwen(void)
 				inerStatus++;
 			}
 		break;
-		case 8://send 2100 DMG_FUNC_SET_CHANEL_NUM
+		#endif
+		case 9://send 2100 DMG_FUNC_SET_CHANEL_NUM
 			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
 				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{
@@ -2440,20 +2502,7 @@ UINT8 sendSysParaDataToDiwen(void)
 				inerStatus++;
 			}
 		break;
-		case 9://send 1201 DMG_FUNC_HELP_TO_JUDGE_SET_ADDRESS
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
-			{
-				len=0;
-				for(len=0;len<DIFF_TO_DIWEN_DATA_LEN;len++)
-				{
-					sendData[len] = 0;
-				}
-				t5lWriteVarible(DMG_FUNC_HELP_TO_JUDGE_SET_ADDRESS,sendData,len,0);/**< 通道差值，帮助信息 */  //1201
-				inerStatus++;
-			}
-		break;
-		case 10:	
+		case 10://send voice info to DW
 			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
 				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{
@@ -2462,33 +2511,11 @@ UINT8 sendSysParaDataToDiwen(void)
 				inerStatus++;
 			}
 		break;
-		case 11://changed at 20220119 , FuncA Module special , send num
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
-			{
-				if(gSystemPara.isCascade == ModbusFuncA_Slave)//only FuncA Module and Slave , need change block num to 9~16
-				{
-					for(len = 0 ; len < HX711_CHANEL_NUM ; len++)
-					{
-						sendData[len] = HX711_CHANEL_NUM + len;
-					}					
-					t5lWriteVarible((0x3901),sendData,len,0);
-				}			
-				inerStatus++;
-			}
-		break;
-		case 12://小数显示相关描述指针变量发送
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
-			{		
-				if(0 != screen_ChangeDisplayPosition())//根据小数是否打开 发送相关数据
-				{
-					inerStatus++;
-				}
-			}
-		break;
 		default:
-			result = TRUE;
+			if(TRUE == g_T5L.sdweHX711FirstSampleCoplt)
+			{
+				result = TRUE;
+			}
 		break;
 	}
 	return result;
