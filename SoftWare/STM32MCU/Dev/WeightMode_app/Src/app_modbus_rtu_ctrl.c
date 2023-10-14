@@ -130,7 +130,7 @@ void ModbusRtu_MasterCycleReadWeightScan(ModbusRtuType *pContex)
 				pContex->slaveID = ModbusAdd_Slave_1;
 			break;
 			case ModbusFuncA_Master:
-					pContex->slaveID = ModbusFuncA_Slave;
+				pContex->slaveID = ModbusFuncA_Slave;
 			break;
 			default:
 			break;

@@ -161,7 +161,7 @@ void hal_uart_gpio_init( UartDeviceType *pUartDevice )
  */
 void hal_uart_port_init( UartDeviceType *pUartDevice )
 {
-	#if 0 
+#if 0 //串口的初始化在main.c中自动完成
 	// UART外设引脚配置  
 	hal_uart_gpio_init( pUartDevice );
 
@@ -248,7 +248,7 @@ void hal_uart_port_init( UartDeviceType *pUartDevice )
 			drv_uart_it_enable( UART_PORT[pUartDevice->Port], USART_IT_ERR );
 		}
 	}
-	#endif
+#endif
 }
 
 /**
@@ -286,75 +286,16 @@ void hal_uart_set_timeout( UartDeviceType *pUartDevice )
 */
 UINT8 hal_uart_tx_bytes( UartDeviceType *pUartDevice, UINT8 *pTxData, UINT16 TxLength )
 {
-	#if 0 
-	// 检查上次发送是否完成
-	if( pUartDevice->TxBusyFlag == 1 )
-	{
-		if( 0 != drv_dma_stream_get_left_length( UART_TX_DMA_CHANNEL[pUartDevice->Port] ) )
-		{
-			return 1;
-		}
-	}
-
-	// 根据配置使能输出
-	if( (pUartDevice->LinkType == UART_LINK_RX_TX_HALF) || (pUartDevice->LinkType == UART_LINK_RX_TX_HALF_ENABE) )
-	{
-		hal_uart_set_tx_mode( pUartDevice );
-	}
-
-	if( pUartDevice->RxTxMode == UART_RX_TX_MODE_POLL )				// 查询方式发送
-	{
-		pUartDevice->TxBusyFlag = 1;
-		// 发送数据
-		drv_uart_put_bytes( UART_PORT[pUartDevice->Port], pTxData, TxLength );
-
-		// 发送完成切换到接收模式
-		if( (pUartDevice->LinkType == UART_LINK_RX_TX_HALF) || (pUartDevice->LinkType == UART_LINK_RX_TX_HALF_ENABE) )
-		{
-			while( RESET != drv_uart_get_flag_status( UART_PORT[pUartDevice->Port], USART_FLAG_TC ) );
-			hal_uart_set_rx_mode( pUartDevice );
-			drv_uart_clear_flag_status( UART_PORT[pUartDevice->Port], USART_FLAG_TC );
-		}
-		pUartDevice->TxBusyFlag = 0;
-	}
-	else if( pUartDevice->RxTxMode == UART_RX_TX_MODE_INTERRUPT )		// 中断方式发送
-	{
-		// 发送前的准备
-		pUartDevice->TxCounter = 0;
-		pUartDevice->TxLength = TxLength;
-		if( pUartDevice->pTxBuffer != pTxData )
-		{
-			pUartDevice->pTxBuffer = pTxData;
-		}
-		// 启动中断发送
-		drv_uart_clear_it_pending_bit( UART_PORT[pUartDevice->Port], USART_IT_TXE );
-		drv_uart_it_enable( UART_PORT[pUartDevice->Port], USART_IT_TXE );
-		pUartDevice->TxBusyFlag = 1;
-	}
-	else															// DMA方式发送
-	{
-		drv_dma_stream_clear_flag_status( UART_TX_DMA_IT_TCIF[pUartDevice->Port] );
-		if( pTxData == 0 )
-		{
-			drv_dma_stream_start_mem_to_periph( UART_TX_DMA_CHANNEL[pUartDevice->Port], (UINT32)pUartDevice->pTxBuffer, pUartDevice->TxLength );
-		}
-		else
-		{
-			drv_dma_stream_start_mem_to_periph( UART_TX_DMA_CHANNEL[pUartDevice->Port], (UINT32)pTxData, TxLength );
-		}
-		pUartDevice->TxBusyFlag = 1;
-	}
-	#else
 	if(UART_EXTERN == pUartDevice->Port)
 	{
 		HAL_UART_Transmit_DMA(&huart1, pTxData, TxLength); 
 	}
 	else if(UART_COM == pUartDevice->Port)
 	{
+		//RS485发送时需要使能发送
 		HAL_GPIO_WritePin(STM32_RS485_EN_GPIO_Port, STM32_RS485_EN_Pin, GPIO_PIN_SET);
 		HAL_UART_Transmit_DMA(&huart3, pTxData, TxLength); 
 	}
-	#endif
 	return 0;
 }
 
@@ -460,6 +401,8 @@ void hal_uart_rx_irq_disable( UartDeviceType *pUartDevice )
 //}
 
 
+
+#if 0 //中断服务函数在生成工具里面有了 不需要重定向
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////																													////////
 /////////										/** 中断服务函数 */															////////
@@ -473,14 +416,12 @@ void hal_uart_rx_irq_disable( UartDeviceType *pUartDevice )
 */
 void uart_com_tx_dma_isr()
 {
-	#if 0 
 	if( drv_dma_stream_get_it_status( UART_TX_DMA_CHANNEL[UART_COM], UART_TX_DMA_IT_TCIF[UART_COM] ) )
 	{
 		drv_dma_stream_disable( UART_TX_DMA_CHANNEL[UART_COM] );
 		drv_uart_it_enable( UART_PORT[UART_COM], USART_IT_TC );
 		drv_dma_stream_clear_it_pending_bit( UART_TX_DMA_IT_TCIF[UART_COM] );
 	}
-	#endif
 }
 
 /**
@@ -489,7 +430,6 @@ void uart_com_tx_dma_isr()
 */
 void uart_com_isr( void )
 {
-	#if 0 
 	UsartIsrType l_Sr;
 	l_Sr.all = UART_PORT[UART_COM]->ISR.all;
 
@@ -549,7 +489,6 @@ void uart_com_isr( void )
 		//错误处理
 		hal_uart_port_init( &g_UartDevice[UART_COM] );
 	}
-	#endif
 }
 
 
@@ -559,14 +498,12 @@ void uart_com_isr( void )
 */
 void uart_TouchSreen_tx_dma_isr()
 {
-	#if 0 
 	if( drv_dma_stream_get_it_status( UART_TX_DMA_CHANNEL[UART_EXTERN], UART_TX_DMA_IT_TCIF[UART_EXTERN] ) )
 	{
 		drv_dma_stream_disable( UART_TX_DMA_CHANNEL[UART_EXTERN] );
 		drv_uart_it_enable( UART_PORT[UART_EXTERN], USART_IT_TC );
 		drv_dma_stream_clear_it_pending_bit( UART_TX_DMA_IT_TCIF[UART_EXTERN] );
 	}
-	#endif
 }
 
 /**
@@ -575,7 +512,6 @@ void uart_TouchSreen_tx_dma_isr()
 */
 void uart_TouchSreen_isr( void )
 {
-	#if 0 
 	volatile UsartIsrType l_Sr;
 	UsartCr1Type l_Cr1;
 
@@ -647,7 +583,7 @@ void uart_TouchSreen_isr( void )
 		//错误处理
 		hal_uart_port_init( &g_UartDevice[UART_EXTERN] );
 	}
-	#endif
 }
+#endif
 
 

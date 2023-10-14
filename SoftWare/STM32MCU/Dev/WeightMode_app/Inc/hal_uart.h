@@ -71,20 +71,22 @@
 #define UART2_DEA_GPIO_PORT					(0)//GPIOB
 #define UART2_DEA_GPIO_PIN					(0)//GPIO_PIN_10
 
+#if 0//因为采用DMA+IDLE接收，处理在UART中断中处理 
 /** 重新定义中断 */
 //#define uart_com_isr						USART3_IRQHandler
-//#define uart_com_tx_dma_isr					DMA1_Channel2_IRQHandler
+//#define uart_com_tx_dma_isr				DMA1_Channel2_IRQHandler
 
 /** 重新定义中断 ：接触摸屏的串口*/
 /** RX中断 和 DMA TX中断 */
-//#define uart_TouchSreen_isr					USART1_IRQHandler
-//#define uart_TouchSreen_tx_dma_isr			DMA1_Channel4_IRQHandler
+//#define uart_TouchSreen_isr				USART1_IRQHandler
+//#define uart_TouchSreen_tx_dma_isr		DMA1_Channel4_IRQHandler
+#endif
 
 /** UART硬件端口定义 */
 typedef enum UartPortType
 {
-	UART_COM = 0,
-	UART_EXTERN,
+	UART_COM = 0,//RS485的串口通信 UART3
+	UART_EXTERN,//显示屏的串口通信 UART1
 	UART_NUMBER
 }enumUartPortType;
 
@@ -229,7 +231,7 @@ extern const UINT16 UART_DEA_GPIO_PIN[];
 void __INLINE hal_uart_set_tx_mode( UartDeviceType *pUartDevice )
 {
 	#if 0
-//	drv_gpio_set_pins_high( UART_REA_GPIO_PORT[ pUartDevice->Port ], UART_REA_GPIO_PIN[ pUartDevice->Port ] );
+	//drv_gpio_set_pins_high( UART_REA_GPIO_PORT[ pUartDevice->Port ], UART_REA_GPIO_PIN[ pUartDevice->Port ] );
 	drv_gpio_set_pins_high( UART_DEA_GPIO_PORT[ pUartDevice->Port ], UART_DEA_GPIO_PIN[ pUartDevice->Port ] );
 	#endif
 }
@@ -242,7 +244,7 @@ void __INLINE hal_uart_set_tx_mode( UartDeviceType *pUartDevice )
 void __INLINE hal_uart_set_rx_mode( UartDeviceType *pUartDevice )
 {
 	#if 0
-//	drv_gpio_set_pins_low( UART_REA_GPIO_PORT[ pUartDevice->Port ], UART_REA_GPIO_PIN[ pUartDevice->Port ] );
+	//drv_gpio_set_pins_low( UART_REA_GPIO_PORT[ pUartDevice->Port ], UART_REA_GPIO_PIN[ pUartDevice->Port ] );
 	drv_gpio_set_pins_low( UART_DEA_GPIO_PORT[ pUartDevice->Port ], UART_DEA_GPIO_PIN[ pUartDevice->Port ] );
 	#endif
 }
@@ -255,7 +257,7 @@ void __INLINE hal_uart_set_rx_mode( UartDeviceType *pUartDevice )
 void __INLINE hal_uart_set_rx_tx_mode( UartDeviceType *pUartDevice )
 {
 	#if 0
-//	drv_gpio_set_pins_low( UART_REA_GPIO_PORT[ pUartDevice->Port ], UART_REA_GPIO_PIN[ pUartDevice->Port ] );
+	//drv_gpio_set_pins_low( UART_REA_GPIO_PORT[ pUartDevice->Port ], UART_REA_GPIO_PIN[ pUartDevice->Port ] );
 	drv_gpio_set_pins_high( UART_DEA_GPIO_PORT[ pUartDevice->Port ], UART_DEA_GPIO_PIN[ pUartDevice->Port ] );
 	#endif
 }
@@ -299,7 +301,3 @@ extern UINT8 hal_uart_get_byte_with_timeout(UartDeviceType *pUartDevice, UINT8 *
 extern void hal_uart_set_timeout( UartDeviceType *pUartDevice );
 
 #endif
-
-	
-	
-

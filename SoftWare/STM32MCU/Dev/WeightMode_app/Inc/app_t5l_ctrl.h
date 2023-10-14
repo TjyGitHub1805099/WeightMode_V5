@@ -12,7 +12,7 @@
 
 //================================================================================================
 //==(update:20210328):DIWEN reserve (uodate to v3:2021.03.26)
-#define DMG_MIN_DIFF_OF_TWO_SEND_ORDER			(25)//25ms 
+#define DMG_MIN_DIFF_OF_TWO_SEND_ORDER			(20)//20ms 
 #define DMG_DATA_HOLD_TIME						(250)//250ms
 
 //==(update:20210328):address of set chanel number : 0->all chanel set  ; (1~8)->single chanel set

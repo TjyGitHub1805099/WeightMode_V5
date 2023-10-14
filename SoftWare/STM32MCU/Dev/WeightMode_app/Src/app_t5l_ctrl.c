@@ -27,8 +27,8 @@ tT5LVoinceType g_T5L_VoiceBuff[T5L_VOICE_MAX_PRINTF_NUM][3];
 UINT8 u8T5LVoiceBuffPush_i = 0 ,u8T5LVoiceBuffPop_i = 0 , u8T5LVoiceBuffStoreNum = 0;
 
 //data send to DIWEN
-INT32 g_i16DataBuff[T5L_MAX_CHANEL_LEN]={0};
-INT32 g_i16DataBuffPre[T5L_MAX_CHANEL_LEN]={0};
+INT32 g_i32DataBuff[T5L_MAX_CHANEL_LEN]={0};
+INT32 g_i32DataBuffPre[T5L_MAX_CHANEL_LEN]={0};
 INT16 g_i32_i16DataBuff[2*T5L_MAX_CHANEL_LEN]={0};//cause STM32 was little mode : low address store low data but screen was not
 //color send to DIWEN
 INT16 g_i16ColorBuff[T5L_MAX_CHANEL_LEN]={0};
@@ -49,7 +49,7 @@ UINT8 g_u8Read00A1_Data = 0XFF;
 /*******************************************************************************
  * Functions
  ******************************************************************************/
-
+//帮助信息统一处理
 void screenT5L_HelpDataMainFunction(void);
 
 
@@ -74,19 +74,17 @@ void screenT5L_Init(void)
 	g_T5L.pUartDevice->pTxBuffer = &g_T5L.rxData[0];
 	g_T5L.pUartDevice->pRxBuffer = &g_T5L.rxData[0];
 	//
+	g_T5L.RxLength = 0;			/**< 接收字节数 */
+	g_T5L.RxFinishFlag = FALSE;	/**< 接收完成标志 */
 	//
-	g_T5L.RxLength = 0;					/**< 接收字节数 */
-	g_T5L.RxFinishFlag = FALSE;			/**< 接收完成标志 */
+	g_T5L.SetAdd = 0XFFFF;	/**< 地址 */
+	g_T5L.DataLen = 0;		/**< 数据长度 */
+	g_T5L.SetData = 0;		/**< 数据 */
 	//
-	g_T5L.SetAdd = 0XFFFF;/**< 地址 */
-	g_T5L.DataLen = 0;/**< 数据长度 */
-	g_T5L.SetData = 0;/**< 数据 */
-
-	g_T5L.ColorClen=FALSE;/**< 通道切换SDWE颜色清除 */
-	g_T5L.CalibrateChanel=88;/**< 通道 */
-	g_T5L.CalibratePoint=0;/**< 校准点 */
-
-
+	g_T5L.ColorClen=FALSE;		/**< 通道切换SDWE颜色清除 */
+	g_T5L.CalibrateChanel=88;	/**< 通道 */
+	g_T5L.CalibratePoint=0;		/**< 校准点 */
+	//
 	g_T5L.ResetTrigerValid = FALSE;
 	//
 	for(i=0;i<CHANEL_POINT_NUM;i++)
@@ -106,10 +104,10 @@ void t5lDisPlayDataClear(void)
 	UINT8 i = 0 ;
 	for(i=0;i<T5L_MAX_CHANEL_LEN;i++)
 	{
-		g_i16DataBuff[i] = 0 ;
+		g_i32DataBuff[i] = 0 ;
 		g_i32_i16DataBuff[2*i + 0] = 0 ;
 		g_i32_i16DataBuff[2*i + 1] = 0 ;
-		g_i16DataBuffPre[i] = 0xffff ;
+		g_i32DataBuffPre[i] = 0xffff ;
 		g_i16ColorBuff[i] = 0 ;
 		g_i16ColorBuffPre[i] = 0xff;
 		g_i16ColorOtherChanel[i] = T5L_CHANEL_WEIGHT_NOT_EQUAL;
@@ -379,6 +377,7 @@ void color_clearAllColor(void)
 	for(seq=0;seq<T5L_MAX_CHANEL_LEN;seq++)
 	{
 		g_i16ColorBuff[seq] = LED_COLOR_NONE;
+		g_i16ColorBuffPre[seq] = LED_COLOR_NUM;
 	}
 }
 //==recv sdwe register ask deal
@@ -472,7 +471,7 @@ void clearLocalCalibrationKAndBAndSample(UINT8 sreen_chanel)
 		}
 	}	
 }
-
+#if 0
 void storeSysPara_3030(UINT16 varAdd, UINT16 varData)
 {
 	switch(varAdd)
@@ -501,7 +500,7 @@ void storeSysPara_3030(UINT16 varAdd, UINT16 varData)
 	}
 
 }
-
+#endif
 //==recv sdwe variable ask deal
 UINT8 sdweAskVaribleData(UINT16 varAdd, UINT16 varData)
 {
@@ -932,11 +931,16 @@ UINT8 jumpToBanlingPage()
 	//20220119 changed
 	switch(gSystemPara.isCascade)
 	{
+		//1、非级联
+		//2、级联+模式是11（主机）+12（从机）
+		//以上2种：页面跳转至8个方块界面
 		case 0://single module , not cascade
 		case ModbusFuncA_Master://FuncA module
 		case ModbusFuncA_Slave://FuncA module
 			pageChangeOrderAndData[1] = DMG_FUNC_Balancing_6_PAGE;
 		break;
+		//1、常规级联 1（主机）+（从机）
+		//2、常规级联的显示模式：16个方块界面 或 带帮助信息界面
 		case ModbusAdd_Master:
 		case ModbusAdd_Slave_1:
 			if(0 == gSystemPara.ScreenCastMode)
@@ -956,7 +960,7 @@ UINT8 jumpToBanlingPage()
 	if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
 		((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 	{
-		t5lWriteVarible((0X0084),pageChangeOrderAndData,2,0);
+		t5lWriteVarible((0X0084),pageChangeOrderAndData,2,0);/**< DIWEN屏幕界面跳转 */  //0084
 		result = 1;
 	}
 	return result;
@@ -1159,7 +1163,7 @@ void sendHelpDataDiff(void)
 	static UINT8 needSend = FALSE;
 	UINT8 i = 0 ;
 
-	INT32 *pData = &g_i16DataBuff[0];
+	INT32 *pData = &g_i32DataBuff[0];
 	INT16 *pColorOtherCh = &g_i16ColorOtherChanel[0];
 	//
 	float *sortWeight = &g_i16HelpDataSort[0];
@@ -1266,7 +1270,7 @@ void sendHelpDataDiff(void)
 
 void masterCaculateHelpData(ModbusRtuType *pContex,UINT8 chanel_len)
 {
-	INT32 *pData = &g_i16DataBuff[0];
+	INT32 *pData = &g_i32DataBuff[0];
 	INT16 *pColorOtherCh = &g_i16ColorOtherChanel[0];
 	//
 	float *sortWeight = &g_i16HelpDataSort[0];
@@ -1377,11 +1381,11 @@ void writeWeightDataFromCom(UINT8 *pWeightData,UINT8 len)
 	{
 		for(i=0;i<len;i++)
 		{
-			g_i16DataBuff[i] = 0 ;
-			g_i16DataBuff[i] = pWeightData[2*i+0];
-			g_i16DataBuff[i] <<= 8;
-			g_i16DataBuff[i] &= 0XFF00;
-			g_i16DataBuff[i] += pWeightData[2*i+1];
+			g_i32DataBuff[i] = 0 ;
+			g_i32DataBuff[i] = pWeightData[2*i+0];
+			g_i32DataBuff[i] <<= 8;
+			g_i32DataBuff[i] &= 0XFF00;
+			g_i32DataBuff[i] += pWeightData[2*i+1];
 		}
 	}
 }
@@ -1421,8 +1425,8 @@ void readWeightDataFromSys(UINT8 *pWeightData,UINT8 len)
 	{
 		for(i=0;i<len;i++)
 		{
-			pWeightData[2*i+0] = (g_i16DataBuff[i]>>8)&0xff;
-			pWeightData[2*i+1] = (g_i16DataBuff[i]>>0)&0xff;
+			pWeightData[2*i+0] = (g_i32DataBuff[i]>>8)&0xff;
+			pWeightData[2*i+1] = (g_i32DataBuff[i]>>0)&0xff;
 		}
 	}
 }
@@ -1814,8 +1818,8 @@ UINT8 sendBalancingWeightAndColor_Slave_1(void)
 	static UINT8 dataSendFlag = FALSE,colorSendFlag = FALSE;
 	UINT8 data_i = 0 ,chn_i = 0 , ret = 0;
 	//
-	INT32 *pData = &g_i16DataBuff[0];
-	INT32 *pDataPre = &g_i16DataBuffPre[0];
+	INT32 *pData = &g_i32DataBuff[0];
+	INT32 *pDataPre = &g_i32DataBuffPre[0];
 	//
 	INT16 *pDataSendToDiWen = &g_i32_i16DataBuff[0];
 	//
@@ -1927,8 +1931,8 @@ INT16 *pColor , INT16 *pColorPre , INT16 *pColorOtherCh , UINT8 chanel_len)
 
 UINT16 sendBalancingWeightAndColor_Master()
 {
-	INT32 *pData = &g_i16DataBuff[0];
-	INT32 *pDataPre = &g_i16DataBuffPre[0];
+	INT32 *pData = &g_i32DataBuff[0];
+	INT32 *pDataPre = &g_i32DataBuffPre[0];
 	INT16 *pDataSendToDiWen = &g_i32_i16DataBuff[0];
 	//
 	INT16 *pColor = &g_i16ColorBuff[0];
@@ -1961,8 +1965,8 @@ UINT8 sendBalancingWeightAndColor20220125_FuncA_Master()
 	//
 	static UINT8 dataSendFlag = FALSE , colorSendFlag = FALSE;
 	//
-	INT32 *pData = &g_i16DataBuff[0];
-	INT32 *pDataPre = &g_i16DataBuffPre[0];
+	INT32 *pData = &g_i32DataBuff[0];
+	INT32 *pDataPre = &g_i32DataBuffPre[0];
 	//
 	INT16 *pDataSendToDiWen = &g_i32_i16DataBuff[0];
 	//
@@ -2018,8 +2022,8 @@ UINT8 sendBalancingWeightAndColor20220125_FuncA_Slave(void)
 	static UINT8 dataSendFlag = FALSE,colorSendFlag = FALSE;
 	UINT8 data_i = 0 ,chn_i = 0 , ret = 0;
 	//
-	INT32 *pData = &g_i16DataBuff[0];
-	INT32 *pDataPre = &g_i16DataBuffPre[0];
+	INT32 *pData = &g_i32DataBuff[0];
+	INT32 *pDataPre = &g_i32DataBuffPre[0];
 	//
 	INT16 *pDataSendToDiWen = &g_i32_i16DataBuff[0];
 	//
@@ -2307,139 +2311,7 @@ UINT8 sendSysParaDataToDiwen(void)
 				}
 			}
 		break;
-		case 0://send 0x1000 单位
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
-			{
-				len=0;
-				sendData[len++] = gSystemPara.uint;
-				t5lWriteVarible((0x1000),sendData,len,0);
-				inerStatus++;
-			}
-		break;
-		case 1://send 0X100A~0X1013 系统参数
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
-			{
-				len = 0 ;
-				sendData[len++] = gSystemPara.minWeight;/**< 最小量程 */ //100A
-				sendData[len++] = gSystemPara.maxWeight;/**< 最大量程 */ //100B
-				sendData[len++] = gSystemPara.errRange;/**< 误差范围 */ //100C
-				sendData[len++] = gSystemPara.isCascade;/**< 是否级联 */ //100D
-				sendData[len++] = gSystemPara.isLedIndicate;/**< 是否LED指示 */ //100E
-				sendData[len++] = gSystemPara.userColorSet[0];/**< 配平色1 */ //100F
-				sendData[len++] = gSystemPara.userColorSet[1];/**< 配平色2 */ //1010
-				sendData[len++] = gSystemPara.userColorSet[2];/**< 配平色3 */ //1011
-				sendData[len++] = gSystemPara.userColorSet[3];/**< 配平色4 */ //1012
-				sendData[len++] = gSystemPara.zeroRange;/**< 零点范围 */ //1013
-				sendData[len++] = gSystemPara.ScreenLight;/**< 正常亮度 */ //1014
-				//sendData[len++] = 25;/**< 待机亮度 */ //1015
-				//sendData[len++] = 300;/**< 待机时间 */ //1016
-				sendData[len++] = gSystemPara.VoiceNumTouch;/**< 音量大小 触控*/ //1015
-				sendData[len++] = gSystemPara.VoiceNum;/**< 音量大小 */ //1016
-				
-				sendData[len++] = gSystemPara.ScreenVoiceSwitch;/**< HX711	语音开关 */ //1017
-				sendData[len++] = gSystemPara.ScreenCastMode;/**< HX711	级联显示模式 */ //1018
-				sendData[len++] = gSystemPara.FlashEraseTimes;/**< HX711	FLASH 擦写次数 */ //1019
-				sendData[len++] = MCU_VERSION;/**< MCU 版本 */ //101A
-				sendData[len++] = DIWEN_VERSION;/**< DIVEN 版本 */ //101B
-				
-				sendData[len++] = gSystemPara.xiaoShuXianShi;/**< 小数显示 0x101c*/
-				sendData[len++] = gSystemPara.mlYugBiLv;/**< ml与g比率 0x101d*/
-				sendData[len++] = gSystemPara.daPinXianShi;/**< 大屏显示 0x101e*/
-
-				t5lWriteVarible((0x100A),sendData,len,0);
-				inerStatus++;
-			}
-		break;
-		case 2://send 0X1501 password ID
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
-			{
-				len=0;
-				sendData[len++] = g_passWordId&0XFFFF;
-				t5lWriteVarible((0x1500),sendData,len,0);
-				inerStatus++;
-			}
-		break;
-		case 3://send 1510 password store
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
-			{
-				len=0;
-				sendData[len++] = g_passWordStore&0XFFFF;
-				t5lWriteVarible((0x1510),sendData,len,0);
-				inerStatus++;
-			}
-		break;
-		case 4://send 2100 DMG_FUNC_SET_CHANEL_NUM
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
-			{
-				len=0;
-				sendData[len++] = g_T5L.CalibrateChanel;
-				t5lWriteVarible(DMG_FUNC_SET_CHANEL_NUM,sendData,len,0);
-				inerStatus++;
-			}
-		break;
-		case 5://send 1201 DMG_FUNC_HELP_TO_JUDGE_SET_ADDRESS
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
-			{
-				len=0;
-				for(len=0;len<DIFF_TO_DIWEN_DATA_LEN;len++)
-				{
-					sendData[len] = 0;
-				}
-				t5lWriteVarible(DMG_FUNC_HELP_TO_JUDGE_SET_ADDRESS,sendData,len,0);
-				inerStatus++;
-			}
-		break;
-		case 6://send 0x3000 DMG_FUNC_ASK_CHANEL_WEIGHT_ADDRESS
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
-			{
-				len=0;
-				for(len=0;len<(2*T5L_MAX_CHANEL_LEN);len++)
-				{
-					sendData[len] = 0;
-				}
-				t5lWriteVarible(DMG_FUNC_ASK_CHANEL_WEIGHT_ADDRESS,sendData,len,0);
-				inerStatus++;
-			}
-		break;
-		case 7://send back color to DW
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
-			{
-				len=0;
-				for(len=0;len<T5L_MAX_CHANEL_LEN;len++)
-				{
-					sendData[len] = 0;
-				}
-				t5lWriteVarible(DMG_FUNC_ASK_CHANEL_COLOR_ADDRESS,sendData,len,0);
-				inerStatus++;
-			}
-		break;
-		case 8://jump to Banling page
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
-			{
-				len=0;
-				jumpToBanlingPage();
-				inerStatus++;
-			}
-		break;	
-		case 9:	
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
-			{
-				len=0;
-				screenT5L_OutputVoice(VoiceTypeMax);
-				inerStatus++;
-			}
-		break;
-		case 10://send screen light
+		case 0://send screen light
 			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
 				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{
@@ -2448,19 +2320,150 @@ UINT8 sendSysParaDataToDiwen(void)
 				inerStatus++;
 			}
 		break;
+		case 1://send 0x3000 DMG_FUNC_ASK_CHANEL_WEIGHT_ADDRESS
+			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			{
+				len=0;
+				for(len=0;len<(2*T5L_MAX_CHANEL_LEN);len++)//每个通道是4字节变量
+				{
+					sendData[len] = 0;
+				}
+				t5lWriteVarible(DMG_FUNC_ASK_CHANEL_WEIGHT_ADDRESS,sendData,len,0);/**< 通道重量 */  //3000
+				inerStatus++;
+			}
+		break;
+		case 2://send back color to DW
+			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			{
+				len=0;
+				for(len=0;len<T5L_MAX_CHANEL_LEN;len++)
+				{
+					sendData[len] = 0;
+				}
+				t5lWriteVarible(DMG_FUNC_ASK_CHANEL_COLOR_ADDRESS,sendData,len,0);/**< 通道背景色 */  //3100
+				inerStatus++;
+			}
+		break;
+		case 3://jump to Banling page
+			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			{
+				len=0;
+				jumpToBanlingPage();
+				inerStatus++;
+			}
+		break;	
+		case 4://send 0x1000 单位
+			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			{
+				len=0;
+				sendData[len++] = gSystemPara.uint;
+				t5lWriteVarible((0x1000),sendData,len,0);		/**< 单位：ml/g */ 				//1000
+				inerStatus++;
+			}
+		break;
+		case 5://send 0X100A~0X101E 系统参数
+			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			{
+				len = 0 ;
+				sendData[len++] = gSystemPara.minWeight;		/**< 最小量程 */ 				//100A
+				sendData[len++] = gSystemPara.maxWeight;		/**< 最大量程 */ 				//100B
+				sendData[len++] = gSystemPara.errRange;			/**< 误差范围 */ 				//100C
+				sendData[len++] = gSystemPara.isCascade;		/**< 是否级联 */ 				//100D
+				sendData[len++] = gSystemPara.isLedIndicate;  	/**< 是否LED指示 */ 			//100E
+				sendData[len++] = gSystemPara.userColorSet[0];	/**< 配平色1 */ 				//100F
+				sendData[len++] = gSystemPara.userColorSet[1];	/**< 配平色2 */ 				//1010
+				sendData[len++] = gSystemPara.userColorSet[2];	/**< 配平色3 */ 				//1011
+				sendData[len++] = gSystemPara.userColorSet[3];	/**< 配平色4 */ 				//1012
+				sendData[len++] = gSystemPara.zeroRange;		/**< 零点范围 */ 				//1013
+				sendData[len++] = gSystemPara.ScreenLight;		/**< 正常亮度 */ 				//1014
+#if 0				
+				sendData[len++] = 25;							/**< 待机亮度 */ 				//1015
+				sendData[len++] = 300;							/**< 待机时间 */ 				//1016
+#else
+				sendData[len++] = gSystemPara.VoiceNumTouch;	/**< 音量大小 触控*/ 			//1015
+				sendData[len++] = gSystemPara.VoiceNum;			/**< 音量大小 */ 			    //1016
+#endif				
+				sendData[len++] = gSystemPara.ScreenVoiceSwitch;/**< HX711	语音开关 */ 		//1017
+				sendData[len++] = gSystemPara.ScreenCastMode;	/**< HX711	级联显示模式 */ 	//1018
+				sendData[len++] = gSystemPara.FlashEraseTimes;	/**< HX711	FLASH 擦写次数 */ 	//1019
+				sendData[len++] = MCU_VERSION;					/**< MCU 版本 */ 				//101A
+				sendData[len++] = DIWEN_VERSION;				/**< DIVEN 版本 */ 				//101B
+				
+				sendData[len++] = gSystemPara.xiaoShuXianShi;	/**< 小数显示 0x101c*/			//101C
+				sendData[len++] = gSystemPara.mlYugBiLv;		/**< ml与g比率 0x101d*/			//101D
+				sendData[len++] = gSystemPara.daPinXianShi;		/**< 大屏显示 0x101e*/			//101E
+
+				t5lWriteVarible((0x100A),sendData,len,0);
+				inerStatus++;
+			}
+		break;
+		case 6://send 0X1501 password ID
+			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			{
+				len=0;
+				sendData[len++] = g_passWordId&0XFFFF;
+				t5lWriteVarible((0x1500),sendData,len,0);		/**< 密码依赖的芯片ID */		//1500
+				inerStatus++;
+			}
+		break;
+		case 7://send 1510 password store
+			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			{
+				len=0;
+				sendData[len++] = g_passWordStore&0XFFFF;
+				t5lWriteVarible((0x1510),sendData,len,0);		/**< 密码 */				  //1510
+				inerStatus++;
+			}
+		break;
+		case 8://send 2100 DMG_FUNC_SET_CHANEL_NUM
+			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			{
+				len=0;
+				sendData[len++] = g_T5L.CalibrateChanel;
+				t5lWriteVarible(DMG_FUNC_SET_CHANEL_NUM,sendData,len,0);/**< 校准的通道号 */  //2100
+				inerStatus++;
+			}
+		break;
+		case 9://send 1201 DMG_FUNC_HELP_TO_JUDGE_SET_ADDRESS
+			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			{
+				len=0;
+				for(len=0;len<DIFF_TO_DIWEN_DATA_LEN;len++)
+				{
+					sendData[len] = 0;
+				}
+				t5lWriteVarible(DMG_FUNC_HELP_TO_JUDGE_SET_ADDRESS,sendData,len,0);/**< 通道差值，帮助信息 */  //1201
+				inerStatus++;
+			}
+		break;
+		case 10:	
+			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			{
+				len=0;
+				screenT5L_OutputVoice(VoiceTypeMax);
+				inerStatus++;
+			}
+		break;
 		case 11://changed at 20220119 , FuncA Module special , send num
 			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
 				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{
-				if(gSystemPara.isCascade == ModbusFuncA_Slave)//only FuncA Module and Slave , need change block num to 7~12
+				if(gSystemPara.isCascade == ModbusFuncA_Slave)//only FuncA Module and Slave , need change block num to 9~16
 				{
-					len = 0 ;
-					sendData[len++] = 7;
-					sendData[len++] = 8;
-					sendData[len++] = 9;
-					sendData[len++] = 10;
-					sendData[len++] = 11;
-					sendData[len++] = 12;					
+					for(len = 0 ; len < HX711_CHANEL_NUM ; len++)
+					{
+						sendData[len] = HX711_CHANEL_NUM + len;
+					}					
 					t5lWriteVarible((0x3901),sendData,len,0);
 				}			
 				inerStatus++;
@@ -2470,12 +2473,11 @@ UINT8 sendSysParaDataToDiwen(void)
 			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
 				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{		
-				if(0 != screen_ChangeDisplayPosition())//更具小数是否打开 发送相关数据
+				if(0 != screen_ChangeDisplayPosition())//根据小数是否打开 发送相关数据
 				{
 					inerStatus++;
 				}
 			}
-
 		break;
 		default:
 			result = TRUE;
@@ -2811,7 +2813,7 @@ void screenT5L_TxFunction(void)
 		{
 			g_T5L.sdweJumpToHomePage = FALSE;
 		}
-	}//==M2 event arrive:jump to BALANCING Page
+	}//==M2 event arrive:jump to BALANCING Page 物理按键触发
 	else if(TRUE == g_T5L.sdweJumpToBanlingPage)
 	{
 		if(0 != jumpToBanlingPage())
@@ -2854,7 +2856,7 @@ void screenT5L_TxFunction(void)
 			g_T5L.sdweChangeDescriblePoint = FALSE;
 		}
 	}	
-	//==M2-1 event arrive: jump to BALANCING Page
+	//==M2-1 event arrive: jump to BALANCING Page 触摸屏触发
 	else if(TRUE == g_T5L.sdweJumpBalancing)
 	{
 		if(0!= jumpToBalancingPage())
@@ -2930,23 +2932,23 @@ void screenT5L_TxFunction(void)
 			break;
 		}
 		screenT5L_HelpDataMainFunction();
-	}	
 
-	//voice printf mainfunction
-	if(TRUE == gSystemPara.ScreenVoiceSwitch)
-	{
-		switch(gSystemPara.isCascade)
+		//voice printf mainfunction
+		if(TRUE == gSystemPara.ScreenVoiceSwitch)
 		{
-			//master
-			case 0:
-			case ModbusAdd_Master:
-			case ModbusFuncA_Master:
-				screenT5L_VoicePrintfMainfunction();
-			break;
-			default:
-			break;
+			switch(gSystemPara.isCascade)
+			{
+				//master
+				case 0:
+				case ModbusAdd_Master:
+				case ModbusFuncA_Master:
+					screenT5L_VoicePrintfMainfunction();
+				break;
+				default:
+				break;
+			}
 		}
-	}
+	}	
 }
 
 //==SDWE UART data deal

@@ -115,15 +115,13 @@ int main(void)
   /* USER CODE BEGIN 2 */
   //PB6 : USART1_TX_SCREEN1_RX
   //PB7 : USART1_RX_SCREEN1_TX
-  #if 0
-    HAL_UART_Receive_DMA(&huart1, Usart1AsScreen1Type.usartDMA_rxBuf, RECEIVELEN);//串口1DMA
-    __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
-  #else
-    HAL_UART_Receive_DMA(&huart1, g_T5L.rxData, T5L_DMG_UART_DATA_LEN);//串口1DMA
-    __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
-  #endif
-    HAL_UART_Receive_DMA(&huart3, g_ModbusRtu.rxDataUart, MODBUS_RTU_UART_DATA_LEN);//串口3DMA
-    __HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);
+  //串口1 接显示屏
+  HAL_UART_Receive_DMA(&huart1, g_T5L.rxData, T5L_DMG_UART_DATA_LEN);//串口1DMA
+  __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
+  
+  //串口3 接RS485
+  HAL_UART_Receive_DMA(&huart3, g_ModbusRtu.rxDataUart, MODBUS_RTU_UART_DATA_LEN);//串口3DMA
+  __HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);
 
   //PC6 : USART6_TX_WX_RX
   //PC7 : USART6_RX_WX_TX

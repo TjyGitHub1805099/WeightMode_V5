@@ -388,6 +388,8 @@ void hx711_setAllRemoveWeight(void)
 	{
 		gSystemPara.userColorUsed[colorUsed_i] = SYS_COLOR_NOT_USED_FLAG;
 	}
+	//
+	//setModbusSelfRemoveFlag(TRUE);
 }
 //==sample all chanel data
 void hx711_AllChanelSample(void)
@@ -661,13 +663,12 @@ void hx711_MainFunction(void)
 		//waite single sample complete
 		if(TRUE == hx711_SampleFunction())
 		{
-			if((FALSE == u8RemoveWeightWhenPowerOn) && (++u8AllreadySampleTimes >= CHANEL_FILTER_NUM))
+			if((FALSE == u8RemoveWeightWhenPowerOn) && (++u8AllreadySampleTimes >= (CHANEL_FILTER_NUM+2)))//需要多采集2个样 用于上电去皮
 			{
 				//when sample x times match remove weight
 				hx711_setAllRemoveWeight();
 				t5lDisPlayDataClear();
 				u8RemoveWeightWhenPowerOn = TRUE;
-				u8AllreadySampleTimes = CHANEL_FILTER_NUM;
 				//
 				g_T5L.sdweHX711FirstSampleCoplt = TRUE;
 			}	

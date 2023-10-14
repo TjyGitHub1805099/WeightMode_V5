@@ -6,84 +6,16 @@
 #include "stm32f4xx_it.h"
 
 #define SYS_HX711_ONLINE_CHECK_TIME	(2000)//when power on 2000ms start check HX711  , total 3 times
-#define SYS_REMOVE_WEIGHT_TIME		(3300)//when power on 3300ms remove weight
-#define SYS_POWER_REDAY_TIME		(3500)//when power on 3500ms send data to T5L , do not change
-#define MCU_VERSION			        (55)//2023.04.07
-#define DIWEN_VERSION		        (55)//2023.04.07
-extern UINT32 get_SysTick_ByTimer(void);
+#define MCU_VERSION			        (80)//2023.09.19
+#define DIWEN_VERSION		        (80)//2023.09.19
 
+
+extern UINT32 get_SysTick_ByTimer(void);
 extern void app_main_task(void);
 
-//version 55 & 55
 /*
-1.optimize after weight send to screen then judge color
-2.when weight outof zero need judge it
-3.when sortArry_num minus 1 so not compare it
-*/
+//version 8.0 & 8.0
 
-//version 53 & 52
-/*
-1.optimize weight data type from 2byte to 4byte 
-*/
-
-//version 52 & 52
-/*
-1.modified the DW screan weight vlu type len was 4 byte
-2.remove not used logic 
-*/
-
-//version 51 & 51
-/*
-1.add disimal point
-2.add ml/g lilv
-3.add larger sreen open/close para
-*/
-
-//================================================================================================
-/*
-1.Screen Page describe
-Page1~48:log printf from min to max
-Page49:Balancing page , six block display , two group of help data display
-Page50:number input page
-Page51:text input page
-Page52:system param set page
-Page53:system caculate page
-Page54:second sheet , used for enter Page52 or Page49 or Page53
-Page55:Balancing page , 12 block display
-Page56:sys password
-Page57:Balancing page , six block display , logo and unit and err display
-Page58:Balancing page , 12 block display , home enter and remove enter
-Page59:help page , six group help data display , logo and unit and err display
-Page60:system param set page 2
-
-2.Page jump logic
-2.1.1 when sys powerup , entry Page49
-2.1.2 when 0x1102 write 0x1102 , Page49  -> Page57 (single module) ,or Page55  -> Page58 (cascatde module) 
-2.1.3 when 0x1101 write 0x1101 , Page57  -> Page49 (single module) ,or Page58  -> Page55 (cascatde module)
-2.1.4 when 0x2104 write   1010 , Page54  -> Page52
-2.1.5 when 0x2103 write   2021 , Page54  -> Page53
-2.1.6 when 0x2103 write   1202 , Page54  -> Page56
-2.1.7 when home key enter 		 Page54 <-> Page49(single module) , or Page49 <-> Page55 / Page59 (cascatde module)
-
-*/
-
-//================================================================================================
-/*20220119 change list
-1.FunctionA Module
-1.1.when gSystemPara.isCascade = ModbusFuncA_Slave
-    1.1.1.need send the screen block display num as 7~12
-    1.1.2.send it's self weight data to screen
-    1.1.3.send color data from master to screen
-    1.1.4.send caculate help data from master to screen
-    1.1.5.screen exchange only six block page to sys para page
-1.2.when gSystemPara.isCascade = ModbusFuncA_Master
-	1.1.1.need send the screen block display num as 1~6 ; [don't change]
-	1.1.2.send it's self weight data to screen ; [don't change]
-	1.1.3.send color data from master to screen ; [don't change]
-	1.1.4.send caculate help data from master to screen ; [don't change]
-	1.1.5.screen exchange only six block page to sys para page
-
-2.1 send weight and color date to screen
 	
 */
 #endif

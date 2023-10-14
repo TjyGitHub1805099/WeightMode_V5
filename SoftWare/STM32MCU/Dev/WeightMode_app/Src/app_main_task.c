@@ -23,16 +23,6 @@ UINT32 g_sys_ms_tick = 0 ;
 //==sys main init function
 void app_main_init(void)
 {
-	#if 0
-	//after power up 3.3 seconds clear all weight
-	static UINT8 removeWeight = TRUE;
-	if((TRUE == removeWeight)&&(g_sys_ms_tick >= SYS_REMOVE_WEIGHT_TIME))
-	{
-		removeWeight = FALSE;
-		hx711_setAllRemoveWeight();
-		t5lDisPlayDataClear();
-	}
-	#endif
 }
 //==sys main function
 void app_main_task(void)
