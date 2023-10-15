@@ -68,7 +68,7 @@
 #define DMG_FUNC_SET_ZERO_RANGE_ADDRESS		(0X1013)//0x1013
 #define DMG_FUNC_SET_SCREEN_LIGHT_ADDRESS	(0X1014)//0x1014
 
-#define DMG_FUNC_SET_VOICE_NUM_TOUCH_ADDRESS		(0X1015)//0x1015
+#define DMG_FUNC_SET_VOICE_NUM_TOUCH_ADDRESS (0X1015)//0x1015
 
 #define DMG_FUNC_SET_VOICE_NUM_ADDRESS		(0X1016)//0x1016
 
@@ -274,8 +274,19 @@ typedef struct structSdweType
 	UINT16  sdweChangeDescriblePoint;/**< 修改小数显示 */
 	UINT16  sdwePowerOn;/**< 屏幕已经上电 */
 	UINT16  sdweHX711FirstSampleCoplt;/**< HX711数据采集完成 */
+	UINT8 	needStore;/**< 是否需要保存*/
 }T5LType;
 extern T5LType g_T5L;
+typedef UINT8 (*screenRxTxHandleFunc)(T5LType *pSdwe);  // 定义屏幕指令接收发送处理函数指针： screenRxTxHandleFunc
+typedef struct screenRxTxHandleType_Struct
+{
+	UINT8 priority;
+	UINT8 index;
+	screenRxTxHandleFunc func;
+}screenRxTxHandleType;
+
+#define SCREEN_RX_HANDLE_TOTAL_NUM	(14)	/**< 屏幕RX数据处理事件数量 */
+#define SCREEN_TX_HANDLE_TOTAL_NUM	(16)	/**< 屏幕TX数据处理事件数量 */
 
 /** ModbusRtu设备默认配置 */
 #define T5LDataDefault   { \

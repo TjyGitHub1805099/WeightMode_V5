@@ -501,12 +501,322 @@ void storeSysPara_3030(UINT16 varAdd, UINT16 varData)
 
 }
 #endif
+
+
+UINT8 screenRxHandle_Version(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	if(DMG_SYS_VERSION_GET_ADD == pSdwe->SetAdd)
+	{
+		g_T5L.sdwePowerOn = TRUE;//if recived version , indicate allready power on
+		t5lDisPlayDataClear();
+		matched = TRUE;
+	}
+	return matched;
+}
+UINT8 screenRxHandle_SysPassWord(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	if(pSdwe->SetAdd == DMG_FUNC_PASSORD_SET_ADDRESS)
+	{
+		STM32CheckPassWord(pSdwe->SetData);/**< 密码 */
+		pSdwe->needStore |= DMG_TRIGER_SAVE_SECOTOR_2 ;
+		matched = TRUE;
+	}
+	return matched;
+}
+UINT8 screenRxHandle_SysPara(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	if((pSdwe->SetAdd >= DMG_FUNC_SET_UNIT_ADDRESS)&&(pSdwe->SetAdd <= (DMG_FUNC_DIWEN_DAPING_ADDRESS)))
+	{	
+		matched = TRUE;
+		switch(pSdwe->SetAdd)
+		{
+			case DMG_FUNC_SET_UNIT_ADDRESS:		//		(0X1000)//0x1000
+				gSystemPara.uint = pSdwe->SetData;/**< 单位 */
+			break;
+			case DMG_FUNC_SET_MIN_RANGE_ADDRESS://		(0X100A)//0x100A
+				gSystemPara.minWeight = pSdwe->SetData;/**< 最小量程 */
+			break;
+			case  DMG_FUNC_SET_MAX_RANGE_ADDRESS://		(0X100B)//0x100B
+				gSystemPara.maxWeight = pSdwe->SetData;/**< 最大量程 */
+			break;
+			case  DMG_FUNC_SET_ERR_RANGE_ADDRESS://		(0X100C)//0x100C
+				gSystemPara.errRange = pSdwe->SetData;/**< 误差范围 */
+			break;
+			case  DMG_FUNC_SET_isCascade_ADDRESS://		(0X100D)//0x100D
+				gSystemPara.isCascade = pSdwe->SetData;/**< 是否级联 */
+			break;
+			case  DMG_FUNC_SET_isLedIndicate_ADDRESS://	(0X100E)//0x100E
+				gSystemPara.isLedIndicate = pSdwe->SetData;/**< 是否LED指示 */
+			break;
+			case  DMG_FUNC_SET_ZERO_RANGE_ADDRESS://	(0X1013)//0x1013
+				gSystemPara.zeroRange = pSdwe->SetData;/**< 零点范围 */
+			break;
+			case DMG_FUNC_SET_SCREEN_LIGHT_ADDRESS://	(0X1014)//0x1014
+				gSystemPara.ScreenLight = pSdwe->SetData;/**< 屏幕背光亮度 */
+				g_T5L.sdweFreshScreenLight = TRUE;
+			break;
+			case DMG_FUNC_SET_VOICE_NUM_TOUCH_ADDRESS://(0X1015)//0x1015
+				gSystemPara.VoiceNumTouch = pSdwe->SetData;/**< 语音大小 触控*/
+			break;
+			case DMG_FUNC_SET_VOICE_NUM_ADDRESS://		(0X1016)//0x1016
+				gSystemPara.VoiceNum = pSdwe->SetData;/**< 语音大小 */
+			break;				
+			case DMG_FUNC_SET_VOICE_SWITCH_ADDRESS://	(0X1017)//0x1017
+				gSystemPara.ScreenVoiceSwitch = pSdwe->SetData;/**< HX711	语音开关 */ 
+			break;
+			case DMG_FUNC_SET_CAST_SWITCH_ADDRESS://	(0X1018)//0x1018
+				gSystemPara.ScreenCastMode = pSdwe->SetData;/**< HX711	级联显示模式 */
+			break;
+			case DMG_FUNC_DIWEN_XIAOSHU_ADDRESS:/**< 小数显示 0x101C*/
+				gSystemPara.xiaoShuXianShi = pSdwe->SetData;
+				g_T5L.sdweChangeDescriblePoint = TRUE;
+			break;
+			case DMG_FUNC_DIWEN_BILV_ADDRESS:	/**< ml与g比率 0x101D*/
+				gSystemPara.mlYugBiLv = pSdwe->SetData;
+			break;
+			case DMG_FUNC_DIWEN_DAPING_ADDRESS:/**< 大屏显示 0x101E*/
+				gSystemPara.daPinXianShi = pSdwe->SetData;
+			break;
+			default:
+				if((pSdwe->SetAdd >= DMG_FUNC_SET_COLOR_START_ADDRESS)&&(pSdwe->SetAdd <= (DMG_FUNC_SET_COLOR_END_ADDRESS)))
+				{
+					gSystemPara.userColorSet[pSdwe->SetAdd-DMG_FUNC_SET_COLOR_START_ADDRESS] = pSdwe->SetData;/**< 颜色1~4 */
+				}
+			break;
+		}
+		//
+		pSdwe->needStore |= DMG_TRIGER_SAVE_SECOTOR_2 ;
+	}
+	return matched;
+}
+UINT8 screenRxHandle_JumpToBalancingClearnPage(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	if(DMG_FUNC_Balancing_CLEARPAGE_SET_ADDRESS == pSdwe->SetAdd)
+	{
+		matched = TRUE;
+		if(DMG_FUNC_Balancing_CLEARPAGE_SET_VALUE == (UINT16)pSdwe->SetData)
+		{
+			pSdwe->sdweJumpBalancing_cleanpagee = TRUE;
+		}
+	}
+	return matched;
+}
+UINT8 screenRxHandle_JumpToBalancingHomePage(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	if(DMG_FUNC_Balancing_HOME_SET_ADDRESS == pSdwe->SetAdd)
+	{
+		matched = TRUE;
+		if(DMG_FUNC_Balancing_HOME_SET_VALUE == (UINT16)pSdwe->SetData)
+		{
+			pSdwe->sdweJumpBalancing_home = TRUE;
+		}
+	}
+	return matched;
+}
+UINT8 screenRxHandle_JumpToBalancingPage(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	if(DMG_FUNC_Balancing_SET_ADDRESS == pSdwe->SetAdd)
+	{
+		matched = TRUE;
+		if(DMG_FUNC_Balancing_SET_VALUE == (UINT16)pSdwe->SetData)
+		{
+			pSdwe->sdweJumpBalancing = TRUE;
+		}
+	}
+	return matched;
+}
+UINT8 screenRxHandle_CalibrateChanelSet(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	if(DMG_FUNC_SET_CHANEL_NUM == pSdwe->SetAdd)
+	{
+		matched = TRUE;
+		pSdwe->ResetTrigerValid = FALSE;/*重新校准取消*/
+		if(pSdwe->CalibrateChanel != pSdwe->SetData)
+		{
+			pSdwe->sdweChanelChanged = TRUE;
+			if(pSdwe->SetData <= HX711_CHANEL_NUM)
+			{
+				pSdwe->CalibrateChanel = pSdwe->SetData;//chanel
+			}
+		}
+	}
+	return matched;
+}
+UINT8 screenRxHandle_CalibrateAddressSet(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	if(DMG_FUNC_RESET_CALIBRATION_ADDRESS == pSdwe->SetAdd)
+	{
+		matched = TRUE;
+		if(DMG_FUNC_RESET_CALIBRATION_VAL == (UINT16)pSdwe->SetData)
+		{
+			pSdwe->sdweResetTriger = TRUE;
+			pSdwe->ResetTrigerValid = TRUE;
+			clearLocalCalibrationRecordData(pSdwe->CalibrateChanel);
+			clearLocalCalibrationKAndBAndSample(pSdwe->CalibrateChanel);
+		}
+	}
+	return matched;
+}
+UINT8 screenRxHandle_JumpToCalibrateOrActivePage(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	if(DMG_FUNC_JUNPTO_CALIBRATION_ADDRESS == pSdwe->SetAdd)
+	{
+		matched = TRUE;
+		if(DMG_FUNC_JUNPTO_CALIBRATION_VAL == (UINT16)pSdwe->SetData)
+		{
+			pSdwe->sdweJumpToCalitrationPage = TRUE;//jump to page 53
+		}
+		else if(DMG_FUNC_JUNPTO_ACTIVE_VAL == (UINT16)pSdwe->SetData)
+		{
+			pSdwe->sdweJumpActivePage = TRUE;//jump to page 56
+		}
+	}
+	return matched;
+}
+UINT8 screenRxHandle_JumpToSysParaPage(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	if(DMG_FUNC_JUNPTO_SYSPAR_ADDRESS == pSdwe->SetAdd)
+	{
+		matched = TRUE;
+		if(DMG_FUNC_JUNPTO_SYSPAR_VAL == (UINT16)pSdwe->SetData)
+		{
+			pSdwe->sdweJumpToSysParaPage = TRUE;//jump to page 52
+		}
+	}
+	return matched;
+}
+UINT8 screenRxHandle_RemoveWeightTriger(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	if(DMG_FUNC_REMOVE_WEIGHT_ADDRESS == pSdwe->SetAdd)
+	{
+		matched = TRUE;
+		if(DMG_FUNC_REMOVE_WEIGHT_VAL == (UINT16)pSdwe->SetData)
+		{
+			pSdwe->sdweRemoveWeightTriger = TRUE;
+			//
+			setModbusSelfRemoveFlag(TRUE);
+		}
+	}
+	return matched;
+}
+UINT8 screenRxHandle_CalibratePointSet(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	UINT8 i = 0 , point = 0;
+	INT32 weight=0;
+	if((pSdwe->SetAdd >= DMG_FUNC_SET_CHANEL_POINT_ADDRESS)&&(pSdwe->SetAdd < (DMG_FUNC_SET_CHANEL_POINT_ADDRESS + CHANEL_POINT_NUM )))
+	{
+		matched = TRUE;
+		//
+		pSdwe->needStore |= DMG_TRIGER_SAVE_SECOTOR_1 ;
+		//point
+		pSdwe->CalibratePoint = (pSdwe->SetAdd -DMG_FUNC_SET_CHANEL_POINT_ADDRESS) ;//point
+		point = pSdwe->CalibratePoint;
+		pSdwe->CalibratePointArry[point] = pSdwe->SetData;
+		//weight
+		weight = pSdwe->SetData;
+	
+		if(0 == pSdwe->CalibrateChanel)//all chanel point weight value set
+		{
+			for(i=0;i<HX711_CHANEL_NUM;i++)//8通道
+			{
+				setSampleWeightValue(i,point,weight);
+				pointWeightTrigerDataSet(i,point,weight);
+			}
+			pointWeightTrigerDataSet(i,point,weight);
+		}
+		else//single chanel point weight value set
+		{
+			setSampleWeightValue((pSdwe->CalibrateChanel-1),point,weight);
+			pointWeightTrigerDataSet((pSdwe->CalibrateChanel-1),point,weight);
+		}
+	}
+	return matched;
+}
+UINT8 screenRxHandle_CalibratePointSampleAndSet(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	UINT8 i = 0 , point = 0;
+	INT32 avgSampleValue=0;
+	if((TRUE == pSdwe->ResetTrigerValid)&&(pSdwe->SetAdd >= DMG_FUNC_SET_CHANEL_POINT_TRIG_ADDRESS)&&(pSdwe->SetAdd < (DMG_FUNC_SET_CHANEL_POINT_TRIG_ADDRESS + CHANEL_POINT_NUM )))
+	{
+		matched = TRUE;
+		//value = 0x12fe
+		if(DMG_FUNC_SET_CHANEL_POINT_TRIG_VAL == pSdwe->SetData)
+		{
+			//	
+			pSdwe->sdwePointTriger = TRUE;
+			//
+			pSdwe->needStore |= DMG_TRIGER_SAVE_SECOTOR_1 ;
+			point = ( pSdwe->SetAdd - DMG_FUNC_SET_CHANEL_POINT_TRIG_ADDRESS );
+			
+			if(0 == pSdwe->CalibrateChanel)//all chanel caculate	K & B
+			{
+				//avgSampleValue = hx711_getAvgSample(pSdwe->CalibrateChanel)/512;
+				for(i=0;i<HX711_CHANEL_NUM;i++)//eight chanel
+				{
+					avgSampleValue = hx711_getAvgSample((enumHX711ChanelType)i)/512;
+					trigerCalcKB(i,point);
+					pointTrigerDataSet(i,point,1,avgSampleValue);
+				}
+				pointTrigerDataSet(HX711_CHANEL_NUM,point,1,avgSampleValue);
+				
+			}
+			else if(HX711_CHANEL_NUM >= pSdwe->CalibrateChanel)//single chanel caculate  K & B
+			{
+				avgSampleValue = hx711_getAvgSample((enumHX711ChanelType)(pSdwe->CalibrateChanel-1))/512;
+				trigerCalcKB((pSdwe->CalibrateChanel-1),point);
+				pointTrigerDataSet((pSdwe->CalibrateChanel-1),point,1,avgSampleValue);
+			}
+			//sdwePointTrigerUpdata(point,1,avgSampleValue);
+		}
+	}
+	return matched;
+}
+UINT8 screenRxHandle_VoicePrintfStatusFromScreen(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	if(pSdwe->SetAdd == DMG_SYS_STATUS_OF_VOICE_PRINTF_00A1)
+	{
+		matched = TRUE;
+		g_u8Read00A1_Data = pSdwe->SetData;
+	}
+	return matched;
+}
+//
+screenRxTxHandleType screenRxHandle[SCREEN_RX_HANDLE_TOTAL_NUM]=
+{
+	//priority index func_add
+	{0,	0, &screenRxHandle_Version},//开机时MCU获取到屏幕版本时，代表屏幕可以正常通讯
+	{0,	1, &screenRxHandle_SysPassWord},//密码管理
+	{0,	2 ,&screenRxHandle_SysPara},//系统参数管理
+	{0,	3, &screenRxHandle_JumpToBalancingClearnPage},//配平清爽界面
+	{0,	4, &screenRxHandle_JumpToBalancingHomePage},//配平主界面界面 ， 它与清爽界面来会切换，当点击屏幕时
+	{0,	5, &screenRxHandle_JumpToBalancingPage},//配平界面 ， 其他界面跳回配平界面时用
+	{0,	6, &screenRxHandle_CalibrateChanelSet},//校准界面 ，通道号设置
+	{0,	7 ,&screenRxHandle_CalibrateAddressSet},//校准界面 ，地址设置
+	{0,	8 ,&screenRxHandle_JumpToCalibrateOrActivePage},//跳转校准界面
+	{0,	9, &screenRxHandle_JumpToSysParaPage},//跳转系统参数设置界面
+	{0,	10,&screenRxHandle_RemoveWeightTriger},//去皮事件触发
+	{0,	11,&screenRxHandle_CalibratePointSet},//校准界面，校准点参考值设置
+	{0,	12,&screenRxHandle_CalibratePointSampleAndSet},//校准界面，校准点采样及设置
+	{0,	13,&screenRxHandle_VoicePrintfStatusFromScreen},//屏幕语音控制后状态返回
+};
 //==recv sdwe variable ask deal
 UINT8 sdweAskVaribleData(UINT16 varAdd, UINT16 varData)
 {
-	UINT8 needStore = FALSE ;
-	UINT8 i = 0 , point = 0;
-	INT32 weight=0,avgSampleValue=0;
+	UINT8 needStore = FALSE , i = 0;
 	T5LType *pSdwe = &g_T5L;
 	//
 	pSdwe->SetAdd = varAdd ;
@@ -514,220 +824,13 @@ UINT8 sdweAskVaribleData(UINT16 varAdd, UINT16 varData)
 	//receive address from SDWE
 	if(0xffff != pSdwe->SetAdd)
 	{
-		//==(update:20210411):sys para
-		if(DMG_SYS_VERSION_GET_ADD == pSdwe->SetAdd)
+		for( i = 0 ; i < SCREEN_RX_HANDLE_TOTAL_NUM ; i++)
 		{
-			g_T5L.sdwePowerOn = TRUE;//if recived version , indicate allready power on
-			t5lDisPlayDataClear();
-		}
-		else if(((pSdwe->SetAdd >= DMG_FUNC_SET_UNIT_ADDRESS)&&(pSdwe->SetAdd <= (DMG_FUNC_SET_ZERO_RANGE_ADDRESS)))
-			|| (pSdwe->SetAdd == DMG_FUNC_SET_VOICE_SWITCH_ADDRESS)
-			|| (pSdwe->SetAdd == DMG_FUNC_SET_CAST_SWITCH_ADDRESS)
-			|| (pSdwe->SetAdd == DMG_FUNC_PASSORD_SET_ADDRESS)
-			|| (pSdwe->SetAdd == DMG_FUNC_SET_VOICE_NUM_ADDRESS)
-			|| (pSdwe->SetAdd == DMG_FUNC_SET_VOICE_NUM_TOUCH_ADDRESS)
-			|| (pSdwe->SetAdd == DMG_FUNC_SET_SCREEN_LIGHT_ADDRESS)
-			|| (pSdwe->SetAdd == DMG_FUNC_DIWEN_XIAOSHU_ADDRESS)
-			|| (pSdwe->SetAdd == DMG_FUNC_DIWEN_BILV_ADDRESS)
-			|| (pSdwe->SetAdd == DMG_FUNC_DIWEN_DAPING_ADDRESS)
-			)
-		{	
-			switch(pSdwe->SetAdd)
+			if(TRUE == screenRxHandle[i].func(pSdwe))
 			{
-				case DMG_FUNC_PASSORD_SET_ADDRESS:
-					STM32CheckPassWord(pSdwe->SetData);/**< 密码 */
-				break;
-				case DMG_FUNC_SET_UNIT_ADDRESS://			(0X1000)//0x1000
-					gSystemPara.uint = pSdwe->SetData;/**< 单位 */
-				break;
-				case DMG_FUNC_SET_MIN_RANGE_ADDRESS://		(0X100A)//0x100A
-					gSystemPara.minWeight = pSdwe->SetData;/**< 最小量程 */
-				break;
-				case  DMG_FUNC_SET_MAX_RANGE_ADDRESS://		(0X100B)//0x100B
-					gSystemPara.maxWeight = pSdwe->SetData;/**< 最大量程 */
-				break;
-				case  DMG_FUNC_SET_ERR_RANGE_ADDRESS://		(0X100C)//0x100C
-					gSystemPara.errRange = pSdwe->SetData;/**< 误差范围 */
-				break;
-				case  DMG_FUNC_SET_isCascade_ADDRESS://		(0X100D)//0x100D
-					gSystemPara.isCascade = pSdwe->SetData;/**< 是否级联 */
-				break;
-				case  DMG_FUNC_SET_isLedIndicate_ADDRESS://	(0X100E)//0x100E
-					gSystemPara.isLedIndicate = pSdwe->SetData;/**< 是否LED指示 */
-				break;
-				case  DMG_FUNC_SET_ZERO_RANGE_ADDRESS://		(0X1013)//0x1013
-					gSystemPara.zeroRange = pSdwe->SetData;/**< 零点范围 */
-				break;
-				case DMG_FUNC_SET_SCREEN_LIGHT_ADDRESS://	(0X1014)//0x1014
-					gSystemPara.ScreenLight = pSdwe->SetData;/**< 屏幕背光亮度 */
-					g_T5L.sdweFreshScreenLight = TRUE;
-				break;
-				case DMG_FUNC_SET_VOICE_NUM_TOUCH_ADDRESS://	(0X1015)//0x1015
-					gSystemPara.VoiceNumTouch = pSdwe->SetData;/**< 语音大小 触控*/
-				break;
-				case DMG_FUNC_SET_VOICE_NUM_ADDRESS://	(0X1016)//0x1016
-					gSystemPara.VoiceNum = pSdwe->SetData;/**< 语音大小 */
-				break;				
-				case DMG_FUNC_SET_VOICE_SWITCH_ADDRESS://	(0X1017)//0x1017
-					gSystemPara.ScreenVoiceSwitch = pSdwe->SetData;/**< HX711	语音开关 */ 
-				break;
-				case DMG_FUNC_SET_CAST_SWITCH_ADDRESS://	(0X1018)//0x1018
-					gSystemPara.ScreenCastMode = pSdwe->SetData;/**< HX711	级联显示模式 */
-				break;
-				case DMG_FUNC_DIWEN_XIAOSHU_ADDRESS:/**< 小数显示 0x101c*/
-					gSystemPara.xiaoShuXianShi = pSdwe->SetData;
-					g_T5L.sdweChangeDescriblePoint = TRUE;
-				break;
-				case DMG_FUNC_DIWEN_BILV_ADDRESS:/**< ml与g比率 0x101d*/
-					gSystemPara.mlYugBiLv = pSdwe->SetData;
-				break;
-				case DMG_FUNC_DIWEN_DAPING_ADDRESS:/**< 大屏显示 0x101e*/
-					gSystemPara.daPinXianShi = pSdwe->SetData;
-				break;
-				default:
-					if((pSdwe->SetAdd >= DMG_FUNC_SET_COLOR_START_ADDRESS)&&(pSdwe->SetAdd <= (DMG_FUNC_SET_COLOR_END_ADDRESS)))
-					{
-						gSystemPara.userColorSet[pSdwe->SetAdd-DMG_FUNC_SET_COLOR_START_ADDRESS] = pSdwe->SetData;/**< 颜色1~4 */
-					}
-				break;
+				needStore = pSdwe->needStore;
+				break;//遍历所有屏幕发过来的变量地址，满足则退出遍历
 			}
-			//
-			needStore |= DMG_TRIGER_SAVE_SECOTOR_2 ;
-		}
-		//==(update:20210515):Balancing JUMP CLEAN PAGE
-		else if(DMG_FUNC_Balancing_CLEARPAGE_SET_ADDRESS == pSdwe->SetAdd)
-		{
-			if(DMG_FUNC_Balancing_CLEARPAGE_SET_VALUE == (UINT16)pSdwe->SetData)
-			{
-				pSdwe->sdweJumpBalancing_cleanpagee = TRUE;
-			}
-		}
-		//==(update:20210515):Balancing JUMP
-		else if(DMG_FUNC_Balancing_HOME_SET_ADDRESS == pSdwe->SetAdd)
-		{
-			if(DMG_FUNC_Balancing_HOME_SET_VALUE == (UINT16)pSdwe->SetData)
-			{
-				pSdwe->sdweJumpBalancing_home = TRUE;
-			}
-		}
-		//==(update:20210515):Balancing JUMP
-		else if(DMG_FUNC_Balancing_SET_ADDRESS == pSdwe->SetAdd)
-		{
-			if(DMG_FUNC_Balancing_SET_VALUE == (UINT16)pSdwe->SetData)
-			{
-				pSdwe->sdweJumpBalancing = TRUE;
-			}
-		}
-		//==(update:20210328):chanel choice:0->all chanel , 1~8:single chanel
-		else if(DMG_FUNC_SET_CHANEL_NUM == pSdwe->SetAdd)
-		{
-			pSdwe->ResetTrigerValid = FALSE;/*重新校准取消*/
-			if(pSdwe->CalibrateChanel != pSdwe->SetData)
-			{
-				pSdwe->sdweChanelChanged = TRUE;
-				if(pSdwe->SetData <= HX711_CHANEL_NUM)
-				{
-					pSdwe->CalibrateChanel = pSdwe->SetData;//chanel
-				}
-			}
-		}//==(update:20210328):reset calibration
-		else if(DMG_FUNC_RESET_CALIBRATION_ADDRESS == pSdwe->SetAdd)
-		{
-			if(DMG_FUNC_RESET_CALIBRATION_VAL == (UINT16)pSdwe->SetData)
-			{
-				pSdwe->sdweResetTriger = TRUE;
-				pSdwe->ResetTrigerValid = TRUE;
-				clearLocalCalibrationRecordData(pSdwe->CalibrateChanel);
-				clearLocalCalibrationKAndBAndSample(pSdwe->CalibrateChanel);
-			}
-		}//==(update:20210428):reset calibration
-		else if(DMG_FUNC_JUNPTO_CALIBRATION_ADDRESS == pSdwe->SetAdd)
-		{
-			if(DMG_FUNC_JUNPTO_CALIBRATION_VAL == (UINT16)pSdwe->SetData)
-			{
-				pSdwe->sdweJumpToCalitrationPage = TRUE;
-			}
-			else if(DMG_FUNC_JUNPTO_ACTIVE_VAL == (UINT16)pSdwe->SetData)
-			{
-				pSdwe->sdweJumpActivePage = TRUE;
-			}
-		}//==(update:20211119):address of syspara entry
-		else if(DMG_FUNC_JUNPTO_SYSPAR_ADDRESS == pSdwe->SetAdd)
-		{
-			if(DMG_FUNC_JUNPTO_SYSPAR_VAL == (UINT16)pSdwe->SetData)
-			{
-				pSdwe->sdweJumpToSysParaPage = TRUE;
-			}
-		}//==(update:20210328):remove all weight value
-		else if(DMG_FUNC_REMOVE_WEIGHT_ADDRESS == pSdwe->SetAdd)
-		{
-			if(DMG_FUNC_REMOVE_WEIGHT_VAL == (UINT16)pSdwe->SetData)
-			{
-				pSdwe->sdweRemoveWeightTriger = TRUE;
-				//
-				setModbusSelfRemoveFlag(TRUE);
-			}
-		}//==(update:20210328):chanel point weight value set
-		else if((pSdwe->SetAdd >= DMG_FUNC_SET_CHANEL_POINT_ADDRESS)&&(pSdwe->SetAdd < (DMG_FUNC_SET_CHANEL_POINT_ADDRESS + CHANEL_POINT_NUM )))
-		{
-			needStore = DMG_TRIGER_SAVE_SECOTOR_1 ;
-			//point
-			pSdwe->CalibratePoint = (pSdwe->SetAdd -DMG_FUNC_SET_CHANEL_POINT_ADDRESS) ;//point
-			point = pSdwe->CalibratePoint;
-			pSdwe->CalibratePointArry[point] = pSdwe->SetData;
-			//weight
-			weight = pSdwe->SetData;
-		
-			if(0 == pSdwe->CalibrateChanel)//all chanel point weight value set
-			{
-				for(i=0;i<HX711_CHANEL_NUM;i++)//8通道
-				{
-					setSampleWeightValue(i,point,weight);
-					pointWeightTrigerDataSet(i,point,weight);
-				}
-				pointWeightTrigerDataSet(i,point,weight);
-			}
-			else//single chanel point weight value set
-			{
-				setSampleWeightValue((pSdwe->CalibrateChanel-1),point,weight);
-				pointWeightTrigerDataSet((pSdwe->CalibrateChanel-1),point,weight);
-			}
-		}//triger calculate
-		else if((TRUE == pSdwe->ResetTrigerValid)&&(pSdwe->SetAdd >= DMG_FUNC_SET_CHANEL_POINT_TRIG_ADDRESS)&&(pSdwe->SetAdd < (DMG_FUNC_SET_CHANEL_POINT_TRIG_ADDRESS + CHANEL_POINT_NUM )))
-		{
-			//value = 0x12fe
-			if(DMG_FUNC_SET_CHANEL_POINT_TRIG_VAL == pSdwe->SetData)
-			{
-				//	
-				pSdwe->sdwePointTriger = TRUE;
-				//
-				needStore = DMG_TRIGER_SAVE_SECOTOR_1 ;
-				point = ( pSdwe->SetAdd - DMG_FUNC_SET_CHANEL_POINT_TRIG_ADDRESS );
-				
-				if(0 == pSdwe->CalibrateChanel)//all chanel caculate	K & B
-				{
-					//avgSampleValue = hx711_getAvgSample(pSdwe->CalibrateChanel)/512;
-					for(i=0;i<HX711_CHANEL_NUM;i++)//eight chanel
-					{
-						avgSampleValue = hx711_getAvgSample((enumHX711ChanelType)i)/512;
-						trigerCalcKB(i,point);
-						pointTrigerDataSet(i,point,1,avgSampleValue);
-					}
-					pointTrigerDataSet(HX711_CHANEL_NUM,point,1,avgSampleValue);
-					
-				}
-				else if(HX711_CHANEL_NUM >= pSdwe->CalibrateChanel)//single chanel caculate  K & B
-				{
-					avgSampleValue = hx711_getAvgSample((enumHX711ChanelType)(pSdwe->CalibrateChanel-1))/512;
-					trigerCalcKB((pSdwe->CalibrateChanel-1),point);
-					pointTrigerDataSet((pSdwe->CalibrateChanel-1),point,1,avgSampleValue);
-				}
-				//sdwePointTrigerUpdata(point,1,avgSampleValue);
-			}
-		}
-		else if(pSdwe->SetAdd == DMG_SYS_STATUS_OF_VOICE_PRINTF_00A1)
-		{
-			g_u8Read00A1_Data = pSdwe->SetData;
 		}
 		//clr address
 		pSdwe->SetAdd = 0xffff;
@@ -2831,123 +2934,213 @@ void screenT5L_HelpDataMainFunction(void)
 	}
 		
 }
-//==prepare TX data
-void screenT5L_TxFunction(void)
+
+
+UINT8 screenTxHandle_ScreenInit(T5LType *pSdwe)
 {
-	//==send initial data to DIWEN to display
-	if(T5L_INITIAL_COMPLETE != g_T5L.sendSdweInit)
+	UINT8 matched = FALSE;
+	if(T5L_INITIAL_COMPLETE != pSdwe->sendSdweInit)
 	{
+		matched = TRUE;
 		if(TRUE == sendSysParaDataToDiwen())
 		{
-			g_T5L.sendSdweInit = T5L_INITIAL_COMPLETE;
+			pSdwe->sendSdweInit = T5L_INITIAL_COMPLETE;
 		}
-	}//==M1 event arrive:jump to HOME Page
-	else if(TRUE == g_T5L.sdweJumpToHomePage)
+	}
+	return matched;
+}
+UINT8 screenTxHandle_JumpToHomePage(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	if(TRUE == pSdwe->sdweJumpToHomePage)
 	{
+		matched = TRUE;
 		if(0 != jumpToHomePage())
 		{
-			g_T5L.sdweJumpToHomePage = FALSE;
+			pSdwe->sdweJumpToHomePage = FALSE;
 		}
-	}//==M2 event arrive:jump to BALANCING Page 物理按键触发
-	else if(TRUE == g_T5L.sdweJumpToBanlingPage)
+	}
+	return matched;
+}
+UINT8 screenTxHandle_JumpToBanlingPage(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	if(TRUE == pSdwe->sdweJumpToBanlingPage)
 	{
+		matched = TRUE;
 		if(0 != jumpToBanlingPage())
 		{
-			g_T5L.sdweJumpToBanlingPage = FALSE;
+			pSdwe->sdweJumpToBanlingPage = FALSE;
 		}
-	}//==M3 event arrive:jump to CALITRATION Page
-	else if(TRUE == g_T5L.sdweJumpToCalitrationPage)
+	}
+	return matched;
+}
+UINT8 screenTxHandle_JumpToCalibrationPage(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	if(TRUE == pSdwe->sdweJumpToCalitrationPage)
 	{
+		matched = TRUE;
 		if(0 != jumpToCalibrationPage())
 		{
-			g_T5L.sdweJumpToCalitrationPage = FALSE;
+			pSdwe->sdweJumpToCalitrationPage = FALSE;
 		}
-	}//==M4 event arrive:jump to ACTIVE Page
-	else if(TRUE == g_T5L.sdweJumpActivePage)
+	}
+	return matched;
+}
+UINT8 screenTxHandle_JumpToActivePage(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	if(TRUE == pSdwe->sdweJumpActivePage)
 	{
+		matched = TRUE;
 		if(0 != jumpToActivePage())
 		{
-			g_T5L.sdweJumpActivePage = FALSE;
+			pSdwe->sdweJumpActivePage = FALSE;
 		}
-	}//==M5 event arrive:jump to SYSPARA Page
-	else if(TRUE == g_T5L.sdweJumpToSysParaPage)
+	}
+	return matched;
+}
+UINT8 screenTxHandle_JumpToSysParaPage(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	if(TRUE == pSdwe->sdweJumpToSysParaPage)
 	{
+		matched = TRUE;
 		if(0 != jumpToSysparaPage())
 		{
-			g_T5L.sdweJumpToSysParaPage = FALSE;
+			pSdwe->sdweJumpToSysParaPage = FALSE;
 		}
-	}//==M6 event arrive:fresh sreen light
-	else if(TRUE == g_T5L.sdweFreshScreenLight)
+	}
+	return matched;
+}
+UINT8 screenTxHandle_FreshScreenLight(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	if(TRUE == pSdwe->sdweFreshScreenLight)
 	{
+		matched = TRUE;
 		if(0 != sendScreenLight())
 		{
-			g_T5L.sdweFreshScreenLight = FALSE;
+			pSdwe->sdweFreshScreenLight = FALSE;
 		}
-	}//==M7 event arrive:修改小数点
-	else if(TRUE == g_T5L.sdweChangeDescriblePoint)
+	}
+	return matched;
+}
+UINT8 screenTxHandle_ChangeDisplayPosition(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	if(TRUE == pSdwe->sdweChangeDescriblePoint)
 	{
+		matched = TRUE;
 		if(0 != screen_ChangeDisplayPosition())
 		{
-			g_T5L.sdweChangeDescriblePoint = FALSE;
+			pSdwe->sdweChangeDescriblePoint = FALSE;
 		}
-	}	
-	//==M2-1 event arrive: jump to BALANCING Page 触摸屏触发
-	else if(TRUE == g_T5L.sdweJumpBalancing)
+	}
+	return matched;
+}
+UINT8 screenTxHandle_JmmpToBalancingPage(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	if(TRUE == pSdwe->sdweJumpBalancing)
 	{
+		matched = TRUE;
 		if(0!= jumpToBalancingPage())
 		{
-			g_T5L.sdweJumpBalancing = FALSE;
+			pSdwe->sdweJumpBalancing = FALSE;
 		}
-	}//==M2-2 event arrive:jump to BALANCING (clean)page
-	else if(TRUE == g_T5L.sdweJumpBalancing_cleanpagee)
+	}
+	return matched;
+}
+UINT8 screenTxHandle_JumpToBalancingCleanPage(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	if(TRUE == pSdwe->sdweJumpBalancing_cleanpagee)
 	{
+		matched = TRUE;
 		if(0!= jumpToBalancingCleanPage())
 		{
-			g_T5L.sdweJumpBalancing_cleanpagee = FALSE;
+			pSdwe->sdweJumpBalancing_cleanpagee = FALSE;
 		}
-	}//==M2-3 event arrive:jump to BALANCING (home)page
-	else if(TRUE == g_T5L.sdweJumpBalancing_home)
+	}
+	return matched;
+}
+UINT8 screenTxHandle_JumpToBalancingHomePage(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	if(TRUE == pSdwe->sdweJumpBalancing_home)
 	{
+		matched = TRUE;
 		if(0!= jumpToBalancingHomePage())
 		{
-			g_T5L.sdweJumpBalancing_home = FALSE;
+			pSdwe->sdweJumpBalancing_home = FALSE;
 		}
-	}//==C1 event arrive:At Calibration Page , chanel changed trigerd
-	else if(TRUE == g_T5L.sdweChanelChanged)
+	}
+	return matched;
+}
+UINT8 screenTxHandle_ChanelChangedTrigerDeal(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	if(TRUE == pSdwe->sdweChanelChanged)
 	{
+		matched = TRUE;
 		if(0 != chanelChangedTrigerDeal())
 		{
-			 g_T5L.sdweChanelChanged = FALSE;
+			pSdwe->sdweChanelChanged = FALSE;
 		}
-	}//==C2 event arrive:At Calibration Page , calibration reset trigerd 
-	else if(TRUE == g_T5L.sdweResetTriger)
+	}
+	return matched;
+}
+UINT8 screenTxHandle_ResetCalibrationTrigerHandle(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	if(TRUE == pSdwe->sdweResetTriger)
 	{
+		matched = TRUE;
 		if(0 != resetCalibrationTrigerDeal())
 		{
-			g_T5L.sdweResetTriger = FALSE;
+			pSdwe->sdweResetTriger = FALSE;
 		}
-	}//==C3 event arrive:At Calibration Page , point trigerd
-	else if(TRUE == g_T5L.sdwePointTriger)
+	}
+	return matched;
+}
+UINT8 screenTxHandle_PointTrigerHandle(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	if(TRUE == pSdwe->sdwePointTriger)
 	{
+		matched = TRUE;
 		if(0 != pointTrigerDeal())
 		{
-			g_T5L.sdwePointTriger = FALSE;
+			pSdwe->sdwePointTriger = FALSE;
 		}
-	}//==B1 event arrive:At Balancing Page , remove weight trigerd
-	else if((TRUE == g_T5L.sdweRemoveWeightTriger)||(TRUE == getModbusOtherRemoveFlag()))
+	}
+	return matched;
+}
+UINT8 screenTxHandle_RemoveWeightTrigerHandle(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	if((TRUE == pSdwe->sdweRemoveWeightTriger)||(TRUE == getModbusOtherRemoveFlag()))
 	{
+		matched = TRUE;
 		hx711_setAllRemoveWeight();
 		t5lDisPlayDataClear();
 		if(0 != removeWeightTrigerDeal())
 		{
-			g_T5L.sdweRemoveWeightTriger = FALSE;
+			pSdwe->sdweRemoveWeightTriger = FALSE;
 			//
 			setModbusOtherRemoveFlag(FALSE);
 		}
 	}
-	//==SYS LOCK CHARGE
-	else if(g_sysLocked == STM32MCU_UNLOCKED)
+	return matched;
+}
+UINT8 screenTxHandle_ScreenWeightAndColorAndVoiceHandle(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	if(g_sysLocked == STM32MCU_UNLOCKED)
 	{
+		matched = TRUE;
 		switch(gSystemPara.isCascade)
 		{
 			case 0:
@@ -2982,6 +3175,42 @@ void screenT5L_TxFunction(void)
 				default:
 				break;
 			}
+		}
+	}	
+	return matched;
+}
+
+
+screenRxTxHandleType screenTxHandle[SCREEN_TX_HANDLE_TOTAL_NUM]=
+{
+	//priority index func_add
+	{0,	0, &screenTxHandle_ScreenInit},//==send initial data to DIWEN to display
+	{0,	1, &screenTxHandle_JumpToHomePage},//==M1 event arrive:jump to HOME Page 
+	{0,	2, &screenTxHandle_JumpToBanlingPage},//==M2 event arrive:jump to BALANCING Page 物理按键触发
+	{0,	3, &screenTxHandle_JumpToCalibrationPage},//==M3 event arrive:jump to CALITRATION Page
+	{0,	4, &screenTxHandle_JumpToActivePage},//==M4 event arrive:jump to ACTIVE Page
+	{0,	5, &screenTxHandle_JumpToSysParaPage},//==M5 event arrive:jump to SYSPARA Page
+	{0,	6, &screenTxHandle_FreshScreenLight},//==M6 event arrive:fresh sreen light
+	{0,	7, &screenTxHandle_ChangeDisplayPosition},//==M7 event arrive:修改小数点
+	{0,	8, &screenTxHandle_JmmpToBalancingPage},//==M2-1 event arrive: jump to BALANCING Page 触摸屏触发
+	{0,	9, &screenTxHandle_JumpToBalancingCleanPage},//==M2-2 event arrive:jump to BALANCING (clean)page
+	{0,	10, &screenTxHandle_JumpToBalancingHomePage},//==M2-3 event arrive:jump to BALANCING (home)page
+	{0,	11, &screenTxHandle_ChanelChangedTrigerDeal},	//==C1 event arrive:At Calibration Page , chanel changed trigerd
+	{0,	12, &screenTxHandle_ResetCalibrationTrigerHandle},//==C2 event arrive:At Calibration Page , calibration reset trigerd 
+	{0,	13, &screenTxHandle_PointTrigerHandle},//==C3 event arrive:At Calibration Page , point trigerd
+	{0,	14, &screenTxHandle_RemoveWeightTrigerHandle},//==B1 event arrive:At Balancing Page , remove weight trigerd
+	{0,	15, &screenTxHandle_ScreenWeightAndColorAndVoiceHandle},//normaly weight color voice handle
+};
+//==prepare TX data
+void screenT5L_TxFunction(void)
+{
+	T5LType *pSdwe = &g_T5L;
+	UINT8 i = 0;
+	for( i = 0 ; i < SCREEN_TX_HANDLE_TOTAL_NUM ; i++)
+	{
+		if(TRUE == screenTxHandle[i].func(pSdwe))
+		{
+			break;
 		}
 	}	
 }
