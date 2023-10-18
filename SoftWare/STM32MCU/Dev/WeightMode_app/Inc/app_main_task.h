@@ -6,8 +6,8 @@
 #include "stm32f4xx_it.h"
 
 #define SYS_HX711_ONLINE_CHECK_TIME	(2000)//when power on 2000ms start check HX711  , total 3 times
-#define MCU_VERSION			        (80)//2023.09.19
-#define DIWEN_VERSION		        (80)//2023.09.19
+#define MCU_VERSION			        (81)//2023.10.18
+#define DIWEN_VERSION		        (81)//2023.10.18
 
 
 extern UINT32 get_SysTick_ByTimer(void);
@@ -20,6 +20,8 @@ extern void app_main_task(void);
 3、迪文屏幕正常不需要刷写其.cfg文件，如果需要刷写，那么.cfg的第二行（屏幕信息）第三行（校准信息）必须为0（0：代表不做任何更改）
 4、重量信息从2字节改成4字节，便于小数显示
 5、采用描述指针来控制重量显示，字体信息有：位置，字体颜色，字库及字体大小，对齐方式，小数显示等
-	
+//mcu version : 8.1  , diwen version :8.1
+1、对屏幕序号添加描述指针，便于对位置调整
+2、屏幕的每个单元的序号添加描述指针
 */
 #endif

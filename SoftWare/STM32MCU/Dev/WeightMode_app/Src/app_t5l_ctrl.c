@@ -927,6 +927,7 @@ UINT8 jumpToBalancingPage()
 		break;
 	}
 #endif
+	pageChangeOrderAndData[1] = DMG_FUNC_Balancing_6_PAGE;
 	if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
 		((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 	{
@@ -967,6 +968,7 @@ UINT8 jumpToBalancingHomePage()
 		break;
 	}
 #endif
+	pageChangeOrderAndData[1] = DMG_FUNC_Balancing_6_HOME_PAGE;
 	if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
 		((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 	{
@@ -984,7 +986,7 @@ UINT8 jumpToBalancingCleanPage()
 
 	if(TRUE == gSystemPara.isCascade)
 	{
-		pageChangeOrderAndData[1] = DMG_FUNC_Balancing_12_PAGE;
+		//pageChangeOrderAndData[1] = DMG_FUNC_Balancing_12_PAGE;
 	}
 	if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
 		((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
@@ -1063,7 +1065,7 @@ UINT8 jumpToBanlingPage()
 		case ModbusAdd_Slave_1:
 			if(0 == gSystemPara.ScreenCastMode)
 			{
-				pageChangeOrderAndData[1] = DMG_FUNC_Balancing_12_PAGE;
+				pageChangeOrderAndData[1] = DMG_FUNC_Balancing_6_PAGE;
 			}
 			else
 			{
@@ -1075,6 +1077,8 @@ UINT8 jumpToBanlingPage()
 
 	}
 #endif
+	pageChangeOrderAndData[1] = DMG_FUNC_Balancing_6_PAGE;
+
 	if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
 		((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 	{
@@ -2252,7 +2256,31 @@ INT16 describlePointVluXiaoShu[HX711_CHANEL_NUM][6]=
 	{0x04E8, 	0x0160, 	0x6474,		0x0028,			0x0204,			0x0101},
 };
 
+INT16 describleIndexPointAdd[HX711_CHANEL_NUM]={0x9211,0x9221,0x9231,0x9241,0x9251,0x9261,0x9271,0x9281};
+INT16 describleIndexPointData[HX711_CHANEL_NUM][6]=
+{
+//       x    	y      		颜色      	字库/字体大小	 对齐 整数位数    小数位数 变量类型
+//       x    	y      		颜色      	0：0号      	 00:左对齐 整数位数    小数位数 01:长整数(4字节)
+//       x    	y      		颜色      	字库/字体大小	 01:右对齐 整数位数    小数位数 变量类型
+//       x    	y      		颜色      	字库/字体大小	 02:居中   整数位数    小数位数 变量类型
 
+//1     188   	23      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
+	{0x00BC, 	0x0017, 	0x6474,		0x003C,			0x0204,			0x0001},
+//2     188   	265      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
+	{0x00BC, 	0x0109, 	0x6474,		0x003C,			0x0204,			0x0001},
+//3     577   	23      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
+	{0x0241, 	0x0017, 	0x6474,		0x003C,			0x0204,			0x0001},
+//4     577   	265      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
+	{0x0241, 	0x0109, 	0x6474,		0x003C,			0x0204,			0x0001},
+//5      967   	23      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
+	{0x03C7, 	0x0017, 	0x6474,		0x003C,			0x0204,			0x0001},
+//6      967   	265      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
+	{0x03C7, 	0x0109, 	0x6474,		0x003C,			0x0204,			0x0001},
+//7      1357  	23      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
+	{0x054D, 	0x0017, 	0x6474,		0x003C,			0x0204,			0x0001},
+//8      1357  	265      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
+	{0x054D, 	0x0109, 	0x6474,		0x003C,			0x0204,			0x0001},
+};
 
 #define DESCRIBLE_POINT_HELP_NUM			(4)//4组帮助信息
 #define DESCRIBLE_POINT_HELP_COLOR			(0XF810)//红色
@@ -2359,6 +2387,31 @@ UINT8 screen_ChangeDisplayPosition(void)
 	return ret;
 }
 
+
+
+UINT8 screen_ChangeDisplayPositionOfIndex(void)
+{
+	static INT16 add_offset = 0,data_offset = 0,len_offset = 0 , int16_ChangeDisplayPosition_ii = 0;
+	UINT8 ret = FALSE;
+
+	describlePoint_add = describleIndexPointAdd[int16_ChangeDisplayPosition_ii%HX711_CHANEL_NUM]+add_offset;
+	describlePoint_data = &describleIndexPointData[int16_ChangeDisplayPosition_ii%HX711_CHANEL_NUM][0]+data_offset;
+	describlePoint_len = 2+len_offset;
+
+	if(TRUE == t5lWriteData(describlePoint_add,describlePoint_data,describlePoint_len,0))
+	{
+		int16_ChangeDisplayPosition_ii++;
+	}
+
+	if(int16_ChangeDisplayPosition_ii >= HX711_CHANEL_NUM)
+	{
+		int16_ChangeDisplayPosition_ii = 0 ;
+		ret = TRUE;
+	}
+
+	return ret;
+}
+
 void screenT5L_CurPageGet(void)
 {
 	t5lReadVarible(DMG_SYS_CUR_PAGE_GET_ADD,1,0);//get cur page
@@ -2398,14 +2451,14 @@ UINT8 sendSysParaDataToDiwen(void)
 	static UINT8 inerStatus = 0x80;	
 	INT16 sendData[64],len=0;
 	UINT8 result = FALSE ;
-	static INT16 curPage = 0 , curPageDelay_time = 0 , curPageDelay_offset = 40;
+	static INT16 curPage = 0 ,  curPageDelay_offset = 80;
 	//
 	switch(inerStatus)
 	{
 		case 0x80://获取系统版本 若获取回则代表 屏已上电
 			if(FALSE == g_T5L.sdwePowerOn)
 			{
-				if(0 == (g_T5L.CurTick %500))//every 500ms send order to get version
+				if(0 == (g_T5L.CurTick %100))//every 500ms send order to get version
 				{
 					screenT5L_VersionGet();
 				}
@@ -2416,12 +2469,10 @@ UINT8 sendSysParaDataToDiwen(void)
 			}
 		break;
 		case 0x81:
-			if(curPageDelay_time++ >= curPageDelay_offset)
+			if(0 == (g_T5L.CurTick %curPageDelay_offset))//every 500ms send order to get version
 			{	
-				curPageDelay_time = curPageDelay_offset;
 				if(TRUE ==jumpToStartUpPage(curPage))//触发屏幕播放开机动画
 				{
-					curPageDelay_time = 0 ;
 					if(curPage++ >= 25)
 					{
 						inerStatus = 0x82;
@@ -2570,7 +2621,7 @@ UINT8 sendSysParaDataToDiwen(void)
 				sendData[len++] = gSystemPara.daPinXianShi;		/**< 大屏显示 0x101e*/			//101E
 
 				t5lWriteVarible((0x100A),sendData,len,0);
-				inerStatus = 8;
+				inerStatus++;
 			}
 		break;
 		#if 0
@@ -2612,6 +2663,16 @@ UINT8 sendSysParaDataToDiwen(void)
 				len=0;
 				screenT5L_OutputVoice(VoiceTypeMax);
 				inerStatus++;
+			}
+		break;
+		case 11://序号显示相关描述指针变量发送
+			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			{		
+				if(0 != screen_ChangeDisplayPositionOfIndex())//根据小数是否打开 发送相关数据
+				{
+					inerStatus++;
+				}
 			}
 		break;
 		default:
