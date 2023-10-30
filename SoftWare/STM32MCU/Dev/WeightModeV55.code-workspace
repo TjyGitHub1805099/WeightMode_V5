@@ -29,7 +29,8 @@
 			"app_syspara.h": "c",
 			"stm32f4xx_it.h": "c",
 			"string.h": "c",
-			"app_modbus_rtu_ctrl.h": "c"
+			"app_modbus_rtu_ctrl.h": "c",
+			"app_sdwe_ctrl.h": "c"
 		}
 	}
 }

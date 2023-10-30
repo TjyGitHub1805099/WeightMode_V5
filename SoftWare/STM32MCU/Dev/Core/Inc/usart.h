@@ -36,6 +36,8 @@ extern "C" {
 
 extern UART_HandleTypeDef huart1;
 
+extern UART_HandleTypeDef huart2;
+
 extern UART_HandleTypeDef huart3;
 
 extern UART_HandleTypeDef huart6;
@@ -72,12 +74,14 @@ extern uint8_t u_SprintfBuf[256];//用于sprintf函数存放字符串数据
 /* USER CODE END Private defines */
 
 void MX_USART1_UART_Init(void);
+void MX_USART2_UART_Init(void);
 void MX_USART3_UART_Init(void);
 void MX_USART6_UART_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 void Usart1AsScreen1SendData_DMA(uint8_t *pdata, uint16_t Length);
 void Usart1AsScreen1Receive_IDLE(UART_HandleTypeDef *huart);
+void Usart2AsScreen2Receive_IDLE(UART_HandleTypeDef *huart);
 void Usart3WithRS485Receive_IDLE(UART_HandleTypeDef *huart);
 
 /* USER CODE END Prototypes */

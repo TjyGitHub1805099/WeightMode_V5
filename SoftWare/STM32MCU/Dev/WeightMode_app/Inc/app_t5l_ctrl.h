@@ -117,6 +117,17 @@
 #define DIFF_JUDGE_DATA_NUM_SLAVE1	(3)//num1 num2 minus
 #define DIFF_TO_DIWEN_DATA_LEN		(DIFF_JUDGE_GROUP_NUM_SLAVE1*DIFF_JUDGE_DATA_NUM_SLAVE1)
 
+
+#define T5L_SMALLER_INDEX	(0)
+#define T5L_LARGER_INDEX	(1)
+
+typedef enum
+{
+	ScreenIndex_Smaller  = 0 ,
+	ScreenIndex_Larger = 1 ,	
+	ScreenIndex_Max,
+}enumScreenIndexType;
+
 typedef enum
 {
 	cmdWaitVoivePrint_forceRead  = 0 ,
@@ -275,8 +286,11 @@ typedef struct structSdweType
 	UINT16  sdwePowerOn;/**< 屏幕已经上电 */
 	UINT16  sdweHX711FirstSampleCoplt;/**< HX711数据采集完成 */
 	UINT8 	needStore;/**< 是否需要保存*/
+	UINT8 	sendSysParaDataToDiwenIndex;
 }T5LType;
 extern T5LType g_T5L;
+extern T5LType g_T5L2;
+extern T5LType g_T5LCtx[ScreenIndex_Max];
 typedef UINT8 (*screenRxTxHandleFunc)(T5LType *pSdwe);  // 定义屏幕指令接收发送处理函数指针： screenRxTxHandleFunc
 typedef struct screenRxTxHandleType_Struct
 {
@@ -326,6 +340,48 @@ typedef struct screenRxTxHandleType_Struct
 	0,\
 	0,\
 	0,\
+	0x80,\
+	}
+
+/** ModbusRtu设备默认配置 */
+#define T5LDataDefault2   { \
+	SCREEN_STATUS_GET_VERSION,\
+	0,\
+	0,\
+	&g_UartDevice[UART_EXTERN2], \
+	0,\
+	FALSE,\
+	{0}, \
+	{0}, \
+	0,\
+	0,\
+	0XFFFF,\
+	0,\
+	0,\
+	0,\
+	0,\
+	0,\
+	0,\
+	0,\
+	0,\
+	88,\
+	0,\
+	{0},\
+	0,\
+	0,\
+	0,\
+	0,\
+	0,\
+	0,\
+	0,\
+	0,\
+	0,\
+	0,\
+	0,\
+	0,\
+	0,\
+	0,\
+	0x80,\
 	}
 #define T5L_INITIAL_COMPLETE		(0X12)
 #define T5L_MAX_CHANEL_LEN			(2*HX711_CHANEL_NUM)
@@ -349,5 +405,5 @@ extern void readWeightDataFromSys(UINT8 *pWeightData,UINT8 len);
 extern void readColorDataFromSys(UINT8 *pColorData,UINT8 len);
 extern void writeWeightDataFromCom(UINT8 *pWeightData,UINT8 len);
 extern void writeColorDataFromCom(UINT8 *pColorData,UINT8 len);
-extern UINT8 screenT5L_OutputVoice(UINT8 voiceId);
+extern UINT8 screenT5L_OutputVoice(T5LType *pSdwe,UINT8 voiceId);
 #endif

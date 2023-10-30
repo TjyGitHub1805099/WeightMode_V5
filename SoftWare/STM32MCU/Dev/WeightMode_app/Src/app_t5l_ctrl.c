@@ -16,7 +16,8 @@
  * Definitions
  ******************************************************************************/
 T5LType g_T5L = T5LDataDefault;
-
+T5LType g_T5L2 = T5LDataDefault2;
+T5LType g_T5LCtx[ScreenIndex_Max] = {T5LDataDefault,T5LDataDefault2};
 //1.chanel num :0~x HX711_CHANEL_NUM
 //2.trigerStarus , back color , point avg Sample , point set weight
 //3.point num
@@ -50,7 +51,7 @@ UINT8 g_u8Read00A1_Data = 0XFF;
  * Functions
  ******************************************************************************/
 //帮助信息统一处理
-void screenT5L_HelpDataMainFunction(void);
+void screenT5L_HelpDataMainFunction(T5LType *pSdwe);
 
 
 //==sdwe->mcu rx callback ,not used
@@ -120,40 +121,40 @@ void t5lDisPlayDataClear(void)
 
 //========================================================================================check:20210619
 //==write varible data to SDWE thought UART
-void t5lWriteVarible(UINT16 varAdd, INT16 *pData ,UINT16 varlen ,UINT8 crcEn)
+void t5lWriteVarible(T5LType *t5lCtx,UINT16 varAdd, INT16 *pData ,UINT16 varlen ,UINT8 crcEn)
 {
 	//A5 5A 05 82 00 03 00 01:向0x0003地址写入数据0x0001
 	UINT16 i = 0 ,l_data = 0 , total_len = 0 , crc = 0;
-	if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-		((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+	if(((t5lCtx->LastSendTick > t5lCtx->CurTick)&&((t5lCtx->LastSendTick-t5lCtx->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+		((t5lCtx->LastSendTick < t5lCtx->CurTick)&&((t5lCtx->CurTick - t5lCtx->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 	{
 		if(varAdd < 0xFFFF)
 		{
 			if(((varAdd+varlen)>0)&&((varAdd+varlen)<0xFFFF))
 			{
 				//head
-				g_T5L.txData[cmdPosHead1]=T5L_RX_FUN_HEAD1;
-				g_T5L.txData[cmdPosHead2]=T5L_RX_FUN_HEAD2;
+				t5lCtx->txData[cmdPosHead1]=T5L_RX_FUN_HEAD1;
+				t5lCtx->txData[cmdPosHead2]=T5L_RX_FUN_HEAD2;
 				//data len
-				g_T5L.txData[cmdPosDataLen]=0X03+2*varlen;
+				t5lCtx->txData[cmdPosDataLen]=0X03+2*varlen;
 				//order:write
-				g_T5L.txData[cmdPosCommand]=cmdWriteSWDEVariable;
+				t5lCtx->txData[cmdPosCommand]=cmdWriteSWDEVariable;
 				//varAdd
-				g_T5L.txData[cmdPosVarWriteAddress1]=0xff&(varAdd>>8);
-				g_T5L.txData[cmdPosVarWriteAddress2]=0xff&(varAdd>>0);
+				t5lCtx->txData[cmdPosVarWriteAddress1]=0xff&(varAdd>>8);
+				t5lCtx->txData[cmdPosVarWriteAddress2]=0xff&(varAdd>>0);
 				//data
 				for(i=0;i<varlen;i++)
 				{
 					l_data = *pData++;
-					g_T5L.txData[cmdPosVarWriteData+2*i+0] = 0xff&(l_data>>8);
-					g_T5L.txData[cmdPosVarWriteData+2*i+1] = 0xff&(l_data>>0);
+					t5lCtx->txData[cmdPosVarWriteData+2*i+0] = 0xff&(l_data>>8);
+					t5lCtx->txData[cmdPosVarWriteData+2*i+1] = 0xff&(l_data>>0);
 				}
 				//crc
 				if(TRUE == crcEn)
 				{
-					crc = cal_crc16(&g_T5L.txData[cmdPosCommand],(3+2*varlen));
-					g_T5L.txData[cmdPosVarWriteData+2*varlen+0] = 0xff&(crc>>8);
-					g_T5L.txData[cmdPosVarWriteData+2*varlen+1] = 0xff&(crc>>0);
+					crc = cal_crc16(&t5lCtx->txData[cmdPosCommand],(3+2*varlen));
+					t5lCtx->txData[cmdPosVarWriteData+2*varlen+0] = 0xff&(crc>>8);
+					t5lCtx->txData[cmdPosVarWriteData+2*varlen+1] = 0xff&(crc>>0);
 					//total len
 					total_len = cmdPosVarWriteData+2*varlen+2;
 				}
@@ -163,8 +164,8 @@ void t5lWriteVarible(UINT16 varAdd, INT16 *pData ,UINT16 varlen ,UINT8 crcEn)
 					total_len = cmdPosVarWriteData+2*varlen;
 				}
 				//send
-				g_T5L.pUartDevice->tx_bytes(g_T5L.pUartDevice,&g_T5L.txData[0],total_len);
-				g_T5L.LastSendTick = g_T5L.CurTick;
+				t5lCtx->pUartDevice->tx_bytes(t5lCtx->pUartDevice,&t5lCtx->txData[0],total_len);
+				t5lCtx->LastSendTick = t5lCtx->CurTick;
 				//
 				#ifndef T5L_DMG_UART_TX_USE_DMA
 					hal_delay_ms(1);
@@ -175,35 +176,35 @@ void t5lWriteVarible(UINT16 varAdd, INT16 *pData ,UINT16 varlen ,UINT8 crcEn)
 }
 
 //==write varible data to SDWE thought UART
-void t5lReadVarible(UINT16 varAdd,UINT16 varlen ,UINT8 crcEn)
+void t5lReadVarible(T5LType *t5lCtx,UINT16 varAdd,UINT16 varlen ,UINT8 crcEn)
 {
 	//A5 5A 04 83 00 A1 01:读系统变量0x00A1长度为1
 	UINT16 total_len = 0 , crc = 0;
-	if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-		((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+	if(((t5lCtx->LastSendTick > t5lCtx->CurTick)&&((t5lCtx->LastSendTick-t5lCtx->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+		((t5lCtx->LastSendTick < t5lCtx->CurTick)&&((t5lCtx->CurTick - t5lCtx->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 	{
 		if(varAdd < 0xFFFF)
 		{
 			if(((varAdd+varlen)>0)&&((varAdd+varlen)<0xFFFF))
 			{
 				//head
-				g_T5L.txData[cmdPosHead1]=T5L_RX_FUN_HEAD1;
-				g_T5L.txData[cmdPosHead2]=T5L_RX_FUN_HEAD2;
+				t5lCtx->txData[cmdPosHead1]=T5L_RX_FUN_HEAD1;
+				t5lCtx->txData[cmdPosHead2]=T5L_RX_FUN_HEAD2;
 				//data len
-				g_T5L.txData[cmdPosDataLen]=0X04;
+				t5lCtx->txData[cmdPosDataLen]=0X04;
 				//order:write
-				g_T5L.txData[cmdPosCommand]=cmdReadSWDEVariable;
+				t5lCtx->txData[cmdPosCommand]=cmdReadSWDEVariable;
 				//varAdd
-				g_T5L.txData[cmdPosVarWriteAddress1]=0xff&(varAdd>>8);
-				g_T5L.txData[cmdPosVarWriteAddress2]=0xff&(varAdd>>0);
+				t5lCtx->txData[cmdPosVarWriteAddress1]=0xff&(varAdd>>8);
+				t5lCtx->txData[cmdPosVarWriteAddress2]=0xff&(varAdd>>0);
 				//len
-				g_T5L.txData[cmdPosVarReadLen]=varlen&0xff;
+				t5lCtx->txData[cmdPosVarReadLen]=varlen&0xff;
 				//crc
 				if(TRUE == crcEn)
 				{
-					crc = cal_crc16(&g_T5L.txData[cmdPosCommand],4);
-					g_T5L.txData[cmdPosVarReadLen+1+0] = 0xff&(crc>>8);
-					g_T5L.txData[cmdPosVarReadLen+1+1] = 0xff&(crc>>0);
+					crc = cal_crc16(&t5lCtx->txData[cmdPosCommand],4);
+					t5lCtx->txData[cmdPosVarReadLen+1+0] = 0xff&(crc>>8);
+					t5lCtx->txData[cmdPosVarReadLen+1+1] = 0xff&(crc>>0);
 					//total len
 					total_len = cmdPosVarReadLen+1+2;
 				}
@@ -213,8 +214,8 @@ void t5lReadVarible(UINT16 varAdd,UINT16 varlen ,UINT8 crcEn)
 					total_len = cmdPosVarReadLen+1;
 				}
 				//send
-				g_T5L.pUartDevice->tx_bytes(g_T5L.pUartDevice,&g_T5L.txData[0],total_len);
-				g_T5L.LastSendTick = g_T5L.CurTick;
+				t5lCtx->pUartDevice->tx_bytes(t5lCtx->pUartDevice,&t5lCtx->txData[0],total_len);
+				t5lCtx->LastSendTick = t5lCtx->CurTick;
 				//
 				#ifndef T5L_DMG_UART_TX_USE_DMA
 					hal_delay_ms(1);
@@ -225,41 +226,41 @@ void t5lReadVarible(UINT16 varAdd,UINT16 varlen ,UINT8 crcEn)
 }
 
 //==write data to screen , have delay contrl
-UINT8 t5lWriteData(UINT16 varAdd, INT16 *pData ,UINT16 varlen ,UINT8 crcEn)
+UINT8 t5lWriteData(T5LType *t5lCtx,UINT16 varAdd, INT16 *pData ,UINT16 varlen ,UINT8 crcEn)
 {
 	UINT8 ret = FALSE;
-	//A5 5A 05 82 00 03 00 01:向0x0003地址写入数据0x0001
+	//A5 5A 05 82 00 03 00 01:向0x0003地址写入数据0x0001	
 	UINT16 i = 0 ,l_data = 0 , total_len = 0 , crc = 0;
-	if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-		((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+	if(((t5lCtx->LastSendTick > t5lCtx->CurTick)&&((t5lCtx->LastSendTick-t5lCtx->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+		((t5lCtx->LastSendTick < t5lCtx->CurTick)&&((t5lCtx->CurTick - t5lCtx->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 	{
 		if(varAdd < 0xFFFF)
 		{
 			if(((varAdd+varlen)>0)&&((varAdd+varlen)<0xFFFF))
 			{
 				//head
-				g_T5L.txData[cmdPosHead1]=T5L_RX_FUN_HEAD1;
-				g_T5L.txData[cmdPosHead2]=T5L_RX_FUN_HEAD2;
+				t5lCtx->txData[cmdPosHead1]=T5L_RX_FUN_HEAD1;
+				t5lCtx->txData[cmdPosHead2]=T5L_RX_FUN_HEAD2;
 				//data len
-				g_T5L.txData[cmdPosDataLen]=0X03+2*varlen;
+				t5lCtx->txData[cmdPosDataLen]=0X03+2*varlen;
 				//order:write
-				g_T5L.txData[cmdPosCommand]=cmdWriteSWDEVariable;
+				t5lCtx->txData[cmdPosCommand]=cmdWriteSWDEVariable;
 				//varAdd
-				g_T5L.txData[cmdPosVarWriteAddress1]=0xff&(varAdd>>8);
-				g_T5L.txData[cmdPosVarWriteAddress2]=0xff&(varAdd>>0);
+				t5lCtx->txData[cmdPosVarWriteAddress1]=0xff&(varAdd>>8);
+				t5lCtx->txData[cmdPosVarWriteAddress2]=0xff&(varAdd>>0);
 				//data
 				for(i=0;i<varlen;i++)
 				{
 					l_data = pData[i];
-					g_T5L.txData[cmdPosVarWriteData+2*i+0] = 0xff&(l_data>>8);
-					g_T5L.txData[cmdPosVarWriteData+2*i+1] = 0xff&(l_data>>0);
+					t5lCtx->txData[cmdPosVarWriteData+2*i+0] = 0xff&(l_data>>8);
+					t5lCtx->txData[cmdPosVarWriteData+2*i+1] = 0xff&(l_data>>0);
 				}
 				//crc
 				if(TRUE == crcEn)
 				{
-					crc = cal_crc16(&g_T5L.txData[cmdPosCommand],(3+2*varlen));
-					g_T5L.txData[cmdPosVarWriteData+2*varlen+0] = 0xff&(crc>>8);
-					g_T5L.txData[cmdPosVarWriteData+2*varlen+1] = 0xff&(crc>>0);
+					crc = cal_crc16(&t5lCtx->txData[cmdPosCommand],(3+2*varlen));
+					t5lCtx->txData[cmdPosVarWriteData+2*varlen+0] = 0xff&(crc>>8);
+					t5lCtx->txData[cmdPosVarWriteData+2*varlen+1] = 0xff&(crc>>0);
 					//total len
 					total_len = cmdPosVarWriteData+2*varlen+2;
 				}
@@ -269,8 +270,8 @@ UINT8 t5lWriteData(UINT16 varAdd, INT16 *pData ,UINT16 varlen ,UINT8 crcEn)
 					total_len = cmdPosVarWriteData+2*varlen;
 				}
 				//send
-				g_T5L.pUartDevice->tx_bytes(g_T5L.pUartDevice,&g_T5L.txData[0],total_len);
-				g_T5L.LastSendTick = g_T5L.CurTick;
+				t5lCtx->pUartDevice->tx_bytes(t5lCtx->pUartDevice,&t5lCtx->txData[0],total_len);
+				t5lCtx->LastSendTick = t5lCtx->CurTick;
 				//
 				ret = TRUE;
 			}
@@ -317,45 +318,45 @@ void pointTrigerDataSet(UINT8 localChanel , UINT8 point , UINT8 value ,INT16 avg
 }
 
 //if sreen calibtion point triger
-UINT8 pointTrigerDeal()
+UINT8 pointTrigerDeal(T5LType *pSdwe)
 {
 	static UINT8 inerStatus = 0 , localChanel = 0 ;	
 	INT16 *pSendData= 0;
 	UINT8 result = 0 ;
 
-	if(g_T5L.CalibrateChanel > HX711_CHANEL_NUM)
+	if(pSdwe->CalibrateChanel > HX711_CHANEL_NUM)
 		return 0 ;
 
 	//chanel get
-	if(0 == g_T5L.CalibrateChanel)
+	if(0 == pSdwe->CalibrateChanel)
 	{
 		localChanel = HX711_CHANEL_NUM ;
 	}
-	else if(g_T5L.CalibrateChanel <= HX711_CHANEL_NUM)
+	else if(pSdwe->CalibrateChanel <= HX711_CHANEL_NUM)
 	{
-		localChanel = g_T5L.CalibrateChanel - 1 ;
+		localChanel = pSdwe->CalibrateChanel - 1 ;
 	}
 
 	//status
 	switch(inerStatus)
 	{
 		case 0://send Color
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{
 				pSendData= &g_t5l_triger_data[localChanel][DMG_TRIGER_SAMPLE_OF_ASK_COLOR][0];//color:1 green 0:white
-				t5lWriteVarible(DMG_FUNC_ASK_CHANEL_POINT_TRIG_BACK_COLOR_ADDRESS,pSendData,(CHANEL_POINT_NUM),0);
+				t5lWriteVarible(pSdwe,DMG_FUNC_ASK_CHANEL_POINT_TRIG_BACK_COLOR_ADDRESS,pSendData,(CHANEL_POINT_NUM),0);
 				//
 				inerStatus++ ;
 			}
 		break;
 		case 1://send sample data
 			{
-				if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-					((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+				if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+					((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 				{
 					pSendData= &g_t5l_triger_data[localChanel][DMG_TRIGER_SAMPLE_OF_AVG_SAMPLE][0];//data
-					t5lWriteVarible(DMG_FUNC_ASK_CHANEL_POINT_TRIG_SAMPLE_DATA_ADDRESS,pSendData,(CHANEL_POINT_NUM),0);
+					t5lWriteVarible(pSdwe,DMG_FUNC_ASK_CHANEL_POINT_TRIG_SAMPLE_DATA_ADDRESS,pSendData,(CHANEL_POINT_NUM),0);
 					//
 					inerStatus++ ;
 				}
@@ -381,10 +382,10 @@ void color_clearAllColor(void)
 	}
 }
 //==recv sdwe register ask deal
-UINT8 sdweAskRegData(UINT8 regAdd, UINT8 regData)
+UINT8 sdweAskRegData(enumScreenIndexType index,UINT8 regAdd, UINT8 regData)
 {
 	UINT8 needStore = FALSE ;
-	T5LType *pSdwe = &g_T5L;
+	T5LType *pSdwe = &g_T5LCtx[index];
 	if(0 == regAdd)
 	{
 		pSdwe->version = regData;
@@ -508,7 +509,7 @@ UINT8 screenRxHandle_Version(T5LType *pSdwe)
 	UINT8 matched = FALSE;
 	if(DMG_SYS_VERSION_GET_ADD == pSdwe->SetAdd)
 	{
-		g_T5L.sdwePowerOn = TRUE;//if recived version , indicate allready power on
+		pSdwe->sdwePowerOn = TRUE;//if recived version , indicate allready power on
 		t5lDisPlayDataClear();
 		matched = TRUE;
 	}
@@ -556,7 +557,7 @@ UINT8 screenRxHandle_SysPara(T5LType *pSdwe)
 			break;
 			case DMG_FUNC_SET_SCREEN_LIGHT_ADDRESS://	(0X1014)//0x1014
 				gSystemPara.ScreenLight = pSdwe->SetData;/**< 屏幕背光亮度 */
-				g_T5L.sdweFreshScreenLight = TRUE;
+				pSdwe->sdweFreshScreenLight = TRUE;
 			break;
 			case DMG_FUNC_SET_VOICE_NUM_TOUCH_ADDRESS://(0X1015)//0x1015
 				gSystemPara.VoiceNumTouch = pSdwe->SetData;/**< 语音大小 触控*/
@@ -572,7 +573,7 @@ UINT8 screenRxHandle_SysPara(T5LType *pSdwe)
 			break;
 			case DMG_FUNC_DIWEN_XIAOSHU_ADDRESS:/**< 小数显示 0x101C*/
 				gSystemPara.xiaoShuXianShi = pSdwe->SetData;
-				g_T5L.sdweChangeDescriblePoint = TRUE;
+				pSdwe->sdweChangeDescriblePoint = TRUE;
 			break;
 			case DMG_FUNC_DIWEN_BILV_ADDRESS:	/**< ml与g比率 0x101D*/
 				gSystemPara.mlYugBiLv = pSdwe->SetData;
@@ -814,10 +815,10 @@ screenRxTxHandleType screenRxHandle[SCREEN_RX_HANDLE_TOTAL_NUM]=
 	{0,	13,&screenRxHandle_VoicePrintfStatusFromScreen},//屏幕语音控制后状态返回
 };
 //==recv sdwe variable ask deal
-UINT8 sdweAskVaribleData(UINT16 varAdd, UINT16 varData)
+UINT8 sdweAskVaribleData(enumScreenIndexType index,UINT16 varAdd, UINT16 varData)
 {
 	UINT8 needStore = FALSE , i = 0;
-	T5LType *pSdwe = &g_T5L;
+	T5LType *pSdwe = &g_T5LCtx[index];
 	//
 	pSdwe->SetAdd = varAdd ;
 	pSdwe->SetData = varData ;
@@ -838,51 +839,51 @@ UINT8 sdweAskVaribleData(UINT16 varAdd, UINT16 varData)
 	return needStore;
 }
 //if need jump to startup page 
-UINT8 jumpToStartUpPage(INT16 curPage)
+UINT8 jumpToStartUpPage(T5LType *pSdwe,INT16 curPage)
 {
 	UINT8 result = 0 ;
 	//5A A5 07 82 0084 5A01 page
 	INT16 pageChangeOrderAndData[2]={0x5A01,1};//1 page
 	pageChangeOrderAndData[1] = curPage;
-	if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-		((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+	if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+		((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 	{
-		t5lWriteVarible((0X0084),pageChangeOrderAndData,2,0);
+		t5lWriteVarible(pSdwe,(0X0084),pageChangeOrderAndData,2,0);
 		result = 1;
 	}
 	return result;
 }
 //if need jump to active page 
-UINT8 jumpToActivePage()
+UINT8 jumpToActivePage(T5LType *pSdwe)
 {
 	UINT8 result = 0 ;
 	//5A A5 07 82 0084 5A01 page
 	INT16 pageChangeOrderAndData[2]={0x5A01,56};//56 page
-	if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-		((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+	if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+		((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 	{
-		t5lWriteVarible((0X0084),pageChangeOrderAndData,2,0);
+		t5lWriteVarible(pSdwe,(0X0084),pageChangeOrderAndData,2,0);
 		result = 1;
 	}
 	return result;
 }
 //if need jump to Syspara page 
-UINT8 jumpToSysparaPage()
+UINT8 jumpToSysparaPage(T5LType *pSdwe)
 {
 	UINT8 result = 0 ;
 	//5A A5 07 82 0084 5A01 page
 	INT16 pageChangeOrderAndData[2]={0x5A01,52};//52 page
-	if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-		((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+	if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+		((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 	{
-		t5lWriteVarible((0X0084),pageChangeOrderAndData,2,0);
+		t5lWriteVarible(pSdwe,(0X0084),pageChangeOrderAndData,2,0);
 		result = 1;
 	}
 	return result;
 }
 
 //if need jump to active page 
-UINT8 jumpToBalancingPage()
+UINT8 jumpToBalancingPage(T5LType *pSdwe)
 {
 	UINT8 result = 0 ;
 	//5A A5 07 82 0084 5A01 page
@@ -928,16 +929,16 @@ UINT8 jumpToBalancingPage()
 	}
 #endif
 	pageChangeOrderAndData[1] = DMG_FUNC_Balancing_6_PAGE;
-	if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-		((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+	if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+		((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 	{
-		t5lWriteVarible((0X0084),pageChangeOrderAndData,2,0);
+		t5lWriteVarible(pSdwe,(0X0084),pageChangeOrderAndData,2,0);
 		result = 1;
 	}
 	return result;
 }
 //if need jump to active page 
-UINT8 jumpToBalancingHomePage()
+UINT8 jumpToBalancingHomePage(T5LType *pSdwe)
 {
 	UINT8 result = 0 ;
 	//5A A5 07 82 0084 5A01 page
@@ -969,16 +970,16 @@ UINT8 jumpToBalancingHomePage()
 	}
 #endif
 	pageChangeOrderAndData[1] = DMG_FUNC_Balancing_6_HOME_PAGE;
-	if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-		((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+	if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+		((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 	{
-		t5lWriteVarible((0X0084),pageChangeOrderAndData,2,0);
+		t5lWriteVarible(pSdwe,(0X0084),pageChangeOrderAndData,2,0);
 		result = 1;
 	}
 	return result;
 }
 //if need jump to active page 
-UINT8 jumpToBalancingCleanPage()
+UINT8 jumpToBalancingCleanPage(T5LType *pSdwe)
 {
 	UINT8 result = 0 ;
 	//5A A5 07 82 0084 5A01 page
@@ -988,45 +989,45 @@ UINT8 jumpToBalancingCleanPage()
 	{
 		//pageChangeOrderAndData[1] = DMG_FUNC_Balancing_12_PAGE;
 	}
-	if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-		((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+	if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+		((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 	{
-		t5lWriteVarible((0X0084),pageChangeOrderAndData,2,0);
+		t5lWriteVarible(pSdwe,(0X0084),pageChangeOrderAndData,2,0);
 		result = 1;
 	}
 	return result;
 }
 
 //if need jump to calibration page 
-UINT8 jumpToCalibrationPage()
+UINT8 jumpToCalibrationPage(T5LType *pSdwe)
 {
 	UINT8 result = 0 ;
 	//5A A5 07 82 0084 5A01 page
 	INT16 pageChangeOrderAndData[2]={0x5A01,53};//53 page
-	if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-		((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+	if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+		((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 	{
-		t5lWriteVarible((0X0084),pageChangeOrderAndData,2,0);
+		t5lWriteVarible(pSdwe,(0X0084),pageChangeOrderAndData,2,0);
 		result = 1;
 	}
 	return result;
 }
 //if need jump to home page 
-UINT8 jumpToHomePage()
+UINT8 jumpToHomePage(T5LType *pSdwe)
 {
 	UINT8 result = 0 ;
 	//5A A5 07 82 0084 5A01 page
 	INT16 pageChangeOrderAndData[2]={0x5A01,54};//54 page
-	if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-		((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+	if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+		((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 	{
-		t5lWriteVarible((0X0084),pageChangeOrderAndData,2,0);
+		t5lWriteVarible(pSdwe,(0X0084),pageChangeOrderAndData,2,0);
 		result = 1;
 	}
 	return result;
 }
 //if need jump to Banling page , 跳转至配平页面
-UINT8 jumpToBanlingPage()
+UINT8 jumpToBanlingPage(T5LType *pSdwe)
 {
 	UINT8 result = 0 ;
 	//5A A5 07 82 0084 5A01 page
@@ -1079,26 +1080,26 @@ UINT8 jumpToBanlingPage()
 #endif
 	pageChangeOrderAndData[1] = DMG_FUNC_Balancing_6_PAGE;
 
-	if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-		((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+	if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+		((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 	{
-		t5lWriteVarible((0X0084),pageChangeOrderAndData,2,0);/**< DIWEN屏幕界面跳转 */  //0084
+		t5lWriteVarible(pSdwe,(0X0084),pageChangeOrderAndData,2,0);/**< DIWEN屏幕界面跳转 */  //0084
 		result = 1;
 	}
 	return result;
 }
 //send screen light 
-UINT8 sendScreenLight()
+UINT8 sendScreenLight(T5LType *pSdwe)
 {
 	UINT8 result = 0 ;
 	//5A A5 05 82 0082 5A01 page 0XEA60
 	INT16 pageChangeOrderAndData[2]={0x6423,0XEA60};//0x64:black light ,0x23:standby light ,entry standby x*0.01S
 	pageChangeOrderAndData[0] &= 0x00ff;
 	pageChangeOrderAndData[0] |= (0xff00&(gSystemPara.ScreenLight<<8));
-	if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-		((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+	if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+		((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 	{
-		t5lWriteVarible((0X0082),pageChangeOrderAndData,2,0);
+		t5lWriteVarible(pSdwe,(0X0082),pageChangeOrderAndData,2,0);
 		result = 1;
 	}
 	return result;
@@ -1106,45 +1107,45 @@ UINT8 sendScreenLight()
 
 //if reset calibration valid 
 //prepare DMG display of color and sample avg data
-UINT8 resetCalibrationTrigerDeal()
+UINT8 resetCalibrationTrigerDeal(T5LType *pSdwe)
 {
 	static UINT8 inerStatus = 0 , localChanel = 0 ;	
 
 	INT16 *pSendData= 0;
 	UINT8 result = 0 ;
 
-	if(g_T5L.CalibrateChanel > HX711_CHANEL_NUM)
+	if(pSdwe->CalibrateChanel > HX711_CHANEL_NUM)
 		return 0 ;
 
 	//chanel get
-	if(0 == g_T5L.CalibrateChanel)
+	if(0 == pSdwe->CalibrateChanel)
 	{
 		localChanel = 0 ;
 	}
-	else if(g_T5L.CalibrateChanel <= HX711_CHANEL_NUM)
+	else if(pSdwe->CalibrateChanel <= HX711_CHANEL_NUM)
 	{
-		localChanel = g_T5L.CalibrateChanel ;
+		localChanel = pSdwe->CalibrateChanel ;
 	}
 	//status
 	switch(inerStatus)
 	{
 		case 0://send Color
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{
 				pSendData= &g_t5l_triger_data[localChanel][DMG_TRIGER_SAMPLE_OF_ASK_COLOR][0];//color:1 green 0:white
-				t5lWriteVarible(DMG_FUNC_ASK_CHANEL_POINT_TRIG_BACK_COLOR_ADDRESS,pSendData,(CHANEL_POINT_NUM),0);
+				t5lWriteVarible(pSdwe,DMG_FUNC_ASK_CHANEL_POINT_TRIG_BACK_COLOR_ADDRESS,pSendData,(CHANEL_POINT_NUM),0);
 				//
 				inerStatus++ ;
 			}
 		break;
 		case 1://send data
 			{
-				if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-					((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+				if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+					((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 				{
 					pSendData= &g_t5l_triger_data[localChanel][DMG_TRIGER_SAMPLE_OF_AVG_SAMPLE][0];//data
-					t5lWriteVarible(DMG_FUNC_ASK_CHANEL_POINT_TRIG_SAMPLE_DATA_ADDRESS,pSendData,(CHANEL_POINT_NUM),0);
+					t5lWriteVarible(pSdwe,DMG_FUNC_ASK_CHANEL_POINT_TRIG_SAMPLE_DATA_ADDRESS,pSendData,(CHANEL_POINT_NUM),0);
 					//
 					inerStatus++ ;
 				}
@@ -1161,46 +1162,46 @@ UINT8 resetCalibrationTrigerDeal()
 
 
 //if sreen chanel changed
-UINT8 chanelChangedTrigerDeal()
+UINT8 chanelChangedTrigerDeal(T5LType *pSdwe)
 {
 	static UINT8 inerStatus = 0 , localChanel = 0 ;	
 
 	INT16 *pSendData= 0 ;
 	UINT8 result = 0 ;
 	
-	if(g_T5L.CalibrateChanel > HX711_CHANEL_NUM)
+	if(pSdwe->CalibrateChanel > HX711_CHANEL_NUM)
 		return 0 ;
 
 	//chanel get
-	if(0 == g_T5L.CalibrateChanel)
+	if(0 == pSdwe->CalibrateChanel)
 	{
 		localChanel = HX711_CHANEL_NUM ;
 	}
-	else if(g_T5L.CalibrateChanel <= HX711_CHANEL_NUM)
+	else if(pSdwe->CalibrateChanel <= HX711_CHANEL_NUM)
 	{
-		localChanel = g_T5L.CalibrateChanel - 1 ;
+		localChanel = pSdwe->CalibrateChanel - 1 ;
 	}
 	
 	//status
 	switch(inerStatus)
 	{
 		case 0://send back Color
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{
 				pSendData= &g_t5l_triger_data[localChanel][DMG_TRIGER_SAMPLE_OF_ASK_COLOR][0];//color:1 green 0:white
-				t5lWriteVarible(DMG_FUNC_ASK_CHANEL_POINT_TRIG_BACK_COLOR_ADDRESS,pSendData,(CHANEL_POINT_NUM),0);
+				t5lWriteVarible(pSdwe,DMG_FUNC_ASK_CHANEL_POINT_TRIG_BACK_COLOR_ADDRESS,pSendData,(CHANEL_POINT_NUM),0);
 				//
 				inerStatus++ ;
 			}
 		break;
 		case 1://send avg sample data
 			{
-				if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-					((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+				if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+					((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 				{
 					pSendData= &g_t5l_triger_data[localChanel][DMG_TRIGER_SAMPLE_OF_AVG_SAMPLE][0];//avg sample data
-					t5lWriteVarible(DMG_FUNC_ASK_CHANEL_POINT_TRIG_SAMPLE_DATA_ADDRESS,pSendData,(CHANEL_POINT_NUM),0);
+					t5lWriteVarible(pSdwe,DMG_FUNC_ASK_CHANEL_POINT_TRIG_SAMPLE_DATA_ADDRESS,pSendData,(CHANEL_POINT_NUM),0);
 					//
 					inerStatus++ ;
 				}
@@ -1208,11 +1209,11 @@ UINT8 chanelChangedTrigerDeal()
 			break;
 		case 2://send weight point
 			{
-				if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-					((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+				if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+					((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 				{
 					pSendData= &g_t5l_triger_data[localChanel][DMG_TRIGER_SAMPLE_OF_ASK_WEIGHT][0];//weight point data
-					t5lWriteVarible(DMG_FUNC_SET_CHANEL_POINT_ADDRESS,pSendData,(CHANEL_POINT_NUM),0);
+					t5lWriteVarible(pSdwe,DMG_FUNC_SET_CHANEL_POINT_ADDRESS,pSendData,(CHANEL_POINT_NUM),0);
 					//
 					inerStatus++ ;
 				}
@@ -1220,12 +1221,12 @@ UINT8 chanelChangedTrigerDeal()
 			break;
 		case 3://send chanel
 			{
-				if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-					((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+				if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+					((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 				{
 
-					pSendData = (INT16 *)&(g_T5L.CalibrateChanel);		
-					t5lWriteVarible(DMG_FUNC_SET_CHANEL_NUM,pSendData,1,0);
+					pSendData = (INT16 *)&(pSdwe->CalibrateChanel);		
+					t5lWriteVarible(pSdwe,DMG_FUNC_SET_CHANEL_NUM,pSendData,1,0);
 					//
 					inerStatus++ ;
 				}
@@ -1242,7 +1243,7 @@ UINT8 chanelChangedTrigerDeal()
 }
 
 
-UINT8 removeWeightTrigerDeal()
+UINT8 removeWeightTrigerDeal(T5LType *pSdwe)
 {
 	INT16 *pSendData = &g_i16ColorBuff[0];
 	INT16 *pDataSendToDiWen = &g_i32_i16DataBuff[0];
@@ -1253,21 +1254,21 @@ UINT8 removeWeightTrigerDeal()
 	switch(inerStatus)
 	{
 		case 0://==send weight vlu to Screen
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{
 				pDataSendToDiWen = &g_i32_i16DataBuff[0];
-				t5lWriteVarible(DMG_FUNC_ASK_CHANEL_WEIGHT_ADDRESS,pDataSendToDiWen,(2*T5L_MAX_CHANEL_LEN),0);
+				t5lWriteVarible(pSdwe,DMG_FUNC_ASK_CHANEL_WEIGHT_ADDRESS,pDataSendToDiWen,(2*T5L_MAX_CHANEL_LEN),0);
 				//
 				inerStatus=1;
 			}
 		break;
 		case 1://==send color vlu to Screen
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{
 				pSendData = &g_i16ColorBuff[0];
-				t5lWriteVarible(DMG_FUNC_ASK_CHANEL_COLOR_ADDRESS,pSendData,T5L_MAX_CHANEL_LEN,0);
+				t5lWriteVarible(pSdwe,DMG_FUNC_ASK_CHANEL_COLOR_ADDRESS,pSendData,T5L_MAX_CHANEL_LEN,0);
 				//
 				inerStatus=2;
 			}
@@ -1280,7 +1281,7 @@ UINT8 removeWeightTrigerDeal()
 	return result;
 }
 
-void sendHelpDataDiff(void)
+void sendHelpDataDiff(T5LType *pSdwe)
 {
 	static UINT8 needSend = FALSE;
 	UINT8 i = 0 ;
@@ -1383,7 +1384,7 @@ void sendHelpDataDiff(void)
 	}
 	if(TRUE == needSend)
 	{	
-		if(TRUE == t5lWriteData(DMG_FUNC_HELP_TO_JUDGE_SET_ADDRESS,&g_i16HelpDataBuff[0],(DIFF_TO_DIWEN_DATA_LEN),0))
+		if(TRUE == t5lWriteData(pSdwe,DMG_FUNC_HELP_TO_JUDGE_SET_ADDRESS,&g_i16HelpDataBuff[0],(DIFF_TO_DIWEN_DATA_LEN),0))
 		{
 			needSend = FALSE;
 		}
@@ -1573,7 +1574,7 @@ void readColorDataFromSys(UINT8 *pColorData,UINT8 len)
 	}
 }
 
-void sendHelpDataDiff_AtSlave1Device(void)
+void sendHelpDataDiff_AtSlave1Device(T5LType *pSdwe)
 {
 	static UINT8 needSend = FALSE;
 	UINT8 i = 0;
@@ -1587,7 +1588,7 @@ void sendHelpDataDiff_AtSlave1Device(void)
 	}
 	if(TRUE == needSend)
 	{	
-		if(TRUE == t5lWriteData(DMG_FUNC_HELP_TO_JUDGE_SET_ADDRESS,&g_i16HelpDataBuff[0],(DIFF_TO_DIWEN_DATA_LEN),0))
+		if(TRUE == t5lWriteData(pSdwe,DMG_FUNC_HELP_TO_JUDGE_SET_ADDRESS,&g_i16HelpDataBuff[0],(DIFF_TO_DIWEN_DATA_LEN),0))
 		{
 			needSend = FALSE;
 		}
@@ -1738,7 +1739,7 @@ UINT8 preWeightDataAndJudgeIfNeedSend_Master(INT32 *pData,INT16 *pDataInt16, INT
 	return ret;
 	
 }
-UINT8 preWeightDataAndJudgeIfNeedSend_FuncA_Master(INT32 *pData,INT16 *pDataInt16,INT32 *pDataPre,UINT8 chanel_len)
+UINT8 preWeightDataAndJudgeIfNeedSend_FuncA_Master(T5LType *pSdwe,INT32 *pData,INT16 *pDataInt16,INT32 *pDataPre,UINT8 chanel_len)
 {
 	UINT8 ret = FALSE ;
 	//
@@ -1943,7 +1944,7 @@ UINT8 preColorDataAndJudgeIfNeedSend(INT32 *pData,INT16 *pColor,INT16 *pColorPre
 	}
 	return ret;	
 }
-UINT8 sendBalancingWeightAndColor_Slave_1(void)
+UINT8 sendBalancingWeightAndColor_Slave_1(T5LType *pSdwe)
 {
 	static UINT8 dataSendFlag = FALSE,colorSendFlag = FALSE;
 	UINT8 data_i = 0 ,chn_i = 0 , ret = 0;
@@ -1966,7 +1967,7 @@ UINT8 sendBalancingWeightAndColor_Slave_1(void)
 	//
 	if(TRUE == dataSendFlag)
 	{
-		if(TRUE ==t5lWriteData(DMG_FUNC_ASK_CHANEL_WEIGHT_ADDRESS,pDataSendToDiWen,(2*T5L_MAX_CHANEL_LEN),0))
+		if(TRUE ==t5lWriteData(pSdwe,DMG_FUNC_ASK_CHANEL_WEIGHT_ADDRESS,pDataSendToDiWen,(2*T5L_MAX_CHANEL_LEN),0))
 		{
 			dataSendFlag = FALSE;
 		}
@@ -1983,7 +1984,7 @@ UINT8 sendBalancingWeightAndColor_Slave_1(void)
 		}
 		if(TRUE == colorSendFlag)
 		{
-			if(TRUE ==t5lWriteData(DMG_FUNC_ASK_CHANEL_COLOR_ADDRESS,pColor,T5L_MAX_CHANEL_LEN,0))
+			if(TRUE ==t5lWriteData(pSdwe,DMG_FUNC_ASK_CHANEL_COLOR_ADDRESS,pColor,T5L_MAX_CHANEL_LEN,0))
 			{
 				colorSendFlag = FALSE;
 				ret = 1;
@@ -2000,7 +2001,7 @@ UINT8 sendBalancingWeightAndColor_Slave_1(void)
 	return ret;
 }
 
-UINT16 preBalancingWeightAndColorIfNotNeedSendToSreen(INT32 *pData , INT16 *pDataSendToDiWen , INT32 *pDataPre, \
+UINT16 preBalancingWeightAndColorIfNotNeedSendToSreen(T5LType *pSdwe,INT32 *pData , INT16 *pDataSendToDiWen , INT32 *pDataPre, \
 INT16 *pColor , INT16 *pColorPre , INT16 *pColorOtherCh , UINT8 chanel_len)
 {
 	UINT16 ret = 0 ;
@@ -2025,7 +2026,7 @@ INT16 *pColor , INT16 *pColorPre , INT16 *pColorOtherCh , UINT8 chanel_len)
 		break;
 
 		case 0x01://=================send weight data to screen
-			if(TRUE ==t5lWriteData(DMG_FUNC_ASK_CHANEL_WEIGHT_ADDRESS,pDataSendToDiWen,(2*chanel_len),0))//2*chanel_len:because each data type was 4 byte
+			if(TRUE ==t5lWriteData(pSdwe,DMG_FUNC_ASK_CHANEL_WEIGHT_ADDRESS,pDataSendToDiWen,(2*chanel_len),0))//2*chanel_len:because each data type was 4 byte
 			{
 				handleStatus = 0x00;//send complete back to judge weight
 				u16WeightHoldOn = 0 ;
@@ -2045,7 +2046,7 @@ INT16 *pColor , INT16 *pColorPre , INT16 *pColorOtherCh , UINT8 chanel_len)
 			}
 		break;
 		case 0x11://=================send color data
-			if(TRUE ==t5lWriteData(DMG_FUNC_ASK_CHANEL_COLOR_ADDRESS,pColor,chanel_len,0))
+			if(TRUE ==t5lWriteData(pSdwe,DMG_FUNC_ASK_CHANEL_COLOR_ADDRESS,pColor,chanel_len,0))
 			{
 				handleStatus = 0x00;//go to check weigth if not need send
 				handleWeightColorWasSend(pColor,pColorPre,chanel_len);
@@ -2059,7 +2060,7 @@ INT16 *pColor , INT16 *pColorPre , INT16 *pColorOtherCh , UINT8 chanel_len)
 	return ret;
 }
 
-UINT16 sendBalancingWeightAndColor_Master()
+UINT16 sendBalancingWeightAndColor_Master(T5LType *pSdwe)
 {
 	INT32 *pData = &g_i32DataBuff[0];
 	INT32 *pDataPre = &g_i32DataBuffPre[0];
@@ -2084,11 +2085,11 @@ UINT16 sendBalancingWeightAndColor_Master()
 	//3.send weight wo screen
 	//4.prepare color data and judge if not need sent to screen
 	//5.if need send to screen , otherwise back to judge data
-	ret = preBalancingWeightAndColorIfNotNeedSendToSreen(pData,pDataSendToDiWen,pDataPre,pColor,pColorPre,pColorOtherCh,chanel_len);
+	ret = preBalancingWeightAndColorIfNotNeedSendToSreen(pSdwe,pData,pDataSendToDiWen,pDataPre,pColor,pColorPre,pColorOtherCh,chanel_len);
 	return ret;
 }
 
-UINT8 sendBalancingWeightAndColor20220125_FuncA_Master()
+UINT8 sendBalancingWeightAndColor20220125_FuncA_Master(T5LType *pSdwe)
 {
 	//
 	UINT8 ret = 0 ;
@@ -2106,7 +2107,7 @@ UINT8 sendBalancingWeightAndColor20220125_FuncA_Master()
 	//
 	static UINT16 u16WeightHoldOn = 0 ;
 	//=================prepare weight data
-	if(TRUE == preWeightDataAndJudgeIfNeedSend_FuncA_Master(pData,pDataSendToDiWen,pDataPre,HX711_CHANEL_NUM))
+	if(TRUE == preWeightDataAndJudgeIfNeedSend_FuncA_Master(pSdwe,pData,pDataSendToDiWen,pDataPre,HX711_CHANEL_NUM))
 	{
 		dataSendFlag = TRUE;
 		u16WeightHoldOn=0;
@@ -2123,7 +2124,7 @@ UINT8 sendBalancingWeightAndColor20220125_FuncA_Master()
 	//=================send weight data
 	if(TRUE == dataSendFlag)
 	{
-		if(TRUE ==t5lWriteData(DMG_FUNC_ASK_CHANEL_WEIGHT_ADDRESS,pDataSendToDiWen,(2*T5L_MAX_CHANEL_LEN),0))
+		if(TRUE ==t5lWriteData(pSdwe,DMG_FUNC_ASK_CHANEL_WEIGHT_ADDRESS,pDataSendToDiWen,(2*T5L_MAX_CHANEL_LEN),0))
 		{
 			dataSendFlag = FALSE;
 		}
@@ -2138,7 +2139,7 @@ UINT8 sendBalancingWeightAndColor20220125_FuncA_Master()
 		//=================send color data
 		if(TRUE == colorSendFlag)
 		{
-			if(TRUE ==t5lWriteData(DMG_FUNC_ASK_CHANEL_COLOR_ADDRESS,pColor,T5L_MAX_CHANEL_LEN,0))
+			if(TRUE ==t5lWriteData(pSdwe,DMG_FUNC_ASK_CHANEL_COLOR_ADDRESS,pColor,T5L_MAX_CHANEL_LEN,0))
 			{
 				colorSendFlag = FALSE;
 				ret = 1;
@@ -2147,7 +2148,7 @@ UINT8 sendBalancingWeightAndColor20220125_FuncA_Master()
 	}
 	return ret;
 }
-UINT8 sendBalancingWeightAndColor20220125_FuncA_Slave(void)
+UINT8 sendBalancingWeightAndColor20220125_FuncA_Slave(T5LType *pSdwe)
 {
 	static UINT8 dataSendFlag = FALSE,colorSendFlag = FALSE;
 	UINT8 data_i = 0 ,chn_i = 0 , ret = 0;
@@ -2170,7 +2171,7 @@ UINT8 sendBalancingWeightAndColor20220125_FuncA_Slave(void)
 	//
 	if(TRUE == dataSendFlag)
 	{
-		if(TRUE ==t5lWriteData(DMG_FUNC_ASK_CHANEL_WEIGHT_ADDRESS,pDataSendToDiWen,(2*T5L_MAX_CHANEL_LEN),0))
+		if(TRUE ==t5lWriteData(pSdwe,DMG_FUNC_ASK_CHANEL_WEIGHT_ADDRESS,pDataSendToDiWen,(2*T5L_MAX_CHANEL_LEN),0))
 		{
 			dataSendFlag = FALSE;
 		}
@@ -2187,7 +2188,7 @@ UINT8 sendBalancingWeightAndColor20220125_FuncA_Slave(void)
 		}
 		if(TRUE == colorSendFlag)
 		{
-			if(TRUE ==t5lWriteData(DMG_FUNC_ASK_CHANEL_COLOR_ADDRESS,&pColor[HX711_CHANEL_NUM],HX711_CHANEL_NUM,0))
+			if(TRUE ==t5lWriteData(pSdwe,DMG_FUNC_ASK_CHANEL_COLOR_ADDRESS,&pColor[HX711_CHANEL_NUM],HX711_CHANEL_NUM,0))
 			{
 				colorSendFlag = FALSE;
 				ret = 1;
@@ -2322,7 +2323,7 @@ INT16 describlePointVluXiaoShu_help[DESCRIBLE_POINT_HELP_NUM][6]=
 	{DESCRIBLE_POINT_HELP_X_POS, 	310, 	DESCRIBLE_POINT_HELP_COLOR,		DESCRIBLE_POINT_HELP_YOU_XIAOSHU,			0x0204,			0x0100},
 };
 
-UINT8 screen_ChangeDisplayPosition(void)
+UINT8 screen_ChangeDisplayPosition(T5LType *pSdwe)
 {
 	static INT16 add_offset = 0,data_offset = 0,len_offset = 0;
 	UINT8 ret = FALSE;
@@ -2342,7 +2343,7 @@ UINT8 screen_ChangeDisplayPosition(void)
 			describlePoint_data = &describlePointVluXiaoShu[int16_ChangeDisplayPosition_i%HX711_CHANEL_NUM][0]+data_offset;
 			describlePoint_len = 6+len_offset;
 		}
-		if(TRUE == t5lWriteData(describlePoint_add,describlePoint_data,describlePoint_len,0))
+		if(TRUE == t5lWriteData(pSdwe,describlePoint_add,describlePoint_data,describlePoint_len,0))
 		{
 			int16_ChangeDisplayPosition_i++;
 		}
@@ -2367,7 +2368,7 @@ UINT8 screen_ChangeDisplayPosition(void)
 			describlePoint_data = &describlePointVluXiaoShu_help[int16_ChangeDisplayPosition_i%DESCRIBLE_POINT_HELP_NUM][0]+data_offset;
 			describlePoint_len = 6+len_offset;
 		}
-		if(TRUE == t5lWriteData(describlePoint_add,describlePoint_data,describlePoint_len,0))
+		if(TRUE == t5lWriteData(pSdwe,describlePoint_add,describlePoint_data,describlePoint_len,0))
 		{
 			int16_ChangeDisplayPosition_i++;
 		}
@@ -2389,7 +2390,7 @@ UINT8 screen_ChangeDisplayPosition(void)
 
 
 
-UINT8 screen_ChangeDisplayPositionOfIndex(void)
+UINT8 screen_ChangeDisplayPositionOfIndex(T5LType *pSdwe)
 {
 	static INT16 add_offset = 0,data_offset = 0,len_offset = 0 , int16_ChangeDisplayPosition_ii = 0;
 	UINT8 ret = FALSE;
@@ -2398,7 +2399,7 @@ UINT8 screen_ChangeDisplayPositionOfIndex(void)
 	describlePoint_data = &describleIndexPointData[int16_ChangeDisplayPosition_ii%HX711_CHANEL_NUM][0]+data_offset;
 	describlePoint_len = 2+len_offset;
 
-	if(TRUE == t5lWriteData(describlePoint_add,describlePoint_data,describlePoint_len,0))
+	if(TRUE == t5lWriteData(pSdwe,describlePoint_add,describlePoint_data,describlePoint_len,0))
 	{
 		int16_ChangeDisplayPosition_ii++;
 	}
@@ -2412,150 +2413,149 @@ UINT8 screen_ChangeDisplayPositionOfIndex(void)
 	return ret;
 }
 
-void screenT5L_CurPageGet(void)
+void screenT5L_CurPageGet(T5LType *pSdwe)
 {
-	t5lReadVarible(DMG_SYS_CUR_PAGE_GET_ADD,1,0);//get cur page
+	t5lReadVarible(pSdwe,DMG_SYS_CUR_PAGE_GET_ADD,1,0);//get cur page
 }
-void screenT5L_VersionGet(void)
+void screenT5L_VersionGet(T5LType *pSdwe)
 {
-	t5lReadVarible(DMG_SYS_VERSION_GET_ADD,1,0);//get version
+	t5lReadVarible(pSdwe,DMG_SYS_VERSION_GET_ADD,1,0);//get version
 }
 //
-UINT8 sendBalancingWeightAndColorAndHelpDataToScreen(void)
+UINT8 sendBalancingWeightAndColorAndHelpDataToScreen(T5LType *pSdwe)
 {
 	UINT8 ret = 0 ;
 	switch(gSystemPara.isCascade)
 	{
 		case 0:
 		case ModbusAdd_Master:
-			ret = sendBalancingWeightAndColor_Master();
+			ret = sendBalancingWeightAndColor_Master(pSdwe);
 		break;
 		case ModbusAdd_Slave_1:
-			ret = sendBalancingWeightAndColor_Slave_1();
+			ret = sendBalancingWeightAndColor_Slave_1(pSdwe);
 		break;
 		case ModbusFuncA_Master:
-			ret = sendBalancingWeightAndColor20220125_FuncA_Master();
+			ret = sendBalancingWeightAndColor20220125_FuncA_Master(pSdwe);
 		break;
 		case ModbusFuncA_Slave:
-			ret = sendBalancingWeightAndColor20220125_FuncA_Slave();
+			ret = sendBalancingWeightAndColor20220125_FuncA_Slave(pSdwe);
 		break;
 		default:
 		break;
 	}
-	screenT5L_HelpDataMainFunction();
+	screenT5L_HelpDataMainFunction(pSdwe);
 	return ret;
 }
 //if sreen chanel changed
-UINT8 sendSysParaDataToDiwen(void)
+UINT8 sendSysParaDataToDiwen(T5LType *pSdwe)
 {
-	static UINT8 inerStatus = 0x80;	
 	INT16 sendData[64],len=0;
 	UINT8 result = FALSE ;
 	static INT16 curPage = 0 ,  curPageDelay_offset = 80;
 	//
-	switch(inerStatus)
+	switch(pSdwe->sendSysParaDataToDiwenIndex)
 	{
 		case 0x80://获取系统版本 若获取回则代表 屏已上电
-			if(FALSE == g_T5L.sdwePowerOn)
+			if(FALSE == pSdwe->sdwePowerOn)
 			{
-				if(0 == (g_T5L.CurTick %100))//every 500ms send order to get version
+				if(0 == (pSdwe->CurTick %100))//every 500ms send order to get version
 				{
-					screenT5L_VersionGet();
+					screenT5L_VersionGet(pSdwe);
 				}
 			}
 			else
 			{
-				inerStatus = 0x81;
+				pSdwe->sendSysParaDataToDiwenIndex = 0x81;
 			}
 		break;
 		case 0x81:
-			if(0 == (g_T5L.CurTick %curPageDelay_offset))//every 500ms send order to get version
+			if(0 == (pSdwe->CurTick %curPageDelay_offset))//every 500ms send order to get version
 			{	
-				if(TRUE ==jumpToStartUpPage(curPage))//触发屏幕播放开机动画
+				if(TRUE ==jumpToStartUpPage(pSdwe,curPage))//触发屏幕播放开机动画
 				{
 					if(curPage++ >= 25)
 					{
-						inerStatus = 0x82;
+						pSdwe->sendSysParaDataToDiwenIndex = 0x82;
 					}				
 				}			
 			}
 		break;
 		case 0x82://发送配平页面的数据 规整为0 等待HX711采集到一轮完整数据后在继续往后
-			if(TRUE == g_T5L.sdweHX711FirstSampleCoplt)
+			if(TRUE == pSdwe->sdweHX711FirstSampleCoplt)
 			{
-				inerStatus = 0 ;//准备配平页面的数据 后在发送相关参数
+				pSdwe->sendSysParaDataToDiwenIndex = 0 ;//准备配平页面的数据 后在发送相关参数
 			}
 		break;
 		case 0x83://发送配平页面的数据 规整为0
-			if(TRUE == g_T5L.sdweHX711FirstSampleCoplt)
+			if(TRUE == pSdwe->sdweHX711FirstSampleCoplt)
 			{
-				if(TRUE == sendBalancingWeightAndColorAndHelpDataToScreen())
+				if(TRUE == sendBalancingWeightAndColorAndHelpDataToScreen(pSdwe))
 				{
-					inerStatus = 0 ;
+					pSdwe->sendSysParaDataToDiwenIndex = 0 ;
 				}
 			}
 		break;
 		case 0://send screen light
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{
 				len=0;
-				sendScreenLight();
-				inerStatus++;
+				sendScreenLight(pSdwe);
+				pSdwe->sendSysParaDataToDiwenIndex++;
 			}
 		break;
 		case 1://send weight data to DW
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{
 				len=0;
 				for(len=0;len<(2*T5L_MAX_CHANEL_LEN);len++)//每个通道是4字节变量
 				{
 					sendData[len] = 0;
 				}
-				t5lWriteVarible(DMG_FUNC_ASK_CHANEL_WEIGHT_ADDRESS,sendData,len,0);/**< 通道重量 */
-				inerStatus++;
+				t5lWriteVarible(pSdwe,DMG_FUNC_ASK_CHANEL_WEIGHT_ADDRESS,sendData,len,0);/**< 通道重量 */
+				pSdwe->sendSysParaDataToDiwenIndex++;
 			}
 		break;
 		case 2://send back color to DW
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{
 				len=0;
 				for(len=0;len<T5L_MAX_CHANEL_LEN;len++)
 				{
 					sendData[len] = 0;
 				}
-				t5lWriteVarible(DMG_FUNC_ASK_CHANEL_COLOR_ADDRESS,sendData,len,0);/**< 通道背景色 */  //3100
-				inerStatus++;
+				t5lWriteVarible(pSdwe,DMG_FUNC_ASK_CHANEL_COLOR_ADDRESS,sendData,len,0);/**< 通道背景色 */  //3100
+				pSdwe->sendSysParaDataToDiwenIndex++;
 			}
 		break;
 		case 3://send help data to DW
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{
 				len=0;
 				for(len=0;len<DIFF_TO_DIWEN_DATA_LEN;len++)
 				{
 					sendData[len] = 0;
 				}
-				t5lWriteVarible(DMG_FUNC_HELP_TO_JUDGE_SET_ADDRESS,sendData,len,0);/**< 通道差值，帮助信息 */  //1201
-				inerStatus++;
+				t5lWriteVarible(pSdwe,DMG_FUNC_HELP_TO_JUDGE_SET_ADDRESS,sendData,len,0);/**< 通道差值，帮助信息 */  //1201
+				pSdwe->sendSysParaDataToDiwenIndex++;
 			}
 		break;
 		case 4://小数显示相关描述指针变量发送
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{		
-				if(0 != screen_ChangeDisplayPosition())//根据小数是否打开 发送相关数据
+				if(0 != screen_ChangeDisplayPosition(pSdwe))//根据小数是否打开 发送相关数据
 				{
-					inerStatus++;
+					pSdwe->sendSysParaDataToDiwenIndex++;
 				}
 			}
 		break;
 		case 5://changed at 20220119 , FuncA Module special , send num
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{
 				if(gSystemPara.isCascade == ModbusFuncA_Slave)//only FuncA Module and Slave , need change block num to 9~16
 				{
@@ -2563,33 +2563,33 @@ UINT8 sendSysParaDataToDiwen(void)
 					{
 						sendData[len] = HX711_CHANEL_NUM + len;
 					}					
-					t5lWriteVarible((0x3901),sendData,len,0);
+					t5lWriteVarible(pSdwe,(0x3901),sendData,len,0);
 				}			
-				inerStatus++;
+				pSdwe->sendSysParaDataToDiwenIndex++;
 			}
 		break;
 		case 6://jump to Banling page
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{
 				len=0;
-				jumpToBanlingPage();
-				inerStatus++;
+				jumpToBanlingPage(pSdwe);
+				pSdwe->sendSysParaDataToDiwenIndex++;
 			}
 		break;	
 		case 7://send 0x1000 单位
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{
 				len=0;
 				sendData[len++] = gSystemPara.uint;
-				t5lWriteVarible((0x1000),sendData,len,0);		/**< 单位：ml/g */ 				//1000
-				inerStatus++;
+				t5lWriteVarible(pSdwe,(0x1000),sendData,len,0);		/**< 单位：ml/g */ 				//1000
+				pSdwe->sendSysParaDataToDiwenIndex++;
 			}
 		break;
 		case 8://send 0X100A~0X101E 系统参数
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{
 				len = 0 ;
 				sendData[len++] = gSystemPara.minWeight;		/**< 最小量程 */ 				//100A
@@ -2620,63 +2620,63 @@ UINT8 sendSysParaDataToDiwen(void)
 				sendData[len++] = gSystemPara.mlYugBiLv;		/**< ml与g比率 0x101d*/			//101D
 				sendData[len++] = gSystemPara.daPinXianShi;		/**< 大屏显示 0x101e*/			//101E
 
-				t5lWriteVarible((0x100A),sendData,len,0);
-				inerStatus++;
+				t5lWriteVarible(pSdwe,(0x100A),sendData,len,0);
+				pSdwe->sendSysParaDataToDiwenIndex++;
 			}
 		break;
 		#if 0
 		case 6://send 0X1501 password ID
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{
 				len=0;
 				sendData[len++] = g_passWordId&0XFFFF;
-				t5lWriteVarible((0x1500),sendData,len,0);		/**< 密码依赖的芯片ID */		//1500
-				inerStatus++;
+				t5lWriteVarible(pSdwe,(0x1500),sendData,len,0);		/**< 密码依赖的芯片ID */		//1500
+				pSdwe->sendSysParaDataToDiwenIndex++;
 			}
 		break;
 		case 7://send 1510 password store
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{
 				len=0;
 				sendData[len++] = g_passWordStore&0XFFFF;
-				t5lWriteVarible((0x1510),sendData,len,0);		/**< 密码 */				  //1510
-				inerStatus++;
+				t5lWriteVarible(pSdwe,(0x1510),sendData,len,0);		/**< 密码 */				  //1510
+				pSdwe->sendSysParaDataToDiwenIndex++;
 			}
 		break;
 		#endif
 		case 9://send 2100 DMG_FUNC_SET_CHANEL_NUM
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{
 				len=0;
-				sendData[len++] = g_T5L.CalibrateChanel;
-				t5lWriteVarible(DMG_FUNC_SET_CHANEL_NUM,sendData,len,0);/**< 校准的通道号 */  //2100
-				inerStatus++;
+				sendData[len++] = pSdwe->CalibrateChanel;
+				t5lWriteVarible(pSdwe,DMG_FUNC_SET_CHANEL_NUM,sendData,len,0);/**< 校准的通道号 */  //2100
+				pSdwe->sendSysParaDataToDiwenIndex++;
 			}
 		break;
 		case 10://send voice info to DW
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{
 				len=0;
-				screenT5L_OutputVoice(VoiceTypeMax);
-				inerStatus++;
+				screenT5L_OutputVoice(pSdwe,VoiceTypeMax);
+				pSdwe->sendSysParaDataToDiwenIndex++;
 			}
 		break;
 		case 11://序号显示相关描述指针变量发送
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{		
-				if(0 != screen_ChangeDisplayPositionOfIndex())//根据小数是否打开 发送相关数据
+				if(0 != screen_ChangeDisplayPositionOfIndex(pSdwe))//根据小数是否打开 发送相关数据
 				{
-					inerStatus++;
+					pSdwe->sendSysParaDataToDiwenIndex++;
 				}
 			}
 		break;
 		default:
-			if(TRUE == g_T5L.sdweHX711FirstSampleCoplt)
+			if(TRUE == pSdwe->sdweHX711FirstSampleCoplt)
 			{
 				result = TRUE;
 			}
@@ -2686,7 +2686,7 @@ UINT8 sendSysParaDataToDiwen(void)
 }
 
 //if need jump to Banling page 
-UINT8 trigerVoice(UINT8 test_id)
+UINT8 trigerVoice(T5LType *pSdwe,UINT8 test_id)
 {
 	UINT8 result = 0 ;
 	//5A A5 07 82 0084 5A01 page
@@ -2695,10 +2695,10 @@ UINT8 trigerVoice(UINT8 test_id)
 	
 	
 	pageChangeOrderAndData[0] = ((test_id%15)<<8)+(1);//音乐序号 1：整段音乐
-	if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-		((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+	if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+		((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 	{
-		t5lWriteVarible((0X00A0),pageChangeOrderAndData,2,0);
+		t5lWriteVarible(pSdwe,(0X00A0),pageChangeOrderAndData,2,0);
 		result = 1;
 	}
 	return result;
@@ -2745,7 +2745,7 @@ UINT8 sdwe_VoicePrintfPop(tT5LVoinceType *u8Voice1 , tT5LVoinceType *u8Voice2 , 
 	return ret;
 }
 //if need jump to Banling page 
-UINT8 screenT5L_OutputVoice(UINT8 voiceId)
+UINT8 screenT5L_OutputVoice(T5LType *pSdwe,UINT8 voiceId)
 {
 	UINT8 result = 0 ;
 	//5A A5 07 82 00A0 3101 4000
@@ -2763,16 +2763,16 @@ UINT8 screenT5L_OutputVoice(UINT8 voiceId)
 	}
 	//
 	pageChangeOrderAndData[0] = ((voiceId%VoiceTypeMax)<<8)+(1);//音乐序号 1：整段音乐
-	if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-		((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+	if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+		((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 	{
-		t5lWriteVarible((0X00A0),pageChangeOrderAndData,2,0);
+		t5lWriteVarible(pSdwe,(0X00A0),pageChangeOrderAndData,2,0);
 		result = 1;
 	}
 	return result;
 }
 //
-void screenT5L_VoicePrintfMainfunction(void)
+void screenT5L_VoicePrintfMainfunction(T5LType *pSdwe)
 {
 	static UINT8 u8Vstatus = 0 ;
 	static tT5LVoinceType u8Voice1 = T5L_VoiceTypeNum_0 ,u8Voice2 = T5L_VoiceTypeNum_0 ,u8Voice3 = T5L_VoiceTypeNum_0 ;
@@ -2788,7 +2788,7 @@ void screenT5L_VoicePrintfMainfunction(void)
 		break;
 		//===========V1
 		case 1://printf V1
-			if(TRUE == screenT5L_OutputVoice(u8Voice1))
+			if(TRUE == screenT5L_OutputVoice(pSdwe,u8Voice1))
 			{
 				u8Vstatus++;
 				u16Ticks = 0 ;
@@ -2803,7 +2803,7 @@ void screenT5L_VoicePrintfMainfunction(void)
 		break;
 		//===========yu
 		case 3://printf yu
-			if(TRUE == screenT5L_OutputVoice(VoiceTypeYu_13))
+			if(TRUE == screenT5L_OutputVoice(pSdwe,VoiceTypeYu_13))
 			{
 				u8Vstatus++;
 				u16Ticks = 0 ;
@@ -2817,7 +2817,7 @@ void screenT5L_VoicePrintfMainfunction(void)
 		break;
 		//===========V2
 		case 5://printf v2
-			if(TRUE == screenT5L_OutputVoice(u8Voice2))
+			if(TRUE == screenT5L_OutputVoice(pSdwe,u8Voice2))
 			{
 				u8Vstatus++;
 				u16Ticks = 0 ;
@@ -2831,7 +2831,7 @@ void screenT5L_VoicePrintfMainfunction(void)
 		break;
 		//==========pei pin cheng gong
 		case 7://printf v1 v2 success
-			if(TRUE == screenT5L_OutputVoice(u8Voice3))
+			if(TRUE == screenT5L_OutputVoice(pSdwe,u8Voice3))
 			{
 				u8Vstatus++;
 				u16Ticks = 0 ;
@@ -2841,7 +2841,7 @@ void screenT5L_VoicePrintfMainfunction(void)
 			if(u16Ticks++ > 1000)
 			{
 				u8Vstatus++;
-				screenT5L_OutputVoice(VoiceTypeMax);
+				screenT5L_OutputVoice(pSdwe,VoiceTypeMax);
 			}
 		break;
 		default:
@@ -2855,7 +2855,7 @@ UINT8 screenT5L_VoicePrintfMainfunction_WaitSuccess(UINT16 maxWait)
 	static enumSDWEcmdWaitVoivePrintType waitStatus = cmdWaitVoivePrint_max ;
 	static UINT16 ticks = 0; 
 	static UINT16 u16ReadDIffTick = 100;
-
+	T5LType *pSdwe = &g_T5LCtx[ScreenIndex_Smaller];
 	//each 100ms force to read
 	if((++ticks % u16ReadDIffTick) == 0)
 	{
@@ -2866,12 +2866,12 @@ UINT8 screenT5L_VoicePrintfMainfunction_WaitSuccess(UINT16 maxWait)
 	switch(waitStatus)
 	{
 		case cmdWaitVoivePrint_forceRead://send order:read voice printf status 
-			if(((g_T5L.LastSendTick > g_T5L.CurTick)&&((g_T5L.LastSendTick-g_T5L.CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((g_T5L.LastSendTick < g_T5L.CurTick)&&((g_T5L.CurTick - g_T5L.LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{
 				g_u8Read00A1_Data = 0xff;
 				//
-				t5lReadVarible(0x00A1,1,0);
+				t5lReadVarible(pSdwe,0x00A1,1,0);
 				waitStatus = cmdWaitVoivePrint_waitResult;
 			}
 		break;
@@ -2896,7 +2896,7 @@ UINT8 screenT5L_VoicePrintfMainfunction_WaitSuccess(UINT16 maxWait)
 }
 
 //
-void screenT5L_VoicePrintfMainfunction_ReadBackFromScreen(void)
+void screenT5L_VoicePrintfMainfunction_ReadBackFromScreen(T5LType *pSdwe)
 {
 	static UINT8 u8Vstatus = 0;
 	static tT5LVoinceType u8Voice1 = T5L_VoiceTypeNum_0 ,u8Voice2 = T5L_VoiceTypeNum_0 ,u8Voice3 = T5L_VoiceTypeNum_0 ;
@@ -2911,7 +2911,7 @@ void screenT5L_VoicePrintfMainfunction_ReadBackFromScreen(void)
 		break;
 		//===========V1
 		case 1://printf V1
-			if(TRUE == screenT5L_OutputVoice(u8Voice1))
+			if(TRUE == screenT5L_OutputVoice(pSdwe,u8Voice1))
 			{
 				u8Vstatus++;
 			}
@@ -2924,7 +2924,7 @@ void screenT5L_VoicePrintfMainfunction_ReadBackFromScreen(void)
 		break;
 		//===========yu
 		case 3://printf yu
-			if(TRUE == screenT5L_OutputVoice(VoiceTypeYu_13))
+			if(TRUE == screenT5L_OutputVoice(pSdwe,VoiceTypeYu_13))
 			{
 				u8Vstatus++;
 			}
@@ -2937,7 +2937,7 @@ void screenT5L_VoicePrintfMainfunction_ReadBackFromScreen(void)
 		break;
 		//===========V2
 		case 5://printf v2
-			if(TRUE == screenT5L_OutputVoice(u8Voice2))
+			if(TRUE == screenT5L_OutputVoice(pSdwe,u8Voice2))
 			{
 				u8Vstatus++;
 			}
@@ -2950,7 +2950,7 @@ void screenT5L_VoicePrintfMainfunction_ReadBackFromScreen(void)
 		break;
 		//==========pei pin cheng gong
 		case 7://printf v1 v2 success
-			if(TRUE == screenT5L_OutputVoice(u8Voice3))
+			if(TRUE == screenT5L_OutputVoice(pSdwe,u8Voice3))
 			{
 				u8Vstatus++;
 			}
@@ -2959,7 +2959,7 @@ void screenT5L_VoicePrintfMainfunction_ReadBackFromScreen(void)
 			if(TRUE == screenT5L_VoicePrintfMainfunction_WaitSuccess(2000))//最多等900ms
 			{
 				u8Vstatus++;
-				screenT5L_OutputVoice(VoiceTypeMax);
+				screenT5L_OutputVoice(pSdwe,VoiceTypeMax);
 			}
 		break;
 		default:
@@ -2971,27 +2971,27 @@ void screenT5L_VoicePrintfMainfunction_ReadBackFromScreen(void)
 }
 
 //==send help data te screen
-void screenT5L_HelpDataMainFunction(void)
+void screenT5L_HelpDataMainFunction(T5LType *pSdwe)
 {
 	ModbusRtuType *pContex = &g_ModbusRtu;
 
 	if(0 == gSystemPara.isCascade)
 	{
-		sendHelpDataDiff();
+		sendHelpDataDiff(pSdwe);
 	}else if(gSystemPara.isCascade == ModbusAdd_Slave_1)//cascade : slave Device
 	{
-		sendHelpDataDiff_AtSlave1Device();
+		sendHelpDataDiff_AtSlave1Device(pSdwe);
 	}else if(gSystemPara.isCascade == ModbusAdd_Master)//cascade : master Device
 	{
 		masterCaculateHelpData(pContex,T5L_MAX_CHANEL_LEN);	
-		sendHelpDataDiff_AtSlave1Device();
+		sendHelpDataDiff_AtSlave1Device(pSdwe);
 	}else if(gSystemPara.isCascade == ModbusFuncA_Slave)//cascade : slave Device
 	{
-		sendHelpDataDiff_AtSlave1Device();
+		sendHelpDataDiff_AtSlave1Device(pSdwe);
 	}else if(gSystemPara.isCascade == ModbusFuncA_Master)//cascade : master Device
 	{
 		masterCaculateHelpData(pContex,T5L_MAX_CHANEL_LEN); 
-		sendHelpDataDiff_AtSlave1Device();
+		sendHelpDataDiff_AtSlave1Device(pSdwe);
 	}
 		
 }
@@ -3003,7 +3003,7 @@ UINT8 screenTxHandle_ScreenInit(T5LType *pSdwe)
 	if(T5L_INITIAL_COMPLETE != pSdwe->sendSdweInit)
 	{
 		matched = TRUE;
-		if(TRUE == sendSysParaDataToDiwen())
+		if(TRUE == sendSysParaDataToDiwen(pSdwe))
 		{
 			pSdwe->sendSdweInit = T5L_INITIAL_COMPLETE;
 		}
@@ -3016,7 +3016,7 @@ UINT8 screenTxHandle_JumpToHomePage(T5LType *pSdwe)
 	if(TRUE == pSdwe->sdweJumpToHomePage)
 	{
 		matched = TRUE;
-		if(0 != jumpToHomePage())
+		if(0 != jumpToHomePage(pSdwe))
 		{
 			pSdwe->sdweJumpToHomePage = FALSE;
 		}
@@ -3029,7 +3029,7 @@ UINT8 screenTxHandle_JumpToBanlingPage(T5LType *pSdwe)
 	if(TRUE == pSdwe->sdweJumpToBanlingPage)
 	{
 		matched = TRUE;
-		if(0 != jumpToBanlingPage())
+		if(0 != jumpToBanlingPage(pSdwe))
 		{
 			pSdwe->sdweJumpToBanlingPage = FALSE;
 		}
@@ -3042,7 +3042,7 @@ UINT8 screenTxHandle_JumpToCalibrationPage(T5LType *pSdwe)
 	if(TRUE == pSdwe->sdweJumpToCalitrationPage)
 	{
 		matched = TRUE;
-		if(0 != jumpToCalibrationPage())
+		if(0 != jumpToCalibrationPage(pSdwe))
 		{
 			pSdwe->sdweJumpToCalitrationPage = FALSE;
 		}
@@ -3055,7 +3055,7 @@ UINT8 screenTxHandle_JumpToActivePage(T5LType *pSdwe)
 	if(TRUE == pSdwe->sdweJumpActivePage)
 	{
 		matched = TRUE;
-		if(0 != jumpToActivePage())
+		if(0 != jumpToActivePage(pSdwe))
 		{
 			pSdwe->sdweJumpActivePage = FALSE;
 		}
@@ -3068,7 +3068,7 @@ UINT8 screenTxHandle_JumpToSysParaPage(T5LType *pSdwe)
 	if(TRUE == pSdwe->sdweJumpToSysParaPage)
 	{
 		matched = TRUE;
-		if(0 != jumpToSysparaPage())
+		if(0 != jumpToSysparaPage(pSdwe))
 		{
 			pSdwe->sdweJumpToSysParaPage = FALSE;
 		}
@@ -3081,7 +3081,7 @@ UINT8 screenTxHandle_FreshScreenLight(T5LType *pSdwe)
 	if(TRUE == pSdwe->sdweFreshScreenLight)
 	{
 		matched = TRUE;
-		if(0 != sendScreenLight())
+		if(0 != sendScreenLight(pSdwe))
 		{
 			pSdwe->sdweFreshScreenLight = FALSE;
 		}
@@ -3094,7 +3094,7 @@ UINT8 screenTxHandle_ChangeDisplayPosition(T5LType *pSdwe)
 	if(TRUE == pSdwe->sdweChangeDescriblePoint)
 	{
 		matched = TRUE;
-		if(0 != screen_ChangeDisplayPosition())
+		if(0 != screen_ChangeDisplayPosition(pSdwe))
 		{
 			pSdwe->sdweChangeDescriblePoint = FALSE;
 		}
@@ -3107,7 +3107,7 @@ UINT8 screenTxHandle_JmmpToBalancingPage(T5LType *pSdwe)
 	if(TRUE == pSdwe->sdweJumpBalancing)
 	{
 		matched = TRUE;
-		if(0!= jumpToBalancingPage())
+		if(0!= jumpToBalancingPage(pSdwe))
 		{
 			pSdwe->sdweJumpBalancing = FALSE;
 		}
@@ -3120,7 +3120,7 @@ UINT8 screenTxHandle_JumpToBalancingCleanPage(T5LType *pSdwe)
 	if(TRUE == pSdwe->sdweJumpBalancing_cleanpagee)
 	{
 		matched = TRUE;
-		if(0!= jumpToBalancingCleanPage())
+		if(0!= jumpToBalancingCleanPage(pSdwe))
 		{
 			pSdwe->sdweJumpBalancing_cleanpagee = FALSE;
 		}
@@ -3133,7 +3133,7 @@ UINT8 screenTxHandle_JumpToBalancingHomePage(T5LType *pSdwe)
 	if(TRUE == pSdwe->sdweJumpBalancing_home)
 	{
 		matched = TRUE;
-		if(0!= jumpToBalancingHomePage())
+		if(0!= jumpToBalancingHomePage(pSdwe))
 		{
 			pSdwe->sdweJumpBalancing_home = FALSE;
 		}
@@ -3146,7 +3146,7 @@ UINT8 screenTxHandle_ChanelChangedTrigerDeal(T5LType *pSdwe)
 	if(TRUE == pSdwe->sdweChanelChanged)
 	{
 		matched = TRUE;
-		if(0 != chanelChangedTrigerDeal())
+		if(0 != chanelChangedTrigerDeal(pSdwe))
 		{
 			pSdwe->sdweChanelChanged = FALSE;
 		}
@@ -3159,7 +3159,7 @@ UINT8 screenTxHandle_ResetCalibrationTrigerHandle(T5LType *pSdwe)
 	if(TRUE == pSdwe->sdweResetTriger)
 	{
 		matched = TRUE;
-		if(0 != resetCalibrationTrigerDeal())
+		if(0 != resetCalibrationTrigerDeal(pSdwe))
 		{
 			pSdwe->sdweResetTriger = FALSE;
 		}
@@ -3172,7 +3172,7 @@ UINT8 screenTxHandle_PointTrigerHandle(T5LType *pSdwe)
 	if(TRUE == pSdwe->sdwePointTriger)
 	{
 		matched = TRUE;
-		if(0 != pointTrigerDeal())
+		if(0 != pointTrigerDeal(pSdwe))
 		{
 			pSdwe->sdwePointTriger = FALSE;
 		}
@@ -3187,7 +3187,7 @@ UINT8 screenTxHandle_RemoveWeightTrigerHandle(T5LType *pSdwe)
 		matched = TRUE;
 		hx711_setAllRemoveWeight();
 		t5lDisPlayDataClear();
-		if(0 != removeWeightTrigerDeal())
+		if(0 != removeWeightTrigerDeal(pSdwe))
 		{
 			pSdwe->sdweRemoveWeightTriger = FALSE;
 			//
@@ -3206,21 +3206,21 @@ UINT8 screenTxHandle_ScreenWeightAndColorAndVoiceHandle(T5LType *pSdwe)
 		{
 			case 0:
 			case ModbusAdd_Master:
-				sendBalancingWeightAndColor_Master();
+				sendBalancingWeightAndColor_Master(pSdwe);
 			break;
 			case ModbusAdd_Slave_1:
-				sendBalancingWeightAndColor_Slave_1();
+				sendBalancingWeightAndColor_Slave_1(pSdwe);
 			break;
 			case ModbusFuncA_Master:
-				sendBalancingWeightAndColor20220125_FuncA_Master();
+				sendBalancingWeightAndColor20220125_FuncA_Master(pSdwe);
 			break;
 			case ModbusFuncA_Slave:
-				sendBalancingWeightAndColor20220125_FuncA_Slave();
+				sendBalancingWeightAndColor20220125_FuncA_Slave(pSdwe);
 			break;
 			default:
 			break;
 		}
-		screenT5L_HelpDataMainFunction();
+		screenT5L_HelpDataMainFunction(pSdwe);
 
 		//voice printf mainfunction
 		if(TRUE == gSystemPara.ScreenVoiceSwitch)
@@ -3231,7 +3231,7 @@ UINT8 screenTxHandle_ScreenWeightAndColorAndVoiceHandle(T5LType *pSdwe)
 				case 0:
 				case ModbusAdd_Master:
 				case ModbusFuncA_Master:
-					screenT5L_VoicePrintfMainfunction();
+					screenT5L_VoicePrintfMainfunction(pSdwe);
 				break;
 				default:
 				break;
@@ -3263,10 +3263,14 @@ screenRxTxHandleType screenTxHandle[SCREEN_TX_HANDLE_TOTAL_NUM]=
 	{0,	15, &screenTxHandle_ScreenWeightAndColorAndVoiceHandle},//normaly weight color voice handle
 };
 //==prepare TX data
-void screenT5L_TxFunction(void)
+void screenT5L_TxFunction(enumScreenIndexType index)
 {
-	T5LType *pSdwe = &g_T5L;
+	T5LType *pSdwe = &g_T5LCtx[index];
 	UINT8 i = 0;
+	if(index >= ScreenIndex_Max)
+	{
+		return;
+	}
 	for( i = 0 ; i < SCREEN_TX_HANDLE_TOTAL_NUM ; i++)
 	{
 		if(TRUE == screenTxHandle[i].func(pSdwe))
@@ -3277,40 +3281,46 @@ void screenT5L_TxFunction(void)
 }
 
 //==SDWE UART data deal
-void screenT5L_RxFunction(void)
+void screenT5L_RxFunction(enumScreenIndexType index)
 {
 	UINT8 needStore = FALSE ;
 	UINT16 regLen = 0 , reg_i = 0 , regAdd = 0 , regData = 0;
 	UINT16 varLen = 0 , var_i = 0 , varAdd = 0 , varData = 0;
-	if(TRUE == g_T5L.RxFinishFlag)
+	T5LType *t5lCtx;
+	if(index >= ScreenIndex_Max)
+	{
+		return;
+	}
+	t5lCtx = &g_T5LCtx[index];
+	if(TRUE == t5lCtx->RxFinishFlag)
 	{
 		//A5 5A
-		if((T5L_RX_FUN_HEAD1 == g_T5L.rxData[cmdPosHead1]) && (T5L_RX_FUN_HEAD2 == g_T5L.rxData[cmdPosHead2]))
+		if((T5L_RX_FUN_HEAD1 == t5lCtx->rxData[cmdPosHead1]) && (T5L_RX_FUN_HEAD2 == t5lCtx->rxData[cmdPosHead2]))
 		{
 			//2 head + 1 len + last 3(cmd:1 add:1-2 data:1-n) data 
-			if(( g_T5L.RxLength >= 6 ) && ((g_T5L.RxLength-3) == g_T5L.rxData[cmdPosDataLen]) )
+			if(( t5lCtx->RxLength >= 6 ) && ((t5lCtx->RxLength-3) == t5lCtx->rxData[cmdPosDataLen]) )
 			{
-				switch(g_T5L.rxData[cmdPosCommand])
+				switch(t5lCtx->rxData[cmdPosCommand])
 				{
 					case cmdWriteSWDERegister:
 					break;
 					case cmdReadSWDERegister://each register is 8 bits
 						//send:A5 5A 03 cmdReadSWDERegister XX YY (XX:address YY:len)
 						//rec :A5 5A (03+YY) cmdReadSWDERegister XX YY DD^YY (XX:address YY:len DD:data)
-						//if((g_T5L.RxLength-3) == g_T5L.rxData[cmdPosDataLen])//remove 2 head + 1 data len
+						//if((t5lCtx->RxLength-3) == t5lCtx->rxData[cmdPosDataLen])//remove 2 head + 1 data len
 						{
-							regLen = g_T5L.rxData[cmdPosReadRegAskLen];
-							if(((g_T5L.rxData[cmdPosDataLen]-3)/1) == regLen)
+							regLen = t5lCtx->rxData[cmdPosReadRegAskLen];
+							if(((t5lCtx->rxData[cmdPosDataLen]-3)/1) == regLen)
 							{
 								regAdd = 0 ;
-								regAdd = g_T5L.rxData[cmdPosRegAddress];
+								regAdd = t5lCtx->rxData[cmdPosRegAddress];
 								//mult varible deal
 								for(reg_i = 0 ; reg_i < regLen ;reg_i++)
 								{
 									regData = 0 ;
-									regData = g_T5L.rxData[cmdPosRegData+reg_i];
+									regData = t5lCtx->rxData[cmdPosRegData+reg_i];
 									//deal
-									needStore |= sdweAskRegData((regAdd+reg_i),regData);
+									needStore |= sdweAskRegData(index,(regAdd+reg_i),regData);
 								}
 							}
 						}
@@ -3320,26 +3330,26 @@ void screenT5L_RxFunction(void)
 					case cmdReadSWDEVariable://each variable is 16 bits
 						//send:A5 5A 04 cmdReadSWDEVariable XX XX YY (XX XX:address YY:len)
 						//rec :A5 5A (04+2*YY) cmdReadSWDEVariable XX XX YY DD DD^YY (XX XX:address YY:len DD DD:data)
-						//if((g_T5L.RxLength-3) == g_T5L.rxData[cmdPosDataLen])//remove 2 head + 1 data len
+						//if((t5lCtx->RxLength-3) == t5lCtx->rxData[cmdPosDataLen])//remove 2 head + 1 data len
 						{
-							varLen = g_T5L.rxData[cmdPosReadVarAskLen];
-							if(((g_T5L.rxData[cmdPosDataLen]-4)/2) == varLen)
+							varLen = t5lCtx->rxData[cmdPosReadVarAskLen];
+							if(((t5lCtx->rxData[cmdPosDataLen]-4)/2) == varLen)
 							{
 								varAdd = 0 ;
-								varAdd = g_T5L.rxData[cmdPosVarAddress1];					
+								varAdd = t5lCtx->rxData[cmdPosVarAddress1];					
 								varAdd <<= 8 ;
 								varAdd &= 0xff00;
-								varAdd += g_T5L.rxData[cmdPosVarAddress2];
+								varAdd += t5lCtx->rxData[cmdPosVarAddress2];
 								//mult varible deal
 								for(var_i = 0 ; var_i < varLen ;var_i++)
 								{
 									varData = 0 ;
-									varData = g_T5L.rxData[cmdPosVarData1+2*var_i+0];					
+									varData = t5lCtx->rxData[cmdPosVarData1+2*var_i+0];					
 									varData <<= 8 ;
 									varData &= 0xff00;
-									varData += g_T5L.rxData[cmdPosVarData1+2*var_i+1];
+									varData += t5lCtx->rxData[cmdPosVarData1+2*var_i+1];
 									//deal
-									needStore |= sdweAskVaribleData((varAdd+var_i),varData);
+									needStore |= sdweAskVaribleData(index,(varAdd+var_i),varData);
 								}
 							}
 						}						
@@ -3350,7 +3360,7 @@ void screenT5L_RxFunction(void)
 			}
 
 			//store in flash
-			if(g_T5L.CurTick > 5000)
+			if(t5lCtx->CurTick > 5000)
 			{
 				if(0 != (DMG_TRIGER_SAVE_SECOTOR_1&needStore))
 				{
@@ -3365,7 +3375,7 @@ void screenT5L_RxFunction(void)
 			}
 		}
 		//
-		g_T5L.RxFinishFlag = FALSE;
+		t5lCtx->RxFinishFlag = FALSE;
 	}
 }
 
@@ -3374,13 +3384,16 @@ void screenT5L_RxFunction(void)
 //==sdwe main function
 void sreenT5L_MainFunction(void)
 {
-	g_T5L.CurTick++;
+	g_T5LCtx[ScreenIndex_Smaller].CurTick++;
+	g_T5LCtx[ScreenIndex_Larger].CurTick++;
 
 	//handle rx data from SDWE
-	screenT5L_RxFunction();
+	screenT5L_RxFunction(ScreenIndex_Smaller);
+	screenT5L_RxFunction(ScreenIndex_Larger);
 	
 	//prepare data and send to SDWE
-	screenT5L_TxFunction();
+	screenT5L_TxFunction(ScreenIndex_Smaller);
+	//screenT5L_TxFunction(ScreenIndex_Larger);
 
 	//slave data valid
 	setModbusDataValid(SLAVE_DATA_VALID);

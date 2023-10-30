@@ -42,7 +42,7 @@ const UINT16 UART_DEA_GPIO_PIN[] = { UART1_DEA_GPIO_PIN, UART2_DEA_GPIO_PIN };
 //const UINT32 UART_RX_DMA_FLAG_GIF[] = { UART1_RX_DMA_FLAG_GIF };
 
 const UINT32 g_UartBaudTab[] = { 4800, 9600, 19200, 38400, 57600, 115200, 1000000, 2000000, 3000000, 4000000 };
-UartDeviceType	g_UartDevice[UART_NUMBER] = { UartDevice1Default, UartDevice2Default };
+UartDeviceType	g_UartDevice[UART_NUMBER] = { UartDevice1Default, UartDevice2Default ,UartDevice3Default};
 
 extern void app_uart_extern_msg_packet_process( UartDeviceType *pUartDevice );
 //extern void hal_3048_msg_packet_process( UartDeviceType *pUartDevice );
@@ -290,6 +290,10 @@ UINT8 hal_uart_tx_bytes( UartDeviceType *pUartDevice, UINT8 *pTxData, UINT16 TxL
 	{
 		HAL_UART_Transmit_DMA(&huart1, pTxData, TxLength); 
 	}
+	else if(UART_EXTERN2 == pUartDevice->Port)
+	{
+		HAL_UART_Transmit_DMA(&huart2, pTxData, TxLength); 
+	}	
 	else if(UART_COM == pUartDevice->Port)
 	{
 		//RS485发送时需要使能发送

@@ -87,6 +87,7 @@ typedef enum UartPortType
 {
 	UART_COM = 0,//RS485的串口通信 UART3
 	UART_EXTERN,//显示屏的串口通信 UART1
+	UART_EXTERN2,//显示屏的串口通信 UART2
 	UART_NUMBER
 }enumUartPortType;
 
@@ -216,7 +217,29 @@ typedef struct structUartDeviceType
 	hal_uart_rx_irq_enable, \
 	hal_uart_rx_irq_disable \
 }
-
+#define UartDevice3Default { \
+    UART_EXTERN2, \
+	UART_LINK_RX_TX_FULL, \
+	UART_BAUD_115200, \
+	UART_DATABIT_8, \
+	UART_STOPBIT_1, \
+	UART_PARITY_NONE, \
+	UART_RX_TX_MODE_DMA, \
+	0, \
+	0, \
+	0, \
+	0, \
+	0, \
+	0, \
+	0, \
+	4096, \
+	hal_uart_port_init, \
+	hal_uart_set_braudrate, \
+	hal_uart_set_timeout, \
+	hal_uart_tx_bytes, \
+	hal_uart_rx_irq_enable, \
+	hal_uart_rx_irq_disable \
+}
 extern USART_TypeDef* UART_PORT[];
 extern GPIO_TypeDef* UART_DEA_GPIO_PORT[];
 extern const UINT16 UART_DEA_GPIO_PIN[];

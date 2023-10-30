@@ -112,13 +112,18 @@ int main(void)
   MX_USART1_UART_Init();
   MX_I2C1_Init();
   MX_USART6_UART_Init();
+  MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
   //PB6 : USART1_TX_SCREEN1_RX
   //PB7 : USART1_RX_SCREEN1_TX
   //串口1 接显示屏
-  HAL_UART_Receive_DMA(&huart1, g_T5L.rxData, T5L_DMG_UART_DATA_LEN);//串口1DMA
+  HAL_UART_Receive_DMA(&huart1, g_T5LCtx[ScreenIndex_Smaller].rxData, T5L_DMG_UART_DATA_LEN);//串口1DMA
   __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
   
+  //串口2 接显示屏
+  HAL_UART_Receive_DMA(&huart2, g_T5LCtx[ScreenIndex_Larger].rxData, T5L_DMG_UART_DATA_LEN);//串口2DMA
+  __HAL_UART_ENABLE_IT(&huart2, UART_IT_IDLE);
+
   //串口3 接RS485
   HAL_UART_Receive_DMA(&huart3, g_ModbusRtu.rxDataUart, MODBUS_RTU_UART_DATA_LEN);//串口3DMA
   __HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);
