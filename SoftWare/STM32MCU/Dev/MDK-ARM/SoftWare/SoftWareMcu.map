@@ -1155,7 +1155,7 @@ Section Cross References
     app_hx711_ctrl.o(i.hx711_MainFunction) refers to app_hx711_ctrl.o(i.hx711_setAllRemoveWeight) for hx711_setAllRemoveWeight
     app_hx711_ctrl.o(i.hx711_MainFunction) refers to app_t5l_ctrl.o(i.t5lDisPlayDataClear) for t5lDisPlayDataClear
     app_hx711_ctrl.o(i.hx711_MainFunction) refers to app_hx711_ctrl.o(.data) for .data
-    app_hx711_ctrl.o(i.hx711_MainFunction) refers to app_t5l_ctrl.o(.data) for g_T5L
+    app_hx711_ctrl.o(i.hx711_MainFunction) refers to app_t5l_ctrl.o(.data) for g_T5LCtx
     app_hx711_ctrl.o(i.hx711_PowerOff) refers to hal_gpio.o(i.hal_gpio_set_do_high) for hal_gpio_set_do_high
     app_hx711_ctrl.o(i.hx711_PowerOff) refers to hal_delay.o(i.hal_delay_us) for hal_delay_us
     app_hx711_ctrl.o(i.hx711_PowerOn) refers to hal_gpio.o(i.hal_gpio_set_do_low) for hal_gpio_set_do_low
@@ -1193,7 +1193,7 @@ Section Cross References
     app_key_ctrl.o(i.key_MainFunction) refers to app_key_ctrl.o(i.key_FilterGet) for key_FilterGet
     app_key_ctrl.o(i.key_MainFunction) refers to app_modbus_rtu_ctrl.o(i.setModbusSelfRemoveFlag) for setModbusSelfRemoveFlag
     app_key_ctrl.o(i.key_MainFunction) refers to app_key_ctrl.o(.data) for .data
-    app_key_ctrl.o(i.key_MainFunction) refers to app_t5l_ctrl.o(.data) for g_T5L
+    app_key_ctrl.o(i.key_MainFunction) refers to app_t5l_ctrl.o(.data) for g_T5LCtx
     app_key_ctrl.o(i.key_filter) refers to hal_gpio.o(i.hal_di_get) for hal_di_get
     app_key_ctrl.o(i.key_filter) refers to app_key_ctrl.o(.bss) for .bss
     app_key_ctrl.o(i.key_init) refers to app_key_ctrl.o(.bss) for .bss
@@ -1308,6 +1308,7 @@ Section Cross References
     app_t5l_ctrl.o(i.jumpToStartUpPage) refers to app_t5l_ctrl.o(.constdata) for .constdata
     app_t5l_ctrl.o(i.jumpToSysparaPage) refers to app_t5l_ctrl.o(i.t5lWriteVarible) for t5lWriteVarible
     app_t5l_ctrl.o(i.jumpToSysparaPage) refers to app_t5l_ctrl.o(.constdata) for .constdata
+    app_t5l_ctrl.o(i.largerScreen_Init) refers to app_t5l_ctrl.o(i.screenT5L_VersionGet) for screenT5L_VersionGet
     app_t5l_ctrl.o(i.masterCaculateHelpData) refers to app_crc.o(i.BubbleSort) for BubbleSort
     app_t5l_ctrl.o(i.masterCaculateHelpData) refers to app_t5l_ctrl.o(.bss) for .bss
     app_t5l_ctrl.o(i.masterCaculateHelpData) refers to app_syspara.o(.data) for gSystemPara
@@ -1351,6 +1352,7 @@ Section Cross References
     app_t5l_ctrl.o(i.resetCalibrationTrigerDeal) refers to app_t5l_ctrl.o(i.t5lWriteVarible) for t5lWriteVarible
     app_t5l_ctrl.o(i.resetCalibrationTrigerDeal) refers to app_t5l_ctrl.o(.data) for .data
     app_t5l_ctrl.o(i.resetCalibrationTrigerDeal) refers to app_t5l_ctrl.o(.bss) for .bss
+    app_t5l_ctrl.o(i.screenLargerTxHandle_ScreenInit) refers to app_t5l_ctrl.o(i.largerScreen_Init) for largerScreen_Init
     app_t5l_ctrl.o(i.screenRxHandle_CalibrateAddressSet) refers to app_t5l_ctrl.o(i.clearLocalCalibrationRecordData) for clearLocalCalibrationRecordData
     app_t5l_ctrl.o(i.screenRxHandle_CalibrateAddressSet) refers to app_t5l_ctrl.o(i.clearLocalCalibrationKAndBAndSample) for clearLocalCalibrationKAndBAndSample
     app_t5l_ctrl.o(i.screenRxHandle_CalibratePointSampleAndSet) refers to app_hx711_ctrl.o(i.hx711_getAvgSample) for hx711_getAvgSample
@@ -1369,8 +1371,6 @@ Section Cross References
     app_t5l_ctrl.o(i.screenT5L_HelpDataMainFunction) refers to app_t5l_ctrl.o(i.sendHelpDataDiff) for sendHelpDataDiff
     app_t5l_ctrl.o(i.screenT5L_HelpDataMainFunction) refers to app_modbus_rtu_ctrl.o(.data) for g_ModbusRtu
     app_t5l_ctrl.o(i.screenT5L_HelpDataMainFunction) refers to app_syspara.o(.data) for gSystemPara
-    app_t5l_ctrl.o(i.screenT5L_Init) refers to app_t5l_ctrl.o(.data) for .data
-    app_t5l_ctrl.o(i.screenT5L_Init) refers to hal_uart.o(.data) for g_UartDevice
     app_t5l_ctrl.o(i.screenT5L_Init) refers to app_hx711_ctrl.o(.constdata) for defaultChanelSamplePoint
     app_t5l_ctrl.o(i.screenT5L_Init) refers to app_t5l_ctrl.o(.bss) for .bss
     app_t5l_ctrl.o(i.screenT5L_OutputVoice) refers to app_t5l_ctrl.o(i.t5lWriteVarible) for t5lWriteVarible
@@ -1380,8 +1380,6 @@ Section Cross References
     app_t5l_ctrl.o(i.screenT5L_RxFunction) refers to app_t5l_ctrl.o(i.sdweAskVaribleData) for sdweAskVaribleData
     app_t5l_ctrl.o(i.screenT5L_RxFunction) refers to app_syspara.o(i.storeSysDataToFlash) for storeSysDataToFlash
     app_t5l_ctrl.o(i.screenT5L_RxFunction) refers to app_syspara.o(i.storeSysDataToFlash_3030) for storeSysDataToFlash_3030
-    app_t5l_ctrl.o(i.screenT5L_RxFunction) refers to app_t5l_ctrl.o(.data) for .data
-    app_t5l_ctrl.o(i.screenT5L_TxFunction) refers to app_t5l_ctrl.o(.data) for .data
     app_t5l_ctrl.o(i.screenT5L_VersionGet) refers to app_t5l_ctrl.o(i.t5lReadVarible) for t5lReadVarible
     app_t5l_ctrl.o(i.screenT5L_VoicePrintfMainfunction) refers to app_t5l_ctrl.o(i.sdwe_VoicePrintfPop) for sdwe_VoicePrintfPop
     app_t5l_ctrl.o(i.screenT5L_VoicePrintfMainfunction) refers to app_t5l_ctrl.o(i.screenT5L_OutputVoice) for screenT5L_OutputVoice
@@ -1410,7 +1408,7 @@ Section Cross References
     app_t5l_ctrl.o(i.screenTxHandle_RemoveWeightTrigerHandle) refers to app_t5l_ctrl.o(i.removeWeightTrigerDeal) for removeWeightTrigerDeal
     app_t5l_ctrl.o(i.screenTxHandle_RemoveWeightTrigerHandle) refers to app_modbus_rtu_ctrl.o(i.setModbusOtherRemoveFlag) for setModbusOtherRemoveFlag
     app_t5l_ctrl.o(i.screenTxHandle_ResetCalibrationTrigerHandle) refers to app_t5l_ctrl.o(i.resetCalibrationTrigerDeal) for resetCalibrationTrigerDeal
-    app_t5l_ctrl.o(i.screenTxHandle_ScreenInit) refers to app_t5l_ctrl.o(i.sendSysParaDataToDiwen) for sendSysParaDataToDiwen
+    app_t5l_ctrl.o(i.screenTxHandle_ScreenInit) refers to app_t5l_ctrl.o(i.smallerScreen_Init) for smallerScreen_Init
     app_t5l_ctrl.o(i.screenTxHandle_ScreenWeightAndColorAndVoiceHandle) refers to app_t5l_ctrl.o(i.sendBalancingWeightAndColor_Master) for sendBalancingWeightAndColor_Master
     app_t5l_ctrl.o(i.screenTxHandle_ScreenWeightAndColorAndVoiceHandle) refers to app_t5l_ctrl.o(i.sendBalancingWeightAndColor_Slave_1) for sendBalancingWeightAndColor_Slave_1
     app_t5l_ctrl.o(i.screenTxHandle_ScreenWeightAndColorAndVoiceHandle) refers to app_t5l_ctrl.o(i.sendBalancingWeightAndColor20220125_FuncA_Master) for sendBalancingWeightAndColor20220125_FuncA_Master
@@ -1424,8 +1422,6 @@ Section Cross References
     app_t5l_ctrl.o(i.screen_ChangeDisplayPosition) refers to app_t5l_ctrl.o(.data) for .data
     app_t5l_ctrl.o(i.screen_ChangeDisplayPositionOfIndex) refers to app_t5l_ctrl.o(i.t5lWriteData) for t5lWriteData
     app_t5l_ctrl.o(i.screen_ChangeDisplayPositionOfIndex) refers to app_t5l_ctrl.o(.data) for .data
-    app_t5l_ctrl.o(i.sdweAskRegData) refers to app_t5l_ctrl.o(.data) for .data
-    app_t5l_ctrl.o(i.sdweAskVaribleData) refers to app_t5l_ctrl.o(.data) for .data
     app_t5l_ctrl.o(i.sdwe_VoicePrintfPop) refers to app_t5l_ctrl.o(.data) for .data
     app_t5l_ctrl.o(i.sdwe_VoicePrintfPop) refers to app_t5l_ctrl.o(.bss) for .bss
     app_t5l_ctrl.o(i.sdwe_VoicePrintfPush) refers to app_t5l_ctrl.o(.data) for .data
@@ -1463,17 +1459,17 @@ Section Cross References
     app_t5l_ctrl.o(i.sendScreenLight) refers to app_t5l_ctrl.o(i.t5lWriteVarible) for t5lWriteVarible
     app_t5l_ctrl.o(i.sendScreenLight) refers to app_t5l_ctrl.o(.constdata) for .constdata
     app_t5l_ctrl.o(i.sendScreenLight) refers to app_syspara.o(.data) for gSystemPara
-    app_t5l_ctrl.o(i.sendSysParaDataToDiwen) refers to app_t5l_ctrl.o(i.screenT5L_VersionGet) for screenT5L_VersionGet
-    app_t5l_ctrl.o(i.sendSysParaDataToDiwen) refers to app_t5l_ctrl.o(i.jumpToStartUpPage) for jumpToStartUpPage
-    app_t5l_ctrl.o(i.sendSysParaDataToDiwen) refers to app_t5l_ctrl.o(i.sendBalancingWeightAndColorAndHelpDataToScreen) for sendBalancingWeightAndColorAndHelpDataToScreen
-    app_t5l_ctrl.o(i.sendSysParaDataToDiwen) refers to app_t5l_ctrl.o(i.sendScreenLight) for sendScreenLight
-    app_t5l_ctrl.o(i.sendSysParaDataToDiwen) refers to app_t5l_ctrl.o(i.t5lWriteVarible) for t5lWriteVarible
-    app_t5l_ctrl.o(i.sendSysParaDataToDiwen) refers to app_t5l_ctrl.o(i.screen_ChangeDisplayPosition) for screen_ChangeDisplayPosition
-    app_t5l_ctrl.o(i.sendSysParaDataToDiwen) refers to app_t5l_ctrl.o(i.jumpToBanlingPage) for jumpToBanlingPage
-    app_t5l_ctrl.o(i.sendSysParaDataToDiwen) refers to app_t5l_ctrl.o(i.screenT5L_OutputVoice) for screenT5L_OutputVoice
-    app_t5l_ctrl.o(i.sendSysParaDataToDiwen) refers to app_t5l_ctrl.o(i.screen_ChangeDisplayPositionOfIndex) for screen_ChangeDisplayPositionOfIndex
-    app_t5l_ctrl.o(i.sendSysParaDataToDiwen) refers to app_syspara.o(.data) for gSystemPara
-    app_t5l_ctrl.o(i.sendSysParaDataToDiwen) refers to app_t5l_ctrl.o(.data) for .data
+    app_t5l_ctrl.o(i.smallerScreen_Init) refers to app_t5l_ctrl.o(i.screenT5L_VersionGet) for screenT5L_VersionGet
+    app_t5l_ctrl.o(i.smallerScreen_Init) refers to app_t5l_ctrl.o(i.jumpToStartUpPage) for jumpToStartUpPage
+    app_t5l_ctrl.o(i.smallerScreen_Init) refers to app_t5l_ctrl.o(i.sendBalancingWeightAndColorAndHelpDataToScreen) for sendBalancingWeightAndColorAndHelpDataToScreen
+    app_t5l_ctrl.o(i.smallerScreen_Init) refers to app_t5l_ctrl.o(i.sendScreenLight) for sendScreenLight
+    app_t5l_ctrl.o(i.smallerScreen_Init) refers to app_t5l_ctrl.o(i.t5lWriteVarible) for t5lWriteVarible
+    app_t5l_ctrl.o(i.smallerScreen_Init) refers to app_t5l_ctrl.o(i.screen_ChangeDisplayPosition) for screen_ChangeDisplayPosition
+    app_t5l_ctrl.o(i.smallerScreen_Init) refers to app_t5l_ctrl.o(i.jumpToBanlingPage) for jumpToBanlingPage
+    app_t5l_ctrl.o(i.smallerScreen_Init) refers to app_t5l_ctrl.o(i.screenT5L_OutputVoice) for screenT5L_OutputVoice
+    app_t5l_ctrl.o(i.smallerScreen_Init) refers to app_t5l_ctrl.o(i.screen_ChangeDisplayPositionOfIndex) for screen_ChangeDisplayPositionOfIndex
+    app_t5l_ctrl.o(i.smallerScreen_Init) refers to app_syspara.o(.data) for gSystemPara
+    app_t5l_ctrl.o(i.smallerScreen_Init) refers to app_t5l_ctrl.o(.data) for .data
     app_t5l_ctrl.o(i.sreenT5L_MainFunction) refers to app_t5l_ctrl.o(i.screenT5L_RxFunction) for screenT5L_RxFunction
     app_t5l_ctrl.o(i.sreenT5L_MainFunction) refers to app_t5l_ctrl.o(i.screenT5L_TxFunction) for screenT5L_TxFunction
     app_t5l_ctrl.o(i.sreenT5L_MainFunction) refers to app_modbus_rtu_ctrl.o(i.setModbusDataValid) for setModbusDataValid
@@ -1488,6 +1484,11 @@ Section Cross References
     app_t5l_ctrl.o(i.writeHelpDataFromCom) refers to app_t5l_ctrl.o(.bss) for .bss
     app_t5l_ctrl.o(i.writeWeightDataFromCom) refers to app_t5l_ctrl.o(.bss) for .bss
     app_t5l_ctrl.o(.data) refers to hal_uart.o(.data) for g_UartDevice
+    app_t5l_ctrl.o(.data) refers to hal_uart.o(.data) for g_UartDevice
+    app_t5l_ctrl.o(.data) refers to app_t5l_ctrl.o(.data) for screenRxHandle
+    app_t5l_ctrl.o(.data) refers to app_t5l_ctrl.o(.data) for screenTxHandle
+    app_t5l_ctrl.o(.data) refers to app_t5l_ctrl.o(.data) for screenLargerRxHandle
+    app_t5l_ctrl.o(.data) refers to app_t5l_ctrl.o(.data) for screenLargerTxHandle
     app_t5l_ctrl.o(.data) refers to app_t5l_ctrl.o(i.screenRxHandle_Version) for screenRxHandle_Version
     app_t5l_ctrl.o(.data) refers to app_t5l_ctrl.o(i.screenRxHandle_SysPassWord) for screenRxHandle_SysPassWord
     app_t5l_ctrl.o(.data) refers to app_t5l_ctrl.o(i.screenRxHandle_SysPara) for screenRxHandle_SysPara
@@ -1502,6 +1503,7 @@ Section Cross References
     app_t5l_ctrl.o(.data) refers to app_t5l_ctrl.o(i.screenRxHandle_CalibratePointSet) for screenRxHandle_CalibratePointSet
     app_t5l_ctrl.o(.data) refers to app_t5l_ctrl.o(i.screenRxHandle_CalibratePointSampleAndSet) for screenRxHandle_CalibratePointSampleAndSet
     app_t5l_ctrl.o(.data) refers to app_t5l_ctrl.o(i.screenRxHandle_VoicePrintfStatusFromScreen) for screenRxHandle_VoicePrintfStatusFromScreen
+    app_t5l_ctrl.o(.data) refers to app_t5l_ctrl.o(i.screenRxHandle_Version) for screenRxHandle_Version
     app_t5l_ctrl.o(.data) refers to app_t5l_ctrl.o(i.screenTxHandle_ScreenInit) for screenTxHandle_ScreenInit
     app_t5l_ctrl.o(.data) refers to app_t5l_ctrl.o(i.screenTxHandle_JumpToHomePage) for screenTxHandle_JumpToHomePage
     app_t5l_ctrl.o(.data) refers to app_t5l_ctrl.o(i.screenTxHandle_JumpToBanlingPage) for screenTxHandle_JumpToBanlingPage
@@ -1518,7 +1520,7 @@ Section Cross References
     app_t5l_ctrl.o(.data) refers to app_t5l_ctrl.o(i.screenTxHandle_PointTrigerHandle) for screenTxHandle_PointTrigerHandle
     app_t5l_ctrl.o(.data) refers to app_t5l_ctrl.o(i.screenTxHandle_RemoveWeightTrigerHandle) for screenTxHandle_RemoveWeightTrigerHandle
     app_t5l_ctrl.o(.data) refers to app_t5l_ctrl.o(i.screenTxHandle_ScreenWeightAndColorAndVoiceHandle) for screenTxHandle_ScreenWeightAndColorAndVoiceHandle
-    app_t5l_ctrl.o(.data) refers to hal_uart.o(.data) for g_UartDevice
+    app_t5l_ctrl.o(.data) refers to app_t5l_ctrl.o(i.screenLargerTxHandle_ScreenInit) for screenLargerTxHandle_ScreenInit
     drv_flash.o(i.drv_flash_erase_sector) refers to stm32f4xx_hal_flash_ex.o(i.HAL_FLASHEx_Erase) for HAL_FLASHEx_Erase
     drv_flash.o(i.drv_flash_erase_sector) refers to drv_flash.o(.data) for .data
     drv_flash.o(i.drv_flash_lock) refers to stm32f4xx_hal_flash.o(i.HAL_FLASH_Lock) for HAL_FLASH_Lock
@@ -2456,62 +2458,62 @@ Image Symbol Table
     ../Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c 0x00000000   Number         0  stream_buffer.o ABSOLUTE
     ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c 0x00000000   Number         0  tasks.o ABSOLUTE
     ../Middlewares/Third_Party/FreeRTOS/Source/timers.c 0x00000000   Number         0  timers.o ABSOLUTE
-    ../clib/angel/boardlib.s                 0x00000000   Number         0  boardinit2.o ABSOLUTE
-    ../clib/angel/boardlib.s                 0x00000000   Number         0  boardinit3.o ABSOLUTE
-    ../clib/angel/boardlib.s                 0x00000000   Number         0  boardshut.o ABSOLUTE
     ../clib/angel/boardlib.s                 0x00000000   Number         0  boardinit1.o ABSOLUTE
+    ../clib/angel/boardlib.s                 0x00000000   Number         0  boardinit3.o ABSOLUTE
+    ../clib/angel/boardlib.s                 0x00000000   Number         0  boardinit2.o ABSOLUTE
+    ../clib/angel/boardlib.s                 0x00000000   Number         0  boardshut.o ABSOLUTE
     ../clib/angel/dczerorl2.s                0x00000000   Number         0  __dczerorl2.o ABSOLUTE
     ../clib/angel/handlers.s                 0x00000000   Number         0  __scatter_zi.o ABSOLUTE
-    ../clib/angel/kernel.s                   0x00000000   Number         0  rtexit2.o ABSOLUTE
-    ../clib/angel/kernel.s                   0x00000000   Number         0  __rtentry2.o ABSOLUTE
     ../clib/angel/kernel.s                   0x00000000   Number         0  __rtentry.o ABSOLUTE
     ../clib/angel/kernel.s                   0x00000000   Number         0  rtexit.o ABSOLUTE
+    ../clib/angel/kernel.s                   0x00000000   Number         0  __rtentry2.o ABSOLUTE
+    ../clib/angel/kernel.s                   0x00000000   Number         0  rtexit2.o ABSOLUTE
     ../clib/angel/kernel.s                   0x00000000   Number         0  __rtentry4.o ABSOLUTE
+    ../clib/angel/rt.s                       0x00000000   Number         0  rt_div0.o ABSOLUTE
+    ../clib/angel/rt.s                       0x00000000   Number         0  aeabi_ldiv0.o ABSOLUTE
     ../clib/angel/rt.s                       0x00000000   Number         0  rt_raise.o ABSOLUTE
     ../clib/angel/rt.s                       0x00000000   Number         0  aeabi_ldiv0_sigfpe.o ABSOLUTE
-    ../clib/angel/rt.s                       0x00000000   Number         0  aeabi_ldiv0.o ABSOLUTE
-    ../clib/angel/rt.s                       0x00000000   Number         0  rt_div0.o ABSOLUTE
     ../clib/angel/scatter.s                  0x00000000   Number         0  __scatter.o ABSOLUTE
     ../clib/angel/startup.s                  0x00000000   Number         0  __main.o ABSOLUTE
     ../clib/angel/sys.s                      0x00000000   Number         0  libspace.o ABSOLUTE
-    ../clib/angel/sys.s                      0x00000000   Number         0  sys_stackheap_outer.o ABSOLUTE
     ../clib/angel/sys.s                      0x00000000   Number         0  use_no_semi.o ABSOLUTE
+    ../clib/angel/sys.s                      0x00000000   Number         0  sys_stackheap_outer.o ABSOLUTE
     ../clib/angel/sys.s                      0x00000000   Number         0  indicate_semi.o ABSOLUTE
+    ../clib/angel/sysapp.c                   0x00000000   Number         0  sys_exit.o ABSOLUTE
     ../clib/angel/sysapp.c                   0x00000000   Number         0  sys_command.o ABSOLUTE
     ../clib/angel/sysapp.c                   0x00000000   Number         0  sys_wrch.o ABSOLUTE
-    ../clib/angel/sysapp.c                   0x00000000   Number         0  sys_exit.o ABSOLUTE
     ../clib/armsys.c                         0x00000000   Number         0  no_argv.o ABSOLUTE
     ../clib/armsys.c                         0x00000000   Number         0  argv_veneer.o ABSOLUTE
     ../clib/armsys.c                         0x00000000   Number         0  argv_veneer.o ABSOLUTE
     ../clib/armsys.c                         0x00000000   Number         0  _get_argv_nomalloc.o ABSOLUTE
     ../clib/heapalloc.c                      0x00000000   Number         0  hrguard.o ABSOLUTE
     ../clib/heapaux.c                        0x00000000   Number         0  heapauxi.o ABSOLUTE
-    ../clib/libinit.s                        0x00000000   Number         0  libshutdown.o ABSOLUTE
-    ../clib/libinit.s                        0x00000000   Number         0  libinit2.o ABSOLUTE
-    ../clib/libinit.s                        0x00000000   Number         0  libinit.o ABSOLUTE
     ../clib/libinit.s                        0x00000000   Number         0  libshutdown2.o ABSOLUTE
+    ../clib/libinit.s                        0x00000000   Number         0  libinit.o ABSOLUTE
+    ../clib/libinit.s                        0x00000000   Number         0  libinit2.o ABSOLUTE
+    ../clib/libinit.s                        0x00000000   Number         0  libshutdown.o ABSOLUTE
     ../clib/longlong.s                       0x00000000   Number         0  lludivv7m.o ABSOLUTE
     ../clib/memcpset.s                       0x00000000   Number         0  rt_memcpy_v6.o ABSOLUTE
+    ../clib/memcpset.s                       0x00000000   Number         0  rt_memclr.o ABSOLUTE
     ../clib/memcpset.s                       0x00000000   Number         0  rt_memcpy_w.o ABSOLUTE
     ../clib/memcpset.s                       0x00000000   Number         0  memset.o ABSOLUTE
-    ../clib/memcpset.s                       0x00000000   Number         0  rt_memclr.o ABSOLUTE
     ../clib/memcpset.s                       0x00000000   Number         0  rt_memclr_w.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_other.o ABSOLUTE
     ../clib/signal.c                         0x00000000   Number         0  defsig_rtmem_formal.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_abrt_inner.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_stak_inner.o ABSOLUTE
     ../clib/signal.c                         0x00000000   Number         0  defsig_rtmem_outer.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_pvfn_inner.o ABSOLUTE
     ../clib/signal.c                         0x00000000   Number         0  defsig_rtmem_inner.o ABSOLUTE
     ../clib/signal.c                         0x00000000   Number         0  defsig_rtred_inner.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_general.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  __raise.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_abrt_inner.o ABSOLUTE
     ../clib/signal.c                         0x00000000   Number         0  defsig_fpe_inner.o ABSOLUTE
     ../clib/signal.c                         0x00000000   Number         0  defsig_exit.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  __raise.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_general.o ABSOLUTE
     ../clib/signal.c                         0x00000000   Number         0  defsig_fpe_formal.o ABSOLUTE
     ../clib/signal.c                         0x00000000   Number         0  defsig_fpe_outer.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_other.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_segv_inner.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_stak_inner.o ABSOLUTE
     ../clib/signal.c                         0x00000000   Number         0  defsig_cppl_inner.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_pvfn_inner.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_segv_inner.o ABSOLUTE
     ../clib/signal.s                         0x00000000   Number         0  defsig.o ABSOLUTE
     ../clib/stdlib.c                         0x00000000   Number         0  exit.o ABSOLUTE
     ../fplib/d2f.s                           0x00000000   Number         0  d2f.o ABSOLUTE
@@ -2832,196 +2834,198 @@ Image Symbol Table
     i.hx711_AllChanelSample                  0x08003ea8   Section        0  app_hx711_ctrl.o(i.hx711_AllChanelSample)
     i.hx711_DataSampleCtrl                   0x08003f70   Section        0  app_hx711_ctrl.o(i.hx711_DataSampleCtrl)
     i.hx711_MainFunction                     0x08003f9c   Section        0  app_hx711_ctrl.o(i.hx711_MainFunction)
-    i.hx711_SampleFunction                   0x08003fe4   Section        0  app_hx711_ctrl.o(i.hx711_SampleFunction)
-    i.hx711_SenserCheck                      0x0800409c   Section        0  app_hx711_ctrl.o(i.hx711_SenserCheck)
-    i.hx711_SigChanelAvrgAndWeightCalc       0x08004218   Section        0  app_hx711_ctrl.o(i.hx711_SigChanelAvrgAndWeightCalc)
-    i.hx711_getAvgSample                     0x080042b4   Section        0  app_hx711_ctrl.o(i.hx711_getAvgSample)
-    i.hx711_getWeight                        0x080042d4   Section        0  app_hx711_ctrl.o(i.hx711_getWeight)
-    i.hx711_init                             0x08004358   Section        0  app_hx711_ctrl.o(i.hx711_init)
-    i.hx711_setAllRemoveWeight               0x08004400   Section        0  app_hx711_ctrl.o(i.hx711_setAllRemoveWeight)
-    i.judgeWeightColorIfNotNeedSend          0x08004450   Section        0  app_t5l_ctrl.o(i.judgeWeightColorIfNotNeedSend)
-    i.judgeWeightDataIfNotNeedSend           0x08004478   Section        0  app_t5l_ctrl.o(i.judgeWeightDataIfNotNeedSend)
-    i.jumpToActivePage                       0x080044a0   Section        0  app_t5l_ctrl.o(i.jumpToActivePage)
-    i.jumpToBalancingCleanPage               0x080044dc   Section        0  app_t5l_ctrl.o(i.jumpToBalancingCleanPage)
-    i.jumpToBalancingHomePage                0x08004518   Section        0  app_t5l_ctrl.o(i.jumpToBalancingHomePage)
-    i.jumpToBalancingPage                    0x08004584   Section        0  app_t5l_ctrl.o(i.jumpToBalancingPage)
-    i.jumpToBanlingPage                      0x080045f8   Section        0  app_t5l_ctrl.o(i.jumpToBanlingPage)
-    i.jumpToCalibrationPage                  0x08004668   Section        0  app_t5l_ctrl.o(i.jumpToCalibrationPage)
-    i.jumpToHomePage                         0x080046a4   Section        0  app_t5l_ctrl.o(i.jumpToHomePage)
-    i.jumpToStartUpPage                      0x080046e0   Section        0  app_t5l_ctrl.o(i.jumpToStartUpPage)
-    i.jumpToSysparaPage                      0x08004720   Section        0  app_t5l_ctrl.o(i.jumpToSysparaPage)
-    i.key_FilterGet                          0x0800475c   Section        0  app_key_ctrl.o(i.key_FilterGet)
-    i.key_MainFunction                       0x0800477c   Section        0  app_key_ctrl.o(i.key_MainFunction)
-    i.key_filter                             0x080047fc   Section        0  app_key_ctrl.o(i.key_filter)
-    i.key_init                               0x08004844   Section        0  app_key_ctrl.o(i.key_init)
-    i.led_MainFunction                       0x08004878   Section        0  app_led_ctrl.o(i.led_MainFunction)
-    i.led_RunIndicate                        0x080048f4   Section        0  app_led_ctrl.o(i.led_RunIndicate)
-    i.led_init                               0x08004916   Section        0  app_led_ctrl.o(i.led_init)
-    i.main                                   0x08004958   Section        0  main.o(i.main)
-    i.makeFreeRtosPriority                   0x08004a04   Section        0  cmsis_os.o(i.makeFreeRtosPriority)
-    makeFreeRtosPriority                     0x08004a05   Thumb Code    12  cmsis_os.o(i.makeFreeRtosPriority)
-    i.masterCaculateHelpData                 0x08004a10   Section        0  app_t5l_ctrl.o(i.masterCaculateHelpData)
-    i.osDelay                                0x08004b8c   Section        0  cmsis_os.o(i.osDelay)
-    i.osKernelStart                          0x08004b9a   Section        0  cmsis_os.o(i.osKernelStart)
-    i.osThreadCreate                         0x08004ba4   Section        0  cmsis_os.o(i.osThreadCreate)
-    i.pointSampleTrigerDataSet               0x08004bf8   Section        0  app_t5l_ctrl.o(i.pointSampleTrigerDataSet)
-    i.pointTrigerDataSet                     0x08004c18   Section        0  app_t5l_ctrl.o(i.pointTrigerDataSet)
-    i.pointTrigerDeal                        0x08004c40   Section        0  app_t5l_ctrl.o(i.pointTrigerDeal)
-    i.pointWeightTrigerDataSet               0x08004ce0   Section        0  app_t5l_ctrl.o(i.pointWeightTrigerDataSet)
-    i.preBalancingWeightAndColorIfNotNeedSendToSreen 0x08004d00   Section        0  app_t5l_ctrl.o(i.preBalancingWeightAndColorIfNotNeedSendToSreen)
-    i.preColorDataAndJudgeIfNeedSend         0x08004db4   Section        0  app_t5l_ctrl.o(i.preColorDataAndJudgeIfNeedSend)
-    i.preCurrentDeviceWeightData             0x08005054   Section        0  app_t5l_ctrl.o(i.preCurrentDeviceWeightData)
-    i.preOtherDeviceWeightData               0x080050d0   Section        0  app_t5l_ctrl.o(i.preOtherDeviceWeightData)
-    i.preWeightDataAndJudgeIfNeedSend_FuncA_Master 0x08005122   Section        0  app_t5l_ctrl.o(i.preWeightDataAndJudgeIfNeedSend_FuncA_Master)
-    i.preWeightDataAndJudgeIfNeedSend_Master 0x08005158   Section        0  app_t5l_ctrl.o(i.preWeightDataAndJudgeIfNeedSend_Master)
-    i.prvAddCurrentTaskToDelayedList         0x080051a8   Section        0  tasks.o(i.prvAddCurrentTaskToDelayedList)
-    prvAddCurrentTaskToDelayedList           0x080051a9   Thumb Code   102  tasks.o(i.prvAddCurrentTaskToDelayedList)
-    i.prvAddNewTaskToReadyList               0x08005218   Section        0  tasks.o(i.prvAddNewTaskToReadyList)
-    prvAddNewTaskToReadyList                 0x08005219   Thumb Code   194  tasks.o(i.prvAddNewTaskToReadyList)
-    i.prvDeleteTCB                           0x080052e8   Section        0  tasks.o(i.prvDeleteTCB)
-    prvDeleteTCB                             0x080052e9   Thumb Code    52  tasks.o(i.prvDeleteTCB)
-    i.prvHeapInit                            0x0800531c   Section        0  heap_4.o(i.prvHeapInit)
-    prvHeapInit                              0x0800531d   Thumb Code    66  heap_4.o(i.prvHeapInit)
-    i.prvIdleTask                            0x08005368   Section        0  tasks.o(i.prvIdleTask)
-    prvIdleTask                              0x08005369   Thumb Code    82  tasks.o(i.prvIdleTask)
-    i.prvInitialiseNewTask                   0x080053c8   Section        0  tasks.o(i.prvInitialiseNewTask)
-    prvInitialiseNewTask                     0x080053c9   Thumb Code   152  tasks.o(i.prvInitialiseNewTask)
-    i.prvInsertBlockIntoFreeList             0x08005460   Section        0  heap_4.o(i.prvInsertBlockIntoFreeList)
-    prvInsertBlockIntoFreeList               0x08005461   Thumb Code    72  heap_4.o(i.prvInsertBlockIntoFreeList)
-    i.prvResetNextTaskUnblockTime            0x080054ac   Section        0  tasks.o(i.prvResetNextTaskUnblockTime)
-    prvResetNextTaskUnblockTime              0x080054ad   Thumb Code    26  tasks.o(i.prvResetNextTaskUnblockTime)
-    i.prvTaskExitError                       0x080054cc   Section        0  port.o(i.prvTaskExitError)
-    prvTaskExitError                         0x080054cd   Thumb Code    36  port.o(i.prvTaskExitError)
-    i.pvPortMalloc                           0x080054f4   Section        0  heap_4.o(i.pvPortMalloc)
-    i.pxPortInitialiseStack                  0x080055d0   Section        0  port.o(i.pxPortInitialiseStack)
-    i.readColorDataFromSys                   0x080055fc   Section        0  app_t5l_ctrl.o(i.readColorDataFromSys)
-    i.readHelpDataFromSys                    0x0800562c   Section        0  app_t5l_ctrl.o(i.readHelpDataFromSys)
-    i.readSysDataFromFlash                   0x0800565c   Section        0  app_syspara.o(i.readSysDataFromFlash)
-    i.readSysDataFromFlash_3030              0x0800579c   Section        0  app_syspara.o(i.readSysDataFromFlash_3030)
-    i.readWeightDataFromSys                  0x0800588c   Section        0  app_t5l_ctrl.o(i.readWeightDataFromSys)
-    i.releaseSysColor                        0x080058cc   Section        0  app_t5l_ctrl.o(i.releaseSysColor)
-    i.removeWeightTrigerDeal                 0x080058f4   Section        0  app_t5l_ctrl.o(i.removeWeightTrigerDeal)
-    i.resetCalibrationTrigerDeal             0x08005970   Section        0  app_t5l_ctrl.o(i.resetCalibrationTrigerDeal)
-    i.sampleDataPush                         0x08005a0c   Section        0  app_hx711_ctrl.o(i.sampleDataPush)
-    i.screenRxHandle_CalibrateAddressSet     0x08005a34   Section        0  app_t5l_ctrl.o(i.screenRxHandle_CalibrateAddressSet)
-    i.screenRxHandle_CalibrateChanelSet      0x08005a74   Section        0  app_t5l_ctrl.o(i.screenRxHandle_CalibrateChanelSet)
-    i.screenRxHandle_CalibratePointSampleAndSet 0x08005aaa   Section        0  app_t5l_ctrl.o(i.screenRxHandle_CalibratePointSampleAndSet)
-    i.screenRxHandle_CalibratePointSet       0x08005b64   Section        0  app_t5l_ctrl.o(i.screenRxHandle_CalibratePointSet)
-    i.screenRxHandle_JumpToBalancingClearnPage 0x08005bee   Section        0  app_t5l_ctrl.o(i.screenRxHandle_JumpToBalancingClearnPage)
-    i.screenRxHandle_JumpToBalancingHomePage 0x08005c10   Section        0  app_t5l_ctrl.o(i.screenRxHandle_JumpToBalancingHomePage)
-    i.screenRxHandle_JumpToBalancingPage     0x08005c32   Section        0  app_t5l_ctrl.o(i.screenRxHandle_JumpToBalancingPage)
-    i.screenRxHandle_JumpToCalibrateOrActivePage 0x08005c54   Section        0  app_t5l_ctrl.o(i.screenRxHandle_JumpToCalibrateOrActivePage)
-    i.screenRxHandle_JumpToSysParaPage       0x08005c8c   Section        0  app_t5l_ctrl.o(i.screenRxHandle_JumpToSysParaPage)
-    i.screenRxHandle_RemoveWeightTriger      0x08005cb2   Section        0  app_t5l_ctrl.o(i.screenRxHandle_RemoveWeightTriger)
-    i.screenRxHandle_SysPara                 0x08005ce0   Section        0  app_t5l_ctrl.o(i.screenRxHandle_SysPara)
-    i.screenRxHandle_SysPassWord             0x08005e08   Section        0  app_t5l_ctrl.o(i.screenRxHandle_SysPassWord)
-    i.screenRxHandle_Version                 0x08005e32   Section        0  app_t5l_ctrl.o(i.screenRxHandle_Version)
-    i.screenRxHandle_VoicePrintfStatusFromScreen 0x08005e50   Section        0  app_t5l_ctrl.o(i.screenRxHandle_VoicePrintfStatusFromScreen)
-    i.screenT5L_HelpDataMainFunction         0x08005e6c   Section        0  app_t5l_ctrl.o(i.screenT5L_HelpDataMainFunction)
-    i.screenT5L_Init                         0x08005eac   Section        0  app_t5l_ctrl.o(i.screenT5L_Init)
-    i.screenT5L_OutputVoice                  0x08005f44   Section        0  app_t5l_ctrl.o(i.screenT5L_OutputVoice)
-    i.screenT5L_RxFunction                   0x08005fc4   Section        0  app_t5l_ctrl.o(i.screenT5L_RxFunction)
-    i.screenT5L_TxFunction                   0x080060c4   Section        0  app_t5l_ctrl.o(i.screenT5L_TxFunction)
-    i.screenT5L_VersionGet                   0x080060fc   Section        0  app_t5l_ctrl.o(i.screenT5L_VersionGet)
-    i.screenT5L_VoicePrintfMainfunction      0x08006108   Section        0  app_t5l_ctrl.o(i.screenT5L_VoicePrintfMainfunction)
-    i.screenTxHandle_ChanelChangedTrigerDeal 0x080061b0   Section        0  app_t5l_ctrl.o(i.screenTxHandle_ChanelChangedTrigerDeal)
-    i.screenTxHandle_ChangeDisplayPosition   0x080061d2   Section        0  app_t5l_ctrl.o(i.screenTxHandle_ChangeDisplayPosition)
-    i.screenTxHandle_FreshScreenLight        0x080061f4   Section        0  app_t5l_ctrl.o(i.screenTxHandle_FreshScreenLight)
-    i.screenTxHandle_JmmpToBalancingPage     0x08006216   Section        0  app_t5l_ctrl.o(i.screenTxHandle_JmmpToBalancingPage)
-    i.screenTxHandle_JumpToActivePage        0x08006238   Section        0  app_t5l_ctrl.o(i.screenTxHandle_JumpToActivePage)
-    i.screenTxHandle_JumpToBalancingCleanPage 0x0800625a   Section        0  app_t5l_ctrl.o(i.screenTxHandle_JumpToBalancingCleanPage)
-    i.screenTxHandle_JumpToBalancingHomePage 0x0800627c   Section        0  app_t5l_ctrl.o(i.screenTxHandle_JumpToBalancingHomePage)
-    i.screenTxHandle_JumpToBanlingPage       0x0800629e   Section        0  app_t5l_ctrl.o(i.screenTxHandle_JumpToBanlingPage)
-    i.screenTxHandle_JumpToCalibrationPage   0x080062c0   Section        0  app_t5l_ctrl.o(i.screenTxHandle_JumpToCalibrationPage)
-    i.screenTxHandle_JumpToHomePage          0x080062e2   Section        0  app_t5l_ctrl.o(i.screenTxHandle_JumpToHomePage)
-    i.screenTxHandle_JumpToSysParaPage       0x08006304   Section        0  app_t5l_ctrl.o(i.screenTxHandle_JumpToSysParaPage)
-    i.screenTxHandle_PointTrigerHandle       0x08006326   Section        0  app_t5l_ctrl.o(i.screenTxHandle_PointTrigerHandle)
-    i.screenTxHandle_RemoveWeightTrigerHandle 0x08006348   Section        0  app_t5l_ctrl.o(i.screenTxHandle_RemoveWeightTrigerHandle)
-    i.screenTxHandle_ResetCalibrationTrigerHandle 0x0800637e   Section        0  app_t5l_ctrl.o(i.screenTxHandle_ResetCalibrationTrigerHandle)
-    i.screenTxHandle_ScreenInit              0x080063a0   Section        0  app_t5l_ctrl.o(i.screenTxHandle_ScreenInit)
-    i.screenTxHandle_ScreenWeightAndColorAndVoiceHandle 0x080063c0   Section        0  app_t5l_ctrl.o(i.screenTxHandle_ScreenWeightAndColorAndVoiceHandle)
-    i.screen_ChangeDisplayPosition           0x08006438   Section        0  app_t5l_ctrl.o(i.screen_ChangeDisplayPosition)
-    i.screen_ChangeDisplayPositionOfIndex    0x08006570   Section        0  app_t5l_ctrl.o(i.screen_ChangeDisplayPositionOfIndex)
-    i.sdweAskRegData                         0x080065e0   Section        0  app_t5l_ctrl.o(i.sdweAskRegData)
-    i.sdweAskVaribleData                     0x08006604   Section        0  app_t5l_ctrl.o(i.sdweAskVaribleData)
-    i.sdwe_VoicePrintfPop                    0x0800665c   Section        0  app_t5l_ctrl.o(i.sdwe_VoicePrintfPop)
-    i.sdwe_VoicePrintfPush                   0x080066d4   Section        0  app_t5l_ctrl.o(i.sdwe_VoicePrintfPush)
-    i.sendBalancingWeightAndColor20220125_FuncA_Master 0x0800670c   Section        0  app_t5l_ctrl.o(i.sendBalancingWeightAndColor20220125_FuncA_Master)
-    i.sendBalancingWeightAndColor20220125_FuncA_Slave 0x080067c4   Section        0  app_t5l_ctrl.o(i.sendBalancingWeightAndColor20220125_FuncA_Slave)
-    i.sendBalancingWeightAndColorAndHelpDataToScreen 0x08006890   Section        0  app_t5l_ctrl.o(i.sendBalancingWeightAndColorAndHelpDataToScreen)
-    i.sendBalancingWeightAndColor_Master     0x080068e4   Section        0  app_t5l_ctrl.o(i.sendBalancingWeightAndColor_Master)
-    i.sendBalancingWeightAndColor_Slave_1    0x08006928   Section        0  app_t5l_ctrl.o(i.sendBalancingWeightAndColor_Slave_1)
-    i.sendHelpDataDiff                       0x080069f4   Section        0  app_t5l_ctrl.o(i.sendHelpDataDiff)
-    i.sendHelpDataDiff_AtSlave1Device        0x08006bb8   Section        0  app_t5l_ctrl.o(i.sendHelpDataDiff_AtSlave1Device)
-    i.sendScreenLight                        0x08006c0c   Section        0  app_t5l_ctrl.o(i.sendScreenLight)
-    i.sendSysParaDataToDiwen                 0x08006c60   Section        0  app_t5l_ctrl.o(i.sendSysParaDataToDiwen)
-    i.setModbusDataValid                     0x08006fe4   Section        0  app_modbus_rtu_ctrl.o(i.setModbusDataValid)
-    i.setModbusOtherRemoveFlag               0x08006ff0   Section        0  app_modbus_rtu_ctrl.o(i.setModbusOtherRemoveFlag)
-    i.setModbusSelfRemoveFlag                0x08006ffc   Section        0  app_modbus_rtu_ctrl.o(i.setModbusSelfRemoveFlag)
-    i.setSampleWeightValue                   0x08007008   Section        0  app_hx711_ctrl.o(i.setSampleWeightValue)
-    i.sreenT5L_MainFunction                  0x0800702c   Section        0  app_t5l_ctrl.o(i.sreenT5L_MainFunction)
-    i.storeSysDataToFlash                    0x08007064   Section        0  app_syspara.o(i.storeSysDataToFlash)
-    i.storeSysDataToFlash_3030               0x08007180   Section        0  app_syspara.o(i.storeSysDataToFlash_3030)
-    i.t5lDisPlayDataClear                    0x080073b4   Section        0  app_t5l_ctrl.o(i.t5lDisPlayDataClear)
-    i.t5lReadVarible                         0x08007430   Section        0  app_t5l_ctrl.o(i.t5lReadVarible)
-    i.t5lWriteData                           0x080074b8   Section        0  app_t5l_ctrl.o(i.t5lWriteData)
-    i.t5lWriteVarible                        0x08007584   Section        0  app_t5l_ctrl.o(i.t5lWriteVarible)
-    i.trigerCalcKB                           0x08007644   Section        0  app_hx711_ctrl.o(i.trigerCalcKB)
-    i.uxListRemove                           0x08007730   Section        0  list.o(i.uxListRemove)
-    i.vApplicationGetIdleTaskMemory          0x08007758   Section        0  freertos.o(i.vApplicationGetIdleTaskMemory)
-    i.vListInitialise                        0x0800776c   Section        0  list.o(i.vListInitialise)
-    i.vListInitialiseItem                    0x08007782   Section        0  list.o(i.vListInitialiseItem)
-    i.vListInsert                            0x08007788   Section        0  list.o(i.vListInsert)
-    i.vListInsertEnd                         0x080077b8   Section        0  list.o(i.vListInsertEnd)
-    i.vPortEnterCritical                     0x080077d0   Section        0  port.o(i.vPortEnterCritical)
-    i.vPortExitCritical                      0x08007810   Section        0  port.o(i.vPortExitCritical)
-    i.vPortFree                              0x08007838   Section        0  heap_4.o(i.vPortFree)
-    i.vPortSetupTimerInterrupt               0x0800789c   Section        0  port.o(i.vPortSetupTimerInterrupt)
-    i.vTaskDelay                             0x080078c0   Section        0  tasks.o(i.vTaskDelay)
-    i.vTaskStartScheduler                    0x0800790c   Section        0  tasks.o(i.vTaskStartScheduler)
-    i.vTaskSuspendAll                        0x08007978   Section        0  tasks.o(i.vTaskSuspendAll)
-    i.vTaskSwitchContext                     0x08007988   Section        0  tasks.o(i.vTaskSwitchContext)
-    i.writeColorDataFromCom                  0x080079e4   Section        0  app_t5l_ctrl.o(i.writeColorDataFromCom)
-    i.writeHelpDataFromCom                   0x08007a20   Section        0  app_t5l_ctrl.o(i.writeHelpDataFromCom)
-    i.writeWeightDataFromCom                 0x08007a5c   Section        0  app_t5l_ctrl.o(i.writeWeightDataFromCom)
-    i.xPortStartScheduler                    0x08007ab8   Section        0  port.o(i.xPortStartScheduler)
-    i.xTaskCreate                            0x08007bac   Section        0  tasks.o(i.xTaskCreate)
-    i.xTaskCreateStatic                      0x08007c06   Section        0  tasks.o(i.xTaskCreateStatic)
-    i.xTaskIncrementTick                     0x08007c5c   Section        0  tasks.o(i.xTaskIncrementTick)
-    i.xTaskResumeAll                         0x08007d28   Section        0  tasks.o(i.xTaskResumeAll)
-    x$fpl$d2f                                0x08007dec   Section       98  d2f.o(x$fpl$d2f)
-    $v0                                      0x08007dec   Number         0  d2f.o(x$fpl$d2f)
-    x$fpl$dcmpinf                            0x08007e4e   Section       24  dcmpi.o(x$fpl$dcmpinf)
-    $v0                                      0x08007e4e   Number         0  dcmpi.o(x$fpl$dcmpinf)
-    x$fpl$dflt                               0x08007e66   Section       46  dflt_clz.o(x$fpl$dflt)
-    $v0                                      0x08007e66   Number         0  dflt_clz.o(x$fpl$dflt)
-    x$fpl$dfltu                              0x08007e94   Section       38  dflt_clz.o(x$fpl$dfltu)
-    $v0                                      0x08007e94   Number         0  dflt_clz.o(x$fpl$dfltu)
-    x$fpl$dleqf                              0x08007ebc   Section      120  dleqf.o(x$fpl$dleqf)
-    $v0                                      0x08007ebc   Number         0  dleqf.o(x$fpl$dleqf)
-    x$fpl$dmul                               0x08007f34   Section      340  dmul.o(x$fpl$dmul)
-    $v0                                      0x08007f34   Number         0  dmul.o(x$fpl$dmul)
-    x$fpl$dnaninf                            0x08008088   Section      156  dnaninf.o(x$fpl$dnaninf)
-    $v0                                      0x08008088   Number         0  dnaninf.o(x$fpl$dnaninf)
-    x$fpl$dretinf                            0x08008124   Section       12  dretinf.o(x$fpl$dretinf)
-    $v0                                      0x08008124   Number         0  dretinf.o(x$fpl$dretinf)
-    x$fpl$drleqf                             0x08008130   Section      108  drleqf.o(x$fpl$drleqf)
-    $v0                                      0x08008130   Number         0  drleqf.o(x$fpl$drleqf)
-    x$fpl$fpinit                             0x0800819c   Section       10  fpinit.o(x$fpl$fpinit)
-    $v0                                      0x0800819c   Number         0  fpinit.o(x$fpl$fpinit)
-    x$fpl$fretinf                            0x080081a6   Section       10  fretinf.o(x$fpl$fretinf)
-    $v0                                      0x080081a6   Number         0  fretinf.o(x$fpl$fretinf)
-    .constdata                               0x080081b0   Section       56  freertos.o(.constdata)
-    x$fpl$usenofp                            0x080081b0   Section        0  usenofp.o(x$fpl$usenofp)
-    .constdata                               0x080081e8   Section        8  stm32f4xx_hal_dma.o(.constdata)
-    flagBitshiftOffset                       0x080081e8   Data           8  stm32f4xx_hal_dma.o(.constdata)
-    .constdata                               0x080081f0   Section       16  system_stm32f4xx.o(.constdata)
-    .constdata                               0x08008200   Section        8  system_stm32f4xx.o(.constdata)
-    .constdata                               0x08008208   Section      512  app_crc.o(.constdata)
-    .constdata                               0x08008408   Section       40  app_hx711_ctrl.o(.constdata)
-    .constdata                               0x08008430   Section       48  app_t5l_ctrl.o(.constdata)
-    .constdata                               0x08008460   Section       52  hal_gpio.o(.constdata)
-    .conststring                             0x08008494   Section       23  freertos.o(.conststring)
+    i.hx711_SampleFunction                   0x08003fe8   Section        0  app_hx711_ctrl.o(i.hx711_SampleFunction)
+    i.hx711_SenserCheck                      0x080040a0   Section        0  app_hx711_ctrl.o(i.hx711_SenserCheck)
+    i.hx711_SigChanelAvrgAndWeightCalc       0x0800421c   Section        0  app_hx711_ctrl.o(i.hx711_SigChanelAvrgAndWeightCalc)
+    i.hx711_getAvgSample                     0x080042b8   Section        0  app_hx711_ctrl.o(i.hx711_getAvgSample)
+    i.hx711_getWeight                        0x080042d8   Section        0  app_hx711_ctrl.o(i.hx711_getWeight)
+    i.hx711_init                             0x0800435c   Section        0  app_hx711_ctrl.o(i.hx711_init)
+    i.hx711_setAllRemoveWeight               0x08004404   Section        0  app_hx711_ctrl.o(i.hx711_setAllRemoveWeight)
+    i.judgeWeightColorIfNotNeedSend          0x08004454   Section        0  app_t5l_ctrl.o(i.judgeWeightColorIfNotNeedSend)
+    i.judgeWeightDataIfNotNeedSend           0x0800447c   Section        0  app_t5l_ctrl.o(i.judgeWeightDataIfNotNeedSend)
+    i.jumpToActivePage                       0x080044a4   Section        0  app_t5l_ctrl.o(i.jumpToActivePage)
+    i.jumpToBalancingCleanPage               0x080044e0   Section        0  app_t5l_ctrl.o(i.jumpToBalancingCleanPage)
+    i.jumpToBalancingHomePage                0x0800451c   Section        0  app_t5l_ctrl.o(i.jumpToBalancingHomePage)
+    i.jumpToBalancingPage                    0x08004588   Section        0  app_t5l_ctrl.o(i.jumpToBalancingPage)
+    i.jumpToBanlingPage                      0x080045fc   Section        0  app_t5l_ctrl.o(i.jumpToBanlingPage)
+    i.jumpToCalibrationPage                  0x0800466c   Section        0  app_t5l_ctrl.o(i.jumpToCalibrationPage)
+    i.jumpToHomePage                         0x080046a8   Section        0  app_t5l_ctrl.o(i.jumpToHomePage)
+    i.jumpToStartUpPage                      0x080046e4   Section        0  app_t5l_ctrl.o(i.jumpToStartUpPage)
+    i.jumpToSysparaPage                      0x08004724   Section        0  app_t5l_ctrl.o(i.jumpToSysparaPage)
+    i.key_FilterGet                          0x08004760   Section        0  app_key_ctrl.o(i.key_FilterGet)
+    i.key_MainFunction                       0x08004780   Section        0  app_key_ctrl.o(i.key_MainFunction)
+    i.key_filter                             0x0800480c   Section        0  app_key_ctrl.o(i.key_filter)
+    i.key_init                               0x08004854   Section        0  app_key_ctrl.o(i.key_init)
+    i.largerScreen_Init                      0x08004888   Section        0  app_t5l_ctrl.o(i.largerScreen_Init)
+    i.led_MainFunction                       0x080048c8   Section        0  app_led_ctrl.o(i.led_MainFunction)
+    i.led_RunIndicate                        0x08004944   Section        0  app_led_ctrl.o(i.led_RunIndicate)
+    i.led_init                               0x08004966   Section        0  app_led_ctrl.o(i.led_init)
+    i.main                                   0x080049a8   Section        0  main.o(i.main)
+    i.makeFreeRtosPriority                   0x08004a60   Section        0  cmsis_os.o(i.makeFreeRtosPriority)
+    makeFreeRtosPriority                     0x08004a61   Thumb Code    12  cmsis_os.o(i.makeFreeRtosPriority)
+    i.masterCaculateHelpData                 0x08004a6c   Section        0  app_t5l_ctrl.o(i.masterCaculateHelpData)
+    i.osDelay                                0x08004be8   Section        0  cmsis_os.o(i.osDelay)
+    i.osKernelStart                          0x08004bf6   Section        0  cmsis_os.o(i.osKernelStart)
+    i.osThreadCreate                         0x08004c00   Section        0  cmsis_os.o(i.osThreadCreate)
+    i.pointSampleTrigerDataSet               0x08004c54   Section        0  app_t5l_ctrl.o(i.pointSampleTrigerDataSet)
+    i.pointTrigerDataSet                     0x08004c74   Section        0  app_t5l_ctrl.o(i.pointTrigerDataSet)
+    i.pointTrigerDeal                        0x08004c9c   Section        0  app_t5l_ctrl.o(i.pointTrigerDeal)
+    i.pointWeightTrigerDataSet               0x08004d3c   Section        0  app_t5l_ctrl.o(i.pointWeightTrigerDataSet)
+    i.preBalancingWeightAndColorIfNotNeedSendToSreen 0x08004d5c   Section        0  app_t5l_ctrl.o(i.preBalancingWeightAndColorIfNotNeedSendToSreen)
+    i.preColorDataAndJudgeIfNeedSend         0x08004e10   Section        0  app_t5l_ctrl.o(i.preColorDataAndJudgeIfNeedSend)
+    i.preCurrentDeviceWeightData             0x080050b0   Section        0  app_t5l_ctrl.o(i.preCurrentDeviceWeightData)
+    i.preOtherDeviceWeightData               0x0800512c   Section        0  app_t5l_ctrl.o(i.preOtherDeviceWeightData)
+    i.preWeightDataAndJudgeIfNeedSend_FuncA_Master 0x0800517e   Section        0  app_t5l_ctrl.o(i.preWeightDataAndJudgeIfNeedSend_FuncA_Master)
+    i.preWeightDataAndJudgeIfNeedSend_Master 0x080051b4   Section        0  app_t5l_ctrl.o(i.preWeightDataAndJudgeIfNeedSend_Master)
+    i.prvAddCurrentTaskToDelayedList         0x08005204   Section        0  tasks.o(i.prvAddCurrentTaskToDelayedList)
+    prvAddCurrentTaskToDelayedList           0x08005205   Thumb Code   102  tasks.o(i.prvAddCurrentTaskToDelayedList)
+    i.prvAddNewTaskToReadyList               0x08005274   Section        0  tasks.o(i.prvAddNewTaskToReadyList)
+    prvAddNewTaskToReadyList                 0x08005275   Thumb Code   194  tasks.o(i.prvAddNewTaskToReadyList)
+    i.prvDeleteTCB                           0x08005344   Section        0  tasks.o(i.prvDeleteTCB)
+    prvDeleteTCB                             0x08005345   Thumb Code    52  tasks.o(i.prvDeleteTCB)
+    i.prvHeapInit                            0x08005378   Section        0  heap_4.o(i.prvHeapInit)
+    prvHeapInit                              0x08005379   Thumb Code    66  heap_4.o(i.prvHeapInit)
+    i.prvIdleTask                            0x080053c4   Section        0  tasks.o(i.prvIdleTask)
+    prvIdleTask                              0x080053c5   Thumb Code    82  tasks.o(i.prvIdleTask)
+    i.prvInitialiseNewTask                   0x08005424   Section        0  tasks.o(i.prvInitialiseNewTask)
+    prvInitialiseNewTask                     0x08005425   Thumb Code   152  tasks.o(i.prvInitialiseNewTask)
+    i.prvInsertBlockIntoFreeList             0x080054bc   Section        0  heap_4.o(i.prvInsertBlockIntoFreeList)
+    prvInsertBlockIntoFreeList               0x080054bd   Thumb Code    72  heap_4.o(i.prvInsertBlockIntoFreeList)
+    i.prvResetNextTaskUnblockTime            0x08005508   Section        0  tasks.o(i.prvResetNextTaskUnblockTime)
+    prvResetNextTaskUnblockTime              0x08005509   Thumb Code    26  tasks.o(i.prvResetNextTaskUnblockTime)
+    i.prvTaskExitError                       0x08005528   Section        0  port.o(i.prvTaskExitError)
+    prvTaskExitError                         0x08005529   Thumb Code    36  port.o(i.prvTaskExitError)
+    i.pvPortMalloc                           0x08005550   Section        0  heap_4.o(i.pvPortMalloc)
+    i.pxPortInitialiseStack                  0x0800562c   Section        0  port.o(i.pxPortInitialiseStack)
+    i.readColorDataFromSys                   0x08005658   Section        0  app_t5l_ctrl.o(i.readColorDataFromSys)
+    i.readHelpDataFromSys                    0x08005688   Section        0  app_t5l_ctrl.o(i.readHelpDataFromSys)
+    i.readSysDataFromFlash                   0x080056b8   Section        0  app_syspara.o(i.readSysDataFromFlash)
+    i.readSysDataFromFlash_3030              0x080057f8   Section        0  app_syspara.o(i.readSysDataFromFlash_3030)
+    i.readWeightDataFromSys                  0x080058e8   Section        0  app_t5l_ctrl.o(i.readWeightDataFromSys)
+    i.releaseSysColor                        0x08005928   Section        0  app_t5l_ctrl.o(i.releaseSysColor)
+    i.removeWeightTrigerDeal                 0x08005950   Section        0  app_t5l_ctrl.o(i.removeWeightTrigerDeal)
+    i.resetCalibrationTrigerDeal             0x080059cc   Section        0  app_t5l_ctrl.o(i.resetCalibrationTrigerDeal)
+    i.sampleDataPush                         0x08005a68   Section        0  app_hx711_ctrl.o(i.sampleDataPush)
+    i.screenLargerTxHandle_ScreenInit        0x08005a90   Section        0  app_t5l_ctrl.o(i.screenLargerTxHandle_ScreenInit)
+    i.screenRxHandle_CalibrateAddressSet     0x08005ab0   Section        0  app_t5l_ctrl.o(i.screenRxHandle_CalibrateAddressSet)
+    i.screenRxHandle_CalibrateChanelSet      0x08005af0   Section        0  app_t5l_ctrl.o(i.screenRxHandle_CalibrateChanelSet)
+    i.screenRxHandle_CalibratePointSampleAndSet 0x08005b26   Section        0  app_t5l_ctrl.o(i.screenRxHandle_CalibratePointSampleAndSet)
+    i.screenRxHandle_CalibratePointSet       0x08005be0   Section        0  app_t5l_ctrl.o(i.screenRxHandle_CalibratePointSet)
+    i.screenRxHandle_JumpToBalancingClearnPage 0x08005c6a   Section        0  app_t5l_ctrl.o(i.screenRxHandle_JumpToBalancingClearnPage)
+    i.screenRxHandle_JumpToBalancingHomePage 0x08005c8c   Section        0  app_t5l_ctrl.o(i.screenRxHandle_JumpToBalancingHomePage)
+    i.screenRxHandle_JumpToBalancingPage     0x08005cae   Section        0  app_t5l_ctrl.o(i.screenRxHandle_JumpToBalancingPage)
+    i.screenRxHandle_JumpToCalibrateOrActivePage 0x08005cd0   Section        0  app_t5l_ctrl.o(i.screenRxHandle_JumpToCalibrateOrActivePage)
+    i.screenRxHandle_JumpToSysParaPage       0x08005d08   Section        0  app_t5l_ctrl.o(i.screenRxHandle_JumpToSysParaPage)
+    i.screenRxHandle_RemoveWeightTriger      0x08005d2e   Section        0  app_t5l_ctrl.o(i.screenRxHandle_RemoveWeightTriger)
+    i.screenRxHandle_SysPara                 0x08005d5c   Section        0  app_t5l_ctrl.o(i.screenRxHandle_SysPara)
+    i.screenRxHandle_SysPassWord             0x08005e84   Section        0  app_t5l_ctrl.o(i.screenRxHandle_SysPassWord)
+    i.screenRxHandle_Version                 0x08005eae   Section        0  app_t5l_ctrl.o(i.screenRxHandle_Version)
+    i.screenRxHandle_VoicePrintfStatusFromScreen 0x08005ecc   Section        0  app_t5l_ctrl.o(i.screenRxHandle_VoicePrintfStatusFromScreen)
+    i.screenT5L_HelpDataMainFunction         0x08005ee8   Section        0  app_t5l_ctrl.o(i.screenT5L_HelpDataMainFunction)
+    i.screenT5L_Init                         0x08005f28   Section        0  app_t5l_ctrl.o(i.screenT5L_Init)
+    i.screenT5L_OutputVoice                  0x08005fb0   Section        0  app_t5l_ctrl.o(i.screenT5L_OutputVoice)
+    i.screenT5L_RxFunction                   0x08006030   Section        0  app_t5l_ctrl.o(i.screenT5L_RxFunction)
+    i.screenT5L_TxFunction                   0x0800611c   Section        0  app_t5l_ctrl.o(i.screenT5L_TxFunction)
+    i.screenT5L_VersionGet                   0x0800614a   Section        0  app_t5l_ctrl.o(i.screenT5L_VersionGet)
+    i.screenT5L_VoicePrintfMainfunction      0x08006154   Section        0  app_t5l_ctrl.o(i.screenT5L_VoicePrintfMainfunction)
+    i.screenTxHandle_ChanelChangedTrigerDeal 0x080061fc   Section        0  app_t5l_ctrl.o(i.screenTxHandle_ChanelChangedTrigerDeal)
+    i.screenTxHandle_ChangeDisplayPosition   0x0800621e   Section        0  app_t5l_ctrl.o(i.screenTxHandle_ChangeDisplayPosition)
+    i.screenTxHandle_FreshScreenLight        0x08006240   Section        0  app_t5l_ctrl.o(i.screenTxHandle_FreshScreenLight)
+    i.screenTxHandle_JmmpToBalancingPage     0x08006262   Section        0  app_t5l_ctrl.o(i.screenTxHandle_JmmpToBalancingPage)
+    i.screenTxHandle_JumpToActivePage        0x08006284   Section        0  app_t5l_ctrl.o(i.screenTxHandle_JumpToActivePage)
+    i.screenTxHandle_JumpToBalancingCleanPage 0x080062a6   Section        0  app_t5l_ctrl.o(i.screenTxHandle_JumpToBalancingCleanPage)
+    i.screenTxHandle_JumpToBalancingHomePage 0x080062c8   Section        0  app_t5l_ctrl.o(i.screenTxHandle_JumpToBalancingHomePage)
+    i.screenTxHandle_JumpToBanlingPage       0x080062ea   Section        0  app_t5l_ctrl.o(i.screenTxHandle_JumpToBanlingPage)
+    i.screenTxHandle_JumpToCalibrationPage   0x0800630c   Section        0  app_t5l_ctrl.o(i.screenTxHandle_JumpToCalibrationPage)
+    i.screenTxHandle_JumpToHomePage          0x0800632e   Section        0  app_t5l_ctrl.o(i.screenTxHandle_JumpToHomePage)
+    i.screenTxHandle_JumpToSysParaPage       0x08006350   Section        0  app_t5l_ctrl.o(i.screenTxHandle_JumpToSysParaPage)
+    i.screenTxHandle_PointTrigerHandle       0x08006372   Section        0  app_t5l_ctrl.o(i.screenTxHandle_PointTrigerHandle)
+    i.screenTxHandle_RemoveWeightTrigerHandle 0x08006394   Section        0  app_t5l_ctrl.o(i.screenTxHandle_RemoveWeightTrigerHandle)
+    i.screenTxHandle_ResetCalibrationTrigerHandle 0x080063ca   Section        0  app_t5l_ctrl.o(i.screenTxHandle_ResetCalibrationTrigerHandle)
+    i.screenTxHandle_ScreenInit              0x080063ec   Section        0  app_t5l_ctrl.o(i.screenTxHandle_ScreenInit)
+    i.screenTxHandle_ScreenWeightAndColorAndVoiceHandle 0x0800640c   Section        0  app_t5l_ctrl.o(i.screenTxHandle_ScreenWeightAndColorAndVoiceHandle)
+    i.screen_ChangeDisplayPosition           0x08006484   Section        0  app_t5l_ctrl.o(i.screen_ChangeDisplayPosition)
+    i.screen_ChangeDisplayPositionOfIndex    0x080065bc   Section        0  app_t5l_ctrl.o(i.screen_ChangeDisplayPositionOfIndex)
+    i.sdweAskRegData                         0x0800662c   Section        0  app_t5l_ctrl.o(i.sdweAskRegData)
+    i.sdweAskVaribleData                     0x08006640   Section        0  app_t5l_ctrl.o(i.sdweAskVaribleData)
+    i.sdwe_VoicePrintfPop                    0x08006690   Section        0  app_t5l_ctrl.o(i.sdwe_VoicePrintfPop)
+    i.sdwe_VoicePrintfPush                   0x08006708   Section        0  app_t5l_ctrl.o(i.sdwe_VoicePrintfPush)
+    i.sendBalancingWeightAndColor20220125_FuncA_Master 0x08006740   Section        0  app_t5l_ctrl.o(i.sendBalancingWeightAndColor20220125_FuncA_Master)
+    i.sendBalancingWeightAndColor20220125_FuncA_Slave 0x080067f8   Section        0  app_t5l_ctrl.o(i.sendBalancingWeightAndColor20220125_FuncA_Slave)
+    i.sendBalancingWeightAndColorAndHelpDataToScreen 0x080068c4   Section        0  app_t5l_ctrl.o(i.sendBalancingWeightAndColorAndHelpDataToScreen)
+    i.sendBalancingWeightAndColor_Master     0x08006918   Section        0  app_t5l_ctrl.o(i.sendBalancingWeightAndColor_Master)
+    i.sendBalancingWeightAndColor_Slave_1    0x0800695c   Section        0  app_t5l_ctrl.o(i.sendBalancingWeightAndColor_Slave_1)
+    i.sendHelpDataDiff                       0x08006a28   Section        0  app_t5l_ctrl.o(i.sendHelpDataDiff)
+    i.sendHelpDataDiff_AtSlave1Device        0x08006bec   Section        0  app_t5l_ctrl.o(i.sendHelpDataDiff_AtSlave1Device)
+    i.sendScreenLight                        0x08006c40   Section        0  app_t5l_ctrl.o(i.sendScreenLight)
+    i.setModbusDataValid                     0x08006c94   Section        0  app_modbus_rtu_ctrl.o(i.setModbusDataValid)
+    i.setModbusOtherRemoveFlag               0x08006ca0   Section        0  app_modbus_rtu_ctrl.o(i.setModbusOtherRemoveFlag)
+    i.setModbusSelfRemoveFlag                0x08006cac   Section        0  app_modbus_rtu_ctrl.o(i.setModbusSelfRemoveFlag)
+    i.setSampleWeightValue                   0x08006cb8   Section        0  app_hx711_ctrl.o(i.setSampleWeightValue)
+    i.smallerScreen_Init                     0x08006cdc   Section        0  app_t5l_ctrl.o(i.smallerScreen_Init)
+    i.sreenT5L_MainFunction                  0x08007060   Section        0  app_t5l_ctrl.o(i.sreenT5L_MainFunction)
+    i.storeSysDataToFlash                    0x080070a8   Section        0  app_syspara.o(i.storeSysDataToFlash)
+    i.storeSysDataToFlash_3030               0x080071c4   Section        0  app_syspara.o(i.storeSysDataToFlash_3030)
+    i.t5lDisPlayDataClear                    0x080073f8   Section        0  app_t5l_ctrl.o(i.t5lDisPlayDataClear)
+    i.t5lReadVarible                         0x08007474   Section        0  app_t5l_ctrl.o(i.t5lReadVarible)
+    i.t5lWriteData                           0x080074fc   Section        0  app_t5l_ctrl.o(i.t5lWriteData)
+    i.t5lWriteVarible                        0x080075c8   Section        0  app_t5l_ctrl.o(i.t5lWriteVarible)
+    i.trigerCalcKB                           0x08007688   Section        0  app_hx711_ctrl.o(i.trigerCalcKB)
+    i.uxListRemove                           0x08007774   Section        0  list.o(i.uxListRemove)
+    i.vApplicationGetIdleTaskMemory          0x0800779c   Section        0  freertos.o(i.vApplicationGetIdleTaskMemory)
+    i.vListInitialise                        0x080077b0   Section        0  list.o(i.vListInitialise)
+    i.vListInitialiseItem                    0x080077c6   Section        0  list.o(i.vListInitialiseItem)
+    i.vListInsert                            0x080077cc   Section        0  list.o(i.vListInsert)
+    i.vListInsertEnd                         0x080077fc   Section        0  list.o(i.vListInsertEnd)
+    i.vPortEnterCritical                     0x08007814   Section        0  port.o(i.vPortEnterCritical)
+    i.vPortExitCritical                      0x08007854   Section        0  port.o(i.vPortExitCritical)
+    i.vPortFree                              0x0800787c   Section        0  heap_4.o(i.vPortFree)
+    i.vPortSetupTimerInterrupt               0x080078e0   Section        0  port.o(i.vPortSetupTimerInterrupt)
+    i.vTaskDelay                             0x08007904   Section        0  tasks.o(i.vTaskDelay)
+    i.vTaskStartScheduler                    0x08007950   Section        0  tasks.o(i.vTaskStartScheduler)
+    i.vTaskSuspendAll                        0x080079bc   Section        0  tasks.o(i.vTaskSuspendAll)
+    i.vTaskSwitchContext                     0x080079cc   Section        0  tasks.o(i.vTaskSwitchContext)
+    i.writeColorDataFromCom                  0x08007a28   Section        0  app_t5l_ctrl.o(i.writeColorDataFromCom)
+    i.writeHelpDataFromCom                   0x08007a64   Section        0  app_t5l_ctrl.o(i.writeHelpDataFromCom)
+    i.writeWeightDataFromCom                 0x08007aa0   Section        0  app_t5l_ctrl.o(i.writeWeightDataFromCom)
+    i.xPortStartScheduler                    0x08007afc   Section        0  port.o(i.xPortStartScheduler)
+    i.xTaskCreate                            0x08007bf0   Section        0  tasks.o(i.xTaskCreate)
+    i.xTaskCreateStatic                      0x08007c4a   Section        0  tasks.o(i.xTaskCreateStatic)
+    i.xTaskIncrementTick                     0x08007ca0   Section        0  tasks.o(i.xTaskIncrementTick)
+    i.xTaskResumeAll                         0x08007d6c   Section        0  tasks.o(i.xTaskResumeAll)
+    x$fpl$d2f                                0x08007e30   Section       98  d2f.o(x$fpl$d2f)
+    $v0                                      0x08007e30   Number         0  d2f.o(x$fpl$d2f)
+    x$fpl$dcmpinf                            0x08007e92   Section       24  dcmpi.o(x$fpl$dcmpinf)
+    $v0                                      0x08007e92   Number         0  dcmpi.o(x$fpl$dcmpinf)
+    x$fpl$dflt                               0x08007eaa   Section       46  dflt_clz.o(x$fpl$dflt)
+    $v0                                      0x08007eaa   Number         0  dflt_clz.o(x$fpl$dflt)
+    x$fpl$dfltu                              0x08007ed8   Section       38  dflt_clz.o(x$fpl$dfltu)
+    $v0                                      0x08007ed8   Number         0  dflt_clz.o(x$fpl$dfltu)
+    x$fpl$dleqf                              0x08007f00   Section      120  dleqf.o(x$fpl$dleqf)
+    $v0                                      0x08007f00   Number         0  dleqf.o(x$fpl$dleqf)
+    x$fpl$dmul                               0x08007f78   Section      340  dmul.o(x$fpl$dmul)
+    $v0                                      0x08007f78   Number         0  dmul.o(x$fpl$dmul)
+    x$fpl$dnaninf                            0x080080cc   Section      156  dnaninf.o(x$fpl$dnaninf)
+    $v0                                      0x080080cc   Number         0  dnaninf.o(x$fpl$dnaninf)
+    x$fpl$dretinf                            0x08008168   Section       12  dretinf.o(x$fpl$dretinf)
+    $v0                                      0x08008168   Number         0  dretinf.o(x$fpl$dretinf)
+    x$fpl$drleqf                             0x08008174   Section      108  drleqf.o(x$fpl$drleqf)
+    $v0                                      0x08008174   Number         0  drleqf.o(x$fpl$drleqf)
+    x$fpl$fpinit                             0x080081e0   Section       10  fpinit.o(x$fpl$fpinit)
+    $v0                                      0x080081e0   Number         0  fpinit.o(x$fpl$fpinit)
+    x$fpl$fretinf                            0x080081ea   Section       10  fretinf.o(x$fpl$fretinf)
+    $v0                                      0x080081ea   Number         0  fretinf.o(x$fpl$fretinf)
+    .constdata                               0x080081f4   Section       56  freertos.o(.constdata)
+    x$fpl$usenofp                            0x080081f4   Section        0  usenofp.o(x$fpl$usenofp)
+    .constdata                               0x0800822c   Section        8  stm32f4xx_hal_dma.o(.constdata)
+    flagBitshiftOffset                       0x0800822c   Data           8  stm32f4xx_hal_dma.o(.constdata)
+    .constdata                               0x08008234   Section       16  system_stm32f4xx.o(.constdata)
+    .constdata                               0x08008244   Section        8  system_stm32f4xx.o(.constdata)
+    .constdata                               0x0800824c   Section      512  app_crc.o(.constdata)
+    .constdata                               0x0800844c   Section       40  app_hx711_ctrl.o(.constdata)
+    .constdata                               0x08008474   Section       48  app_t5l_ctrl.o(.constdata)
+    .constdata                               0x080084a4   Section       52  hal_gpio.o(.constdata)
+    .conststring                             0x080084d8   Section       23  freertos.o(.conststring)
     .data                                    0x20000000   Section        8  freertos.o(.data)
     .data                                    0x20000008   Section        4  stm32f4xx_it.o(.data)
     .data                                    0x2000000c   Section       12  stm32f4xx_hal.o(.data)
@@ -3077,7 +3081,7 @@ Image Symbol Table
     .data                                    0x20000444   Section      100  app_syspara.o(.data)
     storeTick                                0x20000444   Data           2  app_syspara.o(.data)
     storeTick                                0x20000446   Data           2  app_syspara.o(.data)
-    .data                                    0x200004a8   Section     2608  app_t5l_ctrl.o(.data)
+    .data                                    0x200004a8   Section     1792  app_t5l_ctrl.o(.data)
     inerStatus                               0x200004ac   Data           1  app_t5l_ctrl.o(.data)
     localChanel                              0x200004ad   Data           1  app_t5l_ctrl.o(.data)
     inerStatus                               0x200004ae   Data           1  app_t5l_ctrl.o(.data)
@@ -3123,40 +3127,44 @@ Image Symbol Table
     ticks                                    0x200004e8   Data           2  app_t5l_ctrl.o(.data)
     u16ReadDIffTick                          0x200004ea   Data           2  app_t5l_ctrl.o(.data)
     describlePoint_data                      0x200004ec   Data           4  app_t5l_ctrl.o(.data)
-    .data                                    0x20000ed8   Section      104  hal_gpio.o(.data)
-    .data                                    0x20000f40   Section      192  hal_uart.o(.data)
-    .data                                    0x20001000   Section       28  app_i2c.o(.data)
-    .bss                                     0x2000101c   Section      596  freertos.o(.bss)
-    xIdleTaskTCBBuffer                       0x2000101c   Data          84  freertos.o(.bss)
-    xIdleStack                               0x20001070   Data         512  freertos.o(.bss)
-    .bss                                     0x20001270   Section       84  i2c.o(.bss)
-    .bss                                     0x200012c4   Section       72  tim.o(.bss)
-    .bss                                     0x2000130c   Section     2120  usart.o(.bss)
-    .bss                                     0x20001b54   Section       72  stm32f4xx_hal_timebase_tim.o(.bss)
-    .bss                                     0x20001b9c   Section      240  tasks.o(.bss)
-    pxReadyTasksLists                        0x20001b9c   Data         140  tasks.o(.bss)
-    xDelayedTaskList1                        0x20001c28   Data          20  tasks.o(.bss)
-    xDelayedTaskList2                        0x20001c3c   Data          20  tasks.o(.bss)
-    xPendingReadyList                        0x20001c50   Data          20  tasks.o(.bss)
-    xTasksWaitingTermination                 0x20001c64   Data          20  tasks.o(.bss)
-    xSuspendedTaskList                       0x20001c78   Data          20  tasks.o(.bss)
-    .bss                                     0x20001c8c   Section    15360  heap_4.o(.bss)
-    ucHeap                                   0x20001c8c   Data       15360  heap_4.o(.bss)
-    .bss                                     0x2000588c   Section     1928  app_hx711_ctrl.o(.bss)
-    u32OnLineNormalCnt                       0x2000588c   Data          16  app_hx711_ctrl.o(.bss)
-    u8HX711CheckPassStatus                   0x2000589c   Data          24  app_hx711_ctrl.o(.bss)
-    .bss                                     0x20006014   Section       12  app_key_ctrl.o(.bss)
-    .bss                                     0x20006020   Section       12  app_password.o(.bss)
-    .bss                                     0x2000602c   Section     1508  app_syspara.o(.bss)
-    .bss                                     0x20006610   Section     1266  app_t5l_ctrl.o(.bss)
-    g_t5l_triger_data                        0x20006820   Data         720  app_t5l_ctrl.o(.bss)
-    .bss                                     0x20006b02   Section      128  app_i2c.o(.bss)
-    .bss                                     0x20006b84   Section       96  libspace.o(.bss)
-    HEAP                                     0x20006be8   Section     1024  startup_stm32f407xx.o(HEAP)
-    Heap_Mem                                 0x20006be8   Data        1024  startup_stm32f407xx.o(HEAP)
-    STACK                                    0x20006fe8   Section     1024  startup_stm32f407xx.o(STACK)
-    Stack_Mem                                0x20006fe8   Data        1024  startup_stm32f407xx.o(STACK)
-    __initial_sp                             0x200073e8   Data           0  startup_stm32f407xx.o(STACK)
+    .data                                    0x20000ba8   Section      112  app_t5l_ctrl.o(.data)
+    .data                                    0x20000c18   Section        8  app_t5l_ctrl.o(.data)
+    .data                                    0x20000c20   Section      128  app_t5l_ctrl.o(.data)
+    .data                                    0x20000ca0   Section        8  app_t5l_ctrl.o(.data)
+    .data                                    0x20000ca8   Section      104  hal_gpio.o(.data)
+    .data                                    0x20000d10   Section      192  hal_uart.o(.data)
+    .data                                    0x20000dd0   Section       28  app_i2c.o(.data)
+    .bss                                     0x20000dec   Section      596  freertos.o(.bss)
+    xIdleTaskTCBBuffer                       0x20000dec   Data          84  freertos.o(.bss)
+    xIdleStack                               0x20000e40   Data         512  freertos.o(.bss)
+    .bss                                     0x20001040   Section       84  i2c.o(.bss)
+    .bss                                     0x20001094   Section       72  tim.o(.bss)
+    .bss                                     0x200010dc   Section     2120  usart.o(.bss)
+    .bss                                     0x20001924   Section       72  stm32f4xx_hal_timebase_tim.o(.bss)
+    .bss                                     0x2000196c   Section      240  tasks.o(.bss)
+    pxReadyTasksLists                        0x2000196c   Data         140  tasks.o(.bss)
+    xDelayedTaskList1                        0x200019f8   Data          20  tasks.o(.bss)
+    xDelayedTaskList2                        0x20001a0c   Data          20  tasks.o(.bss)
+    xPendingReadyList                        0x20001a20   Data          20  tasks.o(.bss)
+    xTasksWaitingTermination                 0x20001a34   Data          20  tasks.o(.bss)
+    xSuspendedTaskList                       0x20001a48   Data          20  tasks.o(.bss)
+    .bss                                     0x20001a5c   Section    15360  heap_4.o(.bss)
+    ucHeap                                   0x20001a5c   Data       15360  heap_4.o(.bss)
+    .bss                                     0x2000565c   Section     1928  app_hx711_ctrl.o(.bss)
+    u32OnLineNormalCnt                       0x2000565c   Data          16  app_hx711_ctrl.o(.bss)
+    u8HX711CheckPassStatus                   0x2000566c   Data          24  app_hx711_ctrl.o(.bss)
+    .bss                                     0x20005de4   Section       12  app_key_ctrl.o(.bss)
+    .bss                                     0x20005df0   Section       12  app_password.o(.bss)
+    .bss                                     0x20005dfc   Section     1508  app_syspara.o(.bss)
+    .bss                                     0x200063e0   Section     1266  app_t5l_ctrl.o(.bss)
+    g_t5l_triger_data                        0x200065f0   Data         720  app_t5l_ctrl.o(.bss)
+    .bss                                     0x200068d2   Section      128  app_i2c.o(.bss)
+    .bss                                     0x20006954   Section       96  libspace.o(.bss)
+    HEAP                                     0x200069b8   Section     1024  startup_stm32f407xx.o(HEAP)
+    Heap_Mem                                 0x200069b8   Data        1024  startup_stm32f407xx.o(HEAP)
+    STACK                                    0x20006db8   Section     1024  startup_stm32f407xx.o(STACK)
+    Stack_Mem                                0x20006db8   Data        1024  startup_stm32f407xx.o(STACK)
+    __initial_sp                             0x200071b8   Data           0  startup_stm32f407xx.o(STACK)
 
     Global Symbols
 
@@ -3483,174 +3491,176 @@ Image Symbol Table
     handleWeightDataWasSend                  0x08003e89   Thumb Code    30  app_t5l_ctrl.o(i.handleWeightDataWasSend)
     hx711_AllChanelSample                    0x08003ea9   Thumb Code   194  app_hx711_ctrl.o(i.hx711_AllChanelSample)
     hx711_DataSampleCtrl                     0x08003f71   Thumb Code    38  app_hx711_ctrl.o(i.hx711_DataSampleCtrl)
-    hx711_MainFunction                       0x08003f9d   Thumb Code    62  app_hx711_ctrl.o(i.hx711_MainFunction)
-    hx711_SampleFunction                     0x08003fe5   Thumb Code   178  app_hx711_ctrl.o(i.hx711_SampleFunction)
-    hx711_SenserCheck                        0x0800409d   Thumb Code   364  app_hx711_ctrl.o(i.hx711_SenserCheck)
-    hx711_SigChanelAvrgAndWeightCalc         0x08004219   Thumb Code   154  app_hx711_ctrl.o(i.hx711_SigChanelAvrgAndWeightCalc)
-    hx711_getAvgSample                       0x080042b5   Thumb Code    26  app_hx711_ctrl.o(i.hx711_getAvgSample)
-    hx711_getWeight                          0x080042d5   Thumb Code   108  app_hx711_ctrl.o(i.hx711_getWeight)
-    hx711_init                               0x08004359   Thumb Code   146  app_hx711_ctrl.o(i.hx711_init)
-    hx711_setAllRemoveWeight                 0x08004401   Thumb Code    70  app_hx711_ctrl.o(i.hx711_setAllRemoveWeight)
-    judgeWeightColorIfNotNeedSend            0x08004451   Thumb Code    40  app_t5l_ctrl.o(i.judgeWeightColorIfNotNeedSend)
-    judgeWeightDataIfNotNeedSend             0x08004479   Thumb Code    40  app_t5l_ctrl.o(i.judgeWeightDataIfNotNeedSend)
-    jumpToActivePage                         0x080044a1   Thumb Code    54  app_t5l_ctrl.o(i.jumpToActivePage)
-    jumpToBalancingCleanPage                 0x080044dd   Thumb Code    54  app_t5l_ctrl.o(i.jumpToBalancingCleanPage)
-    jumpToBalancingHomePage                  0x08004519   Thumb Code    98  app_t5l_ctrl.o(i.jumpToBalancingHomePage)
-    jumpToBalancingPage                      0x08004585   Thumb Code   108  app_t5l_ctrl.o(i.jumpToBalancingPage)
-    jumpToBanlingPage                        0x080045f9   Thumb Code   104  app_t5l_ctrl.o(i.jumpToBanlingPage)
-    jumpToCalibrationPage                    0x08004669   Thumb Code    54  app_t5l_ctrl.o(i.jumpToCalibrationPage)
-    jumpToHomePage                           0x080046a5   Thumb Code    54  app_t5l_ctrl.o(i.jumpToHomePage)
-    jumpToStartUpPage                        0x080046e1   Thumb Code    58  app_t5l_ctrl.o(i.jumpToStartUpPage)
-    jumpToSysparaPage                        0x08004721   Thumb Code    54  app_t5l_ctrl.o(i.jumpToSysparaPage)
-    key_FilterGet                            0x0800475d   Thumb Code    28  app_key_ctrl.o(i.key_FilterGet)
-    key_MainFunction                         0x0800477d   Thumb Code   120  app_key_ctrl.o(i.key_MainFunction)
-    key_filter                               0x080047fd   Thumb Code    68  app_key_ctrl.o(i.key_filter)
-    key_init                                 0x08004845   Thumb Code    48  app_key_ctrl.o(i.key_init)
-    led_MainFunction                         0x08004879   Thumb Code   114  app_led_ctrl.o(i.led_MainFunction)
-    led_RunIndicate                          0x080048f5   Thumb Code    34  app_led_ctrl.o(i.led_RunIndicate)
-    led_init                                 0x08004917   Thumb Code    64  app_led_ctrl.o(i.led_init)
-    main                                     0x08004959   Thumb Code   148  main.o(i.main)
-    masterCaculateHelpData                   0x08004a11   Thumb Code   366  app_t5l_ctrl.o(i.masterCaculateHelpData)
-    osDelay                                  0x08004b8d   Thumb Code    14  cmsis_os.o(i.osDelay)
-    osKernelStart                            0x08004b9b   Thumb Code    10  cmsis_os.o(i.osKernelStart)
-    osThreadCreate                           0x08004ba5   Thumb Code    84  cmsis_os.o(i.osThreadCreate)
-    pointSampleTrigerDataSet                 0x08004bf9   Thumb Code    26  app_t5l_ctrl.o(i.pointSampleTrigerDataSet)
-    pointTrigerDataSet                       0x08004c19   Thumb Code    36  app_t5l_ctrl.o(i.pointTrigerDataSet)
-    pointTrigerDeal                          0x08004c41   Thumb Code   150  app_t5l_ctrl.o(i.pointTrigerDeal)
-    pointWeightTrigerDataSet                 0x08004ce1   Thumb Code    26  app_t5l_ctrl.o(i.pointWeightTrigerDataSet)
-    preBalancingWeightAndColorIfNotNeedSendToSreen 0x08004d01   Thumb Code   174  app_t5l_ctrl.o(i.preBalancingWeightAndColorIfNotNeedSendToSreen)
-    preColorDataAndJudgeIfNeedSend           0x08004db5   Thumb Code   664  app_t5l_ctrl.o(i.preColorDataAndJudgeIfNeedSend)
-    preCurrentDeviceWeightData               0x08005055   Thumb Code   114  app_t5l_ctrl.o(i.preCurrentDeviceWeightData)
-    preOtherDeviceWeightData                 0x080050d1   Thumb Code    82  app_t5l_ctrl.o(i.preOtherDeviceWeightData)
-    preWeightDataAndJudgeIfNeedSend_FuncA_Master 0x08005123   Thumb Code    54  app_t5l_ctrl.o(i.preWeightDataAndJudgeIfNeedSend_FuncA_Master)
-    preWeightDataAndJudgeIfNeedSend_Master   0x08005159   Thumb Code    74  app_t5l_ctrl.o(i.preWeightDataAndJudgeIfNeedSend_Master)
-    pvPortMalloc                             0x080054f5   Thumb Code   216  heap_4.o(i.pvPortMalloc)
-    pxPortInitialiseStack                    0x080055d1   Thumb Code    40  port.o(i.pxPortInitialiseStack)
-    readColorDataFromSys                     0x080055fd   Thumb Code    42  app_t5l_ctrl.o(i.readColorDataFromSys)
-    readHelpDataFromSys                      0x0800562d   Thumb Code    42  app_t5l_ctrl.o(i.readHelpDataFromSys)
-    readSysDataFromFlash                     0x0800565d   Thumb Code   320  app_syspara.o(i.readSysDataFromFlash)
-    readSysDataFromFlash_3030                0x0800579d   Thumb Code   232  app_syspara.o(i.readSysDataFromFlash_3030)
-    readWeightDataFromSys                    0x0800588d   Thumb Code    58  app_t5l_ctrl.o(i.readWeightDataFromSys)
-    releaseSysColor                          0x080058cd   Thumb Code    36  app_t5l_ctrl.o(i.releaseSysColor)
-    removeWeightTrigerDeal                   0x080058f5   Thumb Code   114  app_t5l_ctrl.o(i.removeWeightTrigerDeal)
-    resetCalibrationTrigerDeal               0x08005971   Thumb Code   148  app_t5l_ctrl.o(i.resetCalibrationTrigerDeal)
-    sampleDataPush                           0x08005a0d   Thumb Code    40  app_hx711_ctrl.o(i.sampleDataPush)
-    screenRxHandle_CalibrateAddressSet       0x08005a35   Thumb Code    64  app_t5l_ctrl.o(i.screenRxHandle_CalibrateAddressSet)
-    screenRxHandle_CalibrateChanelSet        0x08005a75   Thumb Code    54  app_t5l_ctrl.o(i.screenRxHandle_CalibrateChanelSet)
-    screenRxHandle_CalibratePointSampleAndSet 0x08005aab   Thumb Code   186  app_t5l_ctrl.o(i.screenRxHandle_CalibratePointSampleAndSet)
-    screenRxHandle_CalibratePointSet         0x08005b65   Thumb Code   138  app_t5l_ctrl.o(i.screenRxHandle_CalibratePointSet)
-    screenRxHandle_JumpToBalancingClearnPage 0x08005bef   Thumb Code    34  app_t5l_ctrl.o(i.screenRxHandle_JumpToBalancingClearnPage)
-    screenRxHandle_JumpToBalancingHomePage   0x08005c11   Thumb Code    34  app_t5l_ctrl.o(i.screenRxHandle_JumpToBalancingHomePage)
-    screenRxHandle_JumpToBalancingPage       0x08005c33   Thumb Code    34  app_t5l_ctrl.o(i.screenRxHandle_JumpToBalancingPage)
-    screenRxHandle_JumpToCalibrateOrActivePage 0x08005c55   Thumb Code    56  app_t5l_ctrl.o(i.screenRxHandle_JumpToCalibrateOrActivePage)
-    screenRxHandle_JumpToSysParaPage         0x08005c8d   Thumb Code    38  app_t5l_ctrl.o(i.screenRxHandle_JumpToSysParaPage)
-    screenRxHandle_RemoveWeightTriger        0x08005cb3   Thumb Code    46  app_t5l_ctrl.o(i.screenRxHandle_RemoveWeightTriger)
-    screenRxHandle_SysPara                   0x08005ce1   Thumb Code   290  app_t5l_ctrl.o(i.screenRxHandle_SysPara)
-    screenRxHandle_SysPassWord               0x08005e09   Thumb Code    42  app_t5l_ctrl.o(i.screenRxHandle_SysPassWord)
-    screenRxHandle_Version                   0x08005e33   Thumb Code    28  app_t5l_ctrl.o(i.screenRxHandle_Version)
-    screenRxHandle_VoicePrintfStatusFromScreen 0x08005e51   Thumb Code    24  app_t5l_ctrl.o(i.screenRxHandle_VoicePrintfStatusFromScreen)
-    screenT5L_HelpDataMainFunction           0x08005e6d   Thumb Code    56  app_t5l_ctrl.o(i.screenT5L_HelpDataMainFunction)
-    screenT5L_Init                           0x08005ead   Thumb Code   136  app_t5l_ctrl.o(i.screenT5L_Init)
-    screenT5L_OutputVoice                    0x08005f45   Thumb Code   120  app_t5l_ctrl.o(i.screenT5L_OutputVoice)
-    screenT5L_RxFunction                     0x08005fc5   Thumb Code   250  app_t5l_ctrl.o(i.screenT5L_RxFunction)
-    screenT5L_TxFunction                     0x080060c5   Thumb Code    52  app_t5l_ctrl.o(i.screenT5L_TxFunction)
-    screenT5L_VersionGet                     0x080060fd   Thumb Code    10  app_t5l_ctrl.o(i.screenT5L_VersionGet)
-    screenT5L_VoicePrintfMainfunction        0x08006109   Thumb Code   162  app_t5l_ctrl.o(i.screenT5L_VoicePrintfMainfunction)
-    screenTxHandle_ChanelChangedTrigerDeal   0x080061b1   Thumb Code    34  app_t5l_ctrl.o(i.screenTxHandle_ChanelChangedTrigerDeal)
-    screenTxHandle_ChangeDisplayPosition     0x080061d3   Thumb Code    34  app_t5l_ctrl.o(i.screenTxHandle_ChangeDisplayPosition)
-    screenTxHandle_FreshScreenLight          0x080061f5   Thumb Code    34  app_t5l_ctrl.o(i.screenTxHandle_FreshScreenLight)
-    screenTxHandle_JmmpToBalancingPage       0x08006217   Thumb Code    34  app_t5l_ctrl.o(i.screenTxHandle_JmmpToBalancingPage)
-    screenTxHandle_JumpToActivePage          0x08006239   Thumb Code    34  app_t5l_ctrl.o(i.screenTxHandle_JumpToActivePage)
-    screenTxHandle_JumpToBalancingCleanPage  0x0800625b   Thumb Code    34  app_t5l_ctrl.o(i.screenTxHandle_JumpToBalancingCleanPage)
-    screenTxHandle_JumpToBalancingHomePage   0x0800627d   Thumb Code    34  app_t5l_ctrl.o(i.screenTxHandle_JumpToBalancingHomePage)
-    screenTxHandle_JumpToBanlingPage         0x0800629f   Thumb Code    34  app_t5l_ctrl.o(i.screenTxHandle_JumpToBanlingPage)
-    screenTxHandle_JumpToCalibrationPage     0x080062c1   Thumb Code    34  app_t5l_ctrl.o(i.screenTxHandle_JumpToCalibrationPage)
-    screenTxHandle_JumpToHomePage            0x080062e3   Thumb Code    34  app_t5l_ctrl.o(i.screenTxHandle_JumpToHomePage)
-    screenTxHandle_JumpToSysParaPage         0x08006305   Thumb Code    34  app_t5l_ctrl.o(i.screenTxHandle_JumpToSysParaPage)
-    screenTxHandle_PointTrigerHandle         0x08006327   Thumb Code    34  app_t5l_ctrl.o(i.screenTxHandle_PointTrigerHandle)
-    screenTxHandle_RemoveWeightTrigerHandle  0x08006349   Thumb Code    54  app_t5l_ctrl.o(i.screenTxHandle_RemoveWeightTrigerHandle)
-    screenTxHandle_ResetCalibrationTrigerHandle 0x0800637f   Thumb Code    34  app_t5l_ctrl.o(i.screenTxHandle_ResetCalibrationTrigerHandle)
-    screenTxHandle_ScreenInit                0x080063a1   Thumb Code    32  app_t5l_ctrl.o(i.screenTxHandle_ScreenInit)
-    screenTxHandle_ScreenWeightAndColorAndVoiceHandle 0x080063c1   Thumb Code   112  app_t5l_ctrl.o(i.screenTxHandle_ScreenWeightAndColorAndVoiceHandle)
-    screen_ChangeDisplayPosition             0x08006439   Thumb Code   296  app_t5l_ctrl.o(i.screen_ChangeDisplayPosition)
-    screen_ChangeDisplayPositionOfIndex      0x08006571   Thumb Code   106  app_t5l_ctrl.o(i.screen_ChangeDisplayPositionOfIndex)
-    sdweAskRegData                           0x080065e1   Thumb Code    32  app_t5l_ctrl.o(i.sdweAskRegData)
-    sdweAskVaribleData                       0x08006605   Thumb Code    84  app_t5l_ctrl.o(i.sdweAskVaribleData)
-    sdwe_VoicePrintfPop                      0x0800665d   Thumb Code   110  app_t5l_ctrl.o(i.sdwe_VoicePrintfPop)
-    sdwe_VoicePrintfPush                     0x080066d5   Thumb Code    48  app_t5l_ctrl.o(i.sdwe_VoicePrintfPush)
-    sendBalancingWeightAndColor20220125_FuncA_Master 0x0800670d   Thumb Code   174  app_t5l_ctrl.o(i.sendBalancingWeightAndColor20220125_FuncA_Master)
-    sendBalancingWeightAndColor20220125_FuncA_Slave 0x080067c5   Thumb Code   194  app_t5l_ctrl.o(i.sendBalancingWeightAndColor20220125_FuncA_Slave)
-    sendBalancingWeightAndColorAndHelpDataToScreen 0x08006891   Thumb Code    78  app_t5l_ctrl.o(i.sendBalancingWeightAndColorAndHelpDataToScreen)
-    sendBalancingWeightAndColor_Master       0x080068e5   Thumb Code    60  app_t5l_ctrl.o(i.sendBalancingWeightAndColor_Master)
-    sendBalancingWeightAndColor_Slave_1      0x08006929   Thumb Code   194  app_t5l_ctrl.o(i.sendBalancingWeightAndColor_Slave_1)
-    sendHelpDataDiff                         0x080069f5   Thumb Code   430  app_t5l_ctrl.o(i.sendHelpDataDiff)
-    sendHelpDataDiff_AtSlave1Device          0x08006bb9   Thumb Code    74  app_t5l_ctrl.o(i.sendHelpDataDiff_AtSlave1Device)
-    sendScreenLight                          0x08006c0d   Thumb Code    74  app_t5l_ctrl.o(i.sendScreenLight)
-    sendSysParaDataToDiwen                   0x08006c61   Thumb Code   890  app_t5l_ctrl.o(i.sendSysParaDataToDiwen)
-    setModbusDataValid                       0x08006fe5   Thumb Code     8  app_modbus_rtu_ctrl.o(i.setModbusDataValid)
-    setModbusOtherRemoveFlag                 0x08006ff1   Thumb Code     8  app_modbus_rtu_ctrl.o(i.setModbusOtherRemoveFlag)
-    setModbusSelfRemoveFlag                  0x08006ffd   Thumb Code     8  app_modbus_rtu_ctrl.o(i.setModbusSelfRemoveFlag)
-    setSampleWeightValue                     0x08007009   Thumb Code    30  app_hx711_ctrl.o(i.setSampleWeightValue)
-    sreenT5L_MainFunction                    0x0800702d   Thumb Code    52  app_t5l_ctrl.o(i.sreenT5L_MainFunction)
-    storeSysDataToFlash                      0x08007065   Thumb Code   276  app_syspara.o(i.storeSysDataToFlash)
-    storeSysDataToFlash_3030                 0x08007181   Thumb Code   550  app_syspara.o(i.storeSysDataToFlash_3030)
-    t5lDisPlayDataClear                      0x080073b5   Thumb Code   116  app_t5l_ctrl.o(i.t5lDisPlayDataClear)
-    t5lReadVarible                           0x08007431   Thumb Code   136  app_t5l_ctrl.o(i.t5lReadVarible)
-    t5lWriteData                             0x080074b9   Thumb Code   202  app_t5l_ctrl.o(i.t5lWriteData)
-    t5lWriteVarible                          0x08007585   Thumb Code   192  app_t5l_ctrl.o(i.t5lWriteVarible)
-    trigerCalcKB                             0x08007645   Thumb Code   232  app_hx711_ctrl.o(i.trigerCalcKB)
-    uxListRemove                             0x08007731   Thumb Code    38  list.o(i.uxListRemove)
-    vApplicationGetIdleTaskMemory            0x08007759   Thumb Code    16  freertos.o(i.vApplicationGetIdleTaskMemory)
-    vListInitialise                          0x0800776d   Thumb Code    22  list.o(i.vListInitialise)
-    vListInitialiseItem                      0x08007783   Thumb Code     6  list.o(i.vListInitialiseItem)
-    vListInsert                              0x08007789   Thumb Code    48  list.o(i.vListInsert)
-    vListInsertEnd                           0x080077b9   Thumb Code    24  list.o(i.vListInsertEnd)
-    vPortEnterCritical                       0x080077d1   Thumb Code    54  port.o(i.vPortEnterCritical)
-    vPortExitCritical                        0x08007811   Thumb Code    34  port.o(i.vPortExitCritical)
-    vPortFree                                0x08007839   Thumb Code    94  heap_4.o(i.vPortFree)
-    vPortSetupTimerInterrupt                 0x0800789d   Thumb Code    32  port.o(i.vPortSetupTimerInterrupt)
-    vTaskDelay                               0x080078c1   Thumb Code    66  tasks.o(i.vTaskDelay)
-    vTaskStartScheduler                      0x0800790d   Thumb Code    90  tasks.o(i.vTaskStartScheduler)
-    vTaskSuspendAll                          0x08007979   Thumb Code    10  tasks.o(i.vTaskSuspendAll)
-    vTaskSwitchContext                       0x08007989   Thumb Code    82  tasks.o(i.vTaskSwitchContext)
-    writeColorDataFromCom                    0x080079e5   Thumb Code    56  app_t5l_ctrl.o(i.writeColorDataFromCom)
-    writeHelpDataFromCom                     0x08007a21   Thumb Code    56  app_t5l_ctrl.o(i.writeHelpDataFromCom)
-    writeWeightDataFromCom                   0x08007a5d   Thumb Code    82  app_t5l_ctrl.o(i.writeWeightDataFromCom)
-    xPortStartScheduler                      0x08007ab9   Thumb Code   222  port.o(i.xPortStartScheduler)
-    xTaskCreate                              0x08007bad   Thumb Code    90  tasks.o(i.xTaskCreate)
-    xTaskCreateStatic                        0x08007c07   Thumb Code    86  tasks.o(i.xTaskCreateStatic)
-    xTaskIncrementTick                       0x08007c5d   Thumb Code   194  tasks.o(i.xTaskIncrementTick)
-    xTaskResumeAll                           0x08007d29   Thumb Code   182  tasks.o(i.xTaskResumeAll)
-    __aeabi_d2f                              0x08007ded   Thumb Code     0  d2f.o(x$fpl$d2f)
-    _d2f                                     0x08007ded   Thumb Code    98  d2f.o(x$fpl$d2f)
-    __fpl_dcmp_Inf                           0x08007e4f   Thumb Code    24  dcmpi.o(x$fpl$dcmpinf)
-    __aeabi_i2d                              0x08007e67   Thumb Code     0  dflt_clz.o(x$fpl$dflt)
-    _dflt                                    0x08007e67   Thumb Code    46  dflt_clz.o(x$fpl$dflt)
-    __aeabi_ui2d                             0x08007e95   Thumb Code     0  dflt_clz.o(x$fpl$dfltu)
-    _dfltu                                   0x08007e95   Thumb Code    38  dflt_clz.o(x$fpl$dfltu)
-    __aeabi_cdcmple                          0x08007ebd   Thumb Code     0  dleqf.o(x$fpl$dleqf)
-    _dcmple                                  0x08007ebd   Thumb Code   120  dleqf.o(x$fpl$dleqf)
-    __fpl_dcmple_InfNaN                      0x08007f1f   Thumb Code     0  dleqf.o(x$fpl$dleqf)
-    __aeabi_dmul                             0x08007f35   Thumb Code     0  dmul.o(x$fpl$dmul)
-    _dmul                                    0x08007f35   Thumb Code   332  dmul.o(x$fpl$dmul)
-    __fpl_dnaninf                            0x08008089   Thumb Code   156  dnaninf.o(x$fpl$dnaninf)
-    __fpl_dretinf                            0x08008125   Thumb Code    12  dretinf.o(x$fpl$dretinf)
-    __aeabi_cdrcmple                         0x08008131   Thumb Code     0  drleqf.o(x$fpl$drleqf)
-    _drcmple                                 0x08008131   Thumb Code   108  drleqf.o(x$fpl$drleqf)
-    _fp_init                                 0x0800819d   Thumb Code    10  fpinit.o(x$fpl$fpinit)
-    __fplib_config_fpu_vfp                   0x080081a5   Thumb Code     0  fpinit.o(x$fpl$fpinit)
-    __fplib_config_pureend_doubles           0x080081a5   Thumb Code     0  fpinit.o(x$fpl$fpinit)
-    __fpl_fretinf                            0x080081a7   Thumb Code    10  fretinf.o(x$fpl$fretinf)
-    __I$use$fp                               0x080081b0   Number         0  usenofp.o(x$fpl$usenofp)
-    AHBPrescTable                            0x080081f0   Data          16  system_stm32f4xx.o(.constdata)
-    APBPrescTable                            0x08008200   Data           8  system_stm32f4xx.o(.constdata)
-    g_CrcHTable                              0x08008208   Data         256  app_crc.o(.constdata)
-    g_CrcLTable                              0x08008308   Data         256  app_crc.o(.constdata)
-    defaultChanelSamplePoint                 0x08008408   Data          40  app_hx711_ctrl.o(.constdata)
-    DO_GPIO_PIN                              0x08008460   Data          30  hal_gpio.o(.constdata)
-    DI_GPIO_PIN                              0x0800847e   Data          22  hal_gpio.o(.constdata)
-    Region$$Table$$Base                      0x080084ac   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x080084cc   Number         0  anon$$obj.o(Region$$Table)
+    hx711_MainFunction                       0x08003f9d   Thumb Code    66  app_hx711_ctrl.o(i.hx711_MainFunction)
+    hx711_SampleFunction                     0x08003fe9   Thumb Code   178  app_hx711_ctrl.o(i.hx711_SampleFunction)
+    hx711_SenserCheck                        0x080040a1   Thumb Code   364  app_hx711_ctrl.o(i.hx711_SenserCheck)
+    hx711_SigChanelAvrgAndWeightCalc         0x0800421d   Thumb Code   154  app_hx711_ctrl.o(i.hx711_SigChanelAvrgAndWeightCalc)
+    hx711_getAvgSample                       0x080042b9   Thumb Code    26  app_hx711_ctrl.o(i.hx711_getAvgSample)
+    hx711_getWeight                          0x080042d9   Thumb Code   108  app_hx711_ctrl.o(i.hx711_getWeight)
+    hx711_init                               0x0800435d   Thumb Code   146  app_hx711_ctrl.o(i.hx711_init)
+    hx711_setAllRemoveWeight                 0x08004405   Thumb Code    70  app_hx711_ctrl.o(i.hx711_setAllRemoveWeight)
+    judgeWeightColorIfNotNeedSend            0x08004455   Thumb Code    40  app_t5l_ctrl.o(i.judgeWeightColorIfNotNeedSend)
+    judgeWeightDataIfNotNeedSend             0x0800447d   Thumb Code    40  app_t5l_ctrl.o(i.judgeWeightDataIfNotNeedSend)
+    jumpToActivePage                         0x080044a5   Thumb Code    54  app_t5l_ctrl.o(i.jumpToActivePage)
+    jumpToBalancingCleanPage                 0x080044e1   Thumb Code    54  app_t5l_ctrl.o(i.jumpToBalancingCleanPage)
+    jumpToBalancingHomePage                  0x0800451d   Thumb Code    98  app_t5l_ctrl.o(i.jumpToBalancingHomePage)
+    jumpToBalancingPage                      0x08004589   Thumb Code   108  app_t5l_ctrl.o(i.jumpToBalancingPage)
+    jumpToBanlingPage                        0x080045fd   Thumb Code   104  app_t5l_ctrl.o(i.jumpToBanlingPage)
+    jumpToCalibrationPage                    0x0800466d   Thumb Code    54  app_t5l_ctrl.o(i.jumpToCalibrationPage)
+    jumpToHomePage                           0x080046a9   Thumb Code    54  app_t5l_ctrl.o(i.jumpToHomePage)
+    jumpToStartUpPage                        0x080046e5   Thumb Code    58  app_t5l_ctrl.o(i.jumpToStartUpPage)
+    jumpToSysparaPage                        0x08004725   Thumb Code    54  app_t5l_ctrl.o(i.jumpToSysparaPage)
+    key_FilterGet                            0x08004761   Thumb Code    28  app_key_ctrl.o(i.key_FilterGet)
+    key_MainFunction                         0x08004781   Thumb Code   132  app_key_ctrl.o(i.key_MainFunction)
+    key_filter                               0x0800480d   Thumb Code    68  app_key_ctrl.o(i.key_filter)
+    key_init                                 0x08004855   Thumb Code    48  app_key_ctrl.o(i.key_init)
+    largerScreen_Init                        0x08004889   Thumb Code    64  app_t5l_ctrl.o(i.largerScreen_Init)
+    led_MainFunction                         0x080048c9   Thumb Code   114  app_led_ctrl.o(i.led_MainFunction)
+    led_RunIndicate                          0x08004945   Thumb Code    34  app_led_ctrl.o(i.led_RunIndicate)
+    led_init                                 0x08004967   Thumb Code    64  app_led_ctrl.o(i.led_init)
+    main                                     0x080049a9   Thumb Code   160  main.o(i.main)
+    masterCaculateHelpData                   0x08004a6d   Thumb Code   366  app_t5l_ctrl.o(i.masterCaculateHelpData)
+    osDelay                                  0x08004be9   Thumb Code    14  cmsis_os.o(i.osDelay)
+    osKernelStart                            0x08004bf7   Thumb Code    10  cmsis_os.o(i.osKernelStart)
+    osThreadCreate                           0x08004c01   Thumb Code    84  cmsis_os.o(i.osThreadCreate)
+    pointSampleTrigerDataSet                 0x08004c55   Thumb Code    26  app_t5l_ctrl.o(i.pointSampleTrigerDataSet)
+    pointTrigerDataSet                       0x08004c75   Thumb Code    36  app_t5l_ctrl.o(i.pointTrigerDataSet)
+    pointTrigerDeal                          0x08004c9d   Thumb Code   150  app_t5l_ctrl.o(i.pointTrigerDeal)
+    pointWeightTrigerDataSet                 0x08004d3d   Thumb Code    26  app_t5l_ctrl.o(i.pointWeightTrigerDataSet)
+    preBalancingWeightAndColorIfNotNeedSendToSreen 0x08004d5d   Thumb Code   174  app_t5l_ctrl.o(i.preBalancingWeightAndColorIfNotNeedSendToSreen)
+    preColorDataAndJudgeIfNeedSend           0x08004e11   Thumb Code   664  app_t5l_ctrl.o(i.preColorDataAndJudgeIfNeedSend)
+    preCurrentDeviceWeightData               0x080050b1   Thumb Code   114  app_t5l_ctrl.o(i.preCurrentDeviceWeightData)
+    preOtherDeviceWeightData                 0x0800512d   Thumb Code    82  app_t5l_ctrl.o(i.preOtherDeviceWeightData)
+    preWeightDataAndJudgeIfNeedSend_FuncA_Master 0x0800517f   Thumb Code    54  app_t5l_ctrl.o(i.preWeightDataAndJudgeIfNeedSend_FuncA_Master)
+    preWeightDataAndJudgeIfNeedSend_Master   0x080051b5   Thumb Code    74  app_t5l_ctrl.o(i.preWeightDataAndJudgeIfNeedSend_Master)
+    pvPortMalloc                             0x08005551   Thumb Code   216  heap_4.o(i.pvPortMalloc)
+    pxPortInitialiseStack                    0x0800562d   Thumb Code    40  port.o(i.pxPortInitialiseStack)
+    readColorDataFromSys                     0x08005659   Thumb Code    42  app_t5l_ctrl.o(i.readColorDataFromSys)
+    readHelpDataFromSys                      0x08005689   Thumb Code    42  app_t5l_ctrl.o(i.readHelpDataFromSys)
+    readSysDataFromFlash                     0x080056b9   Thumb Code   320  app_syspara.o(i.readSysDataFromFlash)
+    readSysDataFromFlash_3030                0x080057f9   Thumb Code   232  app_syspara.o(i.readSysDataFromFlash_3030)
+    readWeightDataFromSys                    0x080058e9   Thumb Code    58  app_t5l_ctrl.o(i.readWeightDataFromSys)
+    releaseSysColor                          0x08005929   Thumb Code    36  app_t5l_ctrl.o(i.releaseSysColor)
+    removeWeightTrigerDeal                   0x08005951   Thumb Code   114  app_t5l_ctrl.o(i.removeWeightTrigerDeal)
+    resetCalibrationTrigerDeal               0x080059cd   Thumb Code   148  app_t5l_ctrl.o(i.resetCalibrationTrigerDeal)
+    sampleDataPush                           0x08005a69   Thumb Code    40  app_hx711_ctrl.o(i.sampleDataPush)
+    screenLargerTxHandle_ScreenInit          0x08005a91   Thumb Code    32  app_t5l_ctrl.o(i.screenLargerTxHandle_ScreenInit)
+    screenRxHandle_CalibrateAddressSet       0x08005ab1   Thumb Code    64  app_t5l_ctrl.o(i.screenRxHandle_CalibrateAddressSet)
+    screenRxHandle_CalibrateChanelSet        0x08005af1   Thumb Code    54  app_t5l_ctrl.o(i.screenRxHandle_CalibrateChanelSet)
+    screenRxHandle_CalibratePointSampleAndSet 0x08005b27   Thumb Code   186  app_t5l_ctrl.o(i.screenRxHandle_CalibratePointSampleAndSet)
+    screenRxHandle_CalibratePointSet         0x08005be1   Thumb Code   138  app_t5l_ctrl.o(i.screenRxHandle_CalibratePointSet)
+    screenRxHandle_JumpToBalancingClearnPage 0x08005c6b   Thumb Code    34  app_t5l_ctrl.o(i.screenRxHandle_JumpToBalancingClearnPage)
+    screenRxHandle_JumpToBalancingHomePage   0x08005c8d   Thumb Code    34  app_t5l_ctrl.o(i.screenRxHandle_JumpToBalancingHomePage)
+    screenRxHandle_JumpToBalancingPage       0x08005caf   Thumb Code    34  app_t5l_ctrl.o(i.screenRxHandle_JumpToBalancingPage)
+    screenRxHandle_JumpToCalibrateOrActivePage 0x08005cd1   Thumb Code    56  app_t5l_ctrl.o(i.screenRxHandle_JumpToCalibrateOrActivePage)
+    screenRxHandle_JumpToSysParaPage         0x08005d09   Thumb Code    38  app_t5l_ctrl.o(i.screenRxHandle_JumpToSysParaPage)
+    screenRxHandle_RemoveWeightTriger        0x08005d2f   Thumb Code    46  app_t5l_ctrl.o(i.screenRxHandle_RemoveWeightTriger)
+    screenRxHandle_SysPara                   0x08005d5d   Thumb Code   290  app_t5l_ctrl.o(i.screenRxHandle_SysPara)
+    screenRxHandle_SysPassWord               0x08005e85   Thumb Code    42  app_t5l_ctrl.o(i.screenRxHandle_SysPassWord)
+    screenRxHandle_Version                   0x08005eaf   Thumb Code    28  app_t5l_ctrl.o(i.screenRxHandle_Version)
+    screenRxHandle_VoicePrintfStatusFromScreen 0x08005ecd   Thumb Code    24  app_t5l_ctrl.o(i.screenRxHandle_VoicePrintfStatusFromScreen)
+    screenT5L_HelpDataMainFunction           0x08005ee9   Thumb Code    56  app_t5l_ctrl.o(i.screenT5L_HelpDataMainFunction)
+    screenT5L_Init                           0x08005f29   Thumb Code   128  app_t5l_ctrl.o(i.screenT5L_Init)
+    screenT5L_OutputVoice                    0x08005fb1   Thumb Code   120  app_t5l_ctrl.o(i.screenT5L_OutputVoice)
+    screenT5L_RxFunction                     0x08006031   Thumb Code   234  app_t5l_ctrl.o(i.screenT5L_RxFunction)
+    screenT5L_TxFunction                     0x0800611d   Thumb Code    46  app_t5l_ctrl.o(i.screenT5L_TxFunction)
+    screenT5L_VersionGet                     0x0800614b   Thumb Code    10  app_t5l_ctrl.o(i.screenT5L_VersionGet)
+    screenT5L_VoicePrintfMainfunction        0x08006155   Thumb Code   162  app_t5l_ctrl.o(i.screenT5L_VoicePrintfMainfunction)
+    screenTxHandle_ChanelChangedTrigerDeal   0x080061fd   Thumb Code    34  app_t5l_ctrl.o(i.screenTxHandle_ChanelChangedTrigerDeal)
+    screenTxHandle_ChangeDisplayPosition     0x0800621f   Thumb Code    34  app_t5l_ctrl.o(i.screenTxHandle_ChangeDisplayPosition)
+    screenTxHandle_FreshScreenLight          0x08006241   Thumb Code    34  app_t5l_ctrl.o(i.screenTxHandle_FreshScreenLight)
+    screenTxHandle_JmmpToBalancingPage       0x08006263   Thumb Code    34  app_t5l_ctrl.o(i.screenTxHandle_JmmpToBalancingPage)
+    screenTxHandle_JumpToActivePage          0x08006285   Thumb Code    34  app_t5l_ctrl.o(i.screenTxHandle_JumpToActivePage)
+    screenTxHandle_JumpToBalancingCleanPage  0x080062a7   Thumb Code    34  app_t5l_ctrl.o(i.screenTxHandle_JumpToBalancingCleanPage)
+    screenTxHandle_JumpToBalancingHomePage   0x080062c9   Thumb Code    34  app_t5l_ctrl.o(i.screenTxHandle_JumpToBalancingHomePage)
+    screenTxHandle_JumpToBanlingPage         0x080062eb   Thumb Code    34  app_t5l_ctrl.o(i.screenTxHandle_JumpToBanlingPage)
+    screenTxHandle_JumpToCalibrationPage     0x0800630d   Thumb Code    34  app_t5l_ctrl.o(i.screenTxHandle_JumpToCalibrationPage)
+    screenTxHandle_JumpToHomePage            0x0800632f   Thumb Code    34  app_t5l_ctrl.o(i.screenTxHandle_JumpToHomePage)
+    screenTxHandle_JumpToSysParaPage         0x08006351   Thumb Code    34  app_t5l_ctrl.o(i.screenTxHandle_JumpToSysParaPage)
+    screenTxHandle_PointTrigerHandle         0x08006373   Thumb Code    34  app_t5l_ctrl.o(i.screenTxHandle_PointTrigerHandle)
+    screenTxHandle_RemoveWeightTrigerHandle  0x08006395   Thumb Code    54  app_t5l_ctrl.o(i.screenTxHandle_RemoveWeightTrigerHandle)
+    screenTxHandle_ResetCalibrationTrigerHandle 0x080063cb   Thumb Code    34  app_t5l_ctrl.o(i.screenTxHandle_ResetCalibrationTrigerHandle)
+    screenTxHandle_ScreenInit                0x080063ed   Thumb Code    32  app_t5l_ctrl.o(i.screenTxHandle_ScreenInit)
+    screenTxHandle_ScreenWeightAndColorAndVoiceHandle 0x0800640d   Thumb Code   112  app_t5l_ctrl.o(i.screenTxHandle_ScreenWeightAndColorAndVoiceHandle)
+    screen_ChangeDisplayPosition             0x08006485   Thumb Code   296  app_t5l_ctrl.o(i.screen_ChangeDisplayPosition)
+    screen_ChangeDisplayPositionOfIndex      0x080065bd   Thumb Code   106  app_t5l_ctrl.o(i.screen_ChangeDisplayPositionOfIndex)
+    sdweAskRegData                           0x0800662d   Thumb Code    18  app_t5l_ctrl.o(i.sdweAskRegData)
+    sdweAskVaribleData                       0x08006641   Thumb Code    80  app_t5l_ctrl.o(i.sdweAskVaribleData)
+    sdwe_VoicePrintfPop                      0x08006691   Thumb Code   110  app_t5l_ctrl.o(i.sdwe_VoicePrintfPop)
+    sdwe_VoicePrintfPush                     0x08006709   Thumb Code    48  app_t5l_ctrl.o(i.sdwe_VoicePrintfPush)
+    sendBalancingWeightAndColor20220125_FuncA_Master 0x08006741   Thumb Code   174  app_t5l_ctrl.o(i.sendBalancingWeightAndColor20220125_FuncA_Master)
+    sendBalancingWeightAndColor20220125_FuncA_Slave 0x080067f9   Thumb Code   194  app_t5l_ctrl.o(i.sendBalancingWeightAndColor20220125_FuncA_Slave)
+    sendBalancingWeightAndColorAndHelpDataToScreen 0x080068c5   Thumb Code    78  app_t5l_ctrl.o(i.sendBalancingWeightAndColorAndHelpDataToScreen)
+    sendBalancingWeightAndColor_Master       0x08006919   Thumb Code    60  app_t5l_ctrl.o(i.sendBalancingWeightAndColor_Master)
+    sendBalancingWeightAndColor_Slave_1      0x0800695d   Thumb Code   194  app_t5l_ctrl.o(i.sendBalancingWeightAndColor_Slave_1)
+    sendHelpDataDiff                         0x08006a29   Thumb Code   430  app_t5l_ctrl.o(i.sendHelpDataDiff)
+    sendHelpDataDiff_AtSlave1Device          0x08006bed   Thumb Code    74  app_t5l_ctrl.o(i.sendHelpDataDiff_AtSlave1Device)
+    sendScreenLight                          0x08006c41   Thumb Code    74  app_t5l_ctrl.o(i.sendScreenLight)
+    setModbusDataValid                       0x08006c95   Thumb Code     8  app_modbus_rtu_ctrl.o(i.setModbusDataValid)
+    setModbusOtherRemoveFlag                 0x08006ca1   Thumb Code     8  app_modbus_rtu_ctrl.o(i.setModbusOtherRemoveFlag)
+    setModbusSelfRemoveFlag                  0x08006cad   Thumb Code     8  app_modbus_rtu_ctrl.o(i.setModbusSelfRemoveFlag)
+    setSampleWeightValue                     0x08006cb9   Thumb Code    30  app_hx711_ctrl.o(i.setSampleWeightValue)
+    smallerScreen_Init                       0x08006cdd   Thumb Code   890  app_t5l_ctrl.o(i.smallerScreen_Init)
+    sreenT5L_MainFunction                    0x08007061   Thumb Code    66  app_t5l_ctrl.o(i.sreenT5L_MainFunction)
+    storeSysDataToFlash                      0x080070a9   Thumb Code   276  app_syspara.o(i.storeSysDataToFlash)
+    storeSysDataToFlash_3030                 0x080071c5   Thumb Code   550  app_syspara.o(i.storeSysDataToFlash_3030)
+    t5lDisPlayDataClear                      0x080073f9   Thumb Code   116  app_t5l_ctrl.o(i.t5lDisPlayDataClear)
+    t5lReadVarible                           0x08007475   Thumb Code   136  app_t5l_ctrl.o(i.t5lReadVarible)
+    t5lWriteData                             0x080074fd   Thumb Code   202  app_t5l_ctrl.o(i.t5lWriteData)
+    t5lWriteVarible                          0x080075c9   Thumb Code   192  app_t5l_ctrl.o(i.t5lWriteVarible)
+    trigerCalcKB                             0x08007689   Thumb Code   232  app_hx711_ctrl.o(i.trigerCalcKB)
+    uxListRemove                             0x08007775   Thumb Code    38  list.o(i.uxListRemove)
+    vApplicationGetIdleTaskMemory            0x0800779d   Thumb Code    16  freertos.o(i.vApplicationGetIdleTaskMemory)
+    vListInitialise                          0x080077b1   Thumb Code    22  list.o(i.vListInitialise)
+    vListInitialiseItem                      0x080077c7   Thumb Code     6  list.o(i.vListInitialiseItem)
+    vListInsert                              0x080077cd   Thumb Code    48  list.o(i.vListInsert)
+    vListInsertEnd                           0x080077fd   Thumb Code    24  list.o(i.vListInsertEnd)
+    vPortEnterCritical                       0x08007815   Thumb Code    54  port.o(i.vPortEnterCritical)
+    vPortExitCritical                        0x08007855   Thumb Code    34  port.o(i.vPortExitCritical)
+    vPortFree                                0x0800787d   Thumb Code    94  heap_4.o(i.vPortFree)
+    vPortSetupTimerInterrupt                 0x080078e1   Thumb Code    32  port.o(i.vPortSetupTimerInterrupt)
+    vTaskDelay                               0x08007905   Thumb Code    66  tasks.o(i.vTaskDelay)
+    vTaskStartScheduler                      0x08007951   Thumb Code    90  tasks.o(i.vTaskStartScheduler)
+    vTaskSuspendAll                          0x080079bd   Thumb Code    10  tasks.o(i.vTaskSuspendAll)
+    vTaskSwitchContext                       0x080079cd   Thumb Code    82  tasks.o(i.vTaskSwitchContext)
+    writeColorDataFromCom                    0x08007a29   Thumb Code    56  app_t5l_ctrl.o(i.writeColorDataFromCom)
+    writeHelpDataFromCom                     0x08007a65   Thumb Code    56  app_t5l_ctrl.o(i.writeHelpDataFromCom)
+    writeWeightDataFromCom                   0x08007aa1   Thumb Code    82  app_t5l_ctrl.o(i.writeWeightDataFromCom)
+    xPortStartScheduler                      0x08007afd   Thumb Code   222  port.o(i.xPortStartScheduler)
+    xTaskCreate                              0x08007bf1   Thumb Code    90  tasks.o(i.xTaskCreate)
+    xTaskCreateStatic                        0x08007c4b   Thumb Code    86  tasks.o(i.xTaskCreateStatic)
+    xTaskIncrementTick                       0x08007ca1   Thumb Code   194  tasks.o(i.xTaskIncrementTick)
+    xTaskResumeAll                           0x08007d6d   Thumb Code   182  tasks.o(i.xTaskResumeAll)
+    __aeabi_d2f                              0x08007e31   Thumb Code     0  d2f.o(x$fpl$d2f)
+    _d2f                                     0x08007e31   Thumb Code    98  d2f.o(x$fpl$d2f)
+    __fpl_dcmp_Inf                           0x08007e93   Thumb Code    24  dcmpi.o(x$fpl$dcmpinf)
+    __aeabi_i2d                              0x08007eab   Thumb Code     0  dflt_clz.o(x$fpl$dflt)
+    _dflt                                    0x08007eab   Thumb Code    46  dflt_clz.o(x$fpl$dflt)
+    __aeabi_ui2d                             0x08007ed9   Thumb Code     0  dflt_clz.o(x$fpl$dfltu)
+    _dfltu                                   0x08007ed9   Thumb Code    38  dflt_clz.o(x$fpl$dfltu)
+    __aeabi_cdcmple                          0x08007f01   Thumb Code     0  dleqf.o(x$fpl$dleqf)
+    _dcmple                                  0x08007f01   Thumb Code   120  dleqf.o(x$fpl$dleqf)
+    __fpl_dcmple_InfNaN                      0x08007f63   Thumb Code     0  dleqf.o(x$fpl$dleqf)
+    __aeabi_dmul                             0x08007f79   Thumb Code     0  dmul.o(x$fpl$dmul)
+    _dmul                                    0x08007f79   Thumb Code   332  dmul.o(x$fpl$dmul)
+    __fpl_dnaninf                            0x080080cd   Thumb Code   156  dnaninf.o(x$fpl$dnaninf)
+    __fpl_dretinf                            0x08008169   Thumb Code    12  dretinf.o(x$fpl$dretinf)
+    __aeabi_cdrcmple                         0x08008175   Thumb Code     0  drleqf.o(x$fpl$drleqf)
+    _drcmple                                 0x08008175   Thumb Code   108  drleqf.o(x$fpl$drleqf)
+    _fp_init                                 0x080081e1   Thumb Code    10  fpinit.o(x$fpl$fpinit)
+    __fplib_config_fpu_vfp                   0x080081e9   Thumb Code     0  fpinit.o(x$fpl$fpinit)
+    __fplib_config_pureend_doubles           0x080081e9   Thumb Code     0  fpinit.o(x$fpl$fpinit)
+    __fpl_fretinf                            0x080081eb   Thumb Code    10  fretinf.o(x$fpl$fretinf)
+    __I$use$fp                               0x080081f4   Number         0  usenofp.o(x$fpl$usenofp)
+    AHBPrescTable                            0x08008234   Data          16  system_stm32f4xx.o(.constdata)
+    APBPrescTable                            0x08008244   Data           8  system_stm32f4xx.o(.constdata)
+    g_CrcHTable                              0x0800824c   Data         256  app_crc.o(.constdata)
+    g_CrcLTable                              0x0800834c   Data         256  app_crc.o(.constdata)
+    defaultChanelSamplePoint                 0x0800844c   Data          40  app_hx711_ctrl.o(.constdata)
+    DO_GPIO_PIN                              0x080084a4   Data          30  hal_gpio.o(.constdata)
+    DI_GPIO_PIN                              0x080084c2   Data          22  hal_gpio.o(.constdata)
+    Region$$Table$$Base                      0x080084f0   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x08008510   Number         0  anon$$obj.o(Region$$Table)
     defaultTaskHandle                        0x20000000   Data           4  freertos.o(.data)
     appTask1MsHandle                         0x20000004   Data           4  freertos.o(.data)
     sys_tick                                 0x20000008   Data           4  stm32f4xx_it.o(.data)
@@ -3672,60 +3682,62 @@ Image Symbol Table
     u8T5LVoiceBuffStoreNum                   0x200004aa   Data           1  app_t5l_ctrl.o(.data)
     g_u8Read00A1_Data                        0x200004ab   Data           1  app_t5l_ctrl.o(.data)
     describlePointAdd_help                   0x200004f0   Data           8  app_t5l_ctrl.o(.data)
-    g_T5L                                    0x200004f8   Data         624  app_t5l_ctrl.o(.data)
-    g_T5LCtx                                 0x20000768   Data        1248  app_t5l_ctrl.o(.data)
-    screenRxHandle                           0x20000c48   Data         112  app_t5l_ctrl.o(.data)
-    describlePointAdd                        0x20000cb8   Data          16  app_t5l_ctrl.o(.data)
-    describlePointVluWuXiaoShu               0x20000cc8   Data          96  app_t5l_ctrl.o(.data)
-    describlePointVluXiaoShu                 0x20000d28   Data          96  app_t5l_ctrl.o(.data)
-    describleIndexPointAdd                   0x20000d88   Data          16  app_t5l_ctrl.o(.data)
-    describleIndexPointData                  0x20000d98   Data          96  app_t5l_ctrl.o(.data)
-    describlePointVluWuXiaoShu_help          0x20000df8   Data          48  app_t5l_ctrl.o(.data)
-    describlePointVluXiaoShu_help            0x20000e28   Data          48  app_t5l_ctrl.o(.data)
-    screenTxHandle                           0x20000e58   Data         128  app_t5l_ctrl.o(.data)
-    DO_GPIO_PORT                             0x20000ed8   Data          60  hal_gpio.o(.data)
-    DI_GPIO_PORT                             0x20000f14   Data          44  hal_gpio.o(.data)
-    g_UartDevice                             0x20000f40   Data         192  hal_uart.o(.data)
-    app_i2cComtext                           0x20001000   Data          28  app_i2c.o(.data)
-    hi2c1                                    0x20001270   Data          84  i2c.o(.bss)
-    htim7                                    0x200012c4   Data          72  tim.o(.bss)
-    Usart1AsScreen1Type                      0x2000130c   Data        1028  usart.o(.bss)
-    Rx_buff                                  0x20001710   Data          50  usart.o(.bss)
-    huart1                                   0x20001744   Data          68  usart.o(.bss)
-    huart2                                   0x20001788   Data          68  usart.o(.bss)
-    huart3                                   0x200017cc   Data          68  usart.o(.bss)
-    huart6                                   0x20001810   Data          68  usart.o(.bss)
-    hdma_usart1_rx                           0x20001854   Data          96  usart.o(.bss)
-    hdma_usart1_tx                           0x200018b4   Data          96  usart.o(.bss)
-    hdma_usart2_rx                           0x20001914   Data          96  usart.o(.bss)
-    hdma_usart2_tx                           0x20001974   Data          96  usart.o(.bss)
-    hdma_usart3_rx                           0x200019d4   Data          96  usart.o(.bss)
-    hdma_usart3_tx                           0x20001a34   Data          96  usart.o(.bss)
-    hdma_usart6_rx                           0x20001a94   Data          96  usart.o(.bss)
-    hdma_usart6_tx                           0x20001af4   Data          96  usart.o(.bss)
-    htim6                                    0x20001b54   Data          72  stm32f4xx_hal_timebase_tim.o(.bss)
-    HX711Chanel                              0x200058b4   Data        1888  app_hx711_ctrl.o(.bss)
-    SysKey                                   0x20006014   Data          12  app_key_ctrl.o(.bss)
-    STM32McuId                               0x20006020   Data          12  app_password.o(.bss)
-    flashStoreDataBuf                        0x2000602c   Data        1412  app_syspara.o(.bss)
-    flashStoreDataBuf_3030                   0x200065b0   Data          96  app_syspara.o(.bss)
-    g_i32DataBuff                            0x20006610   Data          64  app_t5l_ctrl.o(.bss)
-    g_i32DataBuffPre                         0x20006650   Data          64  app_t5l_ctrl.o(.bss)
-    g_i32_i16DataBuff                        0x20006690   Data          64  app_t5l_ctrl.o(.bss)
-    g_i16ColorBuff                           0x200066d0   Data          32  app_t5l_ctrl.o(.bss)
-    g_i16ColorBuffPre                        0x200066f0   Data          32  app_t5l_ctrl.o(.bss)
-    g_i16ColorOtherChanel                    0x20006710   Data          32  app_t5l_ctrl.o(.bss)
-    g_fDataBuffCaculate                      0x20006730   Data          64  app_t5l_ctrl.o(.bss)
-    g_i16OtherChanelCaculate                 0x20006770   Data          32  app_t5l_ctrl.o(.bss)
-    g_i16HelpDataBuff                        0x20006790   Data          24  app_t5l_ctrl.o(.bss)
-    g_i16HelpDataBuffPre                     0x200067a8   Data          24  app_t5l_ctrl.o(.bss)
-    g_i16HelpDataSort                        0x200067c0   Data          64  app_t5l_ctrl.o(.bss)
-    g_i16HelpDataChnSort                     0x20006800   Data          32  app_t5l_ctrl.o(.bss)
-    g_T5L_VoiceBuff                          0x20006af0   Data          18  app_t5l_ctrl.o(.bss)
-    app_i2cRxData                            0x20006b02   Data          64  app_i2c.o(.bss)
-    app_i2cTxData                            0x20006b42   Data          64  app_i2c.o(.bss)
-    __libspace_start                         0x20006b84   Data          96  libspace.o(.bss)
-    __temporary_stack_top$libspace           0x20006be4   Data           0  libspace.o(.bss)
+    g_T5LCtx                                 0x200004f8   Data        1248  app_t5l_ctrl.o(.data)
+    g_ScreenHandle                           0x200009d8   Data          48  app_t5l_ctrl.o(.data)
+    describlePointAdd                        0x20000a08   Data          16  app_t5l_ctrl.o(.data)
+    describlePointVluWuXiaoShu               0x20000a18   Data          96  app_t5l_ctrl.o(.data)
+    describlePointVluXiaoShu                 0x20000a78   Data          96  app_t5l_ctrl.o(.data)
+    describleIndexPointAdd                   0x20000ad8   Data          16  app_t5l_ctrl.o(.data)
+    describleIndexPointData                  0x20000ae8   Data          96  app_t5l_ctrl.o(.data)
+    describlePointVluWuXiaoShu_help          0x20000b48   Data          48  app_t5l_ctrl.o(.data)
+    describlePointVluXiaoShu_help            0x20000b78   Data          48  app_t5l_ctrl.o(.data)
+    screenRxHandle                           0x20000ba8   Data         112  app_t5l_ctrl.o(.data)
+    screenLargerRxHandle                     0x20000c18   Data           8  app_t5l_ctrl.o(.data)
+    screenTxHandle                           0x20000c20   Data         128  app_t5l_ctrl.o(.data)
+    screenLargerTxHandle                     0x20000ca0   Data           8  app_t5l_ctrl.o(.data)
+    DO_GPIO_PORT                             0x20000ca8   Data          60  hal_gpio.o(.data)
+    DI_GPIO_PORT                             0x20000ce4   Data          44  hal_gpio.o(.data)
+    g_UartDevice                             0x20000d10   Data         192  hal_uart.o(.data)
+    app_i2cComtext                           0x20000dd0   Data          28  app_i2c.o(.data)
+    hi2c1                                    0x20001040   Data          84  i2c.o(.bss)
+    htim7                                    0x20001094   Data          72  tim.o(.bss)
+    Usart1AsScreen1Type                      0x200010dc   Data        1028  usart.o(.bss)
+    Rx_buff                                  0x200014e0   Data          50  usart.o(.bss)
+    huart1                                   0x20001514   Data          68  usart.o(.bss)
+    huart2                                   0x20001558   Data          68  usart.o(.bss)
+    huart3                                   0x2000159c   Data          68  usart.o(.bss)
+    huart6                                   0x200015e0   Data          68  usart.o(.bss)
+    hdma_usart1_rx                           0x20001624   Data          96  usart.o(.bss)
+    hdma_usart1_tx                           0x20001684   Data          96  usart.o(.bss)
+    hdma_usart2_rx                           0x200016e4   Data          96  usart.o(.bss)
+    hdma_usart2_tx                           0x20001744   Data          96  usart.o(.bss)
+    hdma_usart3_rx                           0x200017a4   Data          96  usart.o(.bss)
+    hdma_usart3_tx                           0x20001804   Data          96  usart.o(.bss)
+    hdma_usart6_rx                           0x20001864   Data          96  usart.o(.bss)
+    hdma_usart6_tx                           0x200018c4   Data          96  usart.o(.bss)
+    htim6                                    0x20001924   Data          72  stm32f4xx_hal_timebase_tim.o(.bss)
+    HX711Chanel                              0x20005684   Data        1888  app_hx711_ctrl.o(.bss)
+    SysKey                                   0x20005de4   Data          12  app_key_ctrl.o(.bss)
+    STM32McuId                               0x20005df0   Data          12  app_password.o(.bss)
+    flashStoreDataBuf                        0x20005dfc   Data        1412  app_syspara.o(.bss)
+    flashStoreDataBuf_3030                   0x20006380   Data          96  app_syspara.o(.bss)
+    g_i32DataBuff                            0x200063e0   Data          64  app_t5l_ctrl.o(.bss)
+    g_i32DataBuffPre                         0x20006420   Data          64  app_t5l_ctrl.o(.bss)
+    g_i32_i16DataBuff                        0x20006460   Data          64  app_t5l_ctrl.o(.bss)
+    g_i16ColorBuff                           0x200064a0   Data          32  app_t5l_ctrl.o(.bss)
+    g_i16ColorBuffPre                        0x200064c0   Data          32  app_t5l_ctrl.o(.bss)
+    g_i16ColorOtherChanel                    0x200064e0   Data          32  app_t5l_ctrl.o(.bss)
+    g_fDataBuffCaculate                      0x20006500   Data          64  app_t5l_ctrl.o(.bss)
+    g_i16OtherChanelCaculate                 0x20006540   Data          32  app_t5l_ctrl.o(.bss)
+    g_i16HelpDataBuff                        0x20006560   Data          24  app_t5l_ctrl.o(.bss)
+    g_i16HelpDataBuffPre                     0x20006578   Data          24  app_t5l_ctrl.o(.bss)
+    g_i16HelpDataSort                        0x20006590   Data          64  app_t5l_ctrl.o(.bss)
+    g_i16HelpDataChnSort                     0x200065d0   Data          32  app_t5l_ctrl.o(.bss)
+    g_T5L_VoiceBuff                          0x200068c0   Data          18  app_t5l_ctrl.o(.bss)
+    app_i2cRxData                            0x200068d2   Data          64  app_i2c.o(.bss)
+    app_i2cTxData                            0x20006912   Data          64  app_i2c.o(.bss)
+    __libspace_start                         0x20006954   Data          96  libspace.o(.bss)
+    __temporary_stack_top$libspace           0x200069b4   Data           0  libspace.o(.bss)
 
 
 
@@ -3735,74 +3747,74 @@ Memory Map of the image
 
   Image Entry point : 0x08000189
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x000094e8, Max: 0x00080000, ABSOLUTE, COMPRESSED[0x00008718])
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x000092fc, Max: 0x00080000, ABSOLUTE, COMPRESSED[0x0000876c])
 
-    Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x000084cc, Max: 0x00080000, ABSOLUTE)
+    Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x00008510, Max: 0x00080000, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x08000000   0x00000188   Data   RO            3    RESET               startup_stm32f407xx.o
-    0x08000188   0x00000008   Code   RO         6509  * !!!main             c_w.l(__main.o)
-    0x08000190   0x00000034   Code   RO         6703    !!!scatter          c_w.l(__scatter.o)
-    0x080001c4   0x0000005a   Code   RO         6701    !!dczerorl2         c_w.l(__dczerorl2.o)
+    0x08000188   0x00000008   Code   RO         6524  * !!!main             c_w.l(__main.o)
+    0x08000190   0x00000034   Code   RO         6718    !!!scatter          c_w.l(__scatter.o)
+    0x080001c4   0x0000005a   Code   RO         6716    !!dczerorl2         c_w.l(__dczerorl2.o)
     0x0800021e   0x00000002   PAD
-    0x08000220   0x0000001c   Code   RO         6705    !!handler_zi        c_w.l(__scatter_zi.o)
-    0x0800023c   0x00000002   Code   RO         6571    .ARM.Collect$$libinit$$00000000  c_w.l(libinit.o)
-    0x0800023e   0x00000004   Code   RO         6583    .ARM.Collect$$libinit$$00000001  c_w.l(libinit2.o)
-    0x08000242   0x00000000   Code   RO         6586    .ARM.Collect$$libinit$$00000004  c_w.l(libinit2.o)
-    0x08000242   0x00000000   Code   RO         6589    .ARM.Collect$$libinit$$0000000A  c_w.l(libinit2.o)
-    0x08000242   0x00000000   Code   RO         6591    .ARM.Collect$$libinit$$0000000C  c_w.l(libinit2.o)
-    0x08000242   0x00000000   Code   RO         6593    .ARM.Collect$$libinit$$0000000E  c_w.l(libinit2.o)
-    0x08000242   0x00000000   Code   RO         6596    .ARM.Collect$$libinit$$00000011  c_w.l(libinit2.o)
-    0x08000242   0x00000000   Code   RO         6598    .ARM.Collect$$libinit$$00000013  c_w.l(libinit2.o)
-    0x08000242   0x00000000   Code   RO         6600    .ARM.Collect$$libinit$$00000015  c_w.l(libinit2.o)
-    0x08000242   0x00000000   Code   RO         6602    .ARM.Collect$$libinit$$00000017  c_w.l(libinit2.o)
-    0x08000242   0x00000000   Code   RO         6604    .ARM.Collect$$libinit$$00000019  c_w.l(libinit2.o)
-    0x08000242   0x00000000   Code   RO         6606    .ARM.Collect$$libinit$$0000001B  c_w.l(libinit2.o)
-    0x08000242   0x00000000   Code   RO         6608    .ARM.Collect$$libinit$$0000001D  c_w.l(libinit2.o)
-    0x08000242   0x00000000   Code   RO         6610    .ARM.Collect$$libinit$$0000001F  c_w.l(libinit2.o)
-    0x08000242   0x00000000   Code   RO         6612    .ARM.Collect$$libinit$$00000021  c_w.l(libinit2.o)
-    0x08000242   0x00000000   Code   RO         6614    .ARM.Collect$$libinit$$00000023  c_w.l(libinit2.o)
-    0x08000242   0x00000000   Code   RO         6616    .ARM.Collect$$libinit$$00000025  c_w.l(libinit2.o)
-    0x08000242   0x00000000   Code   RO         6620    .ARM.Collect$$libinit$$0000002C  c_w.l(libinit2.o)
-    0x08000242   0x00000000   Code   RO         6622    .ARM.Collect$$libinit$$0000002E  c_w.l(libinit2.o)
-    0x08000242   0x00000000   Code   RO         6624    .ARM.Collect$$libinit$$00000030  c_w.l(libinit2.o)
-    0x08000242   0x00000000   Code   RO         6626    .ARM.Collect$$libinit$$00000032  c_w.l(libinit2.o)
-    0x08000242   0x00000002   Code   RO         6627    .ARM.Collect$$libinit$$00000033  c_w.l(libinit2.o)
-    0x08000244   0x00000002   Code   RO         6658    .ARM.Collect$$libshutdown$$00000000  c_w.l(libshutdown.o)
-    0x08000246   0x00000000   Code   RO         6684    .ARM.Collect$$libshutdown$$00000002  c_w.l(libshutdown2.o)
-    0x08000246   0x00000000   Code   RO         6686    .ARM.Collect$$libshutdown$$00000004  c_w.l(libshutdown2.o)
-    0x08000246   0x00000000   Code   RO         6689    .ARM.Collect$$libshutdown$$00000007  c_w.l(libshutdown2.o)
-    0x08000246   0x00000000   Code   RO         6692    .ARM.Collect$$libshutdown$$0000000A  c_w.l(libshutdown2.o)
-    0x08000246   0x00000000   Code   RO         6694    .ARM.Collect$$libshutdown$$0000000C  c_w.l(libshutdown2.o)
-    0x08000246   0x00000000   Code   RO         6697    .ARM.Collect$$libshutdown$$0000000F  c_w.l(libshutdown2.o)
-    0x08000246   0x00000002   Code   RO         6698    .ARM.Collect$$libshutdown$$00000010  c_w.l(libshutdown2.o)
-    0x08000248   0x00000000   Code   RO         6523    .ARM.Collect$$rtentry$$00000000  c_w.l(__rtentry.o)
-    0x08000248   0x00000000   Code   RO         6540    .ARM.Collect$$rtentry$$00000002  c_w.l(__rtentry2.o)
-    0x08000248   0x00000006   Code   RO         6552    .ARM.Collect$$rtentry$$00000004  c_w.l(__rtentry4.o)
-    0x0800024e   0x00000000   Code   RO         6542    .ARM.Collect$$rtentry$$00000009  c_w.l(__rtentry2.o)
-    0x0800024e   0x00000004   Code   RO         6543    .ARM.Collect$$rtentry$$0000000A  c_w.l(__rtentry2.o)
-    0x08000252   0x00000000   Code   RO         6545    .ARM.Collect$$rtentry$$0000000C  c_w.l(__rtentry2.o)
-    0x08000252   0x00000008   Code   RO         6546    .ARM.Collect$$rtentry$$0000000D  c_w.l(__rtentry2.o)
-    0x0800025a   0x00000002   Code   RO         6575    .ARM.Collect$$rtexit$$00000000  c_w.l(rtexit.o)
-    0x0800025c   0x00000000   Code   RO         6631    .ARM.Collect$$rtexit$$00000002  c_w.l(rtexit2.o)
-    0x0800025c   0x00000004   Code   RO         6632    .ARM.Collect$$rtexit$$00000003  c_w.l(rtexit2.o)
-    0x08000260   0x00000006   Code   RO         6633    .ARM.Collect$$rtexit$$00000004  c_w.l(rtexit2.o)
+    0x08000220   0x0000001c   Code   RO         6720    !!handler_zi        c_w.l(__scatter_zi.o)
+    0x0800023c   0x00000002   Code   RO         6586    .ARM.Collect$$libinit$$00000000  c_w.l(libinit.o)
+    0x0800023e   0x00000004   Code   RO         6598    .ARM.Collect$$libinit$$00000001  c_w.l(libinit2.o)
+    0x08000242   0x00000000   Code   RO         6601    .ARM.Collect$$libinit$$00000004  c_w.l(libinit2.o)
+    0x08000242   0x00000000   Code   RO         6604    .ARM.Collect$$libinit$$0000000A  c_w.l(libinit2.o)
+    0x08000242   0x00000000   Code   RO         6606    .ARM.Collect$$libinit$$0000000C  c_w.l(libinit2.o)
+    0x08000242   0x00000000   Code   RO         6608    .ARM.Collect$$libinit$$0000000E  c_w.l(libinit2.o)
+    0x08000242   0x00000000   Code   RO         6611    .ARM.Collect$$libinit$$00000011  c_w.l(libinit2.o)
+    0x08000242   0x00000000   Code   RO         6613    .ARM.Collect$$libinit$$00000013  c_w.l(libinit2.o)
+    0x08000242   0x00000000   Code   RO         6615    .ARM.Collect$$libinit$$00000015  c_w.l(libinit2.o)
+    0x08000242   0x00000000   Code   RO         6617    .ARM.Collect$$libinit$$00000017  c_w.l(libinit2.o)
+    0x08000242   0x00000000   Code   RO         6619    .ARM.Collect$$libinit$$00000019  c_w.l(libinit2.o)
+    0x08000242   0x00000000   Code   RO         6621    .ARM.Collect$$libinit$$0000001B  c_w.l(libinit2.o)
+    0x08000242   0x00000000   Code   RO         6623    .ARM.Collect$$libinit$$0000001D  c_w.l(libinit2.o)
+    0x08000242   0x00000000   Code   RO         6625    .ARM.Collect$$libinit$$0000001F  c_w.l(libinit2.o)
+    0x08000242   0x00000000   Code   RO         6627    .ARM.Collect$$libinit$$00000021  c_w.l(libinit2.o)
+    0x08000242   0x00000000   Code   RO         6629    .ARM.Collect$$libinit$$00000023  c_w.l(libinit2.o)
+    0x08000242   0x00000000   Code   RO         6631    .ARM.Collect$$libinit$$00000025  c_w.l(libinit2.o)
+    0x08000242   0x00000000   Code   RO         6635    .ARM.Collect$$libinit$$0000002C  c_w.l(libinit2.o)
+    0x08000242   0x00000000   Code   RO         6637    .ARM.Collect$$libinit$$0000002E  c_w.l(libinit2.o)
+    0x08000242   0x00000000   Code   RO         6639    .ARM.Collect$$libinit$$00000030  c_w.l(libinit2.o)
+    0x08000242   0x00000000   Code   RO         6641    .ARM.Collect$$libinit$$00000032  c_w.l(libinit2.o)
+    0x08000242   0x00000002   Code   RO         6642    .ARM.Collect$$libinit$$00000033  c_w.l(libinit2.o)
+    0x08000244   0x00000002   Code   RO         6673    .ARM.Collect$$libshutdown$$00000000  c_w.l(libshutdown.o)
+    0x08000246   0x00000000   Code   RO         6699    .ARM.Collect$$libshutdown$$00000002  c_w.l(libshutdown2.o)
+    0x08000246   0x00000000   Code   RO         6701    .ARM.Collect$$libshutdown$$00000004  c_w.l(libshutdown2.o)
+    0x08000246   0x00000000   Code   RO         6704    .ARM.Collect$$libshutdown$$00000007  c_w.l(libshutdown2.o)
+    0x08000246   0x00000000   Code   RO         6707    .ARM.Collect$$libshutdown$$0000000A  c_w.l(libshutdown2.o)
+    0x08000246   0x00000000   Code   RO         6709    .ARM.Collect$$libshutdown$$0000000C  c_w.l(libshutdown2.o)
+    0x08000246   0x00000000   Code   RO         6712    .ARM.Collect$$libshutdown$$0000000F  c_w.l(libshutdown2.o)
+    0x08000246   0x00000002   Code   RO         6713    .ARM.Collect$$libshutdown$$00000010  c_w.l(libshutdown2.o)
+    0x08000248   0x00000000   Code   RO         6538    .ARM.Collect$$rtentry$$00000000  c_w.l(__rtentry.o)
+    0x08000248   0x00000000   Code   RO         6555    .ARM.Collect$$rtentry$$00000002  c_w.l(__rtentry2.o)
+    0x08000248   0x00000006   Code   RO         6567    .ARM.Collect$$rtentry$$00000004  c_w.l(__rtentry4.o)
+    0x0800024e   0x00000000   Code   RO         6557    .ARM.Collect$$rtentry$$00000009  c_w.l(__rtentry2.o)
+    0x0800024e   0x00000004   Code   RO         6558    .ARM.Collect$$rtentry$$0000000A  c_w.l(__rtentry2.o)
+    0x08000252   0x00000000   Code   RO         6560    .ARM.Collect$$rtentry$$0000000C  c_w.l(__rtentry2.o)
+    0x08000252   0x00000008   Code   RO         6561    .ARM.Collect$$rtentry$$0000000D  c_w.l(__rtentry2.o)
+    0x0800025a   0x00000002   Code   RO         6590    .ARM.Collect$$rtexit$$00000000  c_w.l(rtexit.o)
+    0x0800025c   0x00000000   Code   RO         6646    .ARM.Collect$$rtexit$$00000002  c_w.l(rtexit2.o)
+    0x0800025c   0x00000004   Code   RO         6647    .ARM.Collect$$rtexit$$00000003  c_w.l(rtexit2.o)
+    0x08000260   0x00000006   Code   RO         6648    .ARM.Collect$$rtexit$$00000004  c_w.l(rtexit2.o)
     0x08000266   0x00000002   PAD
     0x08000268   0x000000be   Code   RO         4937    .emb_text           port.o
     0x08000326   0x00000002   PAD
     0x08000328   0x00000040   Code   RO            4    .text               startup_stm32f407xx.o
-    0x08000368   0x000000ee   Code   RO         6497    .text               c_w.l(lludivv7m.o)
-    0x08000456   0x0000008a   Code   RO         6499    .text               c_w.l(rt_memcpy_v6.o)
-    0x080004e0   0x00000064   Code   RO         6501    .text               c_w.l(rt_memcpy_w.o)
-    0x08000544   0x0000004e   Code   RO         6505    .text               c_w.l(rt_memclr_w.o)
-    0x08000592   0x00000006   Code   RO         6507    .text               c_w.l(heapauxi.o)
-    0x08000598   0x0000004a   Code   RO         6558    .text               c_w.l(sys_stackheap_outer.o)
-    0x080005e2   0x00000012   Code   RO         6560    .text               c_w.l(exit.o)
-    0x080005f4   0x00000008   Code   RO         6572    .text               c_w.l(libspace.o)
-    0x080005fc   0x0000000c   Code   RO         6628    .text               c_w.l(sys_exit.o)
-    0x08000608   0x00000002   Code   RO         6647    .text               c_w.l(use_no_semi.o)
-    0x0800060a   0x00000000   Code   RO         6649    .text               c_w.l(indicate_semi.o)
+    0x08000368   0x000000ee   Code   RO         6512    .text               c_w.l(lludivv7m.o)
+    0x08000456   0x0000008a   Code   RO         6514    .text               c_w.l(rt_memcpy_v6.o)
+    0x080004e0   0x00000064   Code   RO         6516    .text               c_w.l(rt_memcpy_w.o)
+    0x08000544   0x0000004e   Code   RO         6520    .text               c_w.l(rt_memclr_w.o)
+    0x08000592   0x00000006   Code   RO         6522    .text               c_w.l(heapauxi.o)
+    0x08000598   0x0000004a   Code   RO         6573    .text               c_w.l(sys_stackheap_outer.o)
+    0x080005e2   0x00000012   Code   RO         6575    .text               c_w.l(exit.o)
+    0x080005f4   0x00000008   Code   RO         6587    .text               c_w.l(libspace.o)
+    0x080005fc   0x0000000c   Code   RO         6643    .text               c_w.l(sys_exit.o)
+    0x08000608   0x00000002   Code   RO         6662    .text               c_w.l(use_no_semi.o)
+    0x0800060a   0x00000000   Code   RO         6664    .text               c_w.l(indicate_semi.o)
     0x0800060a   0x00000002   PAD
     0x0800060c   0x0000005a   Code   RO         5014    i.BubbleSort        app_crc.o
     0x08000666   0x00000002   PAD
@@ -3952,8 +3964,8 @@ Memory Map of the image
     0x08003880   0x00000050   Code   RO          478    i.Usart2AsScreen2Receive_IDLE  usart.o
     0x080038d0   0x00000068   Code   RO          479    i.Usart3WithRS485Receive_IDLE  usart.o
     0x08003938   0x00000020   Code   RO         1527    i.__NVIC_SetPriority  stm32f4xx_hal_cortex.o
-    0x08003958   0x000000a0   Code   RO         6464    i.app_HAL_I2C_Master_Read  app_i2c.o
-    0x080039f8   0x0000009c   Code   RO         6465    i.app_HAL_I2C_Master_Transmit  app_i2c.o
+    0x08003958   0x000000a0   Code   RO         6479    i.app_HAL_I2C_Master_Read  app_i2c.o
+    0x080039f8   0x0000009c   Code   RO         6480    i.app_HAL_I2C_Master_Transmit  app_i2c.o
     0x08003a94   0x00000028   Code   RO         5302    i.app_main_task     app_main_task.o
     0x08003abc   0x00000016   Code   RO         5242    i.balaningColorClear  app_led_ctrl.o
     0x08003ad2   0x00000002   PAD
@@ -3966,206 +3978,209 @@ Memory Map of the image
     0x08003d2c   0x0000000c   Code   RO         5346    i.getModbusOtherRemoveFlag  app_modbus_rtu_ctrl.o
     0x08003d38   0x00000038   Code   RO         5581    i.getSysColorWhichUsable  app_t5l_ctrl.o
     0x08003d70   0x0000000c   Code   RO          584    i.get_SysTick_ByTimer  stm32f4xx_it.o
-    0x08003d7c   0x00000018   Code   RO         6308    i.hal_delay_ms      hal_delay.o
-    0x08003d94   0x00000010   Code   RO         6310    i.hal_delay_us      hal_delay.o
-    0x08003da4   0x00000024   Code   RO         6335    i.hal_di_get        hal_gpio.o
-    0x08003dc8   0x00000018   Code   RO         6336    i.hal_gpio_TogglePin  hal_gpio.o
-    0x08003de0   0x0000001c   Code   RO         6337    i.hal_gpio_set_do_high  hal_gpio.o
-    0x08003dfc   0x0000001c   Code   RO         6338    i.hal_gpio_set_do_low  hal_gpio.o
-    0x08003e18   0x00000002   Code   RO         6383    i.hal_uart_port_init  hal_uart.o
-    0x08003e1a   0x00000002   Code   RO         6384    i.hal_uart_rx_irq_disable  hal_uart.o
-    0x08003e1c   0x00000002   Code   RO         6385    i.hal_uart_rx_irq_enable  hal_uart.o
-    0x08003e1e   0x00000002   Code   RO         6386    i.hal_uart_set_braudrate  hal_uart.o
-    0x08003e20   0x00000002   Code   RO         6387    i.hal_uart_set_timeout  hal_uart.o
+    0x08003d7c   0x00000018   Code   RO         6323    i.hal_delay_ms      hal_delay.o
+    0x08003d94   0x00000010   Code   RO         6325    i.hal_delay_us      hal_delay.o
+    0x08003da4   0x00000024   Code   RO         6350    i.hal_di_get        hal_gpio.o
+    0x08003dc8   0x00000018   Code   RO         6351    i.hal_gpio_TogglePin  hal_gpio.o
+    0x08003de0   0x0000001c   Code   RO         6352    i.hal_gpio_set_do_high  hal_gpio.o
+    0x08003dfc   0x0000001c   Code   RO         6353    i.hal_gpio_set_do_low  hal_gpio.o
+    0x08003e18   0x00000002   Code   RO         6398    i.hal_uart_port_init  hal_uart.o
+    0x08003e1a   0x00000002   Code   RO         6399    i.hal_uart_rx_irq_disable  hal_uart.o
+    0x08003e1c   0x00000002   Code   RO         6400    i.hal_uart_rx_irq_enable  hal_uart.o
+    0x08003e1e   0x00000002   Code   RO         6401    i.hal_uart_set_braudrate  hal_uart.o
+    0x08003e20   0x00000002   Code   RO         6402    i.hal_uart_set_timeout  hal_uart.o
     0x08003e22   0x00000002   PAD
-    0x08003e24   0x00000044   Code   RO         6388    i.hal_uart_tx_bytes  hal_uart.o
+    0x08003e24   0x00000044   Code   RO         6403    i.hal_uart_tx_bytes  hal_uart.o
     0x08003e68   0x0000001e   Code   RO         5582    i.handleWeightColorWasSend  app_t5l_ctrl.o
     0x08003e86   0x00000002   PAD
     0x08003e88   0x0000001e   Code   RO         5583    i.handleWeightDataWasSend  app_t5l_ctrl.o
     0x08003ea6   0x00000002   PAD
     0x08003ea8   0x000000c8   Code   RO         5046    i.hx711_AllChanelSample  app_hx711_ctrl.o
     0x08003f70   0x0000002c   Code   RO         5047    i.hx711_DataSampleCtrl  app_hx711_ctrl.o
-    0x08003f9c   0x00000048   Code   RO         5048    i.hx711_MainFunction  app_hx711_ctrl.o
-    0x08003fe4   0x000000b8   Code   RO         5051    i.hx711_SampleFunction  app_hx711_ctrl.o
-    0x0800409c   0x0000017c   Code   RO         5052    i.hx711_SenserCheck  app_hx711_ctrl.o
-    0x08004218   0x0000009a   Code   RO         5053    i.hx711_SigChanelAvrgAndWeightCalc  app_hx711_ctrl.o
-    0x080042b2   0x00000002   PAD
-    0x080042b4   0x00000020   Code   RO         5054    i.hx711_getAvgSample  app_hx711_ctrl.o
-    0x080042d4   0x00000084   Code   RO         5055    i.hx711_getWeight   app_hx711_ctrl.o
-    0x08004358   0x000000a8   Code   RO         5056    i.hx711_init        app_hx711_ctrl.o
-    0x08004400   0x00000050   Code   RO         5057    i.hx711_setAllRemoveWeight  app_hx711_ctrl.o
-    0x08004450   0x00000028   Code   RO         5585    i.judgeWeightColorIfNotNeedSend  app_t5l_ctrl.o
-    0x08004478   0x00000028   Code   RO         5586    i.judgeWeightDataIfNotNeedSend  app_t5l_ctrl.o
-    0x080044a0   0x0000003c   Code   RO         5587    i.jumpToActivePage  app_t5l_ctrl.o
-    0x080044dc   0x0000003c   Code   RO         5588    i.jumpToBalancingCleanPage  app_t5l_ctrl.o
-    0x08004518   0x0000006c   Code   RO         5589    i.jumpToBalancingHomePage  app_t5l_ctrl.o
-    0x08004584   0x00000074   Code   RO         5590    i.jumpToBalancingPage  app_t5l_ctrl.o
-    0x080045f8   0x00000070   Code   RO         5591    i.jumpToBanlingPage  app_t5l_ctrl.o
-    0x08004668   0x0000003c   Code   RO         5592    i.jumpToCalibrationPage  app_t5l_ctrl.o
-    0x080046a4   0x0000003c   Code   RO         5593    i.jumpToHomePage    app_t5l_ctrl.o
-    0x080046e0   0x00000040   Code   RO         5594    i.jumpToStartUpPage  app_t5l_ctrl.o
-    0x08004720   0x0000003c   Code   RO         5595    i.jumpToSysparaPage  app_t5l_ctrl.o
-    0x0800475c   0x00000020   Code   RO         5193    i.key_FilterGet     app_key_ctrl.o
-    0x0800477c   0x00000080   Code   RO         5194    i.key_MainFunction  app_key_ctrl.o
-    0x080047fc   0x00000048   Code   RO         5195    i.key_filter        app_key_ctrl.o
-    0x08004844   0x00000034   Code   RO         5196    i.key_init          app_key_ctrl.o
-    0x08004878   0x0000007c   Code   RO         5243    i.led_MainFunction  app_led_ctrl.o
-    0x080048f4   0x00000022   Code   RO         5244    i.led_RunIndicate   app_led_ctrl.o
-    0x08004916   0x00000040   Code   RO         5245    i.led_init          app_led_ctrl.o
-    0x08004956   0x00000002   PAD
-    0x08004958   0x000000ac   Code   RO           16    i.main              main.o
-    0x08004a04   0x0000000c   Code   RO         4503    i.makeFreeRtosPriority  cmsis_os.o
-    0x08004a10   0x0000017c   Code   RO         5596    i.masterCaculateHelpData  app_t5l_ctrl.o
-    0x08004b8c   0x0000000e   Code   RO         4505    i.osDelay           cmsis_os.o
-    0x08004b9a   0x0000000a   Code   RO         4508    i.osKernelStart     cmsis_os.o
-    0x08004ba4   0x00000054   Code   RO         4542    i.osThreadCreate    cmsis_os.o
-    0x08004bf8   0x00000020   Code   RO         5597    i.pointSampleTrigerDataSet  app_t5l_ctrl.o
-    0x08004c18   0x00000028   Code   RO         5598    i.pointTrigerDataSet  app_t5l_ctrl.o
-    0x08004c40   0x000000a0   Code   RO         5599    i.pointTrigerDeal   app_t5l_ctrl.o
-    0x08004ce0   0x00000020   Code   RO         5600    i.pointWeightTrigerDataSet  app_t5l_ctrl.o
-    0x08004d00   0x000000b4   Code   RO         5601    i.preBalancingWeightAndColorIfNotNeedSendToSreen  app_t5l_ctrl.o
-    0x08004db4   0x000002a0   Code   RO         5602    i.preColorDataAndJudgeIfNeedSend  app_t5l_ctrl.o
-    0x08005054   0x0000007c   Code   RO         5603    i.preCurrentDeviceWeightData  app_t5l_ctrl.o
-    0x080050d0   0x00000052   Code   RO         5604    i.preOtherDeviceWeightData  app_t5l_ctrl.o
-    0x08005122   0x00000036   Code   RO         5605    i.preWeightDataAndJudgeIfNeedSend_FuncA_Master  app_t5l_ctrl.o
-    0x08005158   0x00000050   Code   RO         5606    i.preWeightDataAndJudgeIfNeedSend_Master  app_t5l_ctrl.o
-    0x080051a8   0x00000070   Code   RO         4185    i.prvAddCurrentTaskToDelayedList  tasks.o
-    0x08005218   0x000000d0   Code   RO         4186    i.prvAddNewTaskToReadyList  tasks.o
-    0x080052e8   0x00000034   Code   RO         4187    i.prvDeleteTCB      tasks.o
-    0x0800531c   0x0000004c   Code   RO         4870    i.prvHeapInit       heap_4.o
-    0x08005368   0x00000060   Code   RO         4188    i.prvIdleTask       tasks.o
-    0x080053c8   0x00000098   Code   RO         4189    i.prvInitialiseNewTask  tasks.o
-    0x08005460   0x0000004c   Code   RO         4871    i.prvInsertBlockIntoFreeList  heap_4.o
-    0x080054ac   0x00000020   Code   RO         4190    i.prvResetNextTaskUnblockTime  tasks.o
-    0x080054cc   0x00000028   Code   RO         4939    i.prvTaskExitError  port.o
-    0x080054f4   0x000000dc   Code   RO         4872    i.pvPortMalloc      heap_4.o
-    0x080055d0   0x0000002c   Code   RO         4940    i.pxPortInitialiseStack  port.o
-    0x080055fc   0x00000030   Code   RO         5607    i.readColorDataFromSys  app_t5l_ctrl.o
-    0x0800562c   0x00000030   Code   RO         5608    i.readHelpDataFromSys  app_t5l_ctrl.o
-    0x0800565c   0x00000140   Code   RO         5498    i.readSysDataFromFlash  app_syspara.o
-    0x0800579c   0x000000f0   Code   RO         5499    i.readSysDataFromFlash_3030  app_syspara.o
-    0x0800588c   0x00000040   Code   RO         5609    i.readWeightDataFromSys  app_t5l_ctrl.o
-    0x080058cc   0x00000028   Code   RO         5610    i.releaseSysColor   app_t5l_ctrl.o
-    0x080058f4   0x0000007c   Code   RO         5611    i.removeWeightTrigerDeal  app_t5l_ctrl.o
-    0x08005970   0x0000009c   Code   RO         5612    i.resetCalibrationTrigerDeal  app_t5l_ctrl.o
-    0x08005a0c   0x00000028   Code   RO         5059    i.sampleDataPush    app_hx711_ctrl.o
-    0x08005a34   0x00000040   Code   RO         5613    i.screenRxHandle_CalibrateAddressSet  app_t5l_ctrl.o
-    0x08005a74   0x00000036   Code   RO         5614    i.screenRxHandle_CalibrateChanelSet  app_t5l_ctrl.o
-    0x08005aaa   0x000000ba   Code   RO         5615    i.screenRxHandle_CalibratePointSampleAndSet  app_t5l_ctrl.o
-    0x08005b64   0x0000008a   Code   RO         5616    i.screenRxHandle_CalibratePointSet  app_t5l_ctrl.o
-    0x08005bee   0x00000022   Code   RO         5617    i.screenRxHandle_JumpToBalancingClearnPage  app_t5l_ctrl.o
-    0x08005c10   0x00000022   Code   RO         5618    i.screenRxHandle_JumpToBalancingHomePage  app_t5l_ctrl.o
-    0x08005c32   0x00000022   Code   RO         5619    i.screenRxHandle_JumpToBalancingPage  app_t5l_ctrl.o
-    0x08005c54   0x00000038   Code   RO         5620    i.screenRxHandle_JumpToCalibrateOrActivePage  app_t5l_ctrl.o
-    0x08005c8c   0x00000026   Code   RO         5621    i.screenRxHandle_JumpToSysParaPage  app_t5l_ctrl.o
-    0x08005cb2   0x0000002e   Code   RO         5622    i.screenRxHandle_RemoveWeightTriger  app_t5l_ctrl.o
-    0x08005ce0   0x00000128   Code   RO         5623    i.screenRxHandle_SysPara  app_t5l_ctrl.o
-    0x08005e08   0x0000002a   Code   RO         5624    i.screenRxHandle_SysPassWord  app_t5l_ctrl.o
-    0x08005e32   0x0000001c   Code   RO         5625    i.screenRxHandle_Version  app_t5l_ctrl.o
-    0x08005e4e   0x00000002   PAD
-    0x08005e50   0x0000001c   Code   RO         5626    i.screenRxHandle_VoicePrintfStatusFromScreen  app_t5l_ctrl.o
-    0x08005e6c   0x00000040   Code   RO         5628    i.screenT5L_HelpDataMainFunction  app_t5l_ctrl.o
-    0x08005eac   0x00000098   Code   RO         5629    i.screenT5L_Init    app_t5l_ctrl.o
-    0x08005f44   0x00000080   Code   RO         5630    i.screenT5L_OutputVoice  app_t5l_ctrl.o
-    0x08005fc4   0x00000100   Code   RO         5631    i.screenT5L_RxFunction  app_t5l_ctrl.o
-    0x080060c4   0x00000038   Code   RO         5632    i.screenT5L_TxFunction  app_t5l_ctrl.o
-    0x080060fc   0x0000000a   Code   RO         5633    i.screenT5L_VersionGet  app_t5l_ctrl.o
-    0x08006106   0x00000002   PAD
-    0x08006108   0x000000a8   Code   RO         5634    i.screenT5L_VoicePrintfMainfunction  app_t5l_ctrl.o
-    0x080061b0   0x00000022   Code   RO         5637    i.screenTxHandle_ChanelChangedTrigerDeal  app_t5l_ctrl.o
-    0x080061d2   0x00000022   Code   RO         5638    i.screenTxHandle_ChangeDisplayPosition  app_t5l_ctrl.o
-    0x080061f4   0x00000022   Code   RO         5639    i.screenTxHandle_FreshScreenLight  app_t5l_ctrl.o
-    0x08006216   0x00000022   Code   RO         5640    i.screenTxHandle_JmmpToBalancingPage  app_t5l_ctrl.o
-    0x08006238   0x00000022   Code   RO         5641    i.screenTxHandle_JumpToActivePage  app_t5l_ctrl.o
-    0x0800625a   0x00000022   Code   RO         5642    i.screenTxHandle_JumpToBalancingCleanPage  app_t5l_ctrl.o
-    0x0800627c   0x00000022   Code   RO         5643    i.screenTxHandle_JumpToBalancingHomePage  app_t5l_ctrl.o
-    0x0800629e   0x00000022   Code   RO         5644    i.screenTxHandle_JumpToBanlingPage  app_t5l_ctrl.o
-    0x080062c0   0x00000022   Code   RO         5645    i.screenTxHandle_JumpToCalibrationPage  app_t5l_ctrl.o
-    0x080062e2   0x00000022   Code   RO         5646    i.screenTxHandle_JumpToHomePage  app_t5l_ctrl.o
-    0x08006304   0x00000022   Code   RO         5647    i.screenTxHandle_JumpToSysParaPage  app_t5l_ctrl.o
-    0x08006326   0x00000022   Code   RO         5648    i.screenTxHandle_PointTrigerHandle  app_t5l_ctrl.o
-    0x08006348   0x00000036   Code   RO         5649    i.screenTxHandle_RemoveWeightTrigerHandle  app_t5l_ctrl.o
-    0x0800637e   0x00000022   Code   RO         5650    i.screenTxHandle_ResetCalibrationTrigerHandle  app_t5l_ctrl.o
-    0x080063a0   0x00000020   Code   RO         5651    i.screenTxHandle_ScreenInit  app_t5l_ctrl.o
-    0x080063c0   0x00000078   Code   RO         5652    i.screenTxHandle_ScreenWeightAndColorAndVoiceHandle  app_t5l_ctrl.o
-    0x08006438   0x00000138   Code   RO         5653    i.screen_ChangeDisplayPosition  app_t5l_ctrl.o
-    0x08006570   0x00000070   Code   RO         5654    i.screen_ChangeDisplayPositionOfIndex  app_t5l_ctrl.o
-    0x080065e0   0x00000024   Code   RO         5655    i.sdweAskRegData    app_t5l_ctrl.o
-    0x08006604   0x00000058   Code   RO         5656    i.sdweAskVaribleData  app_t5l_ctrl.o
-    0x0800665c   0x00000078   Code   RO         5657    i.sdwe_VoicePrintfPop  app_t5l_ctrl.o
-    0x080066d4   0x00000038   Code   RO         5658    i.sdwe_VoicePrintfPush  app_t5l_ctrl.o
-    0x0800670c   0x000000b8   Code   RO         5659    i.sendBalancingWeightAndColor20220125_FuncA_Master  app_t5l_ctrl.o
-    0x080067c4   0x000000cc   Code   RO         5660    i.sendBalancingWeightAndColor20220125_FuncA_Slave  app_t5l_ctrl.o
-    0x08006890   0x00000054   Code   RO         5661    i.sendBalancingWeightAndColorAndHelpDataToScreen  app_t5l_ctrl.o
-    0x080068e4   0x00000044   Code   RO         5662    i.sendBalancingWeightAndColor_Master  app_t5l_ctrl.o
-    0x08006928   0x000000cc   Code   RO         5663    i.sendBalancingWeightAndColor_Slave_1  app_t5l_ctrl.o
-    0x080069f4   0x000001c4   Code   RO         5664    i.sendHelpDataDiff  app_t5l_ctrl.o
-    0x08006bb8   0x00000054   Code   RO         5665    i.sendHelpDataDiff_AtSlave1Device  app_t5l_ctrl.o
-    0x08006c0c   0x00000054   Code   RO         5666    i.sendScreenLight   app_t5l_ctrl.o
-    0x08006c60   0x00000384   Code   RO         5667    i.sendSysParaDataToDiwen  app_t5l_ctrl.o
-    0x08006fe4   0x0000000c   Code   RO         5348    i.setModbusDataValid  app_modbus_rtu_ctrl.o
-    0x08006ff0   0x0000000c   Code   RO         5349    i.setModbusOtherRemoveFlag  app_modbus_rtu_ctrl.o
-    0x08006ffc   0x0000000c   Code   RO         5350    i.setModbusSelfRemoveFlag  app_modbus_rtu_ctrl.o
-    0x08007008   0x00000024   Code   RO         5061    i.setSampleWeightValue  app_hx711_ctrl.o
-    0x0800702c   0x00000038   Code   RO         5668    i.sreenT5L_MainFunction  app_t5l_ctrl.o
-    0x08007064   0x0000011c   Code   RO         5500    i.storeSysDataToFlash  app_syspara.o
-    0x08007180   0x00000234   Code   RO         5501    i.storeSysDataToFlash_3030  app_syspara.o
-    0x080073b4   0x0000007c   Code   RO         5669    i.t5lDisPlayDataClear  app_t5l_ctrl.o
-    0x08007430   0x00000088   Code   RO         5670    i.t5lReadVarible    app_t5l_ctrl.o
-    0x080074b8   0x000000ca   Code   RO         5671    i.t5lWriteData      app_t5l_ctrl.o
-    0x08007582   0x00000002   PAD
-    0x08007584   0x000000c0   Code   RO         5672    i.t5lWriteVarible   app_t5l_ctrl.o
-    0x08007644   0x000000ec   Code   RO         5062    i.trigerCalcKB      app_hx711_ctrl.o
-    0x08007730   0x00000026   Code   RO         3821    i.uxListRemove      list.o
-    0x08007756   0x00000002   PAD
-    0x08007758   0x00000014   Code   RO          297    i.vApplicationGetIdleTaskMemory  freertos.o
-    0x0800776c   0x00000016   Code   RO         3822    i.vListInitialise   list.o
-    0x08007782   0x00000006   Code   RO         3823    i.vListInitialiseItem  list.o
-    0x08007788   0x00000030   Code   RO         3824    i.vListInsert       list.o
-    0x080077b8   0x00000018   Code   RO         3825    i.vListInsertEnd    list.o
-    0x080077d0   0x00000040   Code   RO         4942    i.vPortEnterCritical  port.o
-    0x08007810   0x00000028   Code   RO         4943    i.vPortExitCritical  port.o
-    0x08007838   0x00000064   Code   RO         4873    i.vPortFree         heap_4.o
-    0x0800789c   0x00000024   Code   RO         4944    i.vPortSetupTimerInterrupt  port.o
-    0x080078c0   0x0000004c   Code   RO         4199    i.vTaskDelay        tasks.o
-    0x0800790c   0x0000006c   Code   RO         4212    i.vTaskStartScheduler  tasks.o
-    0x08007978   0x00000010   Code   RO         4214    i.vTaskSuspendAll   tasks.o
-    0x08007988   0x0000005c   Code   RO         4215    i.vTaskSwitchContext  tasks.o
-    0x080079e4   0x0000003c   Code   RO         5674    i.writeColorDataFromCom  app_t5l_ctrl.o
-    0x08007a20   0x0000003c   Code   RO         5675    i.writeHelpDataFromCom  app_t5l_ctrl.o
-    0x08007a5c   0x0000005c   Code   RO         5676    i.writeWeightDataFromCom  app_t5l_ctrl.o
-    0x08007ab8   0x000000f4   Code   RO         4946    i.xPortStartScheduler  port.o
-    0x08007bac   0x0000005a   Code   RO         4218    i.xTaskCreate       tasks.o
-    0x08007c06   0x00000056   Code   RO         4219    i.xTaskCreateStatic  tasks.o
-    0x08007c5c   0x000000cc   Code   RO         4226    i.xTaskIncrementTick  tasks.o
-    0x08007d28   0x000000c4   Code   RO         4232    i.xTaskResumeAll    tasks.o
-    0x08007dec   0x00000062   Code   RO         6511    x$fpl$d2f           fz_wm.l(d2f.o)
-    0x08007e4e   0x00000018   Code   RO         6556    x$fpl$dcmpinf       fz_wm.l(dcmpi.o)
-    0x08007e66   0x0000002e   Code   RO         6514    x$fpl$dflt          fz_wm.l(dflt_clz.o)
-    0x08007e94   0x00000026   Code   RO         6513    x$fpl$dfltu         fz_wm.l(dflt_clz.o)
-    0x08007eba   0x00000002   PAD
-    0x08007ebc   0x00000078   Code   RO         6530    x$fpl$dleqf         fz_wm.l(dleqf.o)
-    0x08007f34   0x00000154   Code   RO         6519    x$fpl$dmul          fz_wm.l(dmul.o)
-    0x08008088   0x0000009c   Code   RO         6532    x$fpl$dnaninf       fz_wm.l(dnaninf.o)
-    0x08008124   0x0000000c   Code   RO         6534    x$fpl$dretinf       fz_wm.l(dretinf.o)
-    0x08008130   0x0000006c   Code   RO         6521    x$fpl$drleqf        fz_wm.l(drleqf.o)
-    0x0800819c   0x0000000a   Code   RO         6643    x$fpl$fpinit        fz_wm.l(fpinit.o)
-    0x080081a6   0x0000000a   Code   RO         6536    x$fpl$fretinf       fz_wm.l(fretinf.o)
-    0x080081b0   0x00000000   Code   RO         6538    x$fpl$usenofp       fz_wm.l(usenofp.o)
-    0x080081b0   0x00000038   Data   RO          299    .constdata          freertos.o
-    0x080081e8   0x00000008   Data   RO         1244    .constdata          stm32f4xx_hal_dma.o
-    0x080081f0   0x00000010   Data   RO         3684    .constdata          system_stm32f4xx.o
-    0x08008200   0x00000008   Data   RO         3685    .constdata          system_stm32f4xx.o
-    0x08008208   0x00000200   Data   RO         5017    .constdata          app_crc.o
-    0x08008408   0x00000028   Data   RO         5064    .constdata          app_hx711_ctrl.o
-    0x08008430   0x00000030   Data   RO         5678    .constdata          app_t5l_ctrl.o
-    0x08008460   0x00000034   Data   RO         6339    .constdata          hal_gpio.o
-    0x08008494   0x00000017   Data   RO          300    .conststring        freertos.o
-    0x080084ab   0x00000001   PAD
-    0x080084ac   0x00000020   Data   RO         6699    Region$$Table       anon$$obj.o
+    0x08003f9c   0x0000004c   Code   RO         5048    i.hx711_MainFunction  app_hx711_ctrl.o
+    0x08003fe8   0x000000b8   Code   RO         5051    i.hx711_SampleFunction  app_hx711_ctrl.o
+    0x080040a0   0x0000017c   Code   RO         5052    i.hx711_SenserCheck  app_hx711_ctrl.o
+    0x0800421c   0x0000009a   Code   RO         5053    i.hx711_SigChanelAvrgAndWeightCalc  app_hx711_ctrl.o
+    0x080042b6   0x00000002   PAD
+    0x080042b8   0x00000020   Code   RO         5054    i.hx711_getAvgSample  app_hx711_ctrl.o
+    0x080042d8   0x00000084   Code   RO         5055    i.hx711_getWeight   app_hx711_ctrl.o
+    0x0800435c   0x000000a8   Code   RO         5056    i.hx711_init        app_hx711_ctrl.o
+    0x08004404   0x00000050   Code   RO         5057    i.hx711_setAllRemoveWeight  app_hx711_ctrl.o
+    0x08004454   0x00000028   Code   RO         5585    i.judgeWeightColorIfNotNeedSend  app_t5l_ctrl.o
+    0x0800447c   0x00000028   Code   RO         5586    i.judgeWeightDataIfNotNeedSend  app_t5l_ctrl.o
+    0x080044a4   0x0000003c   Code   RO         5587    i.jumpToActivePage  app_t5l_ctrl.o
+    0x080044e0   0x0000003c   Code   RO         5588    i.jumpToBalancingCleanPage  app_t5l_ctrl.o
+    0x0800451c   0x0000006c   Code   RO         5589    i.jumpToBalancingHomePage  app_t5l_ctrl.o
+    0x08004588   0x00000074   Code   RO         5590    i.jumpToBalancingPage  app_t5l_ctrl.o
+    0x080045fc   0x00000070   Code   RO         5591    i.jumpToBanlingPage  app_t5l_ctrl.o
+    0x0800466c   0x0000003c   Code   RO         5592    i.jumpToCalibrationPage  app_t5l_ctrl.o
+    0x080046a8   0x0000003c   Code   RO         5593    i.jumpToHomePage    app_t5l_ctrl.o
+    0x080046e4   0x00000040   Code   RO         5594    i.jumpToStartUpPage  app_t5l_ctrl.o
+    0x08004724   0x0000003c   Code   RO         5595    i.jumpToSysparaPage  app_t5l_ctrl.o
+    0x08004760   0x00000020   Code   RO         5193    i.key_FilterGet     app_key_ctrl.o
+    0x08004780   0x0000008c   Code   RO         5194    i.key_MainFunction  app_key_ctrl.o
+    0x0800480c   0x00000048   Code   RO         5195    i.key_filter        app_key_ctrl.o
+    0x08004854   0x00000034   Code   RO         5196    i.key_init          app_key_ctrl.o
+    0x08004888   0x00000040   Code   RO         5596    i.largerScreen_Init  app_t5l_ctrl.o
+    0x080048c8   0x0000007c   Code   RO         5243    i.led_MainFunction  app_led_ctrl.o
+    0x08004944   0x00000022   Code   RO         5244    i.led_RunIndicate   app_led_ctrl.o
+    0x08004966   0x00000040   Code   RO         5245    i.led_init          app_led_ctrl.o
+    0x080049a6   0x00000002   PAD
+    0x080049a8   0x000000b8   Code   RO           16    i.main              main.o
+    0x08004a60   0x0000000c   Code   RO         4503    i.makeFreeRtosPriority  cmsis_os.o
+    0x08004a6c   0x0000017c   Code   RO         5597    i.masterCaculateHelpData  app_t5l_ctrl.o
+    0x08004be8   0x0000000e   Code   RO         4505    i.osDelay           cmsis_os.o
+    0x08004bf6   0x0000000a   Code   RO         4508    i.osKernelStart     cmsis_os.o
+    0x08004c00   0x00000054   Code   RO         4542    i.osThreadCreate    cmsis_os.o
+    0x08004c54   0x00000020   Code   RO         5598    i.pointSampleTrigerDataSet  app_t5l_ctrl.o
+    0x08004c74   0x00000028   Code   RO         5599    i.pointTrigerDataSet  app_t5l_ctrl.o
+    0x08004c9c   0x000000a0   Code   RO         5600    i.pointTrigerDeal   app_t5l_ctrl.o
+    0x08004d3c   0x00000020   Code   RO         5601    i.pointWeightTrigerDataSet  app_t5l_ctrl.o
+    0x08004d5c   0x000000b4   Code   RO         5602    i.preBalancingWeightAndColorIfNotNeedSendToSreen  app_t5l_ctrl.o
+    0x08004e10   0x000002a0   Code   RO         5603    i.preColorDataAndJudgeIfNeedSend  app_t5l_ctrl.o
+    0x080050b0   0x0000007c   Code   RO         5604    i.preCurrentDeviceWeightData  app_t5l_ctrl.o
+    0x0800512c   0x00000052   Code   RO         5605    i.preOtherDeviceWeightData  app_t5l_ctrl.o
+    0x0800517e   0x00000036   Code   RO         5606    i.preWeightDataAndJudgeIfNeedSend_FuncA_Master  app_t5l_ctrl.o
+    0x080051b4   0x00000050   Code   RO         5607    i.preWeightDataAndJudgeIfNeedSend_Master  app_t5l_ctrl.o
+    0x08005204   0x00000070   Code   RO         4185    i.prvAddCurrentTaskToDelayedList  tasks.o
+    0x08005274   0x000000d0   Code   RO         4186    i.prvAddNewTaskToReadyList  tasks.o
+    0x08005344   0x00000034   Code   RO         4187    i.prvDeleteTCB      tasks.o
+    0x08005378   0x0000004c   Code   RO         4870    i.prvHeapInit       heap_4.o
+    0x080053c4   0x00000060   Code   RO         4188    i.prvIdleTask       tasks.o
+    0x08005424   0x00000098   Code   RO         4189    i.prvInitialiseNewTask  tasks.o
+    0x080054bc   0x0000004c   Code   RO         4871    i.prvInsertBlockIntoFreeList  heap_4.o
+    0x08005508   0x00000020   Code   RO         4190    i.prvResetNextTaskUnblockTime  tasks.o
+    0x08005528   0x00000028   Code   RO         4939    i.prvTaskExitError  port.o
+    0x08005550   0x000000dc   Code   RO         4872    i.pvPortMalloc      heap_4.o
+    0x0800562c   0x0000002c   Code   RO         4940    i.pxPortInitialiseStack  port.o
+    0x08005658   0x00000030   Code   RO         5608    i.readColorDataFromSys  app_t5l_ctrl.o
+    0x08005688   0x00000030   Code   RO         5609    i.readHelpDataFromSys  app_t5l_ctrl.o
+    0x080056b8   0x00000140   Code   RO         5498    i.readSysDataFromFlash  app_syspara.o
+    0x080057f8   0x000000f0   Code   RO         5499    i.readSysDataFromFlash_3030  app_syspara.o
+    0x080058e8   0x00000040   Code   RO         5610    i.readWeightDataFromSys  app_t5l_ctrl.o
+    0x08005928   0x00000028   Code   RO         5611    i.releaseSysColor   app_t5l_ctrl.o
+    0x08005950   0x0000007c   Code   RO         5612    i.removeWeightTrigerDeal  app_t5l_ctrl.o
+    0x080059cc   0x0000009c   Code   RO         5613    i.resetCalibrationTrigerDeal  app_t5l_ctrl.o
+    0x08005a68   0x00000028   Code   RO         5059    i.sampleDataPush    app_hx711_ctrl.o
+    0x08005a90   0x00000020   Code   RO         5614    i.screenLargerTxHandle_ScreenInit  app_t5l_ctrl.o
+    0x08005ab0   0x00000040   Code   RO         5615    i.screenRxHandle_CalibrateAddressSet  app_t5l_ctrl.o
+    0x08005af0   0x00000036   Code   RO         5616    i.screenRxHandle_CalibrateChanelSet  app_t5l_ctrl.o
+    0x08005b26   0x000000ba   Code   RO         5617    i.screenRxHandle_CalibratePointSampleAndSet  app_t5l_ctrl.o
+    0x08005be0   0x0000008a   Code   RO         5618    i.screenRxHandle_CalibratePointSet  app_t5l_ctrl.o
+    0x08005c6a   0x00000022   Code   RO         5619    i.screenRxHandle_JumpToBalancingClearnPage  app_t5l_ctrl.o
+    0x08005c8c   0x00000022   Code   RO         5620    i.screenRxHandle_JumpToBalancingHomePage  app_t5l_ctrl.o
+    0x08005cae   0x00000022   Code   RO         5621    i.screenRxHandle_JumpToBalancingPage  app_t5l_ctrl.o
+    0x08005cd0   0x00000038   Code   RO         5622    i.screenRxHandle_JumpToCalibrateOrActivePage  app_t5l_ctrl.o
+    0x08005d08   0x00000026   Code   RO         5623    i.screenRxHandle_JumpToSysParaPage  app_t5l_ctrl.o
+    0x08005d2e   0x0000002e   Code   RO         5624    i.screenRxHandle_RemoveWeightTriger  app_t5l_ctrl.o
+    0x08005d5c   0x00000128   Code   RO         5625    i.screenRxHandle_SysPara  app_t5l_ctrl.o
+    0x08005e84   0x0000002a   Code   RO         5626    i.screenRxHandle_SysPassWord  app_t5l_ctrl.o
+    0x08005eae   0x0000001c   Code   RO         5627    i.screenRxHandle_Version  app_t5l_ctrl.o
+    0x08005eca   0x00000002   PAD
+    0x08005ecc   0x0000001c   Code   RO         5628    i.screenRxHandle_VoicePrintfStatusFromScreen  app_t5l_ctrl.o
+    0x08005ee8   0x00000040   Code   RO         5630    i.screenT5L_HelpDataMainFunction  app_t5l_ctrl.o
+    0x08005f28   0x00000088   Code   RO         5631    i.screenT5L_Init    app_t5l_ctrl.o
+    0x08005fb0   0x00000080   Code   RO         5632    i.screenT5L_OutputVoice  app_t5l_ctrl.o
+    0x08006030   0x000000ea   Code   RO         5633    i.screenT5L_RxFunction  app_t5l_ctrl.o
+    0x0800611a   0x00000002   PAD
+    0x0800611c   0x0000002e   Code   RO         5634    i.screenT5L_TxFunction  app_t5l_ctrl.o
+    0x0800614a   0x0000000a   Code   RO         5635    i.screenT5L_VersionGet  app_t5l_ctrl.o
+    0x08006154   0x000000a8   Code   RO         5636    i.screenT5L_VoicePrintfMainfunction  app_t5l_ctrl.o
+    0x080061fc   0x00000022   Code   RO         5639    i.screenTxHandle_ChanelChangedTrigerDeal  app_t5l_ctrl.o
+    0x0800621e   0x00000022   Code   RO         5640    i.screenTxHandle_ChangeDisplayPosition  app_t5l_ctrl.o
+    0x08006240   0x00000022   Code   RO         5641    i.screenTxHandle_FreshScreenLight  app_t5l_ctrl.o
+    0x08006262   0x00000022   Code   RO         5642    i.screenTxHandle_JmmpToBalancingPage  app_t5l_ctrl.o
+    0x08006284   0x00000022   Code   RO         5643    i.screenTxHandle_JumpToActivePage  app_t5l_ctrl.o
+    0x080062a6   0x00000022   Code   RO         5644    i.screenTxHandle_JumpToBalancingCleanPage  app_t5l_ctrl.o
+    0x080062c8   0x00000022   Code   RO         5645    i.screenTxHandle_JumpToBalancingHomePage  app_t5l_ctrl.o
+    0x080062ea   0x00000022   Code   RO         5646    i.screenTxHandle_JumpToBanlingPage  app_t5l_ctrl.o
+    0x0800630c   0x00000022   Code   RO         5647    i.screenTxHandle_JumpToCalibrationPage  app_t5l_ctrl.o
+    0x0800632e   0x00000022   Code   RO         5648    i.screenTxHandle_JumpToHomePage  app_t5l_ctrl.o
+    0x08006350   0x00000022   Code   RO         5649    i.screenTxHandle_JumpToSysParaPage  app_t5l_ctrl.o
+    0x08006372   0x00000022   Code   RO         5650    i.screenTxHandle_PointTrigerHandle  app_t5l_ctrl.o
+    0x08006394   0x00000036   Code   RO         5651    i.screenTxHandle_RemoveWeightTrigerHandle  app_t5l_ctrl.o
+    0x080063ca   0x00000022   Code   RO         5652    i.screenTxHandle_ResetCalibrationTrigerHandle  app_t5l_ctrl.o
+    0x080063ec   0x00000020   Code   RO         5653    i.screenTxHandle_ScreenInit  app_t5l_ctrl.o
+    0x0800640c   0x00000078   Code   RO         5654    i.screenTxHandle_ScreenWeightAndColorAndVoiceHandle  app_t5l_ctrl.o
+    0x08006484   0x00000138   Code   RO         5655    i.screen_ChangeDisplayPosition  app_t5l_ctrl.o
+    0x080065bc   0x00000070   Code   RO         5656    i.screen_ChangeDisplayPositionOfIndex  app_t5l_ctrl.o
+    0x0800662c   0x00000012   Code   RO         5657    i.sdweAskRegData    app_t5l_ctrl.o
+    0x0800663e   0x00000002   PAD
+    0x08006640   0x00000050   Code   RO         5658    i.sdweAskVaribleData  app_t5l_ctrl.o
+    0x08006690   0x00000078   Code   RO         5659    i.sdwe_VoicePrintfPop  app_t5l_ctrl.o
+    0x08006708   0x00000038   Code   RO         5660    i.sdwe_VoicePrintfPush  app_t5l_ctrl.o
+    0x08006740   0x000000b8   Code   RO         5661    i.sendBalancingWeightAndColor20220125_FuncA_Master  app_t5l_ctrl.o
+    0x080067f8   0x000000cc   Code   RO         5662    i.sendBalancingWeightAndColor20220125_FuncA_Slave  app_t5l_ctrl.o
+    0x080068c4   0x00000054   Code   RO         5663    i.sendBalancingWeightAndColorAndHelpDataToScreen  app_t5l_ctrl.o
+    0x08006918   0x00000044   Code   RO         5664    i.sendBalancingWeightAndColor_Master  app_t5l_ctrl.o
+    0x0800695c   0x000000cc   Code   RO         5665    i.sendBalancingWeightAndColor_Slave_1  app_t5l_ctrl.o
+    0x08006a28   0x000001c4   Code   RO         5666    i.sendHelpDataDiff  app_t5l_ctrl.o
+    0x08006bec   0x00000054   Code   RO         5667    i.sendHelpDataDiff_AtSlave1Device  app_t5l_ctrl.o
+    0x08006c40   0x00000054   Code   RO         5668    i.sendScreenLight   app_t5l_ctrl.o
+    0x08006c94   0x0000000c   Code   RO         5348    i.setModbusDataValid  app_modbus_rtu_ctrl.o
+    0x08006ca0   0x0000000c   Code   RO         5349    i.setModbusOtherRemoveFlag  app_modbus_rtu_ctrl.o
+    0x08006cac   0x0000000c   Code   RO         5350    i.setModbusSelfRemoveFlag  app_modbus_rtu_ctrl.o
+    0x08006cb8   0x00000024   Code   RO         5061    i.setSampleWeightValue  app_hx711_ctrl.o
+    0x08006cdc   0x00000384   Code   RO         5669    i.smallerScreen_Init  app_t5l_ctrl.o
+    0x08007060   0x00000048   Code   RO         5670    i.sreenT5L_MainFunction  app_t5l_ctrl.o
+    0x080070a8   0x0000011c   Code   RO         5500    i.storeSysDataToFlash  app_syspara.o
+    0x080071c4   0x00000234   Code   RO         5501    i.storeSysDataToFlash_3030  app_syspara.o
+    0x080073f8   0x0000007c   Code   RO         5671    i.t5lDisPlayDataClear  app_t5l_ctrl.o
+    0x08007474   0x00000088   Code   RO         5672    i.t5lReadVarible    app_t5l_ctrl.o
+    0x080074fc   0x000000ca   Code   RO         5673    i.t5lWriteData      app_t5l_ctrl.o
+    0x080075c6   0x00000002   PAD
+    0x080075c8   0x000000c0   Code   RO         5674    i.t5lWriteVarible   app_t5l_ctrl.o
+    0x08007688   0x000000ec   Code   RO         5062    i.trigerCalcKB      app_hx711_ctrl.o
+    0x08007774   0x00000026   Code   RO         3821    i.uxListRemove      list.o
+    0x0800779a   0x00000002   PAD
+    0x0800779c   0x00000014   Code   RO          297    i.vApplicationGetIdleTaskMemory  freertos.o
+    0x080077b0   0x00000016   Code   RO         3822    i.vListInitialise   list.o
+    0x080077c6   0x00000006   Code   RO         3823    i.vListInitialiseItem  list.o
+    0x080077cc   0x00000030   Code   RO         3824    i.vListInsert       list.o
+    0x080077fc   0x00000018   Code   RO         3825    i.vListInsertEnd    list.o
+    0x08007814   0x00000040   Code   RO         4942    i.vPortEnterCritical  port.o
+    0x08007854   0x00000028   Code   RO         4943    i.vPortExitCritical  port.o
+    0x0800787c   0x00000064   Code   RO         4873    i.vPortFree         heap_4.o
+    0x080078e0   0x00000024   Code   RO         4944    i.vPortSetupTimerInterrupt  port.o
+    0x08007904   0x0000004c   Code   RO         4199    i.vTaskDelay        tasks.o
+    0x08007950   0x0000006c   Code   RO         4212    i.vTaskStartScheduler  tasks.o
+    0x080079bc   0x00000010   Code   RO         4214    i.vTaskSuspendAll   tasks.o
+    0x080079cc   0x0000005c   Code   RO         4215    i.vTaskSwitchContext  tasks.o
+    0x08007a28   0x0000003c   Code   RO         5676    i.writeColorDataFromCom  app_t5l_ctrl.o
+    0x08007a64   0x0000003c   Code   RO         5677    i.writeHelpDataFromCom  app_t5l_ctrl.o
+    0x08007aa0   0x0000005c   Code   RO         5678    i.writeWeightDataFromCom  app_t5l_ctrl.o
+    0x08007afc   0x000000f4   Code   RO         4946    i.xPortStartScheduler  port.o
+    0x08007bf0   0x0000005a   Code   RO         4218    i.xTaskCreate       tasks.o
+    0x08007c4a   0x00000056   Code   RO         4219    i.xTaskCreateStatic  tasks.o
+    0x08007ca0   0x000000cc   Code   RO         4226    i.xTaskIncrementTick  tasks.o
+    0x08007d6c   0x000000c4   Code   RO         4232    i.xTaskResumeAll    tasks.o
+    0x08007e30   0x00000062   Code   RO         6526    x$fpl$d2f           fz_wm.l(d2f.o)
+    0x08007e92   0x00000018   Code   RO         6571    x$fpl$dcmpinf       fz_wm.l(dcmpi.o)
+    0x08007eaa   0x0000002e   Code   RO         6529    x$fpl$dflt          fz_wm.l(dflt_clz.o)
+    0x08007ed8   0x00000026   Code   RO         6528    x$fpl$dfltu         fz_wm.l(dflt_clz.o)
+    0x08007efe   0x00000002   PAD
+    0x08007f00   0x00000078   Code   RO         6545    x$fpl$dleqf         fz_wm.l(dleqf.o)
+    0x08007f78   0x00000154   Code   RO         6534    x$fpl$dmul          fz_wm.l(dmul.o)
+    0x080080cc   0x0000009c   Code   RO         6547    x$fpl$dnaninf       fz_wm.l(dnaninf.o)
+    0x08008168   0x0000000c   Code   RO         6549    x$fpl$dretinf       fz_wm.l(dretinf.o)
+    0x08008174   0x0000006c   Code   RO         6536    x$fpl$drleqf        fz_wm.l(drleqf.o)
+    0x080081e0   0x0000000a   Code   RO         6658    x$fpl$fpinit        fz_wm.l(fpinit.o)
+    0x080081ea   0x0000000a   Code   RO         6551    x$fpl$fretinf       fz_wm.l(fretinf.o)
+    0x080081f4   0x00000000   Code   RO         6553    x$fpl$usenofp       fz_wm.l(usenofp.o)
+    0x080081f4   0x00000038   Data   RO          299    .constdata          freertos.o
+    0x0800822c   0x00000008   Data   RO         1244    .constdata          stm32f4xx_hal_dma.o
+    0x08008234   0x00000010   Data   RO         3684    .constdata          system_stm32f4xx.o
+    0x08008244   0x00000008   Data   RO         3685    .constdata          system_stm32f4xx.o
+    0x0800824c   0x00000200   Data   RO         5017    .constdata          app_crc.o
+    0x0800844c   0x00000028   Data   RO         5064    .constdata          app_hx711_ctrl.o
+    0x08008474   0x00000030   Data   RO         5680    .constdata          app_t5l_ctrl.o
+    0x080084a4   0x00000034   Data   RO         6354    .constdata          hal_gpio.o
+    0x080084d8   0x00000017   Data   RO          300    .conststring        freertos.o
+    0x080084ef   0x00000001   PAD
+    0x080084f0   0x00000020   Data   RO         6714    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x000073e8, Max: 0x00020000, ABSOLUTE, COMPRESSED[0x0000024c])
+    Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x000071b8, Max: 0x00020000, ABSOLUTE, COMPRESSED[0x0000025c])
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -4184,28 +4199,32 @@ Memory Map of the image
     0x200000ac   0x00000364   Data   RW         5351    .data               app_modbus_rtu_ctrl.o
     0x20000410   0x00000034   Data   RW         5461    .data               app_password.o
     0x20000444   0x00000064   Data   RW         5503    .data               app_syspara.o
-    0x200004a8   0x00000a30   Data   RW         5679    .data               app_t5l_ctrl.o
-    0x20000ed8   0x00000068   Data   RW         6340    .data               hal_gpio.o
-    0x20000f40   0x000000c0   Data   RW         6399    .data               hal_uart.o
-    0x20001000   0x0000001c   Data   RW         6467    .data               app_i2c.o
-    0x2000101c   0x00000254   Zero   RW          298    .bss                freertos.o
-    0x20001270   0x00000054   Zero   RW          381    .bss                i2c.o
-    0x200012c4   0x00000048   Zero   RW          424    .bss                tim.o
-    0x2000130c   0x00000848   Zero   RW          480    .bss                usart.o
-    0x20001b54   0x00000048   Zero   RW          734    .bss                stm32f4xx_hal_timebase_tim.o
-    0x20001b9c   0x000000f0   Zero   RW         4234    .bss                tasks.o
-    0x20001c8c   0x00003c00   Zero   RW         4878    .bss                heap_4.o
-    0x2000588c   0x00000788   Zero   RW         5063    .bss                app_hx711_ctrl.o
-    0x20006014   0x0000000c   Zero   RW         5197    .bss                app_key_ctrl.o
-    0x20006020   0x0000000c   Zero   RW         5460    .bss                app_password.o
-    0x2000602c   0x000005e4   Zero   RW         5502    .bss                app_syspara.o
-    0x20006610   0x000004f2   Zero   RW         5677    .bss                app_t5l_ctrl.o
-    0x20006b02   0x00000080   Zero   RW         6466    .bss                app_i2c.o
-    0x20006b82   0x00000002   PAD
-    0x20006b84   0x00000060   Zero   RW         6573    .bss                c_w.l(libspace.o)
-    0x20006be4   0x00000004   PAD
-    0x20006be8   0x00000400   Zero   RW            2    HEAP                startup_stm32f407xx.o
-    0x20006fe8   0x00000400   Zero   RW            1    STACK               startup_stm32f407xx.o
+    0x200004a8   0x00000700   Data   RW         5682    .data               app_t5l_ctrl.o
+    0x20000ba8   0x00000070   Data   RW         5683    .data               app_t5l_ctrl.o
+    0x20000c18   0x00000008   Data   RW         5684    .data               app_t5l_ctrl.o
+    0x20000c20   0x00000080   Data   RW         5685    .data               app_t5l_ctrl.o
+    0x20000ca0   0x00000008   Data   RW         5686    .data               app_t5l_ctrl.o
+    0x20000ca8   0x00000068   Data   RW         6355    .data               hal_gpio.o
+    0x20000d10   0x000000c0   Data   RW         6414    .data               hal_uart.o
+    0x20000dd0   0x0000001c   Data   RW         6482    .data               app_i2c.o
+    0x20000dec   0x00000254   Zero   RW          298    .bss                freertos.o
+    0x20001040   0x00000054   Zero   RW          381    .bss                i2c.o
+    0x20001094   0x00000048   Zero   RW          424    .bss                tim.o
+    0x200010dc   0x00000848   Zero   RW          480    .bss                usart.o
+    0x20001924   0x00000048   Zero   RW          734    .bss                stm32f4xx_hal_timebase_tim.o
+    0x2000196c   0x000000f0   Zero   RW         4234    .bss                tasks.o
+    0x20001a5c   0x00003c00   Zero   RW         4878    .bss                heap_4.o
+    0x2000565c   0x00000788   Zero   RW         5063    .bss                app_hx711_ctrl.o
+    0x20005de4   0x0000000c   Zero   RW         5197    .bss                app_key_ctrl.o
+    0x20005df0   0x0000000c   Zero   RW         5460    .bss                app_password.o
+    0x20005dfc   0x000005e4   Zero   RW         5502    .bss                app_syspara.o
+    0x200063e0   0x000004f2   Zero   RW         5679    .bss                app_t5l_ctrl.o
+    0x200068d2   0x00000080   Zero   RW         6481    .bss                app_i2c.o
+    0x20006952   0x00000002   PAD
+    0x20006954   0x00000060   Zero   RW         6588    .bss                c_w.l(libspace.o)
+    0x200069b4   0x00000004   PAD
+    0x200069b8   0x00000400   Zero   RW            2    HEAP                startup_stm32f407xx.o
+    0x20006db8   0x00000400   Zero   RW            1    STACK               startup_stm32f407xx.o
 
 
 ==============================================================================
@@ -4216,15 +4235,15 @@ Image component sizes
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
        210          6        512          0          0       3173   app_crc.o
-      1786        134         40         22       1928      14761   app_hx711_ctrl.o
+      1790        134         40         22       1928      14765   app_hx711_ctrl.o
        316         18          0         28        128       3393   app_i2c.o
-       284         20          0          3         12       3424   app_key_ctrl.o
+       296         20          0          3         12       3436   app_key_ctrl.o
        430         16          0          8          0       5325   app_led_ctrl.o
         40          6          0          4          0        848   app_main_task.o
       1200         60          0        868          0      14828   app_modbus_rtu_ctrl.o
         60         10          0         52         12       1570   app_password.o
       1408         30          0        100       1508       9167   app_syspara.o
-     10238        484         48       2608       1266      92307   app_t5l_ctrl.o
+     10276        460         48       2048       1266      94481   app_t5l_ctrl.o
        120          0          0          0          0      23581   cmsis_os.o
        172          4          0          0          0        930   dma.o
          0          0          0          0          0      17008   event_groups.o
@@ -4236,7 +4255,7 @@ Image component sizes
        472         24          0         32      15360       7639   heap_4.o
        172         28          0          0         84       1805   i2c.o
        138          0          0          0          0       3738   list.o
-       348         40          0          0          0     750520   main.o
+       360         40          0          0          0     750524   main.o
        702         72          0         12          0      11344   port.o
         64         26        392          0       2048        876   startup_stm32f407xx.o
         80         14          0         12          0       8274   stm32f4xx_hal.o
@@ -4258,9 +4277,9 @@ Image component sizes
       1416        128          0          0       2120       9244   usart.o
 
     ----------------------------------------------------------------------
-     30944       1816       1188       4124      25448    1129687   Object Totals
+     31012       1792       1188       3564      25448    1131881   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-        54          0          1          3          2          0   (incl. Padding)
+        56          0          1          3          2          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -4323,15 +4342,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     32808       1856       1188       4124      25548    1100931   Grand Totals
-     32808       1856       1188        588      25548    1100931   ELF Image Totals (compressed)
-     32808       1856       1188        588          0          0   ROM Totals
+     32876       1832       1188       3564      25548    1102925   Grand Totals
+     32876       1832       1188        604      25548    1102925   ELF Image Totals (compressed)
+     32876       1832       1188        604          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                33996 (  33.20kB)
-    Total RW  Size (RW Data + ZI Data)             29672 (  28.98kB)
-    Total ROM Size (Code + RO Data + RW Data)      34584 (  33.77kB)
+    Total RO  Size (Code + RO Data)                34064 (  33.27kB)
+    Total RW  Size (RW Data + ZI Data)             29112 (  28.43kB)
+    Total ROM Size (Code + RO Data + RW Data)      34668 (  33.86kB)
 
 ==============================================================================
 

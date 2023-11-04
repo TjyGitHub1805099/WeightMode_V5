@@ -670,7 +670,8 @@ void hx711_MainFunction(void)
 				t5lDisPlayDataClear();
 				u8RemoveWeightWhenPowerOn = TRUE;
 				//
-				g_T5L.sdweHX711FirstSampleCoplt = TRUE;
+				g_T5LCtx[ScreenIndex_Smaller].sdweHX711FirstSampleCoplt = TRUE;
+				g_T5LCtx[ScreenIndex_Larger].sdweHX711FirstSampleCoplt = TRUE;
 			}	
 		}
 	}

@@ -56,47 +56,36 @@
 
 
 //==(update:20210411):address of unit min max ...
-#define DMG_FUNC_SET_UNIT_ADDRESS			(0X1000)//0x1000
+#define DMG_FUNC_SET_UNIT_ADDRESS				(0X1000)//0x1000
 
-#define DMG_FUNC_SET_MIN_RANGE_ADDRESS		(0X100A)//0x100A
-#define DMG_FUNC_SET_MAX_RANGE_ADDRESS		(0X100B)//0x100B
-#define DMG_FUNC_SET_ERR_RANGE_ADDRESS		(0X100C)//0x100C
-#define DMG_FUNC_SET_isCascade_ADDRESS		(0X100D)//0x100D
-#define DMG_FUNC_SET_isLedIndicate_ADDRESS	(0X100E)//0x100E
-#define DMG_FUNC_SET_COLOR_START_ADDRESS	(0X100F)//0x100F
-#define DMG_FUNC_SET_COLOR_END_ADDRESS		(0X1012)//0x1012
-#define DMG_FUNC_SET_ZERO_RANGE_ADDRESS		(0X1013)//0x1013
-#define DMG_FUNC_SET_SCREEN_LIGHT_ADDRESS	(0X1014)//0x1014
-
-#define DMG_FUNC_SET_VOICE_NUM_TOUCH_ADDRESS (0X1015)//0x1015
-
-#define DMG_FUNC_SET_VOICE_NUM_ADDRESS		(0X1016)//0x1016
-
-#define DMG_FUNC_SET_VOICE_SWITCH_ADDRESS	(0X1017)//0x1017
-#define DMG_FUNC_SET_CAST_SWITCH_ADDRESS	(0X1018)//0x1018
+#define DMG_FUNC_SET_MIN_RANGE_ADDRESS			(0X100A)//0x100A
+#define DMG_FUNC_SET_MAX_RANGE_ADDRESS			(0X100B)//0x100B
+#define DMG_FUNC_SET_ERR_RANGE_ADDRESS			(0X100C)//0x100C
+#define DMG_FUNC_SET_isCascade_ADDRESS			(0X100D)//0x100D
+#define DMG_FUNC_SET_isLedIndicate_ADDRESS		(0X100E)//0x100E
+#define DMG_FUNC_SET_COLOR_START_ADDRESS		(0X100F)//0x100F
+#define DMG_FUNC_SET_COLOR_END_ADDRESS			(0X1012)//0x1012
+#define DMG_FUNC_SET_ZERO_RANGE_ADDRESS			(0X1013)//0x1013
+#define DMG_FUNC_SET_SCREEN_LIGHT_ADDRESS		(0X1014)//0x1014
+#define DMG_FUNC_SET_VOICE_NUM_TOUCH_ADDRESS 	(0X1015)//0x1015
+#define DMG_FUNC_SET_VOICE_NUM_ADDRESS			(0X1016)//0x1016
+#define DMG_FUNC_SET_VOICE_SWITCH_ADDRESS		(0X1017)//0x1017
+#define DMG_FUNC_SET_CAST_SWITCH_ADDRESS		(0X1018)//0x1018
 #define DMG_FUNC_SET_FLASH_ERASEE_TIMES_ADDRESS	(0X1019)//0x1019
-
-#define DMG_FUNC_SET_CAST_SWITCH_ADDRESS	(0X1018)//0x1018
-#define DMG_FUNC_SET_FLASH_ERASEE_TIMES_ADDRESS	(0X1019)//0x1019
-
-#define DMG_FUNC_MCU_VERSION_ADDRESS	(0X101A)//0x101A
-#define DMG_FUNC_DIWEN_VERSION_ADDRESS	(0X101B)//0x101B
-
-#define DMG_FUNC_DIWEN_XIAOSHU_ADDRESS	(0X101C)//0X101C 小数使能
-#define DMG_FUNC_DIWEN_BILV_ADDRESS		(0X101D)//0X101D ml/g比率
-#define DMG_FUNC_DIWEN_DAPING_ADDRESS	(0X101E)//0X101E 大屏显示
+#define DMG_FUNC_MCU_VERSION_ADDRESS			(0X101A)//0x101A
+#define DMG_FUNC_DIWEN_VERSION_ADDRESS			(0X101B)//0x101B
+#define DMG_FUNC_DIWEN_XIAOSHU_ADDRESS			(0X101C)//0X101C 小数使能
+#define DMG_FUNC_DIWEN_BILV_ADDRESS				(0X101D)//0X101D ml/g比率
+#define DMG_FUNC_DIWEN_DAPING_ADDRESS			(0X101E)//0X101E 大屏显示
 
 #define DMG_FUNC_MCUID_ADDRESS				(0X1500)//0x1500
 
 #define DMG_FUNC_PASSORD_SET_ADDRESS		(0X1510)//0x1510
 
-
-#define DMG_FUNC_Balancing_SET_ADDRESS		(0X1101)//0x1101
-#define DMG_FUNC_Balancing_SET_VALUE		(0X1101)//0x1101
-
-#define DMG_FUNC_Balancing_HOME_SET_ADDRESS	(0X1102)//0x1102
-#define DMG_FUNC_Balancing_HOME_SET_VALUE	(0X1102)//0x1102
-
+#define DMG_FUNC_Balancing_SET_ADDRESS				(0X1101)//0x1101
+#define DMG_FUNC_Balancing_SET_VALUE				(0X1101)//0x1101
+#define DMG_FUNC_Balancing_HOME_SET_ADDRESS			(0X1102)//0x1102
+#define DMG_FUNC_Balancing_HOME_SET_VALUE			(0X1102)//0x1102
 #define DMG_FUNC_Balancing_CLEARPAGE_SET_ADDRESS	(0X1103)//0x1103
 #define DMG_FUNC_Balancing_CLEARPAGE_SET_VALUE		(0X1103)//0x1103
 
@@ -117,10 +106,8 @@
 #define DIFF_JUDGE_DATA_NUM_SLAVE1	(3)//num1 num2 minus
 #define DIFF_TO_DIWEN_DATA_LEN		(DIFF_JUDGE_GROUP_NUM_SLAVE1*DIFF_JUDGE_DATA_NUM_SLAVE1)
 
-
-#define T5L_SMALLER_INDEX	(0)
-#define T5L_LARGER_INDEX	(1)
-
+//================================================================================================
+//枚举：大小屏序号
 typedef enum
 {
 	ScreenIndex_Smaller  = 0 ,
@@ -128,6 +115,7 @@ typedef enum
 	ScreenIndex_Max,
 }enumScreenIndexType;
 
+//枚举：语音控制流程
 typedef enum
 {
 	cmdWaitVoivePrint_forceRead  = 0 ,
@@ -135,7 +123,7 @@ typedef enum
 	cmdWaitVoivePrint_max,
 }enumSDWEcmdWaitVoivePrintType;
 
-
+//枚举：小屏界面序号
 //DMG PageType
 typedef enum DMGPageType
 {
@@ -146,8 +134,10 @@ typedef enum DMGPageType
 	DMG_FUNC_Help_PAGE =59
 }enumDMGPageType;
 
-#define T5L_VOICE_MAX_PRINTF_NUM	6
+//语音队列：深度
+#define T5L_VOICE_MAX_PRINTF_NUM		(6)
 
+//语音序号
 typedef enum VoinceType
 {
 	T5L_VoiceTypeNum_0 = 0,
@@ -168,7 +158,6 @@ typedef enum VoinceType
 	VoiceTypeMax,
 }tT5LVoinceType;
 
-
 //ask calibration page data
 typedef enum CalibrationAskParaType
 {
@@ -178,8 +167,8 @@ typedef enum CalibrationAskParaType
 	DMG_TRIGER_SAMPLE_OF_ASK_WEIGHT = 3 ,	/* set weight of point */
 	DMG_TRIGER_SAMPLE_MAX_NUM
 }enumCalibrationAskParaType;
-	
 
+//迪文屏幕通信协议：命令头
 typedef enum sdweRxFuncIdType
 {
 	/**< SDWE_RX_0X83 举例
@@ -194,7 +183,7 @@ typedef enum sdweRxFuncIdType
 	SDWE_RX_FUN_NUM	 		 /**< SDWE 总数量*/
 }enumsdweRxFuncIdType;
 
-
+//迪文屏幕通信协议：寄存器及变量读写命令
 typedef enum
 {
 	cmdWriteSWDERegister = 0x80 ,
@@ -203,6 +192,7 @@ typedef enum
 	cmdReadSWDEVariable = 0x83 ,
 }enumSDWEcmdType;
 
+//迪文屏幕通信协议：数据位置含义
 typedef enum
 {
 	cmdPosHead1  = 0 ,//A5
@@ -244,54 +234,161 @@ typedef enum
 	SCREEN_STATUS_GET_VERSION = 0 ,
 	SCREEN_STATUS_SEND_BANLING_DATA,
 }enumSDWEStatusType;
+
 /** 定义从机串口设备类型 */
 typedef struct structSdweType
 {
-	enumSDWEStatusType status;/**< sdwe 状态 */
-	UINT8 	sendSdweInit;
-	UINT8 	readSdweInit;
-	UartDeviceType *pUartDevice;        /**< 串口设备 */
-	UINT8 	version;//SDWE version
-	UINT8 	allowCompare;
-	UINT8 	rxData[T5L_DMG_UART_DATA_LEN];
-	UINT8 	txData[T5L_DMG_UART_DATA_LEN];
-	UINT16	RxLength;					/**< 接收字节数 */
-	UINT8 	RxFinishFlag;				/**< 接收完成标志 */
+	enumSDWEStatusType status;				/**< status ：sdwe 状态 */
 	
-	UINT16  SetAdd;/**< 地址 */
-	INT16  	DataLen;/**< 数据长度 */
-	INT16  	SetData;/**< 数据 */
+	UINT8 	sendSdweInit;					/**< sendSdweInit ：初始化屏幕完成状态*/
+	UINT8 	readSdweInit;					/**< readSdweInit ：状态 */
+	
+	enumUartPortType uartIndex;				/**< uartIndex ： 串口的序号 */
+	UartDeviceType *pUartDevice;        	/**< pUartDevice：串口设备 */
+	
+	UINT8 	version;						/**< version：屏幕的版本值 */
+	
+	UINT8 	rxData[T5L_DMG_UART_DATA_LEN];	/**< rxData：接收到屏幕的缓存 */
+	UINT8 	txData[T5L_DMG_UART_DATA_LEN];	/**< txData：发送到屏幕的缓存 */
+	UINT16	RxLength;						/**< RxLength ：接收字节数 */
+	UINT8 	RxFinishFlag;					/**< RxFinishFlag ：接收完成标志 */
+	
+	UINT16  SetAdd;							/**< SetAdd：屏幕发过来的数据变量的地址 */
+	INT16  	DataLen;						/**< DataLen：屏幕发过来的数据长度 */
+	INT16  	SetData;						/**< SetData：屏幕发过来的数据 */
 
-	UINT16 	sdweRemoveWeightTriger;/**< 去皮 */
-	UINT16 	sdwePointTriger;/**< 点触发校准 */
-	UINT16 	sdweResetTriger;/**< 重新校准 */
-	UINT16 	ResetTrigerValid;/**< 重新校准有效 */
-	UINT16 	sdweChanelChanged;/**< 通道改变 */
-	UINT16 	ColorClen;/**< 通道改变时清颜色 */
-	UINT16 	CalibrateChanel;/**< 通道 */
-	UINT16 	CalibratePoint;/**< 校准点 */
-	INT32 	CalibratePointArry[CHANEL_POINT_NUM];/**< 校准点数组 */
-	UINT32	CurTick;
-	UINT32	LastSendTick;
-	UINT16 	sdweJumpToCalitrationPage;/**< 跳转至校准页面 */
-	UINT16	sdweJumpToHomePage;
-	UINT16	sdweJumpToBanlingPage;
-	UINT16 	sdweJumpActivePage;/**< 跳转至激活页面 */
-	UINT16 	sdweJumpBalancing;/**< 跳转至配平页面 */
-	UINT16 	sdweJumpBalancing_home;/**< 跳转至配平页面可去皮 */
-	UINT16 	sdweJumpBalancing_cleanpagee;/**< 跳转至配平清爽页面 */
-	UINT16 	sdweJumpToSysParaPage;/**< 跳转至参数页面 */
-	UINT16 	sdweFreshScreenLight;/**< 刷新背光亮度 */
-	UINT16  sdweChangeDescriblePoint;/**< 修改小数显示 */
-	UINT16  sdwePowerOn;/**< 屏幕已经上电 */
-	UINT16  sdweHX711FirstSampleCoplt;/**< HX711数据采集完成 */
-	UINT8 	needStore;/**< 是否需要保存*/
-	UINT8 	sendSysParaDataToDiwenIndex;
+	UINT16 	sdweRemoveWeightTriger;			/**< sdweRemoveWeightTriger：(事件)去皮 */
+	UINT16 	sdwePointTriger;				/**< sdwePointTriger：(事件)点触发校准 */
+	UINT16 	sdweResetTriger;				/**< sdweResetTriger：(事件)重新校准 */
+	UINT16 	ResetTrigerValid;				/**< ResetTrigerValid：(事件)重新校准有效 */
+	UINT16 	sdweChanelChanged;				/**< sdweChanelChanged：(事件)通道改变 */
+	UINT16 	ColorClen;						/**< ColorClen：(事件)通道改变时清颜色 */
+	UINT16 	CalibrateChanel;						/**< CalibrateChanel：称重校准的通道号 */
+	UINT16 	CalibratePoint;							/**< CalibratePoint：称重校准的校准点 */
+	INT32 	CalibratePointArry[CHANEL_POINT_NUM];	/**< CalibratePointArry：称重校准的校准点数组 */
+	
+	UINT32	CurTick;					/**< CurTick：当前系统时间 */
+	UINT32	LastSendTick;				/**< LastSendTick：上次发送给屏幕的时间 */
+	
+	UINT16 	sdweJumpToCalitrationPage;	/**< sdweJumpToCalitrationPage：(事件)跳转至校准页面 */
+	UINT16	sdweJumpToHomePage;			/**< sdweJumpToHomePage：(事件)跳转至主页面 */
+	UINT16	sdweJumpToBanlingPage;		/**< sdweJumpToBanlingPage：(事件)跳转至配平页面 */
+	UINT16 	sdweJumpActivePage;			/**< sdweJumpActivePage：(事件)跳转至激活页面 */
+	UINT16 	sdweJumpBalancing;			/**< sdweJumpBalancing：(事件)跳转至配平页面 */
+	UINT16 	sdweJumpBalancing_home;		/**< sdweJumpBalancing_home：(事件)跳转至配平页面可去皮 */
+	UINT16 	sdweJumpBalancing_cleanpagee;/**< sdweJumpBalancing_cleanpagee：(事件)跳转至配平清爽页面 */
+	UINT16 	sdweJumpToSysParaPage;		/**< sdweJumpToSysParaPage：(事件)跳转至参数页面 */
+	UINT16 	sdweFreshScreenLight;		/**< sdweFreshScreenLight：(事件)刷新背光亮度 */
+	UINT16  sdweChangeDescriblePoint;	/**< sdweChangeDescriblePoint：(事件)修改小数显示 */
+	UINT16  sdwePowerOn;				/**< sdwePowerOn：(事件)屏幕已经上电 */
+	UINT16  sdweHX711FirstSampleCoplt;	/**< sdweHX711FirstSampleCoplt：(事件)HX711数据采集完成 */
+	UINT8 	needStore;					/**< needStore：(事件)是否需要保存*/
+	UINT8 	sendSysParaDataToDiwenIndex;/**< sendSysParaDataToDiwenIndex：(事件)初始化屏幕时的序号*/
 }T5LType;
-extern T5LType g_T5L;
-extern T5LType g_T5L2;
-extern T5LType g_T5LCtx[ScreenIndex_Max];
+
+/** ModbusRtu设备默认配置 */
+#define T5LDataDefault   { \
+	SCREEN_STATUS_GET_VERSION,/*status ：sdwe 状态*/\
+	0,/**/\
+	0,/**/\
+	\
+	UART_EXTERN,/**< uartIndex ： 串口的序号 */\
+	&g_UartDevice[UART_EXTERN],/**< pUartDevice：串口设备 */\
+	\
+	0,/**< version：屏幕的版本值 */\
+	\
+	{0},/**< rxData：接收到屏幕的缓存 */\
+	{0},/**< txData：发送到屏幕的缓存 */\
+	0,/**< RxLength ：接收字节数 */\
+	0,/**< RxFinishFlag ：接收完成标志 */\
+	\
+	0XFFFF,/**/\
+	0,/**/\
+	0,/**/\
+	\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	88,/**/\
+	0,/**/\
+	{0},/**< CalibratePointArry：称重校准的校准点数组 */\
+	\
+	0,/**/\
+	0,/**< LastSendTick：上次发送给屏幕的时间 */\
+	\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	0x80,/**< sendSysParaDataToDiwenIndex：(事件)初始化屏幕时的序号*/\
+	}
+
+/** ModbusRtu设备默认配置 */
+#define T5LDataDefault2   { \
+	SCREEN_STATUS_GET_VERSION,/*status ：sdwe 状态*/\
+	0,/**/\
+	0,/**/\
+	\
+	UART_EXTERN2,/**< uartIndex ： 串口的序号 */\
+	&g_UartDevice[UART_EXTERN2],/**< pUartDevice：串口设备 */\
+	\
+	0,/**< version：屏幕的版本值 */\
+	\
+	{0},/**< rxData：接收到屏幕的缓存 */\
+	{0},/**< txData：发送到屏幕的缓存 */\
+	0,/**< RxLength ：接收字节数 */\
+	0,/**< RxFinishFlag ：接收完成标志 */\
+	\
+	0XFFFF,/**/\
+	0,/**/\
+	0,/**/\
+	\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	88,/**/\
+	0,/**/\
+	{0},/**< CalibratePointArry：称重校准的校准点数组 */\
+	\
+	0,/**/\
+	0,/**< LastSendTick：上次发送给屏幕的时间 */\
+	\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	0,/**/\
+	0x80,/**< sendSysParaDataToDiwenIndex：(事件)初始化屏幕时的序号*/\
+	}
+//================================================================================================
+
+
+//================================================================================================
 typedef UINT8 (*screenRxTxHandleFunc)(T5LType *pSdwe);  // 定义屏幕指令接收发送处理函数指针： screenRxTxHandleFunc
+
 typedef struct screenRxTxHandleType_Struct
 {
 	UINT8 priority;
@@ -299,100 +396,58 @@ typedef struct screenRxTxHandleType_Struct
 	screenRxTxHandleFunc func;
 }screenRxTxHandleType;
 
+typedef struct structScreenHandleType
+{
+	enumScreenIndexType index;
+	T5LType *Ctx;
+	UINT8 recvScreenHadlleNum;
+	screenRxTxHandleType *recvScreenHadlleCtx;
+	UINT8 sendScreenHadlleNum;
+	screenRxTxHandleType *sendScreenHadlleCtx;
+}ScreenHandleType;
+
 #define SCREEN_RX_HANDLE_TOTAL_NUM	(14)	/**< 屏幕RX数据处理事件数量 */
 #define SCREEN_TX_HANDLE_TOTAL_NUM	(16)	/**< 屏幕TX数据处理事件数量 */
+extern screenRxTxHandleType screenRxHandle[SCREEN_RX_HANDLE_TOTAL_NUM];
+extern screenRxTxHandleType screenTxHandle[SCREEN_TX_HANDLE_TOTAL_NUM];
 
-/** ModbusRtu设备默认配置 */
-#define T5LDataDefault   { \
-	SCREEN_STATUS_GET_VERSION,\
-	0,\
-	0,\
-	&g_UartDevice[UART_EXTERN], \
-	0,\
-	FALSE,\
-	{0}, \
-	{0}, \
-	0,\
-	0,\
-	0XFFFF,\
-	0,\
-	0,\
-	0,\
-	0,\
-	0,\
-	0,\
-	0,\
-	0,\
-	88,\
-	0,\
-	{0},\
-	0,\
-	0,\
-	0,\
-	0,\
-	0,\
-	0,\
-	0,\
-	0,\
-	0,\
-	0,\
-	0,\
-	0,\
-	0,\
-	0,\
-	0x80,\
-	}
+#define SCREEN_LARGER_RX_HANDLE_TOTAL_NUM	(1)	/**< 屏幕RX数据处理事件数量 */
+#define SCREEN_LARGER_TX_HANDLE_TOTAL_NUM	(1)	/**< 屏幕TX数据处理事件数量 */
+extern screenRxTxHandleType screenLargerRxHandle[SCREEN_LARGER_RX_HANDLE_TOTAL_NUM];
+extern screenRxTxHandleType screenLargerTxHandle[SCREEN_LARGER_TX_HANDLE_TOTAL_NUM];
 
-/** ModbusRtu设备默认配置 */
-#define T5LDataDefault2   { \
-	SCREEN_STATUS_GET_VERSION,\
-	0,\
-	0,\
-	&g_UartDevice[UART_EXTERN2], \
-	0,\
-	FALSE,\
-	{0}, \
-	{0}, \
-	0,\
-	0,\
-	0XFFFF,\
-	0,\
-	0,\
-	0,\
-	0,\
-	0,\
-	0,\
-	0,\
-	0,\
-	88,\
-	0,\
-	{0},\
-	0,\
-	0,\
-	0,\
-	0,\
-	0,\
-	0,\
-	0,\
-	0,\
-	0,\
-	0,\
-	0,\
-	0,\
-	0,\
-	0,\
-	0x80,\
-	}
-#define T5L_INITIAL_COMPLETE		(0X12)
+#define ScreenHandleDefault_Smaller   { \
+	ScreenIndex_Smaller,\
+	&g_T5LCtx[ScreenIndex_Smaller],\
+	SCREEN_RX_HANDLE_TOTAL_NUM,\
+	&screenRxHandle[0],\
+	SCREEN_TX_HANDLE_TOTAL_NUM,\
+	&screenTxHandle[0],\
+}
+#define ScreenHandleDefault_Larger   { \
+	ScreenIndex_Larger,\
+	&g_T5LCtx[ScreenIndex_Larger],\
+	SCREEN_LARGER_RX_HANDLE_TOTAL_NUM,\
+	&screenLargerRxHandle[0],\
+	SCREEN_LARGER_TX_HANDLE_TOTAL_NUM,\
+	&screenLargerTxHandle[0],\
+}
+
+//================================================================================================
+#define T5L_INITIAL_COMPLETE		(0X12)//屏初始化完成标志
 #define T5L_MAX_CHANEL_LEN			(2*HX711_CHANEL_NUM)
 #define T5L_CHANEL_WEIGHT_NOT_EQUAL	(0XFF)
 	
-	
-	
+
+//================================================================================================
+extern T5LType g_T5L;
+extern T5LType g_T5LCtx[ScreenIndex_Max];
+extern ScreenHandleType g_ScreenHandle[ScreenIndex_Max];
 extern INT16 g_i16ColorOtherChanel[T5L_MAX_CHANEL_LEN];//T5L_CHANEL_WEIGHT_NOT_EQUAL:invalid
-	
+
+//================================================================================================
 extern void color_clearAllColor(void);
-extern void screenT5L_Init(void);
+extern void screenT5L_Init(T5LType *t5lCtx);
 extern void pointSampleTrigerDataSet(UINT8 localChanel , UINT8 point , INT16 value);
 extern void pointWeightTrigerDataSet(UINT8 localChanel , UINT8 point , INT16 value);
 extern void sdwe_VoicePrintfPush(tT5LVoinceType u8Voice1 ,tT5LVoinceType u8Voice2);
@@ -406,4 +461,5 @@ extern void readColorDataFromSys(UINT8 *pColorData,UINT8 len);
 extern void writeWeightDataFromCom(UINT8 *pWeightData,UINT8 len);
 extern void writeColorDataFromCom(UINT8 *pColorData,UINT8 len);
 extern UINT8 screenT5L_OutputVoice(T5LType *pSdwe,UINT8 voiceId);
+
 #endif

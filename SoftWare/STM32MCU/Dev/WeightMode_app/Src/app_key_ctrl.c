@@ -82,7 +82,8 @@ void key_MainFunction(void)
 		{
 			preRemoveKey = SYS_KEY_VALUED;
 			//
-			g_T5L.sdweRemoveWeightTriger = TRUE;
+			g_T5LCtx[ScreenIndex_Smaller].sdweRemoveWeightTriger = TRUE;
+			g_T5LCtx[ScreenIndex_Larger].sdweRemoveWeightTriger = TRUE;
 			//
 			setModbusSelfRemoveFlag(TRUE);
 		}
@@ -105,10 +106,12 @@ void key_MainFunction(void)
 			switch((preHomeAndCalibrateStatus++)%2)
 			{
 				case 0://切主页
-						g_T5L.sdweJumpToHomePage = TRUE;
+						g_T5LCtx[ScreenIndex_Smaller].sdweJumpToHomePage = TRUE;
+						g_T5LCtx[ScreenIndex_Larger].sdweJumpToHomePage = TRUE;
 				break;
 				case 1://切配平
-						g_T5L.sdweJumpToBanlingPage = TRUE;
+						g_T5LCtx[ScreenIndex_Smaller].sdweJumpToBanlingPage = TRUE;
+						g_T5LCtx[ScreenIndex_Larger].sdweJumpToBanlingPage = TRUE;
 				break;
 				default:
 				break;

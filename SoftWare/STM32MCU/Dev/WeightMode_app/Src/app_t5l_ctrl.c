@@ -16,8 +16,9 @@
  * Definitions
  ******************************************************************************/
 T5LType g_T5L = T5LDataDefault;
-T5LType g_T5L2 = T5LDataDefault2;
 T5LType g_T5LCtx[ScreenIndex_Max] = {T5LDataDefault,T5LDataDefault2};
+ScreenHandleType g_ScreenHandle[ScreenIndex_Max] = {ScreenHandleDefault_Smaller,ScreenHandleDefault_Larger};
+
 //1.chanel num :0~x HX711_CHANEL_NUM
 //2.trigerStarus , back color , point avg Sample , point set weight
 //3.point num
@@ -61,43 +62,42 @@ void app_uart_extern_msg_packet_process( UartDeviceType *pUartDevice )
 }
 
 //==sdwe initial
-void screenT5L_Init(void)
+void screenT5L_Init(T5LType *t5lCtx)
 {
 	UINT8 i = 0 ;
 	//
-	g_T5L.readSdweInit = FALSE;
-	g_T5L.pUartDevice = &g_UartDevice[UART_EXTERN];
-	g_T5L.version = 0;//SDWE version
-	g_T5L.allowCompare = FALSE;
+	t5lCtx->readSdweInit = FALSE;
+	//t5lCtx->pUartDevice = &g_UartDevice[t5lCtx->uartIndex];
+	t5lCtx->version = 0;//SDWE version
 	//
-	g_T5L.pUartDevice->pRxLength = &g_T5L.RxLength;
-	g_T5L.pUartDevice->pRxFinishFlag = &g_T5L.RxFinishFlag;
-	g_T5L.pUartDevice->pTxBuffer = &g_T5L.rxData[0];
-	g_T5L.pUartDevice->pRxBuffer = &g_T5L.rxData[0];
+	t5lCtx->pUartDevice->pRxLength = &t5lCtx->RxLength;
+	t5lCtx->pUartDevice->pRxFinishFlag = &t5lCtx->RxFinishFlag;
+	t5lCtx->pUartDevice->pTxBuffer = &t5lCtx->rxData[0];
+	t5lCtx->pUartDevice->pRxBuffer = &t5lCtx->rxData[0];
 	//
-	g_T5L.RxLength = 0;			/**< 接收字节数 */
-	g_T5L.RxFinishFlag = FALSE;	/**< 接收完成标志 */
+	t5lCtx->RxLength = 0;			/**< 接收字节数 */
+	t5lCtx->RxFinishFlag = FALSE;	/**< 接收完成标志 */
 	//
-	g_T5L.SetAdd = 0XFFFF;	/**< 地址 */
-	g_T5L.DataLen = 0;		/**< 数据长度 */
-	g_T5L.SetData = 0;		/**< 数据 */
+	t5lCtx->SetAdd = 0XFFFF;	/**< 地址 */
+	t5lCtx->DataLen = 0;		/**< 数据长度 */
+	t5lCtx->SetData = 0;		/**< 数据 */
 	//
-	g_T5L.ColorClen=FALSE;		/**< 通道切换SDWE颜色清除 */
-	g_T5L.CalibrateChanel=88;	/**< 通道 */
-	g_T5L.CalibratePoint=0;		/**< 校准点 */
+	t5lCtx->ColorClen=FALSE;		/**< 通道切换SDWE颜色清除 */
+	t5lCtx->CalibrateChanel=88;	/**< 通道 */
+	t5lCtx->CalibratePoint=0;		/**< 校准点 */
 	//
-	g_T5L.ResetTrigerValid = FALSE;
+	t5lCtx->ResetTrigerValid = FALSE;
 	//
 	for(i=0;i<CHANEL_POINT_NUM;i++)
 	{
-		g_T5L.CalibratePointArry[i] = defaultChanelSamplePoint[i];/**< 校准点数组 */
+		t5lCtx->CalibratePointArry[i] = defaultChanelSamplePoint[i];/**< 校准点数组 */
 	}
 	for(i=0;i<T5L_MAX_CHANEL_LEN;i++)
 	{
 		g_i16ColorOtherChanel[i]=T5L_CHANEL_WEIGHT_NOT_EQUAL;
 	}
 	//
-	g_T5L.pUartDevice->init(g_T5L.pUartDevice);
+	t5lCtx->pUartDevice->init(t5lCtx->pUartDevice);
 }
 
 void t5lDisPlayDataClear(void)
@@ -382,10 +382,10 @@ void color_clearAllColor(void)
 	}
 }
 //==recv sdwe register ask deal
-UINT8 sdweAskRegData(enumScreenIndexType index,UINT8 regAdd, UINT8 regData)
+UINT8 sdweAskRegData(ScreenHandleType  *screenHandlePtr,UINT8 regAdd, UINT8 regData)
 {
 	UINT8 needStore = FALSE ;
-	T5LType *pSdwe = &g_T5LCtx[index];
+	T5LType *pSdwe = screenHandlePtr->Ctx;
 	if(0 == regAdd)
 	{
 		pSdwe->version = regData;
@@ -814,20 +814,26 @@ screenRxTxHandleType screenRxHandle[SCREEN_RX_HANDLE_TOTAL_NUM]=
 	{0,	12,&screenRxHandle_CalibratePointSampleAndSet},//校准界面，校准点采样及设置
 	{0,	13,&screenRxHandle_VoicePrintfStatusFromScreen},//屏幕语音控制后状态返回
 };
+//
+screenRxTxHandleType screenLargerRxHandle[SCREEN_LARGER_RX_HANDLE_TOTAL_NUM]=
+{
+	//priority index func_add
+	{0,	0, &screenRxHandle_Version},//开机时MCU获取到屏幕版本时，代表屏幕可以正常通讯
+};
 //==recv sdwe variable ask deal
-UINT8 sdweAskVaribleData(enumScreenIndexType index,UINT16 varAdd, UINT16 varData)
+UINT8 sdweAskVaribleData(ScreenHandleType  *screenHandlePtr,UINT16 varAdd, UINT16 varData)
 {
 	UINT8 needStore = FALSE , i = 0;
-	T5LType *pSdwe = &g_T5LCtx[index];
+	T5LType *pSdwe = screenHandlePtr->Ctx;
 	//
 	pSdwe->SetAdd = varAdd ;
 	pSdwe->SetData = varData ;
 	//receive address from SDWE
 	if(0xffff != pSdwe->SetAdd)
 	{
-		for( i = 0 ; i < SCREEN_RX_HANDLE_TOTAL_NUM ; i++)
+		for( i = 0 ; i < screenHandlePtr->recvScreenHadlleNum ; i++)
 		{
-			if(TRUE == screenRxHandle[i].func(pSdwe))
+			if(TRUE == screenHandlePtr->recvScreenHadlleCtx[i].func(pSdwe))
 			{
 				needStore = pSdwe->needStore;
 				break;//遍历所有屏幕发过来的变量地址，满足则退出遍历
@@ -2446,8 +2452,41 @@ UINT8 sendBalancingWeightAndColorAndHelpDataToScreen(T5LType *pSdwe)
 	screenT5L_HelpDataMainFunction(pSdwe);
 	return ret;
 }
+
+
 //if sreen chanel changed
-UINT8 sendSysParaDataToDiwen(T5LType *pSdwe)
+UINT8 largerScreen_Init(T5LType *pSdwe)
+{
+	UINT8 result = FALSE ;
+	switch(pSdwe->sendSysParaDataToDiwenIndex)
+	{
+		case 0x80://获取系统版本 若获取回则代表 屏已上电
+			if(FALSE == pSdwe->sdwePowerOn)
+			{
+				if(0 == (pSdwe->CurTick %100))//every 500ms send order to get version
+				{
+					screenT5L_VersionGet(pSdwe);
+				}
+			}
+			else
+			{
+				pSdwe->sendSysParaDataToDiwenIndex = 0x81;
+			}
+		break;
+		default:
+			if(TRUE == pSdwe->sdweHX711FirstSampleCoplt)
+			{
+				result = TRUE;
+			}
+		break;
+	}
+	return result;
+}
+
+
+
+//if sreen chanel changed
+UINT8 smallerScreen_Init(T5LType *pSdwe)
 {
 	INT16 sendData[64],len=0;
 	UINT8 result = FALSE ;
@@ -3003,7 +3042,20 @@ UINT8 screenTxHandle_ScreenInit(T5LType *pSdwe)
 	if(T5L_INITIAL_COMPLETE != pSdwe->sendSdweInit)
 	{
 		matched = TRUE;
-		if(TRUE == sendSysParaDataToDiwen(pSdwe))
+		if(TRUE == smallerScreen_Init(pSdwe))
+		{
+			pSdwe->sendSdweInit = T5L_INITIAL_COMPLETE;
+		}
+	}
+	return matched;
+}
+UINT8 screenLargerTxHandle_ScreenInit(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	if(T5L_INITIAL_COMPLETE != pSdwe->sendSdweInit)
+	{
+		matched = TRUE;
+		if(TRUE == largerScreen_Init(pSdwe))
 		{
 			pSdwe->sendSdweInit = T5L_INITIAL_COMPLETE;
 		}
@@ -3262,18 +3314,19 @@ screenRxTxHandleType screenTxHandle[SCREEN_TX_HANDLE_TOTAL_NUM]=
 	{0,	14, &screenTxHandle_RemoveWeightTrigerHandle},//==B1 event arrive:At Balancing Page , remove weight trigerd
 	{0,	15, &screenTxHandle_ScreenWeightAndColorAndVoiceHandle},//normaly weight color voice handle
 };
-//==prepare TX data
-void screenT5L_TxFunction(enumScreenIndexType index)
+screenRxTxHandleType screenLargerTxHandle[SCREEN_LARGER_TX_HANDLE_TOTAL_NUM]=
 {
-	T5LType *pSdwe = &g_T5LCtx[index];
+	//priority index func_add
+	{0,	0, &screenLargerTxHandle_ScreenInit},//==send initial data to DIWEN to display
+};
+//==prepare TX data
+void screenT5L_TxFunction(ScreenHandleType  *screenHandlePtr)
+{
 	UINT8 i = 0;
-	if(index >= ScreenIndex_Max)
+	T5LType *t5lCtx = screenHandlePtr->Ctx;
+	for( i = 0 ; i < screenHandlePtr->sendScreenHadlleNum ; i++)
 	{
-		return;
-	}
-	for( i = 0 ; i < SCREEN_TX_HANDLE_TOTAL_NUM ; i++)
-	{
-		if(TRUE == screenTxHandle[i].func(pSdwe))
+		if(TRUE == screenHandlePtr->sendScreenHadlleCtx[i].func(t5lCtx))
 		{
 			break;
 		}
@@ -3281,17 +3334,13 @@ void screenT5L_TxFunction(enumScreenIndexType index)
 }
 
 //==SDWE UART data deal
-void screenT5L_RxFunction(enumScreenIndexType index)
+void screenT5L_RxFunction(ScreenHandleType  *screenHandlePtr)
 {
 	UINT8 needStore = FALSE ;
 	UINT16 regLen = 0 , reg_i = 0 , regAdd = 0 , regData = 0;
 	UINT16 varLen = 0 , var_i = 0 , varAdd = 0 , varData = 0;
-	T5LType *t5lCtx;
-	if(index >= ScreenIndex_Max)
-	{
-		return;
-	}
-	t5lCtx = &g_T5LCtx[index];
+	T5LType *t5lCtx=screenHandlePtr->Ctx;
+	//
 	if(TRUE == t5lCtx->RxFinishFlag)
 	{
 		//A5 5A
@@ -3320,7 +3369,7 @@ void screenT5L_RxFunction(enumScreenIndexType index)
 									regData = 0 ;
 									regData = t5lCtx->rxData[cmdPosRegData+reg_i];
 									//deal
-									needStore |= sdweAskRegData(index,(regAdd+reg_i),regData);
+									needStore |= sdweAskRegData(screenHandlePtr,(regAdd+reg_i),regData);
 								}
 							}
 						}
@@ -3349,7 +3398,7 @@ void screenT5L_RxFunction(enumScreenIndexType index)
 									varData &= 0xff00;
 									varData += t5lCtx->rxData[cmdPosVarData1+2*var_i+1];
 									//deal
-									needStore |= sdweAskVaribleData(index,(varAdd+var_i),varData);
+									needStore |= sdweAskVaribleData(screenHandlePtr,(varAdd+var_i),varData);
 								}
 							}
 						}						
@@ -3384,16 +3433,16 @@ void screenT5L_RxFunction(enumScreenIndexType index)
 //==sdwe main function
 void sreenT5L_MainFunction(void)
 {
-	g_T5LCtx[ScreenIndex_Smaller].CurTick++;
-	g_T5LCtx[ScreenIndex_Larger].CurTick++;
+	g_ScreenHandle[ScreenIndex_Smaller].Ctx->CurTick++;
+	g_ScreenHandle[ScreenIndex_Larger].Ctx->CurTick++;
 
 	//handle rx data from SDWE
-	screenT5L_RxFunction(ScreenIndex_Smaller);
-	screenT5L_RxFunction(ScreenIndex_Larger);
+	screenT5L_RxFunction(&g_ScreenHandle[ScreenIndex_Smaller]);
+	screenT5L_RxFunction(&g_ScreenHandle[ScreenIndex_Larger]);
 	
 	//prepare data and send to SDWE
-	screenT5L_TxFunction(ScreenIndex_Smaller);
-	//screenT5L_TxFunction(ScreenIndex_Larger);
+	screenT5L_TxFunction(&g_ScreenHandle[ScreenIndex_Smaller]);
+	screenT5L_TxFunction(&g_ScreenHandle[ScreenIndex_Larger]);
 
 	//slave data valid
 	setModbusDataValid(SLAVE_DATA_VALID);
