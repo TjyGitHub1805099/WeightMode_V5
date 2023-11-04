@@ -144,8 +144,7 @@ int main(void)
 	key_init();
 	led_init();
 	hx711_init();
-	screenT5L_Init(&g_T5LCtx[ScreenIndex_Smaller]);
-	screenT5L_Init(&g_T5LCtx[ScreenIndex_Larger]);
+	allScreenCtx_Init();
 	ModbusRtu_init();
 	readSysDataFromFlash();
 	readSysDataFromFlash_3030();

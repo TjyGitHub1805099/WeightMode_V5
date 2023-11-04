@@ -438,16 +438,14 @@ extern screenRxTxHandleType screenLargerTxHandle[SCREEN_LARGER_TX_HANDLE_TOTAL_N
 #define T5L_MAX_CHANEL_LEN			(2*HX711_CHANEL_NUM)
 #define T5L_CHANEL_WEIGHT_NOT_EQUAL	(0XFF)
 	
-
 //================================================================================================
-extern T5LType g_T5L;
 extern T5LType g_T5LCtx[ScreenIndex_Max];
 extern ScreenHandleType g_ScreenHandle[ScreenIndex_Max];
 extern INT16 g_i16ColorOtherChanel[T5L_MAX_CHANEL_LEN];//T5L_CHANEL_WEIGHT_NOT_EQUAL:invalid
 
 //================================================================================================
 extern void color_clearAllColor(void);
-extern void screenT5L_Init(T5LType *t5lCtx);
+extern void allScreenCtx_Init(void);
 extern void pointSampleTrigerDataSet(UINT8 localChanel , UINT8 point , INT16 value);
 extern void pointWeightTrigerDataSet(UINT8 localChanel , UINT8 point , INT16 value);
 extern void sdwe_VoicePrintfPush(tT5LVoinceType u8Voice1 ,tT5LVoinceType u8Voice2);

@@ -15,7 +15,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-T5LType g_T5L = T5LDataDefault;
 T5LType g_T5LCtx[ScreenIndex_Max] = {T5LDataDefault,T5LDataDefault2};
 ScreenHandleType g_ScreenHandle[ScreenIndex_Max] = {ScreenHandleDefault_Smaller,ScreenHandleDefault_Larger};
 
@@ -62,7 +61,7 @@ void app_uart_extern_msg_packet_process( UartDeviceType *pUartDevice )
 }
 
 //==sdwe initial
-void screenT5L_Init(T5LType *t5lCtx)
+static void screenT5L_Init(T5LType *t5lCtx)
 {
 	UINT8 i = 0 ;
 	//
@@ -98,6 +97,11 @@ void screenT5L_Init(T5LType *t5lCtx)
 	}
 	//
 	t5lCtx->pUartDevice->init(t5lCtx->pUartDevice);
+}
+void allScreenCtx_Init(void)
+{
+	screenT5L_Init(&g_T5LCtx[ScreenIndex_Smaller]);
+	screenT5L_Init(&g_T5LCtx[ScreenIndex_Larger]);
 }
 
 void t5lDisPlayDataClear(void)
@@ -3428,8 +3432,6 @@ void screenT5L_RxFunction(ScreenHandleType  *screenHandlePtr)
 	}
 }
 
-
-
 //==sdwe main function
 void sreenT5L_MainFunction(void)
 {
@@ -3447,4 +3449,3 @@ void sreenT5L_MainFunction(void)
 	//slave data valid
 	setModbusDataValid(SLAVE_DATA_VALID);
 }
-
