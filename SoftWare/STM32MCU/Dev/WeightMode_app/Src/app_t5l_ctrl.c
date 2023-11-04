@@ -47,6 +47,134 @@ INT16 g_i16HelpDataChnSort[T5L_MAX_CHANEL_LEN]={0};
 
 UINT8 g_u8Read00A1_Data = 0XFF;
 
+//================================================================================================
+//屏幕的描述指针：显示托盘的重量控件
+static INT16 int16_ChangeDisplayPosition = 0 ,int16_ChangeDisplayPosition_i = 0 ,int16_ChangeDisplayPosition_switch =0;
+static INT16 describlePoint_add = 0x9000,*describlePoint_data,describlePoint_len = 1;
+static INT16 describlePointAdd[HX711_CHANEL_NUM]={0x9011,0x9021,0x9031,0x9041,0x9051,0x9061,0x9071,0x9081};
+//托盘的重量显示：不带小数点显示
+static INT16 describlePointVluWuXiaoShu[HX711_CHANEL_NUM][6]=
+{
+//       x    	y      		颜色      	字库/字体大小	 对齐 整数位数    小数位数 变量类型
+//       x    	y      		颜色      	0：0号      	 00:左对齐 整数位数    小数位数 01:长整数(4字节)
+//       x    	y      		颜色      	字库/字体大小	 01:右对齐 整数位数    小数位数 变量类型
+//       x    	y      		颜色      	字库/字体大小	 02:居中   整数位数    小数位数 变量类型
+
+//1      86   	96      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
+	{0x0056, 	0x0060, 	0x6474,		0x003C,			0x0204,			0x0001},
+//2      86   	329      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
+	{0x0056, 	0x0149, 	0x6474,		0x003C,			0x0204,			0x0001},
+//3      476   	96      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
+	{0x01DC, 	0x0060, 	0x6474,		0x003C,			0x0204,			0x0001},
+//4      476   	329      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
+	{0x01DC, 	0x0149, 	0x6474,		0x003C,			0x0204,			0x0001},
+//5      866   	96      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
+	{0x0362, 	0x0060, 	0x6474,		0x003C,			0x0204,			0x0001},
+//6      866   	329      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
+	{0x0362, 	0x0149, 	0x6474,		0x003C,			0x0204,			0x0001},
+//7      1256  	96      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
+	{0x04E8, 	0x0060, 	0x6474,		0x003C,			0x0204,			0x0001},
+//8      1256  	329      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
+	{0x04E8, 	0x0149, 	0x6474,		0x003C,			0x0204,			0x0001},
+};
+//托盘的重量显示：带小数点显示
+static INT16 describlePointVluXiaoShu[HX711_CHANEL_NUM][6]=
+{
+//       x    	y      		颜色      	字库/字体大小	 对齐 整数位数    小数位数 变量类型
+//       x    	y      		颜色      	0：0号      	 00:左对齐 整数位数    小数位数 01:长整数(4字节)
+//       x    	y      		颜色      	字库/字体大小	 01:右对齐 整数位数    小数位数 变量类型
+//       x    	y      		颜色      	字库/字体大小	 02:居中   整数位数    小数位数 变量类型
+
+//1      86   	119      	0x6474   	0号字库 60大小   居中 4位数	  	 1位小数 4字节无符号变量			
+	{0x0056, 	0x0077, 	0x6474,		0x0028,			0x0204,			0x0101},
+//2      86   	352      	0x6474   	0号字库 60大小   居中 4位数	  	 1位小数 4字节无符号变量			
+	{0x0056, 	0x0160, 	0x6474,		0x0028,			0x0204,			0x0101},
+//3      476   	119      	0x6474   	0号字库 60大小   居中 4位数	  	 1位小数 4字节无符号变量			
+	{0x01DC, 	0x0077, 	0x6474,		0x0028,			0x0204,			0x0101},
+//4      476   	352      	0x6474   	0号字库 60大小   居中 4位数	  	 1位小数 4字节无符号变量			
+	{0x01DC, 	0x0160, 	0x6474,		0x0028,			0x0204,			0x0101},
+//5      866   	119      	0x6474   	0号字库 60大小   居中 4位数	  	 1位小数 4字节无符号变量			
+	{0x0362, 	0x0077, 	0x6474,		0x0028,			0x0204,			0x0101},
+//6      866   	352      	0x6474   	0号字库 60大小   居中 4位数	  	 1位小数 4字节无符号变量			
+	{0x0362, 	0x0160, 	0x6474,		0x0028,			0x0204,			0x0101},
+//7      1256  	119      	0x6474   	0号字库 60大小   居中 4位数	  	 1位小数 4字节无符号变量			
+	{0x04E8, 	0x0077, 	0x6474,		0x0028,			0x0204,			0x0101},
+//8      1256  	352      	0x6474   	0号字库 60大小   居中 4位数	  	 1位小数 4字节无符号变量			
+	{0x04E8, 	0x0160, 	0x6474,		0x0028,			0x0204,			0x0101},
+};
+
+//================================================================================================
+//屏幕的描述指针：托盘序号控件
+static INT16 describleIndexPointAdd[HX711_CHANEL_NUM]={0x9211,0x9221,0x9231,0x9241,0x9251,0x9261,0x9271,0x9281};
+static INT16 describleIndexPointData[HX711_CHANEL_NUM][6]=
+{
+//       x    	y      		颜色      	字库/字体大小	 对齐 整数位数    小数位数 变量类型
+//       x    	y      		颜色      	0：0号      	 00:左对齐 整数位数    小数位数 01:长整数(4字节)
+//       x    	y      		颜色      	字库/字体大小	 01:右对齐 整数位数    小数位数 变量类型
+//       x    	y      		颜色      	字库/字体大小	 02:居中   整数位数    小数位数 变量类型
+
+//1     188   	23      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
+	{0x00BC, 	0x0017, 	0x6474,		0x003C,			0x0204,			0x0001},
+//2     188   	265      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
+	{0x00BC, 	0x0109, 	0x6474,		0x003C,			0x0204,			0x0001},
+//3     577   	23      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
+	{0x0241, 	0x0017, 	0x6474,		0x003C,			0x0204,			0x0001},
+//4     577   	265      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
+	{0x0241, 	0x0109, 	0x6474,		0x003C,			0x0204,			0x0001},
+//5      967   	23      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
+	{0x03C7, 	0x0017, 	0x6474,		0x003C,			0x0204,			0x0001},
+//6      967   	265      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
+	{0x03C7, 	0x0109, 	0x6474,		0x003C,			0x0204,			0x0001},
+//7      1357  	23      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
+	{0x054D, 	0x0017, 	0x6474,		0x003C,			0x0204,			0x0001},
+//8      1357  	265      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
+	{0x054D, 	0x0109, 	0x6474,		0x003C,			0x0204,			0x0001},
+};
+
+//================================================================================================
+//屏幕的描述指针：帮助信息控件
+#define DESCRIBLE_POINT_HELP_NUM			(4)//4组帮助信息
+#define DESCRIBLE_POINT_HELP_COLOR			(0XF810)//红色
+#define DESCRIBLE_POINT_HELP_X_POS			(0X06E4)//1764
+#define DESCRIBLE_POINT_HELP_WU_XIAOSHU		(0X001A)//0号字库 字体大小26
+#define DESCRIBLE_POINT_HELP_YOU_XIAOSHU	(0X0014)//0号字库 字体大小20
+//帮助信息：不带小数显示
+static INT16 describlePointAdd_help[DESCRIBLE_POINT_HELP_NUM]={0x9111,0x9121,0x9131,0x9141};
+static INT16 describlePointVluWuXiaoShu_help[DESCRIBLE_POINT_HELP_NUM][6]=
+{
+//       x    	y      		颜色      	字库/字体大小	 对齐 整数位数    小数位数 变量类型
+//       x    	y      		颜色      	0：0号      	 00:左对齐 整数位数    小数位数 00:整数(2字节)
+//       x    	y      		颜色      	字库/字体大小	 01:右对齐 整数位数    小数位数 变量类型
+//       x    	y      		红色      	字库/字体大小	 02:居中   整数位数    小数位数 变量类型
+
+//1     1764   						97      	0xf810   						0号字库 大小   								居中 4位数	  	 0位小数 2字节变量			
+	{DESCRIBLE_POINT_HELP_X_POS, 	97, 	DESCRIBLE_POINT_HELP_COLOR,		DESCRIBLE_POINT_HELP_WU_XIAOSHU,			0x0204,			0x0000},
+//2     1764   						167      	0xf810   						0号字库 大小   								居中 4位数	  	 0位小数 2字节变量			
+	{DESCRIBLE_POINT_HELP_X_POS, 	167, 	DESCRIBLE_POINT_HELP_COLOR,		DESCRIBLE_POINT_HELP_WU_XIAOSHU,			0x0204,			0x0000},
+//3     1764   						232      	0xf810   						0号字库 大小   								居中 4位数	  	 0位小数 2字节变量			
+	{DESCRIBLE_POINT_HELP_X_POS, 	232, 	DESCRIBLE_POINT_HELP_COLOR,		DESCRIBLE_POINT_HELP_WU_XIAOSHU,			0x0204,			0x0000},
+//4     1764   						303      	0xf810   						0号字库 大小   								居中 4位数	  	 0位小数 2字节变量			
+	{DESCRIBLE_POINT_HELP_X_POS, 	303, 	DESCRIBLE_POINT_HELP_COLOR,		DESCRIBLE_POINT_HELP_WU_XIAOSHU,			0x0204,			0x0000},
+};
+//帮助信息：带小数显示
+static INT16 describlePointVluXiaoShu_help[DESCRIBLE_POINT_HELP_NUM][6]=
+{
+//       x    	y      		颜色      	字库/字体大小	 对齐 整数位数    小数位数 变量类型
+//       x    	y      		颜色      	0：0号      	 00:左对齐 整数位数    小数位数 00:整数(2字节)
+//       x    	y      		颜色      	字库/字体大小	 01:右对齐 整数位数    小数位数 变量类型
+//       x    	y      		颜色      	字库/字体大小	 02:居中   整数位数    小数位数 变量类型
+
+//1      1764   					105      	0xf810   						0号字库 大小   								居中 4位数	  	 1位小数 2字节变量			
+	{DESCRIBLE_POINT_HELP_X_POS, 	105, 	DESCRIBLE_POINT_HELP_COLOR,		DESCRIBLE_POINT_HELP_YOU_XIAOSHU,			0x0204,			0x0100},
+//2      1764   					175      	0xf810   						0号字库 大小   								居中 4位数	  	 1位小数 2字节变量			
+	{DESCRIBLE_POINT_HELP_X_POS, 	175, 	DESCRIBLE_POINT_HELP_COLOR,		DESCRIBLE_POINT_HELP_YOU_XIAOSHU,			0x0204,			0x0100},
+//3      1764   					240      	0xf810   						0号字库 大小   								居中 4位数	  	 1位小数 2字节变量			
+	{DESCRIBLE_POINT_HELP_X_POS, 	240, 	DESCRIBLE_POINT_HELP_COLOR,		DESCRIBLE_POINT_HELP_YOU_XIAOSHU,			0x0204,			0x0100},
+//4      1764   					310      	0xf810   						0号字库 大小   								居中 4位数	  	 1位小数 2字节变量			
+	{DESCRIBLE_POINT_HELP_X_POS, 	310, 	DESCRIBLE_POINT_HELP_COLOR,		DESCRIBLE_POINT_HELP_YOU_XIAOSHU,			0x0204,			0x0100},
+};
+
+
 /*******************************************************************************
  * Functions
  ******************************************************************************/
@@ -384,18 +512,6 @@ void color_clearAllColor(void)
 		g_i16ColorBuff[seq] = LED_COLOR_NONE;
 		g_i16ColorBuffPre[seq] = LED_COLOR_NUM;
 	}
-}
-//==recv sdwe register ask deal
-UINT8 sdweAskRegData(ScreenHandleType  *screenHandlePtr,UINT8 regAdd, UINT8 regData)
-{
-	UINT8 needStore = FALSE ;
-	T5LType *pSdwe = screenHandlePtr->Ctx;
-	if(0 == regAdd)
-	{
-		pSdwe->version = regData;
-		pSdwe->readSdweInit = TRUE;
-	}
-	return needStore;
 }
 //clear data to screen at calibration page
 void clearLocalCalibrationRecordData(UINT8 sreen_chanel)
@@ -799,7 +915,8 @@ UINT8 screenRxHandle_VoicePrintfStatusFromScreen(T5LType *pSdwe)
 	}
 	return matched;
 }
-//
+//================================================================================================
+//接收到小屏幕的数据处理
 screenRxTxHandleType screenRxHandle[SCREEN_RX_HANDLE_TOTAL_NUM]=
 {
 	//priority index func_add
@@ -818,13 +935,15 @@ screenRxTxHandleType screenRxHandle[SCREEN_RX_HANDLE_TOTAL_NUM]=
 	{0,	12,&screenRxHandle_CalibratePointSampleAndSet},//校准界面，校准点采样及设置
 	{0,	13,&screenRxHandle_VoicePrintfStatusFromScreen},//屏幕语音控制后状态返回
 };
-//
+
+//接收到大屏幕的数据处理
 screenRxTxHandleType screenLargerRxHandle[SCREEN_LARGER_RX_HANDLE_TOTAL_NUM]=
 {
 	//priority index func_add
 	{0,	0, &screenRxHandle_Version},//开机时MCU获取到屏幕版本时，代表屏幕可以正常通讯
 };
-//==recv sdwe variable ask deal
+
+//接收到屏幕的数据变量的处理
 UINT8 sdweAskVaribleData(ScreenHandleType  *screenHandlePtr,UINT16 varAdd, UINT16 varData)
 {
 	UINT8 needStore = FALSE , i = 0;
@@ -848,6 +967,22 @@ UINT8 sdweAskVaribleData(ScreenHandleType  *screenHandlePtr,UINT16 varAdd, UINT1
 	}
 	return needStore;
 }
+
+//================================================================================================
+//接收到屏幕的寄存器数据处理
+UINT8 sdweAskRegData(ScreenHandleType  *screenHandlePtr,UINT8 regAdd, UINT8 regData)
+{
+	UINT8 needStore = FALSE ;
+	T5LType *pSdwe = screenHandlePtr->Ctx;
+	if(0 == regAdd)
+	{
+		pSdwe->version = regData;
+		pSdwe->readSdweInit = TRUE;
+	}
+	return needStore;
+}
+
+//================================================================================================
 //if need jump to startup page 
 UINT8 jumpToStartUpPage(T5LType *pSdwe,INT16 curPage)
 {
@@ -898,23 +1033,7 @@ UINT8 jumpToBalancingPage(T5LType *pSdwe)
 	UINT8 result = 0 ;
 	//5A A5 07 82 0084 5A01 page
 	INT16 pageChangeOrderAndData[2]={0x5A01,DMG_FUNC_Balancing_6_PAGE};//49 page
-#if 0//before 20211119
-	if(0 == gSystemPara.isCascade)
-	{
-		pageChangeOrderAndData[1] = DMG_FUNC_Balancing_6_PAGE;
-	}
-	else 
-	{
-		if(0 == gSystemPara.ScreenCastMode)
-		{
-			pageChangeOrderAndData[1] = DMG_FUNC_Balancing_12_PAGE;
-		}
-		else
-		{
-			pageChangeOrderAndData[1] = DMG_FUNC_Help_PAGE;
-		}
-	}
-#else
+
 	//20220119 changed
 	switch(gSystemPara.isCascade)
 	{
@@ -937,7 +1056,7 @@ UINT8 jumpToBalancingPage(T5LType *pSdwe)
 		default :
 		break;
 	}
-#endif
+
 	pageChangeOrderAndData[1] = DMG_FUNC_Balancing_6_PAGE;
 	if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
 		((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
@@ -953,16 +1072,7 @@ UINT8 jumpToBalancingHomePage(T5LType *pSdwe)
 	UINT8 result = 0 ;
 	//5A A5 07 82 0084 5A01 page
 	INT16 pageChangeOrderAndData[2]={0x5A01,DMG_FUNC_Balancing_6_HOME_PAGE};
-#if 0//before 20211119
-	if(0 == gSystemPara.isCascade)
-	{
-		pageChangeOrderAndData[1] = DMG_FUNC_Balancing_6_HOME_PAGE;
-	}
-	else
-	{
-		pageChangeOrderAndData[1] = DMG_FUNC_Balancing_12_HOME_PAGE;
-	}
-#else
+
 	//20220119 changed
 	switch(gSystemPara.isCascade)
 	{
@@ -978,7 +1088,7 @@ UINT8 jumpToBalancingHomePage(T5LType *pSdwe)
 		default :
 		break;
 	}
-#endif
+
 	pageChangeOrderAndData[1] = DMG_FUNC_Balancing_6_HOME_PAGE;
 	if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
 		((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
@@ -2215,124 +2325,8 @@ UINT8 sendBalancingWeightAndColor20220125_FuncA_Slave(T5LType *pSdwe)
 	return ret;
 }
 
-static INT16 int16_ChangeDisplayPosition = 0 ,int16_ChangeDisplayPosition_i = 0 ,int16_ChangeDisplayPosition_switch =0;
-static INT16 describlePoint_add = 0x9000,*describlePoint_data,describlePoint_len = 1;
-INT16 describlePointAdd[HX711_CHANEL_NUM]={0x9011,0x9021,0x9031,0x9041,0x9051,0x9061,0x9071,0x9081};
-INT16 describlePointVluWuXiaoShu[HX711_CHANEL_NUM][6]=
-{
-//       x    	y      		颜色      	字库/字体大小	 对齐 整数位数    小数位数 变量类型
-//       x    	y      		颜色      	0：0号      	 00:左对齐 整数位数    小数位数 01:长整数(4字节)
-//       x    	y      		颜色      	字库/字体大小	 01:右对齐 整数位数    小数位数 变量类型
-//       x    	y      		颜色      	字库/字体大小	 02:居中   整数位数    小数位数 变量类型
-
-//1      86   	96      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
-	{0x0056, 	0x0060, 	0x6474,		0x003C,			0x0204,			0x0001},
-//2      86   	329      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
-	{0x0056, 	0x0149, 	0x6474,		0x003C,			0x0204,			0x0001},
-//3      476   	96      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
-	{0x01DC, 	0x0060, 	0x6474,		0x003C,			0x0204,			0x0001},
-//4      476   	329      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
-	{0x01DC, 	0x0149, 	0x6474,		0x003C,			0x0204,			0x0001},
-//5      866   	96      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
-	{0x0362, 	0x0060, 	0x6474,		0x003C,			0x0204,			0x0001},
-//6      866   	329      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
-	{0x0362, 	0x0149, 	0x6474,		0x003C,			0x0204,			0x0001},
-//7      1256  	96      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
-	{0x04E8, 	0x0060, 	0x6474,		0x003C,			0x0204,			0x0001},
-//8      1256  	329      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
-	{0x04E8, 	0x0149, 	0x6474,		0x003C,			0x0204,			0x0001},
-};
-INT16 describlePointVluXiaoShu[HX711_CHANEL_NUM][6]=
-{
-//       x    	y      		颜色      	字库/字体大小	 对齐 整数位数    小数位数 变量类型
-//       x    	y      		颜色      	0：0号      	 00:左对齐 整数位数    小数位数 01:长整数(4字节)
-//       x    	y      		颜色      	字库/字体大小	 01:右对齐 整数位数    小数位数 变量类型
-//       x    	y      		颜色      	字库/字体大小	 02:居中   整数位数    小数位数 变量类型
-
-//1      86   	119      	0x6474   	0号字库 60大小   居中 4位数	  	 1位小数 4字节无符号变量			
-	{0x0056, 	0x0077, 	0x6474,		0x0028,			0x0204,			0x0101},
-//2      86   	352      	0x6474   	0号字库 60大小   居中 4位数	  	 1位小数 4字节无符号变量			
-	{0x0056, 	0x0160, 	0x6474,		0x0028,			0x0204,			0x0101},
-//3      476   	119      	0x6474   	0号字库 60大小   居中 4位数	  	 1位小数 4字节无符号变量			
-	{0x01DC, 	0x0077, 	0x6474,		0x0028,			0x0204,			0x0101},
-//4      476   	352      	0x6474   	0号字库 60大小   居中 4位数	  	 1位小数 4字节无符号变量			
-	{0x01DC, 	0x0160, 	0x6474,		0x0028,			0x0204,			0x0101},
-//5      866   	119      	0x6474   	0号字库 60大小   居中 4位数	  	 1位小数 4字节无符号变量			
-	{0x0362, 	0x0077, 	0x6474,		0x0028,			0x0204,			0x0101},
-//6      866   	352      	0x6474   	0号字库 60大小   居中 4位数	  	 1位小数 4字节无符号变量			
-	{0x0362, 	0x0160, 	0x6474,		0x0028,			0x0204,			0x0101},
-//7      1256  	119      	0x6474   	0号字库 60大小   居中 4位数	  	 1位小数 4字节无符号变量			
-	{0x04E8, 	0x0077, 	0x6474,		0x0028,			0x0204,			0x0101},
-//8      1256  	352      	0x6474   	0号字库 60大小   居中 4位数	  	 1位小数 4字节无符号变量			
-	{0x04E8, 	0x0160, 	0x6474,		0x0028,			0x0204,			0x0101},
-};
-
-INT16 describleIndexPointAdd[HX711_CHANEL_NUM]={0x9211,0x9221,0x9231,0x9241,0x9251,0x9261,0x9271,0x9281};
-INT16 describleIndexPointData[HX711_CHANEL_NUM][6]=
-{
-//       x    	y      		颜色      	字库/字体大小	 对齐 整数位数    小数位数 变量类型
-//       x    	y      		颜色      	0：0号      	 00:左对齐 整数位数    小数位数 01:长整数(4字节)
-//       x    	y      		颜色      	字库/字体大小	 01:右对齐 整数位数    小数位数 变量类型
-//       x    	y      		颜色      	字库/字体大小	 02:居中   整数位数    小数位数 变量类型
-
-//1     188   	23      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
-	{0x00BC, 	0x0017, 	0x6474,		0x003C,			0x0204,			0x0001},
-//2     188   	265      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
-	{0x00BC, 	0x0109, 	0x6474,		0x003C,			0x0204,			0x0001},
-//3     577   	23      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
-	{0x0241, 	0x0017, 	0x6474,		0x003C,			0x0204,			0x0001},
-//4     577   	265      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
-	{0x0241, 	0x0109, 	0x6474,		0x003C,			0x0204,			0x0001},
-//5      967   	23      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
-	{0x03C7, 	0x0017, 	0x6474,		0x003C,			0x0204,			0x0001},
-//6      967   	265      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
-	{0x03C7, 	0x0109, 	0x6474,		0x003C,			0x0204,			0x0001},
-//7      1357  	23      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
-	{0x054D, 	0x0017, 	0x6474,		0x003C,			0x0204,			0x0001},
-//8      1357  	265      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
-	{0x054D, 	0x0109, 	0x6474,		0x003C,			0x0204,			0x0001},
-};
-
-#define DESCRIBLE_POINT_HELP_NUM			(4)//4组帮助信息
-#define DESCRIBLE_POINT_HELP_COLOR			(0XF810)//红色
-#define DESCRIBLE_POINT_HELP_X_POS			(0X06E4)//1764
-#define DESCRIBLE_POINT_HELP_WU_XIAOSHU		(0X001A)//0号字库 字体大小26
-#define DESCRIBLE_POINT_HELP_YOU_XIAOSHU	(0X0014)//0号字库 字体大小20
-
-INT16 describlePointAdd_help[DESCRIBLE_POINT_HELP_NUM]={0x9111,0x9121,0x9131,0x9141};
-INT16 describlePointVluWuXiaoShu_help[DESCRIBLE_POINT_HELP_NUM][6]=
-{
-//       x    	y      		颜色      	字库/字体大小	 对齐 整数位数    小数位数 变量类型
-//       x    	y      		颜色      	0：0号      	 00:左对齐 整数位数    小数位数 00:整数(2字节)
-//       x    	y      		颜色      	字库/字体大小	 01:右对齐 整数位数    小数位数 变量类型
-//       x    	y      		红色      	字库/字体大小	 02:居中   整数位数    小数位数 变量类型
-
-//1     1764   						97      	0xf810   						0号字库 大小   								居中 4位数	  	 0位小数 2字节变量			
-	{DESCRIBLE_POINT_HELP_X_POS, 	97, 	DESCRIBLE_POINT_HELP_COLOR,		DESCRIBLE_POINT_HELP_WU_XIAOSHU,			0x0204,			0x0000},
-//2     1764   						167      	0xf810   						0号字库 大小   								居中 4位数	  	 0位小数 2字节变量			
-	{DESCRIBLE_POINT_HELP_X_POS, 	167, 	DESCRIBLE_POINT_HELP_COLOR,		DESCRIBLE_POINT_HELP_WU_XIAOSHU,			0x0204,			0x0000},
-//3     1764   						232      	0xf810   						0号字库 大小   								居中 4位数	  	 0位小数 2字节变量			
-	{DESCRIBLE_POINT_HELP_X_POS, 	232, 	DESCRIBLE_POINT_HELP_COLOR,		DESCRIBLE_POINT_HELP_WU_XIAOSHU,			0x0204,			0x0000},
-//4     1764   						303      	0xf810   						0号字库 大小   								居中 4位数	  	 0位小数 2字节变量			
-	{DESCRIBLE_POINT_HELP_X_POS, 	303, 	DESCRIBLE_POINT_HELP_COLOR,		DESCRIBLE_POINT_HELP_WU_XIAOSHU,			0x0204,			0x0000},
-};
-INT16 describlePointVluXiaoShu_help[DESCRIBLE_POINT_HELP_NUM][6]=
-{
-//       x    	y      		颜色      	字库/字体大小	 对齐 整数位数    小数位数 变量类型
-//       x    	y      		颜色      	0：0号      	 00:左对齐 整数位数    小数位数 00:整数(2字节)
-//       x    	y      		颜色      	字库/字体大小	 01:右对齐 整数位数    小数位数 变量类型
-//       x    	y      		颜色      	字库/字体大小	 02:居中   整数位数    小数位数 变量类型
-
-//1      1764   					105      	0xf810   						0号字库 大小   								居中 4位数	  	 1位小数 2字节变量			
-	{DESCRIBLE_POINT_HELP_X_POS, 	105, 	DESCRIBLE_POINT_HELP_COLOR,		DESCRIBLE_POINT_HELP_YOU_XIAOSHU,			0x0204,			0x0100},
-//2      1764   					175      	0xf810   						0号字库 大小   								居中 4位数	  	 1位小数 2字节变量			
-	{DESCRIBLE_POINT_HELP_X_POS, 	175, 	DESCRIBLE_POINT_HELP_COLOR,		DESCRIBLE_POINT_HELP_YOU_XIAOSHU,			0x0204,			0x0100},
-//3      1764   					240      	0xf810   						0号字库 大小   								居中 4位数	  	 1位小数 2字节变量			
-	{DESCRIBLE_POINT_HELP_X_POS, 	240, 	DESCRIBLE_POINT_HELP_COLOR,		DESCRIBLE_POINT_HELP_YOU_XIAOSHU,			0x0204,			0x0100},
-//4      1764   					310      	0xf810   						0号字库 大小   								居中 4位数	  	 1位小数 2字节变量			
-	{DESCRIBLE_POINT_HELP_X_POS, 	310, 	DESCRIBLE_POINT_HELP_COLOR,		DESCRIBLE_POINT_HELP_YOU_XIAOSHU,			0x0204,			0x0100},
-};
-
+//================================================================================================
+//屏幕：显示托盘的重量（当是否显示小数参数修改时和上电初始化时执行）
 UINT8 screen_ChangeDisplayPosition(T5LType *pSdwe)
 {
 	static INT16 add_offset = 0,data_offset = 0,len_offset = 0;
@@ -2398,8 +2392,8 @@ UINT8 screen_ChangeDisplayPosition(T5LType *pSdwe)
 	return ret;
 }
 
-
-
+//================================================================================================
+//屏幕：显示托盘序号（当是否显示小数参数修改时和上电初始化时执行）
 UINT8 screen_ChangeDisplayPositionOfIndex(T5LType *pSdwe)
 {
 	static INT16 add_offset = 0,data_offset = 0,len_offset = 0 , int16_ChangeDisplayPosition_ii = 0;
@@ -2422,11 +2416,12 @@ UINT8 screen_ChangeDisplayPositionOfIndex(T5LType *pSdwe)
 
 	return ret;
 }
-
+//获取屏幕的当前页面序号
 void screenT5L_CurPageGet(T5LType *pSdwe)
 {
 	t5lReadVarible(pSdwe,DMG_SYS_CUR_PAGE_GET_ADD,1,0);//get cur page
 }
+//获取屏幕的软件版本号
 void screenT5L_VersionGet(T5LType *pSdwe)
 {
 	t5lReadVarible(pSdwe,DMG_SYS_VERSION_GET_ADD,1,0);//get version
@@ -2457,8 +2452,7 @@ UINT8 sendBalancingWeightAndColorAndHelpDataToScreen(T5LType *pSdwe)
 	return ret;
 }
 
-
-//if sreen chanel changed
+//大屏的相关变量初始化过程
 UINT8 largerScreen_Init(T5LType *pSdwe)
 {
 	UINT8 result = FALSE ;
@@ -2487,9 +2481,7 @@ UINT8 largerScreen_Init(T5LType *pSdwe)
 	return result;
 }
 
-
-
-//if sreen chanel changed
+//小屏的相关变量初始化过程
 UINT8 smallerScreen_Init(T5LType *pSdwe)
 {
 	INT16 sendData[64],len=0;
@@ -2667,28 +2659,6 @@ UINT8 smallerScreen_Init(T5LType *pSdwe)
 				pSdwe->sendSysParaDataToDiwenIndex++;
 			}
 		break;
-		#if 0
-		case 6://send 0X1501 password ID
-			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
-			{
-				len=0;
-				sendData[len++] = g_passWordId&0XFFFF;
-				t5lWriteVarible(pSdwe,(0x1500),sendData,len,0);		/**< 密码依赖的芯片ID */		//1500
-				pSdwe->sendSysParaDataToDiwenIndex++;
-			}
-		break;
-		case 7://send 1510 password store
-			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
-			{
-				len=0;
-				sendData[len++] = g_passWordStore&0XFFFF;
-				t5lWriteVarible(pSdwe,(0x1510),sendData,len,0);		/**< 密码 */				  //1510
-				pSdwe->sendSysParaDataToDiwenIndex++;
-			}
-		break;
-		#endif
 		case 9://send 2100 DMG_FUNC_SET_CHANEL_NUM
 			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
 				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
@@ -2728,26 +2698,8 @@ UINT8 smallerScreen_Init(T5LType *pSdwe)
 	return result;
 }
 
-//if need jump to Banling page 
-UINT8 trigerVoice(T5LType *pSdwe,UINT8 test_id)
-{
-	UINT8 result = 0 ;
-	//5A A5 07 82 0084 5A01 page
-	//5A A5 07 82 00A0 3101 4000
-	INT16 pageChangeOrderAndData[2]={0x3101,0X6400};//64音量100 00速度
-	
-	
-	pageChangeOrderAndData[0] = ((test_id%15)<<8)+(1);//音乐序号 1：整段音乐
-	if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-		((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
-	{
-		t5lWriteVarible(pSdwe,(0X00A0),pageChangeOrderAndData,2,0);
-		result = 1;
-	}
-	return result;
-}
-
-//===========================T5L Voice Printf Manage
+//================================================================================================
+//需要播报语音的语音序号入队
 void sdwe_VoicePrintfPush(tT5LVoinceType u8Voice1 ,tT5LVoinceType u8Voice2)
 {
 	if(u8T5LVoiceBuffStoreNum == 0)
@@ -2760,6 +2712,7 @@ void sdwe_VoicePrintfPush(tT5LVoinceType u8Voice1 ,tT5LVoinceType u8Voice2)
 		u8T5LVoiceBuffStoreNum++;
 	}
 }
+//需要播报语音的语音序号出队
 UINT8 sdwe_VoicePrintfPop(tT5LVoinceType *u8Voice1 , tT5LVoinceType *u8Voice2 , tT5LVoinceType *u8Voice3)
 {
 	UINT8 ret = FALSE;
@@ -2787,7 +2740,7 @@ UINT8 sdwe_VoicePrintfPop(tT5LVoinceType *u8Voice1 , tT5LVoinceType *u8Voice2 , 
 	//
 	return ret;
 }
-//if need jump to Banling page 
+//触发屏幕语音播报
 UINT8 screenT5L_OutputVoice(T5LType *pSdwe,UINT8 voiceId)
 {
 	UINT8 result = 0 ;
@@ -2814,7 +2767,7 @@ UINT8 screenT5L_OutputVoice(T5LType *pSdwe,UINT8 voiceId)
 	}
 	return result;
 }
-//
+//屏幕语音播报处理
 void screenT5L_VoicePrintfMainfunction(T5LType *pSdwe)
 {
 	static UINT8 u8Vstatus = 0 ;
@@ -2892,127 +2845,6 @@ void screenT5L_VoicePrintfMainfunction(T5LType *pSdwe)
 		break;
 	}
 }
-UINT8 screenT5L_VoicePrintfMainfunction_WaitSuccess(UINT16 maxWait)
-{
-	UINT8 ret = 0 ;
-	static enumSDWEcmdWaitVoivePrintType waitStatus = cmdWaitVoivePrint_max ;
-	static UINT16 ticks = 0; 
-	static UINT16 u16ReadDIffTick = 100;
-	T5LType *pSdwe = &g_T5LCtx[ScreenIndex_Smaller];
-	//each 100ms force to read
-	if((++ticks % u16ReadDIffTick) == 0)
-	{
-		waitStatus = cmdWaitVoivePrint_forceRead ;//force to read
-	}
-	
-	//wait result
-	switch(waitStatus)
-	{
-		case cmdWaitVoivePrint_forceRead://send order:read voice printf status 
-			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
-				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
-			{
-				g_u8Read00A1_Data = 0xff;
-				//
-				t5lReadVarible(pSdwe,0x00A1,1,0);
-				waitStatus = cmdWaitVoivePrint_waitResult;
-			}
-		break;
-		case cmdWaitVoivePrint_waitResult:
-			if( 0 == g_u8Read00A1_Data)//0：停止 ，1：暂停 ， 2：播放中
-			{
-				ret = TRUE;
-			}
-		break;
-		default:
-		break;
-	}
-	
-	//max timeout break
-	if((ticks >= maxWait) || (TRUE == ret))
-	{
-		ticks = 0 ;
-		waitStatus = cmdWaitVoivePrint_max ;
-	}
-
-	return ret;
-}
-
-//
-void screenT5L_VoicePrintfMainfunction_ReadBackFromScreen(T5LType *pSdwe)
-{
-	static UINT8 u8Vstatus = 0;
-	static tT5LVoinceType u8Voice1 = T5L_VoiceTypeNum_0 ,u8Voice2 = T5L_VoiceTypeNum_0 ,u8Voice3 = T5L_VoiceTypeNum_0 ;
-	//
-	switch(u8Vstatus)
-	{
-		case 0:
-			if(TRUE == sdwe_VoicePrintfPop(&u8Voice1,&u8Voice2,&u8Voice3))
-			{
-				u8Vstatus++;
-			}
-		break;
-		//===========V1
-		case 1://printf V1
-			if(TRUE == screenT5L_OutputVoice(pSdwe,u8Voice1))
-			{
-				u8Vstatus++;
-			}
-		break;
-		case 2://wait time
-			if(TRUE == screenT5L_VoicePrintfMainfunction_WaitSuccess(2000))//最多等2000ms
-			{
-				u8Vstatus = 5;
-			}
-		break;
-		//===========yu
-		case 3://printf yu
-			if(TRUE == screenT5L_OutputVoice(pSdwe,VoiceTypeYu_13))
-			{
-				u8Vstatus++;
-			}
-		break;
-		case 4://wait time
-			if(TRUE == screenT5L_VoicePrintfMainfunction_WaitSuccess(2000))//最多等1000ms
-			{
-				u8Vstatus++;
-			}
-		break;
-		//===========V2
-		case 5://printf v2
-			if(TRUE == screenT5L_OutputVoice(pSdwe,u8Voice2))
-			{
-				u8Vstatus++;
-			}
-		break;
-		case 6://wait time
-			if(TRUE == screenT5L_VoicePrintfMainfunction_WaitSuccess(2000))//最多等900ms
-			{
-				u8Vstatus++;
-			}
-		break;
-		//==========pei pin cheng gong
-		case 7://printf v1 v2 success
-			if(TRUE == screenT5L_OutputVoice(pSdwe,u8Voice3))
-			{
-				u8Vstatus++;
-			}
-		break;
-		case 8://wait time
-			if(TRUE == screenT5L_VoicePrintfMainfunction_WaitSuccess(2000))//最多等900ms
-			{
-				u8Vstatus++;
-				screenT5L_OutputVoice(pSdwe,VoiceTypeMax);
-			}
-		break;
-		default:
-			u8Vstatus = 0 ;
-		break;
-	}
-
-
-}
-
 //==send help data te screen
 void screenT5L_HelpDataMainFunction(T5LType *pSdwe)
 {
@@ -3035,11 +2867,10 @@ void screenT5L_HelpDataMainFunction(T5LType *pSdwe)
 	{
 		masterCaculateHelpData(pContex,T5L_MAX_CHANEL_LEN); 
 		sendHelpDataDiff_AtSlave1Device(pSdwe);
-	}
-		
+	}	
 }
 
-
+//小屏的屏幕初始化：发送相关参数给屏幕
 UINT8 screenTxHandle_ScreenInit(T5LType *pSdwe)
 {
 	UINT8 matched = FALSE;
@@ -3053,6 +2884,7 @@ UINT8 screenTxHandle_ScreenInit(T5LType *pSdwe)
 	}
 	return matched;
 }
+//大屏的屏幕初始化：发送相关参数给屏幕
 UINT8 screenLargerTxHandle_ScreenInit(T5LType *pSdwe)
 {
 	UINT8 matched = FALSE;
@@ -3297,7 +3129,7 @@ UINT8 screenTxHandle_ScreenWeightAndColorAndVoiceHandle(T5LType *pSdwe)
 	return matched;
 }
 
-
+//准备发送给小屏幕的数据处理
 screenRxTxHandleType screenTxHandle[SCREEN_TX_HANDLE_TOTAL_NUM]=
 {
 	//priority index func_add
@@ -3318,12 +3150,15 @@ screenRxTxHandleType screenTxHandle[SCREEN_TX_HANDLE_TOTAL_NUM]=
 	{0,	14, &screenTxHandle_RemoveWeightTrigerHandle},//==B1 event arrive:At Balancing Page , remove weight trigerd
 	{0,	15, &screenTxHandle_ScreenWeightAndColorAndVoiceHandle},//normaly weight color voice handle
 };
+
+//准备发送给大屏幕的数据处理
 screenRxTxHandleType screenLargerTxHandle[SCREEN_LARGER_TX_HANDLE_TOTAL_NUM]=
 {
 	//priority index func_add
 	{0,	0, &screenLargerTxHandle_ScreenInit},//==send initial data to DIWEN to display
 };
-//==prepare TX data
+
+//发送给屏幕的数据处理
 void screenT5L_TxFunction(ScreenHandleType  *screenHandlePtr)
 {
 	UINT8 i = 0;
@@ -3337,7 +3172,7 @@ void screenT5L_TxFunction(ScreenHandleType  *screenHandlePtr)
 	}	
 }
 
-//==SDWE UART data deal
+//接收到屏幕的数据处理
 void screenT5L_RxFunction(ScreenHandleType  *screenHandlePtr)
 {
 	UINT8 needStore = FALSE ;
@@ -3432,7 +3267,7 @@ void screenT5L_RxFunction(ScreenHandleType  *screenHandlePtr)
 	}
 }
 
-//==sdwe main function
+//屏幕的统一处理
 void sreenT5L_MainFunction(void)
 {
 	g_ScreenHandle[ScreenIndex_Smaller].Ctx->CurTick++;
