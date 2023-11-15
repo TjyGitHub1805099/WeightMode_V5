@@ -227,6 +227,21 @@ typedef enum
 	cmdPosVarAddress2= 5 ,//val address two byte position
 	cmdPosReadVarAskLen= 6 ,//when read data ask data len position
 	cmdPosVarData1= 7 ,//val address two byte position
+
+		//write varible color 
+	cmdPosVarWriteAddress1color= 4 ,//val address two byte position
+	cmdPosVarWriteAddress2color= 5 ,//val address two byte position
+	cmdPosVarWriteColorOrder1color= 6 ,//val address two byte position
+	cmdPosVarWriteColorOrder2color= 7 ,//val address two byte position
+	cmdPosVarWriteColorOrder3color= 8 ,//val address two byte position
+	cmdPosVarWriteColorOrder4color= 9 ,//val address two byte position
+	cmdPosVarWriteColorXPos= 10 ,//val address two byte position
+
+
+
+
+	cmdPosVarWriteDatacolor= 6 ,//val address two byte position
+
 }enumSDWEcmdPosType;
 
 typedef enum
@@ -412,7 +427,7 @@ extern screenRxTxHandleType screenRxHandle[SCREEN_RX_HANDLE_TOTAL_NUM];
 extern screenRxTxHandleType screenTxHandle[SCREEN_TX_HANDLE_TOTAL_NUM];
 
 #define SCREEN_LARGER_RX_HANDLE_TOTAL_NUM	(1)	/**< 屏幕RX数据处理事件数量 */
-#define SCREEN_LARGER_TX_HANDLE_TOTAL_NUM	(1)	/**< 屏幕TX数据处理事件数量 */
+#define SCREEN_LARGER_TX_HANDLE_TOTAL_NUM	(2)	/**< 屏幕TX数据处理事件数量 */
 extern screenRxTxHandleType screenLargerRxHandle[SCREEN_LARGER_RX_HANDLE_TOTAL_NUM];
 extern screenRxTxHandleType screenLargerTxHandle[SCREEN_LARGER_TX_HANDLE_TOTAL_NUM];
 
@@ -437,7 +452,7 @@ extern screenRxTxHandleType screenLargerTxHandle[SCREEN_LARGER_TX_HANDLE_TOTAL_N
 #define T5L_INITIAL_COMPLETE		(0X12)//屏初始化完成标志
 #define T5L_MAX_CHANEL_LEN			(2*HX711_CHANEL_NUM)
 #define T5L_CHANEL_WEIGHT_NOT_EQUAL	(0XFF)
-	
+#define T5L_L_HELP_TOTAL_NUM		(6)	
 //================================================================================================
 extern T5LType g_T5LCtx[ScreenIndex_Max];
 extern ScreenHandleType g_ScreenHandle[ScreenIndex_Max];

@@ -207,12 +207,12 @@
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>g_ScreenHandle</ItemText>
+          <ItemText>pSdwe</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>pSdwe</ItemText>
+          <ItemText>TICK_TSET_flag2</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>
