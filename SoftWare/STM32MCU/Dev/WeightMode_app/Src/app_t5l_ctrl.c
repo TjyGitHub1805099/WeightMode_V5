@@ -38,7 +38,7 @@ INT16 g_i16ColorOtherChanel[T5L_MAX_CHANEL_LEN]={0};//T5L_WEIGHT_CHANEL_INVALID:
 //
 float g_fDataBuffCaculate[T5L_MAX_CHANEL_LEN]={0};
 INT16 g_i16OtherChanelCaculate[T5L_MAX_CHANEL_LEN]={0};//other chanel need +1 , chanel = 1~x
-//
+//help data send to DIWEN
 INT16 g_i16HelpDataBuff[DIFF_TO_DIWEN_DATA_LEN]={0};
 INT16 g_i16HelpDataBuffPre[DIFF_TO_DIWEN_DATA_LEN]={0};
 
@@ -47,34 +47,32 @@ INT16 g_i16HelpDataChnSort[T5L_MAX_CHANEL_LEN]={0};
 
 UINT8 g_u8Read00A1_Data = 0XFF;
 
-//================================================================================================
+//=====================================================================================================================
 //屏幕的描述指针地址范围：
 //0x9010~0x9100：重量显示控件
 //0x9110~0x9160：帮助信息的差值显示控件
 //0x9210~0x9300：托盘序号显示控件
 //0x9310~0x9400：托盘背景色显示控件
+//=====================================================================================================================
 
 
 static INT16 int16_ChangeDisplayPosition_Larger = 0 ,int16_ChangeDisplayPosition_i_Larger = 0 ,int16_ChangeDisplayPosition_switch_Larger =0;
 static INT16 describlePoint_add_Larger = 0x9000,*describlePoint_data_Larger,describlePoint_len_Larger = 1;
 //=============================================15.6寸屏的【托盘重量】描述指针=============================================
 //大屏幕的描述指针：显示托盘的重量控件
+//单元格大小150*210
 static INT16 describlePointWeightVluAdd_Larger[T5L_MAX_CHANEL_LEN]={0x9011,0x9021,0x9031,0x9041,0x9051,0x9061,0x9071,0x9081,0x9091,0x90A1,0x90B1,0x90C1,0x90D1,0x90E1,0x90F1,0x9101};
 //托盘的重量显示：不带小数点显示
-//单元格大小150*200
 //                              左边框 单个宽度   单个间距	  (8+8)分块间距
-#define L_WEIGHT_VLU_DIS_X(I) 	(19  + I*(150) + I/1*18     +(I/4)*18)//X
-#define L_WEIGHT_VLU_DIS_Y(I) 	(200 + I*(210) + (I/1)*31   + 0)//Y
-#define L_WEIGHT_VLU_DIS_COLOR	(0x6474)//颜色
-#define L_WEIGHT_VLU_DIS_SIZE	(0x0020)//字库+字体大小
-#define L_WEIGHT_VLU_DIS_DQZWS	(0x0204)//对齐+整数位数
-#define L_WEIGHT_VLU_DIS_XWSLX	(0x0001)//小数位数+变量类型
+#define L_WEIGHT_VLU_DIS_X(I) 	(19  + I*(150) + I/1*18     +(I/4)*18)//X position
+#define L_WEIGHT_VLU_DIS_Y(I) 	(200 + I*(210) + (I/1)*31   + 0)//Y position
+#define L_WEIGHT_VLU_DIS_COLOR	(0x6474)//color
+#define L_WEIGHT_VLU_DIS_SIZE	(0x0020)//字库(00:0号字库)+字体大小(20:32大小)
+#define L_WEIGHT_VLU_DIS_DQZWS	(0x0204)//对齐(00:左对齐，01:右对齐，02:居中) + 整数位数(04:4位整数)
+#define L_WEIGHT_VLU_DIS_XWSLX	(0x0001)//小数位数(00:无小数，01:1位小数)+变量类型(01:长整型4字节)
 static INT16 describlePointWeightVluWuXiaoShu_Larger[T5L_MAX_CHANEL_LEN][6]=
 {
-//  x    				y      				颜色      			字库+字体大小		对齐+整数位数    		小数位数 变量类型
-//  x    				y      				颜色      			0：0号      		00：左对齐 整数位数    	小数位数 01:长整数(4字节)
-//  x    				y      				颜色      			字库+字体大小	 	01：右对齐 整数位数    	小数位数 变量类型
-//  x    				y      				颜色      			字库+字体大小	 	02：居中   整数位数    	小数位数 变量类型
+//  x    					y      					颜色      				字库+字体大小			 对齐+整数位数    			   小数位数 变量类型
 	{L_WEIGHT_VLU_DIS_X(0),	L_WEIGHT_VLU_DIS_Y(0),	L_WEIGHT_VLU_DIS_COLOR,	L_WEIGHT_VLU_DIS_SIZE,	L_WEIGHT_VLU_DIS_DQZWS,		L_WEIGHT_VLU_DIS_XWSLX},
 	{L_WEIGHT_VLU_DIS_X(0),	L_WEIGHT_VLU_DIS_Y(1),	L_WEIGHT_VLU_DIS_COLOR,	L_WEIGHT_VLU_DIS_SIZE,	L_WEIGHT_VLU_DIS_DQZWS,		L_WEIGHT_VLU_DIS_XWSLX},
 	{L_WEIGHT_VLU_DIS_X(1),	L_WEIGHT_VLU_DIS_Y(0),	L_WEIGHT_VLU_DIS_COLOR,	L_WEIGHT_VLU_DIS_SIZE,	L_WEIGHT_VLU_DIS_DQZWS,		L_WEIGHT_VLU_DIS_XWSLX},
@@ -91,23 +89,20 @@ static INT16 describlePointWeightVluWuXiaoShu_Larger[T5L_MAX_CHANEL_LEN][6]=
 	{L_WEIGHT_VLU_DIS_X(6),	L_WEIGHT_VLU_DIS_Y(1),	L_WEIGHT_VLU_DIS_COLOR,	L_WEIGHT_VLU_DIS_SIZE,	L_WEIGHT_VLU_DIS_DQZWS,		L_WEIGHT_VLU_DIS_XWSLX},
 	{L_WEIGHT_VLU_DIS_X(7),	L_WEIGHT_VLU_DIS_Y(0),	L_WEIGHT_VLU_DIS_COLOR,	L_WEIGHT_VLU_DIS_SIZE,	L_WEIGHT_VLU_DIS_DQZWS,		L_WEIGHT_VLU_DIS_XWSLX},
 	{L_WEIGHT_VLU_DIS_X(7),	L_WEIGHT_VLU_DIS_Y(1),	L_WEIGHT_VLU_DIS_COLOR,	L_WEIGHT_VLU_DIS_SIZE,	L_WEIGHT_VLU_DIS_DQZWS,		L_WEIGHT_VLU_DIS_XWSLX},
-
 };
 
 //托盘的重量显示：带小数点显示
 //单元格大小150*200
-#define L_WEIGHT_VLU_DIS_XS_X(I) 	(I*(150+18)+28)//X
-#define L_WEIGHT_VLU_DIS_XS_Y(I) 	(I*(200+18)+115)//Y
+//									左边框  	单个间距
+#define L_WEIGHT_VLU_DIS_XS_X(I) 	(28		+	I*(150+18))//X
+#define L_WEIGHT_VLU_DIS_XS_Y(I) 	(115 	+	I*(200+18))//Y
 #define L_WEIGHT_VLU_DIS_XS_COLOR	(0x6474)//颜色
 #define L_WEIGHT_VLU_DIS_XS_SIZE	(0x0032)//字库+字体大小
 #define L_WEIGHT_VLU_DIS_XS_DQZWS	(0x0204)//对齐+整数位数
 #define L_WEIGHT_VLU_DIS_XS_XWSLX	(0x0101)//小数位数+变量类型
 static INT16 describlePointWeightVluYouXiaoShu_Larger[T5L_MAX_CHANEL_LEN][6]=
 {
-//  x    				y      				颜色      			字库+字体大小		对齐+整数位数    		小数位数 变量类型
-//  x    				y      				颜色      			0：0号      		00：左对齐 整数位数    	小数位数 01:长整数(4字节)
-//  x    				y      				颜色      			字库+字体大小		01：右对齐 整数位数    	小数位数 变量类型
-//  x    				y      				颜色      			字库+字体大小		02：居中   整数位数    	小数位数 变量类型
+//  x    					y      						颜色      				  字库+字体大小				 对齐+整数位数    			  小数位数 变量类型
 	{L_WEIGHT_VLU_DIS_XS_X(0),L_WEIGHT_VLU_DIS_XS_Y(0),	L_WEIGHT_VLU_DIS_XS_COLOR,L_WEIGHT_VLU_DIS_XS_SIZE,	L_WEIGHT_VLU_DIS_XS_DQZWS,	L_WEIGHT_VLU_DIS_XS_XWSLX},
 	{L_WEIGHT_VLU_DIS_XS_X(0),L_WEIGHT_VLU_DIS_XS_Y(1),	L_WEIGHT_VLU_DIS_XS_COLOR,L_WEIGHT_VLU_DIS_XS_SIZE,	L_WEIGHT_VLU_DIS_XS_DQZWS,	L_WEIGHT_VLU_DIS_XS_XWSLX},
 	{L_WEIGHT_VLU_DIS_XS_X(1),L_WEIGHT_VLU_DIS_XS_Y(0),	L_WEIGHT_VLU_DIS_XS_COLOR,L_WEIGHT_VLU_DIS_XS_SIZE,	L_WEIGHT_VLU_DIS_XS_DQZWS,	L_WEIGHT_VLU_DIS_XS_XWSLX},
@@ -129,7 +124,7 @@ static INT16 describlePointWeightVluYouXiaoShu_Larger[T5L_MAX_CHANEL_LEN][6]=
 //=============================================15.6寸屏的【托盘序号】描述指针=============================================
 //托盘的序号显示
 //单元格大小150*210
-//                              左边框 单个宽度   单个间距	  (8+8)分块间距
+//                              		左边框 单个宽度   单个间距	  (8+8)分块间距
 #define L_WEIGHT_VLU_INDEX_DIS_X(I) 	(65  + I*(150) + I/1*18     +(I/4)*18)//X
 #define L_WEIGHT_VLU_INDEX_DIS_Y(I) 	(115 + I*(210) + (I/1)*31   + 0)//Y
 #define L_WEIGHT_VLU_INDEX_DIS_COLOR	(0x6494)//颜色
@@ -139,10 +134,7 @@ static INT16 describlePointWeightVluYouXiaoShu_Larger[T5L_MAX_CHANEL_LEN][6]=
 static INT16 describlePointWeightIndexAdd_Larger[T5L_MAX_CHANEL_LEN]={0x9211,0x9221,0x9231,0x9241,0x9251,0x9261,0x9271,0x9281,0x9291,0x92A1,0x92B1,0x92C1,0x92D1,0x92E1,0x92F1,0x9301};
 static INT16 describlePointWeightIndex_Larger[T5L_MAX_CHANEL_LEN][6]=
 {
-//  x    					y      					颜色      				字库+字体大小			对齐+整数位数    		小数位数 变量类型(00:整数2字节，01:长整数4字节)
-//  x    					y      					颜色      				0：0号      			00：左对齐 整数位数    	小数位数 01:长整数(4字节)
-//  x    					y      					颜色      				字库+字体大小			01：右对齐 整数位数     小数位数 变量类型
-//  x    					y      					颜色      				字库+字体大小			02：居中   整数位数     小数位数 变量类型
+//  x    							y      							颜色      						字库+字体大小					 对齐+整数位数    				  小数位数 变量类型(00:整数2字节，01:长整数4字节)
 	{L_WEIGHT_VLU_INDEX_DIS_X(0),	L_WEIGHT_VLU_INDEX_DIS_Y(0),	L_WEIGHT_VLU_INDEX_DIS_COLOR,	L_WEIGHT_VLU_INDEX_DIS_SIZE,	L_WEIGHT_VLU_INDEX_DIS_DQZWS,	L_WEIGHT_VLU_INDEX_DIS_XWSLX},
 	{L_WEIGHT_VLU_INDEX_DIS_X(0),	L_WEIGHT_VLU_INDEX_DIS_Y(1),	L_WEIGHT_VLU_INDEX_DIS_COLOR,	L_WEIGHT_VLU_INDEX_DIS_SIZE,	L_WEIGHT_VLU_INDEX_DIS_DQZWS,	L_WEIGHT_VLU_INDEX_DIS_XWSLX},
 	{L_WEIGHT_VLU_INDEX_DIS_X(1),	L_WEIGHT_VLU_INDEX_DIS_Y(0),	L_WEIGHT_VLU_INDEX_DIS_COLOR,	L_WEIGHT_VLU_INDEX_DIS_SIZE,	L_WEIGHT_VLU_INDEX_DIS_DQZWS,	L_WEIGHT_VLU_INDEX_DIS_XWSLX},
@@ -162,9 +154,10 @@ static INT16 describlePointWeightIndex_Larger[T5L_MAX_CHANEL_LEN][6]=
 };
 //=============================================15.6寸屏的【帮助差值】描述指针=============================================
 //帮助差值显示
-//单元格大小150*200
-#define L_HELP_VLU_DIS_X(I) 	(310  + I*(430-12) + I/1*0     +(I/4)*0)//X
-#define L_HELP_VLU_DIS_Y(I) 	(580  + I*(637-571) + (I/1)*(15)   + 0)//Y
+//单元格大小(430-12)*(637-571)
+//                              左边框 	单个宽度   	   单个间距	  	  (8+8)分块间距
+#define L_HELP_VLU_DIS_X(I) 	(310  + I*(430-12) 	+ I/1*0     	+(I/4)*0)//X
+#define L_HELP_VLU_DIS_Y(I) 	(580  + I*(637-571) + (I/1)*(15)   	+ 0)//Y
 #define L_HELP_VLU_DIS_COLOR	(0xF810)//颜色
 #define L_HELP_VLU_DIS_SIZE		(0x0022)//字库+字体大小
 #define L_HELP_VLU_DIS_DQZWS	(0x0204)//对齐+整数位数
@@ -172,10 +165,7 @@ static INT16 describlePointWeightIndex_Larger[T5L_MAX_CHANEL_LEN][6]=
 static INT16 describlePointHelpVluAdd_Larger[T5L_L_HELP_TOTAL_NUM]={0x9111,0x9121,0x9131,0x9141,0x9151,0x9161};
 static INT16 describlePointHelpVluWuXiaoShu_Larger[T5L_L_HELP_TOTAL_NUM][6]=
 {
-//  x    					y      					颜色      				字库+字体大小			对齐+整数位数    		小数位数 变量类型
-//  x    					y      					颜色      				0：0号      			00：左对齐 整数位数    	小数位数 01:长整数(4字节)
-//  x    					y      					颜色      				字库+字体大小			01：右对齐 整数位数     小数位数 变量类型
-//  x    					y      					颜色      				字库+字体大小			02：居中   整数位数     小数位数 变量类型
+//  x    					y      					颜色      				字库+字体大小			  对齐+整数位数    		  小数位数 变量类型
 	{L_HELP_VLU_DIS_X(0),	L_HELP_VLU_DIS_Y(0),	L_HELP_VLU_DIS_COLOR,	L_HELP_VLU_DIS_SIZE,	L_HELP_VLU_DIS_DQZWS,	L_HELP_VLU_DIS_XWSLX},
 	{L_HELP_VLU_DIS_X(0),	L_HELP_VLU_DIS_Y(1),	L_HELP_VLU_DIS_COLOR,	L_HELP_VLU_DIS_SIZE,	L_HELP_VLU_DIS_DQZWS,	L_HELP_VLU_DIS_XWSLX},
 	{L_HELP_VLU_DIS_X(0),	L_HELP_VLU_DIS_Y(2),	L_HELP_VLU_DIS_COLOR,	L_HELP_VLU_DIS_SIZE,	L_HELP_VLU_DIS_DQZWS,	L_HELP_VLU_DIS_XWSLX},
@@ -194,9 +184,6 @@ static INT16 describlePointHelpVluWuXiaoShu_Larger[T5L_L_HELP_TOTAL_NUM][6]=
 static INT16 describlePointHelpVluYouXiaoShu_Larger[T5L_L_HELP_TOTAL_NUM][6]=
 {
 //  x    					y      					颜色      				字库+字体大小			对齐+整数位数    		小数位数 变量类型
-//  x    					y      					颜色      				0：0号      			00：左对齐 整数位数    	小数位数 01:长整数(4字节)
-//  x    					y      					颜色      				字库+字体大小			01：右对齐 整数位数     小数位数 变量类型
-//  x    					y      					颜色      				字库+字体大小			02：居中   整数位数     小数位数 变量类型
 	{L_HELP_VLU_DIS_XS_X(0),	L_HELP_VLU_DIS_XS_Y(0),	L_HELP_VLU_DIS_XS_COLOR,	L_HELP_VLU_DIS_XS_SIZE,	L_HELP_VLU_DIS_XS_DQZWS,	L_HELP_VLU_DIS_XS_XWSLX},
 	{L_HELP_VLU_DIS_XS_X(0),	L_HELP_VLU_DIS_XS_Y(1),	L_HELP_VLU_DIS_XS_COLOR,	L_HELP_VLU_DIS_XS_SIZE,	L_HELP_VLU_DIS_XS_DQZWS,	L_HELP_VLU_DIS_XS_XWSLX},
 	{L_HELP_VLU_DIS_XS_X(0),	L_HELP_VLU_DIS_XS_Y(2),	L_HELP_VLU_DIS_XS_COLOR,	L_HELP_VLU_DIS_XS_SIZE,	L_HELP_VLU_DIS_XS_DQZWS,	L_HELP_VLU_DIS_XS_XWSLX},
@@ -208,16 +195,13 @@ static INT16 describlePointHelpVluYouXiaoShu_Larger[T5L_L_HELP_TOTAL_NUM][6]=
 //=============================================15.6寸屏的【托盘的背景色】描述指针=============================================
 //托盘的背景色显示
 //单元格大小150*210
-//                              左边框 单个宽度   单个间距	  (8+8)分块间距
+//                              	左边框 单个宽度   单个间距	  (8+8)分块间距
 #define L_WEIGHT_COLOR_DIS_X(I) 	(11 + I*(150) + I/1*18 	 +(I/4)*18)//X
 #define L_WEIGHT_COLOR_DIS_Y(I) 	(95 + I*(210) + (I/1)*31 + 0)//Y
 static INT16 describlePointWeightColorAdd_Larger[T5L_MAX_CHANEL_LEN]={0x9311,0x9321,0x9331,0x9341,0x9351,0x9361,0x9371,0x9381,0x9391,0x93A1,0x93B1,0x93C1,0x93D1,0x93E1,0x93F1,0x9401};
 static INT16 describlePointWeightColor_Larger[T5L_MAX_CHANEL_LEN][2]=
 {
-//  x    					y      					颜色      	
-//  x    					y      					颜色      	
-//  x    					y      					颜色      	
-//  x    					y      					颜色      	
+//  x    						y      					   	
 	{L_WEIGHT_COLOR_DIS_X(0),	L_WEIGHT_COLOR_DIS_Y(0)},
 	{L_WEIGHT_COLOR_DIS_X(0),	L_WEIGHT_COLOR_DIS_Y(1)},
 	{L_WEIGHT_COLOR_DIS_X(1),	L_WEIGHT_COLOR_DIS_Y(0)},
@@ -408,7 +392,7 @@ static INT16 describlePointVluXiaoShu_help[DESCRIBLE_POINT_HELP_NUM][6]=
  * Functions
  ******************************************************************************/
 //帮助信息统一处理
-void screenT5L_HelpDataMainFunction(T5LType *pSdwe);
+UINT8 screenT5L_HelpDataMainFunction(T5LType *pSdwe);
 
 
 //==sdwe->mcu rx callback ,not used
@@ -1724,10 +1708,10 @@ UINT8 removeWeightTrigerDeal(T5LType *pSdwe)
 	return result;
 }
 
-void sendHelpDataDiff(T5LType *pSdwe)
+UINT8 sendHelpDataDiff(T5LType *pSdwe)
 {
 	static UINT8 needSend = FALSE;
-	UINT8 i = 0 ;
+	UINT8 i = 0 , localStatus = 0;
 
 	INT32 *pData = &g_i32DataBuff[0];
 	INT16 *pColorOtherCh = &g_i16ColorOtherChanel[0];
@@ -1830,8 +1814,14 @@ void sendHelpDataDiff(T5LType *pSdwe)
 		if(TRUE == t5lWriteData(pSdwe,DMG_FUNC_HELP_TO_JUDGE_SET_ADDRESS,&g_i16HelpDataBuff[0],(DIFF_TO_DIWEN_DATA_LEN),0))
 		{
 			needSend = FALSE;
+			localStatus = TRUE;//如果需要发送帮助信息，且发送成功，代表本轮结束
 		}
 	}
+	else
+	{
+		localStatus = TRUE;//如果不需要更新帮助信息
+	}
+	return localStatus;
 }
 
 void masterCaculateHelpData(ModbusRtuType *pContex,UINT8 chanel_len)
@@ -2154,6 +2144,44 @@ void handleWeightColorWasSend(INT16 *pColor,INT16 *pColorPre ,UINT8 chanel_len)
 	}
 }
 
+
+UINT8 preWeightDataAndJudgeIfNeedSend(INT32 *pData,INT16 *pDataInt16, INT32 *pDataPre,UINT8 chanel_len)
+{
+	UINT8 ret = FALSE;
+	//
+	if(chanel_len <= T5L_MAX_CHANEL_LEN)
+	{
+		switch(gSystemPara.isCascade)
+		{
+			//单台，不级联，直接获取hx711采样值并计算
+			case 0:
+				//master local data
+				preCurrentDeviceWeightData(pData,pDataInt16);
+			break;
+
+			//多台，级联，主机端：先获取本机hx711采样值，在获取从机发过来的hx711采样值
+			case ModbusAdd_Master:
+				//ModbusAdd_Slave_1 recv data
+				preOtherDeviceWeightData(pData,pDataInt16,ModbusAdd_Slave_1);
+			break;
+
+			//多台，级联，从机端：直接从主机发过来的数据截取
+			case ModbusAdd_Slave_1:
+				//直接使用总线的数据，这里不需要更新，他的更新在总线侧
+			break;
+
+			default :
+			break;
+		}
+
+		//judge if not need send
+		ret = judgeWeightDataIfNotNeedSend(pData,pDataPre,chanel_len);			
+	}
+	//
+	return ret;
+}
+
+
 UINT8 preWeightDataAndJudgeIfNeedSend_Master(INT32 *pData,INT16 *pDataInt16, INT32 *pDataPre,UINT8 chanel_len)
 {
 	UINT8 ret = FALSE;
@@ -2180,7 +2208,6 @@ UINT8 preWeightDataAndJudgeIfNeedSend_Master(INT32 *pData,INT16 *pDataInt16, INT
 	}
 	//
 	return ret;
-	
 }
 UINT8 preWeightDataAndJudgeIfNeedSend_FuncA_Master(T5LType *pSdwe,INT32 *pData,INT16 *pDataInt16,INT32 *pDataPre,UINT8 chanel_len)
 {
@@ -2242,9 +2269,9 @@ void holdSysColor(enumLedColorType color)
 }
 
 //==20210609
-UINT8 preColorDataAndJudgeIfNeedSend(INT32 *pData,INT16 *pColor,INT16 *pColorPre,INT16 *pColorOtherCh,UINT8 chanel_len)
+void preColorData(INT32 *pData,INT16 *pColor,INT16 *pColorPre,INT16 *pColorOtherCh,UINT8 chanel_len)
 {
-	UINT8 ret = FALSE , release = FALSE;
+	UINT8 release = FALSE;
 	UINT8 sortArry_num = 0 ,chn_self = 0 , chn_other = 0 , chn_i = 0;
 	//
 	float *sortWeight = &g_fDataBuffCaculate[0];
@@ -2252,11 +2279,12 @@ UINT8 preColorDataAndJudgeIfNeedSend(INT32 *pData,INT16 *pColor,INT16 *pColorPre
 	//
 	UINT8 compare_i = 0 ;
 	//
-	//
 	float judge_errRange = gSystemPara.errRange,judge_zeroRange = gSystemPara.zeroRange;
 
 	enumLedColorType colorVld = LED_COLOR_NONE;
-	if(1 == gSystemPara.xiaoShuXianShi)//有小数点时
+
+	//有小数点时，判断范围乘以10
+	if(1 == gSystemPara.xiaoShuXianShi)
 	{
 		judge_errRange = gSystemPara.errRange*10;
 		judge_zeroRange = gSystemPara.zeroRange*10;
@@ -2382,10 +2410,50 @@ UINT8 preColorDataAndJudgeIfNeedSend(INT32 *pData,INT16 *pColor,INT16 *pColorPre
 				}
 			}
 		}
-		//5.updata pColorPre from pColor
+	}
+}
+
+//
+UINT8 preColorDataAndJudgeIfNeedSend(INT32 *pData,INT16 *pColor,INT16 *pColorPre,INT16 *pColorOtherCh,UINT8 chanel_len)
+{
+	UINT8 ret = FALSE;
+	//1.pre Color Data
+	preColorData(pData,pColor,pColorPre,pColorOtherCh,chanel_len);
+
+	//2.updata pColorPre from pColor
+	ret = judgeWeightColorIfNotNeedSend(pColor,pColorPre,chanel_len);
+	return ret;	
+}
+
+//
+UINT8 preColorDataAndJudgeIfNeedSend_New(INT32 *pData,INT16 *pColor,INT16 *pColorPre,INT16 *pColorOtherCh,UINT8 chanel_len)
+{
+	UINT8 ret = FALSE ;
+	//
+	if(chanel_len <= T5L_MAX_CHANEL_LEN)
+	{
+		//1.更新颜色数据
+		switch(gSystemPara.isCascade)
+		{
+			//单台，不级联，直接拿hx711采样值来计算颜色
+			case 0:
+			//多台，级联，主机端：数据在之前的步骤已经完成，这里只需要计算即可
+			case ModbusAdd_Master:
+				preColorData(pData,pColor,pColorPre,pColorOtherCh,chanel_len);
+			break;
+
+			//多台，级联，从机端：直接从主机发过来的数据截取
+			case ModbusAdd_Slave_1:
+				//直接使用总线的color数据，这里不需要更新，他的更新在总线侧
+			break;
+
+			default :
+			break;
+		}
+		//2.updata pColorPre from pColor
 		ret = judgeWeightColorIfNotNeedSend(pColor,pColorPre,chanel_len);
 	}
-	return ret;	
+	return ret;
 }
 UINT8 sendBalancingWeightAndColor_Slave_1(T5LType *pSdwe)
 {
@@ -2447,57 +2515,55 @@ UINT8 sendBalancingWeightAndColor_Slave_1(T5LType *pSdwe)
 UINT16 preBalancingWeightAndColorIfNotNeedSendToSreen(T5LType *pSdwe,INT32 *pData , INT16 *pDataSendToDiWen , INT32 *pDataPre, \
 INT16 *pColor , INT16 *pColorPre , INT16 *pColorOtherCh , UINT8 chanel_len)
 {
-	UINT16 ret = 0 ;
+	UINT16 ret = FALSE ;
 	static UINT16 handleStatus = 0 ;
 	static UINT16 u16WeightHoldOn = 0 ;//when DMG_DATA_HOLD_TIME data not changed send to screen
 	//
 	switch(handleStatus)
 	{
-		case 0x00://=================prepare weight data
-			if(TRUE == preWeightDataAndJudgeIfNeedSend_Master(pData,pDataSendToDiWen,pDataPre,chanel_len))
+		//judge if weight need send to screen
+		//if weight was hold on some time then go to send color 
+		case 0x00:
+			//=================prepare weight data
+			if(TRUE == preWeightDataAndJudgeIfNeedSend(pData,pDataSendToDiWen,pDataPre,chanel_len))
 			{
-				handleStatus = 0x01;//need send weight to screen
+				if(TRUE ==t5lWriteData(pSdwe,DMG_FUNC_ASK_CHANEL_WEIGHT_ADDRESS,pDataSendToDiWen,(2*chanel_len),0))//2*chanel_len:because each data type was 4 byte
+				{
+					u16WeightHoldOn = 0 ;
+					handleWeightDataWasSend(pData,pDataPre,chanel_len);
+				}
 			}
 			else
 			{
 				u16WeightHoldOn++;
 				if(u16WeightHoldOn >= DMG_DATA_HOLD_TIME)//if weight not changed then check if color need send
 				{
-					handleStatus = 0x10;
+					u16WeightHoldOn = 0;
+					handleStatus = 0x10;//if weight was send to screen go to send color
 				}
 			}
 		break;
 
-		case 0x01://=================send weight data to screen
-			if(TRUE ==t5lWriteData(pSdwe,DMG_FUNC_ASK_CHANEL_WEIGHT_ADDRESS,pDataSendToDiWen,(2*chanel_len),0))//2*chanel_len:because each data type was 4 byte
+		//judge if color need send to screen
+		case 0x10:
+			//=================prepare color data
+			if(TRUE == preColorDataAndJudgeIfNeedSend_New(pData,pColor,pColorPre,pColorOtherCh,chanel_len))
 			{
-				handleStatus = 0x00;//send complete back to judge weight
-				u16WeightHoldOn = 0 ;
-				handleWeightDataWasSend(pData,pDataPre,chanel_len);
-			}
-		break;
-
-		case 0x10://=================prepare color data
-			if (TRUE == preColorDataAndJudgeIfNeedSend(pData,pColor,pColorPre,pColorOtherCh,chanel_len))
-			{
-				handleStatus = 0x11;//if color need send to screen
+				if(TRUE ==t5lWriteData(pSdwe,DMG_FUNC_ASK_CHANEL_COLOR_ADDRESS,pColor,chanel_len,0))
+				{
+					handleWeightColorWasSend(pColor,pColorPre,chanel_len);
+					handleStatus = 0x20;//if color was send to screen go to default
+				}
 			}
 			else
 			{
-				handleStatus = 0x00;//else back to weight check
-				u16WeightHoldOn = 0 ;
+				handleStatus = 0x20;//if color was send to screen go to default
 			}
 		break;
-		case 0x11://=================send color data
-			if(TRUE ==t5lWriteData(pSdwe,DMG_FUNC_ASK_CHANEL_COLOR_ADDRESS,pColor,chanel_len,0))
-			{
-				handleStatus = 0x00;//go to check weigth if not need send
-				handleWeightColorWasSend(pColor,pColorPre,chanel_len);
-				ret = 1;
-			}
-		break;
+
 		default :
 			handleStatus = 0;//go to check weigth if not need send
+			ret = TRUE;//this cycle was handle done
 		break;
 	}
 	return ret;
@@ -3256,11 +3322,12 @@ UINT8 screenT5L_OutputVoice(T5LType *pSdwe,UINT8 voiceId)
 	return result;
 }
 //屏幕语音播报处理
-void screenT5L_VoicePrintfMainfunction(T5LType *pSdwe)
+UINT8 screenT5L_VoicePrintfMainfunction(T5LType *pSdwe)
 {
 	static UINT8 u8Vstatus = 0 ;
 	static tT5LVoinceType u8Voice1 = T5L_VoiceTypeNum_0 ,u8Voice2 = T5L_VoiceTypeNum_0 ,u8Voice3 = T5L_VoiceTypeNum_0 ;
 	static UINT16 u16Ticks = 0 ;
+	UINT8 localStatus = FALSE;
 	//
 	switch(u8Vstatus)
 	{
@@ -3270,7 +3337,7 @@ void screenT5L_VoicePrintfMainfunction(T5LType *pSdwe)
 				u8Vstatus++;
 			}
 		break;
-		//===========V1
+		//===========voice 1
 		case 1://printf V1
 			if(TRUE == screenT5L_OutputVoice(pSdwe,u8Voice1))
 			{
@@ -3299,7 +3366,7 @@ void screenT5L_VoicePrintfMainfunction(T5LType *pSdwe)
 				u8Vstatus++;
 			}
 		break;
-		//===========V2
+		//===========voice 2
 		case 5://printf v2
 			if(TRUE == screenT5L_OutputVoice(pSdwe,u8Voice2))
 			{
@@ -3330,17 +3397,20 @@ void screenT5L_VoicePrintfMainfunction(T5LType *pSdwe)
 		break;
 		default:
 			u8Vstatus = 0 ;
+			localStatus = TRUE;
 		break;
 	}
+	return localStatus;
 }
 //==send help data te screen
-void screenT5L_HelpDataMainFunction(T5LType *pSdwe)
+UINT8 screenT5L_HelpDataMainFunction(T5LType *pSdwe)
 {
 	ModbusRtuType *pContex = &g_ModbusRtu;
+	UINT8 localStatus = FALSE;
 
 	if(0 == gSystemPara.isCascade)
 	{
-		sendHelpDataDiff(pSdwe);
+		localStatus = sendHelpDataDiff(pSdwe);
 	}else if(gSystemPara.isCascade == ModbusAdd_Slave_1)//cascade : slave Device
 	{
 		sendHelpDataDiff_AtSlave1Device(pSdwe);
@@ -3356,6 +3426,7 @@ void screenT5L_HelpDataMainFunction(T5LType *pSdwe)
 		masterCaculateHelpData(pContex,T5L_MAX_CHANEL_LEN); 
 		sendHelpDataDiff_AtSlave1Device(pSdwe);
 	}	
+	return localStatus;
 }
 
 //小屏的屏幕初始化：发送相关参数给屏幕
@@ -3628,41 +3699,53 @@ UINT8 screenLargerTxHandle_CycleData(T5LType *pSdwe)
 	INT16 *pColorPre = &g_i16ColorBuffPre[0];
 	INT16 *pColorOtherCh = &g_i16ColorOtherChanel[0];
 	//
-	UINT8 chanel_len = T5L_MAX_CHANEL_LEN , ret = 0 ,i=0;
-	static UINT32 TICK_TSET=0,TICK_TSET_flag = 0,TICK_TSET_iii,TICK_TSET_flag2=0;
-
-	static INT16 Data_X_Y_X_Y_Color[5*1] = {0x0100,0x100,0x200,0x200,0xF800};
-	if(TICK_TSET++%1000 == 0)
+	UINT8 chanel_len = T5L_MAX_CHANEL_LEN , ret = 0 ,localStatus = 0;
+	//
+	static UINT8 u8InnerHandleStatus = 0x00;
+	//
+	switch(u8InnerHandleStatus)
 	{
-		TICK_TSET_flag = 1;
-		TICK_TSET_iii++;
-		for(i=0;i<2*T5L_MAX_CHANEL_LEN;i++)
-		{
-			if(i%2 == 1)
+		//==weight and color handle
+		case 0x00:
+			localStatus = preBalancingWeightAndColorIfNotNeedSendToSreen(pSdwe,pData,pDataSendToDiWen,pDataPre,pColor,pColorPre,pColorOtherCh,chanel_len);
+			if(TRUE == localStatus)
 			{
-				g_i32_i16DataBuff[i] = i*1000 + TICK_TSET_iii;
+				u8InnerHandleStatus = 0X10;//if weight and color was send to screen , go to help handle
 			}
-		}
-	}
-	if((1 == TICK_TSET_flag)&&(TICK_TSET_flag2 == 0))
-	{
-		if(TRUE ==t5lWriteData(pSdwe,DMG_FUNC_ASK_CHANEL_WEIGHT_ADDRESS,pDataSendToDiWen,(2*chanel_len),0))//2*chanel_len:because each data type was 4 byte
-		{
-			TICK_TSET_flag = 0 ;
-		}
-	}
-	if((1 == TICK_TSET_flag)&&(TICK_TSET_flag2 == 1))
-	{
-		//									变量地址 绘图类型 个数 
-		if(TRUE ==t5lWriteDataColor(pSdwe,0X5440, 0x0003,0x0001,Data_X_Y_X_Y_Color))
-		{
-			TICK_TSET_flag = 0 ;
-		}
-	}
+		break;
 
-	 
+		//==help data handle
+		case 0x10:
+			localStatus = screenT5L_HelpDataMainFunction(pSdwe);
+			if(TRUE == localStatus)
+			{
+				u8InnerHandleStatus = 0X20;//if help data was send to screen , go to voice handle
+			}
+		break;
 
+		//==voice printf handle
+		case 0x20:
+			if(TRUE == gSystemPara.ScreenVoiceSwitch)//语音播报功能打开
+			{
+				localStatus = screenT5L_VoicePrintfMainfunction(pSdwe);
+				if(TRUE == localStatus)
+				{
+					u8InnerHandleStatus = 0X30;//if voice was send to screen , go to default handle
+				}				
+			}
+			else
+			{
+				u8InnerHandleStatus = 0X30;
+			}
+		break;
 
+		//==default handle
+		default:
+			u8InnerHandleStatus = 0x00;
+			ret = TRUE;
+		break;
+	}
+	return ret;
 }
 //准备发送给小屏幕的数据处理
 screenRxTxHandleType screenTxHandle[SCREEN_TX_HANDLE_TOTAL_NUM]=
