@@ -347,6 +347,12 @@ INT32 hx711_getAvgSample(enumHX711ChanelType chanel)
 	//sample is 25 bit
 	return ret;
 }
+
+#define WEIGHT_TEST_DATA FALSE
+#if(TRUE == WEIGHT_TEST_DATA) 
+float weightTestData[HX711_CHANEL_NUM];
+#endif
+
 //==get weight-remove weight
 float hx711_getWeight(enumHX711ChanelType chanel)
 {
@@ -367,6 +373,11 @@ float hx711_getWeight(enumHX711ChanelType chanel)
 	{
 		ret = HX711_NOT_ON_LINE_DEFAULT_VLU;
 	}
+
+	#if(TRUE == WEIGHT_TEST_DATA) 
+	ret = weightTestData[chanel];
+	#endif
+	
 	return ret;
 }
 //==set all remove weight

@@ -153,8 +153,12 @@ typedef enum VoinceType
 	T5L_VoiceTypeNum_10 = 10,
 	T5L_VoiceTypeNum_11 = 11,
 	T5L_VoiceTypeNum_12 = 12,
-	VoiceTypeYu_13 = 13,
-	VoiceTypePeiPin_14 = 14,
+	T5L_VoiceTypeNum_13 = 13,
+	T5L_VoiceTypeNum_14 = 14,
+	T5L_VoiceTypeNum_15 = 15,
+	T5L_VoiceTypeNum_16 = 16,
+	VoiceTypeYu_17 = 17,
+	VoiceTypePeiPin_18 = 18,
 	VoiceTypeMax,
 }tT5LVoinceType;
 
@@ -249,12 +253,49 @@ typedef enum
 	SCREEN_STATUS_GET_VERSION = 0 ,
 	SCREEN_STATUS_SEND_BANLING_DATA,
 }enumSDWEStatusType;
+typedef enum
+{
+	SCREEN_CYCLE_DATA_HANDLE_JUDGE_WEIGHT_DATA = 0X00,
+	SCREEN_CYCLE_DATA_HANDLE_SEND_WEIGHT_DATA = 0X01,
+	//
+	SCREEN_CYCLE_DATA_HANDLE_JUDGE_COLOR_DATA = 0X10,
+	SCREEN_CYCLE_DATA_HANDLE_SEND_COLOR_DATA = 0X11,
+	//
+	SCREEN_CYCLE_DATA_HANDLE_JUDGE_VOICE_DATA = 0X20,
+	SCREEN_CYCLE_DATA_HANDLE_SEND_VOICE_DATA = 0X21,
+	//
+	SCREEN_CYCLE_DATA_HANDLE_JUDGE_HELP_DATA = 0X30,
+	SCREEN_CYCLE_DATA_HANDLE_SEND_HELP_DATA = 0X31,
+	//
+	SCREEN_CYCLE_DATA_HANDLE_DEFAULT
+}enumScreenCycleDataHandleStatusType;
 
+
+typedef struct structScreenCycleType
+{
+	//chanel_len
+	UINT8 chanel_len;
+	//weight data
+	INT32 *pData;
+	INT32 *pDataPre;
+	INT16 *pDataSendToDiWen;
+	//color data
+	INT16 *pColor;
+	INT16 *pColorPre;
+	INT16 *pColorOtherCh;
+	//help data
+	float *pSortWeight;
+	INT16 *pSortArry;
+	INT16 *pHelp;
+	INT16 *pHelpPre;
+}ScreenCycleType;
 /** 定义从机串口设备类型 */
 typedef struct structSdweType
 {
 	enumSDWEStatusType status;				/**< status ：sdwe 状态 */
-	
+
+	ScreenCycleType screenCycle;
+
 	UINT8 	sendSdweInit;					/**< sendSdweInit ：初始化屏幕完成状态*/
 	UINT8 	readSdweInit;					/**< readSdweInit ：状态 */
 	
@@ -301,9 +342,33 @@ typedef struct structSdweType
 	UINT8 	sendSysParaDataToDiwenIndex;/**< sendSysParaDataToDiwenIndex：(事件)初始化屏幕时的序号*/
 }T5LType;
 
+#define ScreenCycleTypeDefault   { \
+	/*chanel_len*/\
+	0,\
+	/*weight data*/\
+	0,\
+	0,\
+	0,\
+	/*color data*/\
+	0,\
+	0,\
+	0,\
+	/*help data*/\
+	0,\
+	0,\
+	0,\
+	0,\
+}
+
+
+
+
+
+
 /** ModbusRtu设备默认配置 */
 #define T5LDataDefault   { \
 	SCREEN_STATUS_GET_VERSION,/*status ：sdwe 状态*/\
+	ScreenCycleTypeDefault,\
 	0,/**/\
 	0,/**/\
 	\
@@ -353,6 +418,7 @@ typedef struct structSdweType
 /** ModbusRtu设备默认配置 */
 #define T5LDataDefault2   { \
 	SCREEN_STATUS_GET_VERSION,/*status ：sdwe 状态*/\
+	ScreenCycleTypeDefault,\
 	0,/**/\
 	0,/**/\
 	\

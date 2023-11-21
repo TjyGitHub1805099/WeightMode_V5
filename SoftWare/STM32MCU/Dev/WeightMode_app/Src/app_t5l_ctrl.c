@@ -222,44 +222,6 @@ static INT16 describlePointWeightColor_Larger[T5L_MAX_CHANEL_LEN][2]=
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //=============================================8.8寸屏的【托盘的重量】描述指针=============================================
 //屏幕的描述指针：显示托盘的重量控件
 static INT16 int16_ChangeDisplayPosition = 0 ,int16_ChangeDisplayPosition_i = 0 ,int16_ChangeDisplayPosition_switch =0;
@@ -269,50 +231,26 @@ static INT16 describlePointAdd[HX711_CHANEL_NUM]={0x9011,0x9021,0x9031,0x9041,0x
 static INT16 describlePointVluWuXiaoShu[HX711_CHANEL_NUM][6]=
 {
 //       x    	y      		颜色      	字库/字体大小	 对齐 整数位数    小数位数 变量类型
-//       x    	y      		颜色      	0：0号      	 00:左对齐 整数位数    小数位数 01:长整数(4字节)
-//       x    	y      		颜色      	字库/字体大小	 01:右对齐 整数位数    小数位数 变量类型
-//       x    	y      		颜色      	字库/字体大小	 02:居中   整数位数    小数位数 变量类型
-
-//1      86   	96      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
 	{0x0056, 	0x0060, 	0x6474,		0x003C,			0x0204,			0x0001},
-//2      86   	329      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
 	{0x0056, 	0x0149, 	0x6474,		0x003C,			0x0204,			0x0001},
-//3      476   	96      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
 	{0x01DC, 	0x0060, 	0x6474,		0x003C,			0x0204,			0x0001},
-//4      476   	329      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
 	{0x01DC, 	0x0149, 	0x6474,		0x003C,			0x0204,			0x0001},
-//5      866   	96      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
 	{0x0362, 	0x0060, 	0x6474,		0x003C,			0x0204,			0x0001},
-//6      866   	329      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
 	{0x0362, 	0x0149, 	0x6474,		0x003C,			0x0204,			0x0001},
-//7      1256  	96      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
 	{0x04E8, 	0x0060, 	0x6474,		0x003C,			0x0204,			0x0001},
-//8      1256  	329      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
 	{0x04E8, 	0x0149, 	0x6474,		0x003C,			0x0204,			0x0001},
 };
 //托盘的重量显示：带小数点显示
 static INT16 describlePointVluXiaoShu[HX711_CHANEL_NUM][6]=
 {
 //       x    	y      		颜色      	字库/字体大小	 对齐 整数位数    小数位数 变量类型
-//       x    	y      		颜色      	0：0号      	 00:左对齐 整数位数    小数位数 01:长整数(4字节)
-//       x    	y      		颜色      	字库/字体大小	 01:右对齐 整数位数    小数位数 变量类型
-//       x    	y      		颜色      	字库/字体大小	 02:居中   整数位数    小数位数 变量类型
-
-//1      86   	119      	0x6474   	0号字库 60大小   居中 4位数	  	 1位小数 4字节无符号变量			
 	{0x0056, 	0x0077, 	0x6474,		0x0028,			0x0204,			0x0101},
-//2      86   	352      	0x6474   	0号字库 60大小   居中 4位数	  	 1位小数 4字节无符号变量			
 	{0x0056, 	0x0160, 	0x6474,		0x0028,			0x0204,			0x0101},
-//3      476   	119      	0x6474   	0号字库 60大小   居中 4位数	  	 1位小数 4字节无符号变量			
 	{0x01DC, 	0x0077, 	0x6474,		0x0028,			0x0204,			0x0101},
-//4      476   	352      	0x6474   	0号字库 60大小   居中 4位数	  	 1位小数 4字节无符号变量			
 	{0x01DC, 	0x0160, 	0x6474,		0x0028,			0x0204,			0x0101},
-//5      866   	119      	0x6474   	0号字库 60大小   居中 4位数	  	 1位小数 4字节无符号变量			
 	{0x0362, 	0x0077, 	0x6474,		0x0028,			0x0204,			0x0101},
-//6      866   	352      	0x6474   	0号字库 60大小   居中 4位数	  	 1位小数 4字节无符号变量			
 	{0x0362, 	0x0160, 	0x6474,		0x0028,			0x0204,			0x0101},
-//7      1256  	119      	0x6474   	0号字库 60大小   居中 4位数	  	 1位小数 4字节无符号变量			
 	{0x04E8, 	0x0077, 	0x6474,		0x0028,			0x0204,			0x0101},
-//8      1256  	352      	0x6474   	0号字库 60大小   居中 4位数	  	 1位小数 4字节无符号变量			
 	{0x04E8, 	0x0160, 	0x6474,		0x0028,			0x0204,			0x0101},
 };
 
@@ -322,25 +260,13 @@ static INT16 describleIndexPointAdd[HX711_CHANEL_NUM]={0x9211,0x9221,0x9231,0x92
 static INT16 describleIndexPointData[HX711_CHANEL_NUM][6]=
 {
 //       x    	y      		颜色      	字库/字体大小	 对齐 整数位数    小数位数 变量类型
-//       x    	y      		颜色      	0：0号      	 00:左对齐 整数位数    小数位数 01:长整数(4字节)
-//       x    	y      		颜色      	字库/字体大小	 01:右对齐 整数位数    小数位数 变量类型
-//       x    	y      		颜色      	字库/字体大小	 02:居中   整数位数    小数位数 变量类型
-
-//1     188   	23      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
 	{0x00BC, 	0x0017, 	0x6474,		0x003C,			0x0204,			0x0001},
-//2     188   	265      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
 	{0x00BC, 	0x0109, 	0x6474,		0x003C,			0x0204,			0x0001},
-//3     577   	23      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
 	{0x0241, 	0x0017, 	0x6474,		0x003C,			0x0204,			0x0001},
-//4     577   	265      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
 	{0x0241, 	0x0109, 	0x6474,		0x003C,			0x0204,			0x0001},
-//5      967   	23      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
 	{0x03C7, 	0x0017, 	0x6474,		0x003C,			0x0204,			0x0001},
-//6      967   	265      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
 	{0x03C7, 	0x0109, 	0x6474,		0x003C,			0x0204,			0x0001},
-//7      1357  	23      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
 	{0x054D, 	0x0017, 	0x6474,		0x003C,			0x0204,			0x0001},
-//8      1357  	265      	0x6474   	0号字库 60大小   居中 4位数	  	 0位小数 4字节有符号变量			
 	{0x054D, 	0x0109, 	0x6474,		0x003C,			0x0204,			0x0001},
 };
 
@@ -356,34 +282,18 @@ static INT16 describlePointAdd_help[DESCRIBLE_POINT_HELP_NUM]={0x9111,0x9121,0x9
 static INT16 describlePointVluWuXiaoShu_help[DESCRIBLE_POINT_HELP_NUM][6]=
 {
 //       x    	y      		颜色      	字库/字体大小	 对齐 整数位数    小数位数 变量类型
-//       x    	y      		颜色      	0：0号      	 00:左对齐 整数位数    小数位数 00:整数(2字节)
-//       x    	y      		颜色      	字库/字体大小	 01:右对齐 整数位数    小数位数 变量类型
-//       x    	y      		红色      	字库/字体大小	 02:居中   整数位数    小数位数 变量类型
-
-//1     1764   						97      	0xf810   						0号字库 大小   								居中 4位数	  	 0位小数 2字节变量			
 	{DESCRIBLE_POINT_HELP_X_POS, 	97, 	DESCRIBLE_POINT_HELP_COLOR,		DESCRIBLE_POINT_HELP_WU_XIAOSHU,			0x0204,			0x0000},
-//2     1764   						167      	0xf810   						0号字库 大小   								居中 4位数	  	 0位小数 2字节变量			
 	{DESCRIBLE_POINT_HELP_X_POS, 	167, 	DESCRIBLE_POINT_HELP_COLOR,		DESCRIBLE_POINT_HELP_WU_XIAOSHU,			0x0204,			0x0000},
-//3     1764   						232      	0xf810   						0号字库 大小   								居中 4位数	  	 0位小数 2字节变量			
 	{DESCRIBLE_POINT_HELP_X_POS, 	232, 	DESCRIBLE_POINT_HELP_COLOR,		DESCRIBLE_POINT_HELP_WU_XIAOSHU,			0x0204,			0x0000},
-//4     1764   						303      	0xf810   						0号字库 大小   								居中 4位数	  	 0位小数 2字节变量			
 	{DESCRIBLE_POINT_HELP_X_POS, 	303, 	DESCRIBLE_POINT_HELP_COLOR,		DESCRIBLE_POINT_HELP_WU_XIAOSHU,			0x0204,			0x0000},
 };
 //帮助信息：带小数显示
 static INT16 describlePointVluXiaoShu_help[DESCRIBLE_POINT_HELP_NUM][6]=
 {
 //       x    	y      		颜色      	字库/字体大小	 对齐 整数位数    小数位数 变量类型
-//       x    	y      		颜色      	0：0号      	 00:左对齐 整数位数    小数位数 00:整数(2字节)
-//       x    	y      		颜色      	字库/字体大小	 01:右对齐 整数位数    小数位数 变量类型
-//       x    	y      		颜色      	字库/字体大小	 02:居中   整数位数    小数位数 变量类型
-
-//1      1764   					105      	0xf810   						0号字库 大小   								居中 4位数	  	 1位小数 2字节变量			
 	{DESCRIBLE_POINT_HELP_X_POS, 	105, 	DESCRIBLE_POINT_HELP_COLOR,		DESCRIBLE_POINT_HELP_YOU_XIAOSHU,			0x0204,			0x0100},
-//2      1764   					175      	0xf810   						0号字库 大小   								居中 4位数	  	 1位小数 2字节变量			
 	{DESCRIBLE_POINT_HELP_X_POS, 	175, 	DESCRIBLE_POINT_HELP_COLOR,		DESCRIBLE_POINT_HELP_YOU_XIAOSHU,			0x0204,			0x0100},
-//3      1764   					240      	0xf810   						0号字库 大小   								居中 4位数	  	 1位小数 2字节变量			
 	{DESCRIBLE_POINT_HELP_X_POS, 	240, 	DESCRIBLE_POINT_HELP_COLOR,		DESCRIBLE_POINT_HELP_YOU_XIAOSHU,			0x0204,			0x0100},
-//4      1764   					310      	0xf810   						0号字库 大小   								居中 4位数	  	 1位小数 2字节变量			
 	{DESCRIBLE_POINT_HELP_X_POS, 	310, 	DESCRIBLE_POINT_HELP_COLOR,		DESCRIBLE_POINT_HELP_YOU_XIAOSHU,			0x0204,			0x0100},
 };
 
@@ -407,6 +317,19 @@ static void screenT5L_Init(T5LType *t5lCtx)
 	UINT8 i = 0 ;
 	//
 	t5lCtx->readSdweInit = FALSE;
+	//data handle send to screen
+	t5lCtx->screenCycle.pData = &g_i32DataBuff[0];
+	t5lCtx->screenCycle.pDataPre = &g_i32DataBuffPre[0];
+	t5lCtx->screenCycle.pDataSendToDiWen = &g_i32_i16DataBuff[0];
+	//color handle send to screen
+	t5lCtx->screenCycle.pColor = &g_i16ColorBuff[0];
+	t5lCtx->screenCycle.pColorPre = &g_i16ColorBuffPre[0];
+	t5lCtx->screenCycle.pColorOtherCh = &g_i16ColorOtherChanel[0];
+	//help handle send to screen
+	t5lCtx->screenCycle.pSortWeight = &g_fDataBuffCaculate[0];
+	t5lCtx->screenCycle.pSortArry = &g_i16OtherChanelCaculate[0];
+	t5lCtx->screenCycle.pHelp = &g_i16HelpDataBuff[0];
+	t5lCtx->screenCycle.pHelpPre = &g_i16HelpDataBuffPre[0];
 	//t5lCtx->pUartDevice = &g_UartDevice[t5lCtx->uartIndex];
 	t5lCtx->version = 0;//SDWE version
 	//
@@ -599,7 +522,7 @@ FF00
 */
 	UINT8 ret = FALSE;
 	//A5 5A 05 82 00 03 00 01:向0x0003地址写入数据0x0001	
-	UINT16 i = 0 ,l_data = 0 , total_len = 0 , crc = 0;
+	UINT16 i = 0 ,l_data = 0 , total_len = 0;
 	if(((t5lCtx->LastSendTick > t5lCtx->CurTick)&&((t5lCtx->LastSendTick-t5lCtx->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
 		((t5lCtx->LastSendTick < t5lCtx->CurTick)&&((t5lCtx->CurTick - t5lCtx->LastSendTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 	{
@@ -656,6 +579,7 @@ FF00
 		//
 		ret = TRUE;
 	}
+	return ret;
 }
 
 
@@ -2426,7 +2350,7 @@ UINT8 preColorDataAndJudgeIfNeedSend(INT32 *pData,INT16 *pColor,INT16 *pColorPre
 }
 
 //
-UINT8 preColorDataAndJudgeIfNeedSend_New(INT32 *pData,INT16 *pColor,INT16 *pColorPre,INT16 *pColorOtherCh,UINT8 chanel_len)
+UINT8 preColorDataAndJudgeIfNeedSend_Newxx(INT32 *pData,INT16 *pColor,INT16 *pColorPre,INT16 *pColorOtherCh,UINT8 chanel_len)
 {
 	UINT8 ret = FALSE ;
 	//
@@ -2544,10 +2468,10 @@ INT16 *pColor , INT16 *pColorPre , INT16 *pColorOtherCh , UINT8 chanel_len)
 			}
 		break;
 
-		//judge if color need send to screen
+		//judge if color need send to screenxx
 		case 0x10:
 			//=================prepare color data
-			if(TRUE == preColorDataAndJudgeIfNeedSend_New(pData,pColor,pColorPre,pColorOtherCh,chanel_len))
+			if(TRUE == preColorDataAndJudgeIfNeedSend_Newxx(pData,pColor,pColorPre,pColorOtherCh,chanel_len))
 			{
 				if(TRUE ==t5lWriteData(pSdwe,DMG_FUNC_ASK_CHANEL_COLOR_ADDRESS,pColor,chanel_len,0))
 				{
@@ -3260,7 +3184,7 @@ void sdwe_VoicePrintfPush(tT5LVoinceType u8Voice1 ,tT5LVoinceType u8Voice2)
 	{
 		g_T5L_VoiceBuff[u8T5LVoiceBuffPush_i][0] = u8Voice1;
 		g_T5L_VoiceBuff[u8T5LVoiceBuffPush_i][1] = u8Voice2;
-		g_T5L_VoiceBuff[u8T5LVoiceBuffPush_i][2] = VoiceTypePeiPin_14;
+		g_T5L_VoiceBuff[u8T5LVoiceBuffPush_i][2] = VoiceTypePeiPin_18;
 		u8T5LVoiceBuffPush_i = (u8T5LVoiceBuffPush_i+1)%T5L_VOICE_MAX_PRINTF_NUM;
 		//
 		u8T5LVoiceBuffStoreNum++;
@@ -3284,9 +3208,9 @@ UINT8 sdwe_VoicePrintfPop(tT5LVoinceType *u8Voice1 , tT5LVoinceType *u8Voice2 , 
 		//add u8T5LVoiceBuffPop_i
 		u8T5LVoiceBuffPop_i = (u8T5LVoiceBuffPop_i+1)%T5L_VOICE_MAX_PRINTF_NUM;
 		//
-		if(((T5L_VoiceTypeNum_1 <= *u8Voice1) && (T5L_VoiceTypeNum_12 >= *u8Voice1)) &&
-			((T5L_VoiceTypeNum_1 <= *u8Voice2) && (T5L_VoiceTypeNum_12 >= *u8Voice2)) &&
-			(VoiceTypePeiPin_14 == *u8Voice3) )
+		if(((T5L_VoiceTypeNum_1 <= *u8Voice1) && (T5L_VoiceTypeNum_16 >= *u8Voice1)) &&
+			((T5L_VoiceTypeNum_1 <= *u8Voice2) && (T5L_VoiceTypeNum_16 >= *u8Voice2)) &&
+			(VoiceTypePeiPin_18 == *u8Voice3) )
 		{
 			ret = TRUE;
 		}
@@ -3326,9 +3250,13 @@ UINT8 screenT5L_VoicePrintfMainfunction(T5LType *pSdwe)
 {
 	static UINT8 u8Vstatus = 0 ;
 	static tT5LVoinceType u8Voice1 = T5L_VoiceTypeNum_0 ,u8Voice2 = T5L_VoiceTypeNum_0 ,u8Voice3 = T5L_VoiceTypeNum_0 ;
-	static UINT16 u16Ticks = 0 ;
+	static UINT32 u16Ticks = 0 ;
 	UINT8 localStatus = FALSE;
 	//
+	if(FALSE == gSystemPara.ScreenVoiceSwitch)
+	{
+		return localStatus;
+	}
 	switch(u8Vstatus)
 	{
 		case 0:
@@ -3336,65 +3264,73 @@ UINT8 screenT5L_VoicePrintfMainfunction(T5LType *pSdwe)
 			{
 				u8Vstatus++;
 			}
+			else
+			{
+				localStatus = TRUE;//special handle , no anly voice need printf return TRUE
+			}
 		break;
+		
 		//===========voice 1
 		case 1://printf V1
 			if(TRUE == screenT5L_OutputVoice(pSdwe,u8Voice1))
 			{
 				u8Vstatus++;
-				u16Ticks = 0 ;
+				u16Ticks = pSdwe->CurTick ;
 			}
 		break;
 		case 2://wait time
-			if(u16Ticks++ > 900)
+			if(pSdwe->CurTick >= (u16Ticks + 900))
 			{
-				//u8Vstatus++;
 				u8Vstatus=5;
 			}
 		break;
-		//===========yu
-		case 3://printf yu
-			if(TRUE == screenT5L_OutputVoice(pSdwe,VoiceTypeYu_13))
-			{
-				u8Vstatus++;
-				u16Ticks = 0 ;
-			}
-		break;
-		case 4://wait time
-			if(u16Ticks++ > 1000)
-			{
-				u8Vstatus++;
-			}
-		break;
+
 		//===========voice 2
 		case 5://printf v2
 			if(TRUE == screenT5L_OutputVoice(pSdwe,u8Voice2))
 			{
 				u8Vstatus++;
-				u16Ticks = 0 ;
+				u16Ticks = pSdwe->CurTick ;
 			}
 		break;
 		case 6://wait time
-			if(u16Ticks++ > 900)
+			if(pSdwe->CurTick >= (u16Ticks + 900))
 			{
 				u8Vstatus++;
 			}
 		break;
+
 		//==========pei pin cheng gong
 		case 7://printf v1 v2 success
 			if(TRUE == screenT5L_OutputVoice(pSdwe,u8Voice3))
 			{
 				u8Vstatus++;
-				u16Ticks = 0 ;
+				u16Ticks = pSdwe->CurTick ;
 			}
 		break;
 		case 8://wait time
-			if(u16Ticks++ > 1000)
+			if(pSdwe->CurTick >= (u16Ticks + 1200))
 			{
 				u8Vstatus++;
 				screenT5L_OutputVoice(pSdwe,VoiceTypeMax);
 			}
 		break;
+
+		//===========yu
+		case 3://printf yu
+			if(TRUE == screenT5L_OutputVoice(pSdwe,VoiceTypeYu_17))
+			{
+				u8Vstatus++;
+				u16Ticks = pSdwe->CurTick ;
+			}
+		break;
+		case 4://wait time
+			if(pSdwe->CurTick >= (u16Ticks + 1000))
+			{
+				u8Vstatus++;
+			}
+		break;
+
 		default:
 			u8Vstatus = 0 ;
 			localStatus = TRUE;
@@ -3688,78 +3624,481 @@ UINT8 screenTxHandle_ScreenWeightAndColorAndVoiceHandle(T5LType *pSdwe)
 	return matched;
 }
 
-//周期发送数据到大屏
-UINT8 screenLargerTxHandle_CycleData(T5LType *pSdwe)
+//=============================================================================
+//=============================================================================
+//=============================================================================
+//=============================================================================
+//=============================================================================
+//=============================================================================
+void preCurrentDeviceWeightData_New(T5LType *pSdwe,UINT8 chanel_len)
 {
-	INT32 *pData = &g_i32DataBuff[0];
-	INT32 *pDataPre = &g_i32DataBuffPre[0];
-	INT16 *pDataSendToDiWen = &g_i32_i16DataBuff[0];
+	float weight;
+	enumHX711ChanelType chanel = HX711Chanel_1;
 	//
-	INT16 *pColor = &g_i16ColorBuff[0];
-	INT16 *pColorPre = &g_i16ColorBuffPre[0];
-	INT16 *pColorOtherCh = &g_i16ColorOtherChanel[0];
-	//
-	UINT8 chanel_len = T5L_MAX_CHANEL_LEN , ret = 0 ,localStatus = 0;
-	//
-	static UINT8 u8InnerHandleStatus = 0x00;
-	//
-	switch(u8InnerHandleStatus)
+	for(chanel = HX711Chanel_1 ; chanel < HX711_CHANEL_NUM ; chanel++)
 	{
-		//==weight and color handle
-		case 0x00:
-			localStatus = preBalancingWeightAndColorIfNotNeedSendToSreen(pSdwe,pData,pDataSendToDiWen,pDataPre,pColor,pColorPre,pColorOtherCh,chanel_len);
-			if(TRUE == localStatus)
+		//get current device weight
+		weight = hx711_getWeight(chanel);
+		//uint handle of g/ml
+		if((0 != gSystemPara.mlYugBiLv) && (SYS_ML_G_WAS_ML == gSystemPara.uint))
+		{
+			weight *= 1000;
+			weight /= gSystemPara.mlYugBiLv;
+		}
+		//judge if not have decimal
+		if(0 == gSystemPara.xiaoShuXianShi)
+		{
+			pSdwe->screenCycle.pData[chanel] = (INT32)(weight+0.5f);
+		}
+		else
+		{
+			pSdwe->screenCycle.pData[chanel] = (INT32)(10*weight);
+		}
+		//		
+		pSdwe->screenCycle.pDataSendToDiWen[2*chanel + 0] = (pSdwe->screenCycle.pData[chanel] >> 16) & 0xFFFF;
+		pSdwe->screenCycle.pDataSendToDiWen[2*chanel + 1] = (pSdwe->screenCycle.pData[chanel] >> 0 ) & 0xFFFF;
+	}
+}
+UINT8 judgeWeightDataIfNotNeedSend_New(T5LType *pSdwe,UINT8 chanel_len)
+{
+	UINT8 ret = FALSE , offset = 0;
+	if(chanel_len <= T5L_MAX_CHANEL_LEN)
+	{
+		for(offset = 0 ; offset < chanel_len ; offset++)
+		{
+			if(pSdwe->screenCycle.pData[offset] != pSdwe->screenCycle.pDataPre[offset])
 			{
-				u8InnerHandleStatus = 0X10;//if weight and color was send to screen , go to help handle
+				pSdwe->screenCycle.pDataPre[offset] = pSdwe->screenCycle.pData[offset];
+				ret = TRUE ;
 			}
-		break;
-
-		//==help data handle
-		case 0x10:
-			localStatus = screenT5L_HelpDataMainFunction(pSdwe);
-			if(TRUE == localStatus)
-			{
-				u8InnerHandleStatus = 0X20;//if help data was send to screen , go to voice handle
-			}
-		break;
-
-		//==voice printf handle
-		case 0x20:
-			if(TRUE == gSystemPara.ScreenVoiceSwitch)//语音播报功能打开
-			{
-				localStatus = screenT5L_VoicePrintfMainfunction(pSdwe);
-				if(TRUE == localStatus)
-				{
-					u8InnerHandleStatus = 0X30;//if voice was send to screen , go to default handle
-				}				
-			}
-			else
-			{
-				u8InnerHandleStatus = 0X30;
-			}
-		break;
-
-		//==default handle
-		default:
-			u8InnerHandleStatus = 0x00;
-			ret = TRUE;
-		break;
+		}
 	}
 	return ret;
 }
-//准备发送给小屏幕的数据处理
+void preOtherDeviceWeightData_New(T5LType *pSdwe,enumModbusAddType modbusSlaveId)
+{
+	UINT8 offset = 0;
+	enumHX711ChanelType chanel = HX711Chanel_1;
+	//
+	if(modbusSlaveId < ModbusAdd_Slave_Max)
+	{
+		for(chanel = HX711Chanel_1 ; chanel < HX711_CHANEL_NUM ; chanel++)
+		{
+			offset = HX711_CHANEL_NUM*(modbusSlaveId - ModbusAdd_Master) + chanel;	
+			pSdwe->screenCycle.pData[offset] = (INT32)(GetFloatBalancingModelData(modbusSlaveId,chanel)+0.5f);
+			//INT32 data to INT16 data
+			pSdwe->screenCycle.pDataSendToDiWen[2*offset + 0] = (pSdwe->screenCycle.pData[offset] >> 16) & 0xFFFF;
+			pSdwe->screenCycle.pDataSendToDiWen[2*offset + 1] = (pSdwe->screenCycle.pData[offset] >> 0 ) & 0xFFFF;
+		}		
+	}
+}
+UINT8 preWeightDataAndJudgeIfNeedSend_New(T5LType *pSdwe,UINT8 chanel_len)
+{
+	UINT8 ret = FALSE;
+	//
+	if(chanel_len <= T5L_MAX_CHANEL_LEN)
+	{
+		switch(gSystemPara.isCascade)
+		{
+			case 0:
+				//master local data
+				preCurrentDeviceWeightData_New(pSdwe,chanel_len);
+			break;
+ 
+			case ModbusAdd_Master:
+				preCurrentDeviceWeightData_New(pSdwe,chanel_len);
+				//ModbusAdd_Slave_1 recv data
+				preOtherDeviceWeightData_New(pSdwe,ModbusAdd_Slave_1);
+			break;
+ 
+			case ModbusAdd_Slave_1:
+
+			break;
+ 
+			default :
+			break;
+		}
+ 
+		//judge if not need send
+		ret = judgeWeightDataIfNotNeedSend_New(pSdwe,chanel_len);			
+	}
+	//
+	return ret;
+}
+//=============================================================================
+//=============================================================================
+//=============================================================================
+//=============================================================================
+//=============================================================================
+//=============================================================================
+void preColorData_New(T5LType *pSdwe,UINT8 chanel_len)
+{
+	UINT8 release = FALSE;
+	UINT8 sortArry_num = 0 ,chn_self = 0 , chn_other = 0 , chn_i = 0;
+	//weight use pDataPre
+	INT32 *pData = pSdwe->screenCycle.pDataPre;
+	//color data
+	INT16 *pColor = pSdwe->screenCycle.pColor;
+	//INT16 *pColorPre = pSdwe->screenCycle.pColorPre;
+	INT16 *pColorOtherCh = pSdwe->screenCycle.pColorOtherCh;
+	//sort need data
+	float *sortWeight = pSdwe->screenCycle.pSortWeight;//&g_fDataBuffCaculate[0];
+	INT16 *sortArry = pSdwe->screenCycle.pSortArry;//&g_i16OtherChanelCaculate[0];
+	//
+	UINT8 compare_i = 0 ;
+	//
+	float judge_errRange = gSystemPara.errRange,judge_zeroRange = gSystemPara.zeroRange;
+ 
+	enumLedColorType colorVld = LED_COLOR_NONE;
+ 
+	//有小数点时，判断范围乘以10
+	if(1 == gSystemPara.xiaoShuXianShi)
+	{
+		judge_errRange = gSystemPara.errRange*10;
+		judge_zeroRange = gSystemPara.zeroRange*10;
+	}
+	//
+	if(chanel_len <= T5L_MAX_CHANEL_LEN)
+	{
+		//1.judge the equal chanle again
+		for(chn_i=0;chn_i<chanel_len;chn_i++)
+		{
+			release = FALSE;//dit not release channel display color
+			//
+			chn_self = chn_i;//self chanel
+			chn_other = (UINT8)pColorOtherCh[chn_self];//other chanel
+			//other chanel matched
+			if(chn_other < chanel_len)
+			{
+				if(((pData[chn_self] - pData[chn_other]) >= -judge_errRange) && ((pData[chn_self] - pData[chn_other]) <= judge_errRange) )
+				{
+					//self and other chanel weight equal again
+					if(((pData[chn_self] > -judge_zeroRange) && (pData[chn_self] < judge_zeroRange)) ||	
+						((pData[chn_other] > -judge_zeroRange) && (pData[chn_other] < judge_zeroRange)))
+					{
+						//1.3 someone weight at zero range , need release
+						release = TRUE;
+					}
+					else
+					{
+						if(pColor[chn_self] != pColor[chn_other])
+						{
+							//1.2 weight equal but color not equal or someone was NONE color, need release
+							release = TRUE;
+						}
+					}
+				}
+				else
+				{
+					//1.1 weight not equal again , need release
+					release = TRUE;
+				}
+			}
+			else
+			{
+				//1.0 other channel not match , need release
+				release = TRUE;
+			}
+ 
+			//if need release , must release self and other
+			if(TRUE == release)
+			{
+				//clear the self other chanel = Invalid
+				if(T5L_CHANEL_WEIGHT_NOT_EQUAL != pColorOtherCh[chn_self])
+				{
+					pColorOtherCh[chn_self] = T5L_CHANEL_WEIGHT_NOT_EQUAL;
+				}
+				//clear the other chanel = Invalid
+				if((chn_other < T5L_MAX_CHANEL_LEN) && (T5L_CHANEL_WEIGHT_NOT_EQUAL != pColorOtherCh[chn_other]))
+				{
+					pColorOtherCh[chn_other] = T5L_CHANEL_WEIGHT_NOT_EQUAL;
+				}
+				//release self color
+				if(LED_COLOR_NONE != pColor[chn_self])
+				{
+					releaseSysColor((enumLedColorType)pColor[chn_self]);//release used color
+					LedDataSet((enumLedSeqType)chn_self, LED_COLOR_NONE);//LED : display
+					pColor[chn_self] = LED_COLOR_NONE;//clear chn_self color
+				}
+				//release other color
+				if((chn_other < T5L_MAX_CHANEL_LEN) && (LED_COLOR_NONE != pColor[chn_other]))
+				{
+					releaseSysColor((enumLedColorType)pColor[chn_other]);//release used color
+					LedDataSet((enumLedSeqType)chn_other, LED_COLOR_NONE);//LED : display
+					pColor[chn_other] = LED_COLOR_NONE;//clear chn_other color
+				}
+			}
+		}
+		//2.use pColor ==  LED_COLOR_NONE , to triger need judge weight
+		sortArry_num = 0 ;
+		for(chn_i=0;chn_i<chanel_len;chn_i++)
+		{
+			//no color and weight was need match outof zero
+			if((LED_COLOR_NONE == pColor[chn_i]) &&
+			((pData[chn_i] < -judge_zeroRange) || (pData[chn_i] > judge_zeroRange)))
+			{
+				sortWeight[sortArry_num] = pData[chn_i];
+				sortArry[sortArry_num] = chn_i;
+				sortArry_num++;
+			}
+		}
+		//3.use weight Sort
+		BubbleSort(sortWeight,sortArry,sortArry_num);
+		//4.user sorted weight , set color
+		for(compare_i=0;compare_i<(sortArry_num-1);compare_i++)
+		{
+			chn_self = sortArry[compare_i];
+			chn_other = sortArry[compare_i+1];
+			if(( chn_self < chanel_len) && ( chn_other < chanel_len) )
+			{
+				//is equal
+				if( ((pData[chn_self] < -judge_zeroRange) || (pData[chn_self] > judge_zeroRange)) &&
+					((pData[chn_other] < -judge_zeroRange) || (pData[chn_other] > judge_zeroRange)) &&
+					(((pData[chn_self] - pData[chn_other]) >= -judge_errRange) && ((pData[chn_self] - pData[chn_other]) <= judge_errRange) ) )
+				{
+					//screen : set the same color
+					colorVld = getSysColorWhichUsable();
+					pColor[chn_self] = colorVld;
+					pColor[chn_other] = colorVld;
+					//otherChn recode
+					pColorOtherCh[chn_self] = chn_other;
+					pColorOtherCh[chn_other] = chn_self;
+					
+					//screen : voice pritf
+					if(LED_COLOR_NONE != colorVld)//bug : case weight equal but colot was LED_COLOR_NONE
+					{
+						sdwe_VoicePrintfPush((tT5LVoinceType)(chn_self+1),(tT5LVoinceType)(chn_other+1));
+					}
+					//LED : display
+					LedDataSet((enumLedSeqType)chn_self, colorVld);
+					LedDataSet((enumLedSeqType)chn_other, colorVld);
+ 
+					//
+					compare_i++;//!!!!! must add it !!!!!
+				}
+			}
+		}
+	}
+}
+UINT8 judgeWeightColorIfNotNeedSend_New(T5LType *pSdwe,UINT8 chanel_len)
+{
+	UINT8 ret = FALSE , offset = 0;
+	if(chanel_len <= T5L_MAX_CHANEL_LEN)
+	{
+		for(offset = 0 ; offset < chanel_len ; offset++)
+		{
+			if(pSdwe->screenCycle.pColor[offset] != pSdwe->screenCycle.pColorPre[offset])
+			{
+				pSdwe->screenCycle.pColorPre[offset] = pSdwe->screenCycle.pColor[offset];
+				ret = TRUE ;
+			}
+		}
+	}
+	return ret;
+} 
+UINT8 preColorDataAndJudgeIfNeedSend_New(T5LType *pSdwe,UINT8 chanel_len)
+//(INT32 *pData,INT16 *pColor,INT16 *pColorPre,INT16 *pColorOtherCh,UINT8 chanel_len)
+{
+	UINT8 ret = FALSE ;
+	//
+	if(chanel_len <= T5L_MAX_CHANEL_LEN)
+	{
+		switch(gSystemPara.isCascade)
+		{
+			case 0:
+			case ModbusAdd_Master:
+				preColorData_New(pSdwe,chanel_len);
+			break;
+ 
+			case ModbusAdd_Slave_1:
+			break;
+ 
+			default :
+			break;
+		}
+		//2.updata pColorPre from pColor
+		ret = judgeWeightColorIfNotNeedSend_New(pSdwe,chanel_len);
+	}
+	return ret;
+}
+//=============================================================================
+//=============================================================================
+//=============================================================================
+//=============================================================================
+//=============================================================================
+//=============================================================================
+UINT8 preHelpDataAndJudgeIfNeedSend_New(T5LType *pSdwe)
+{
+	UINT8 localStatus = FALSE;
+	UINT8 i = 0;
+	//pre help data
+	switch(gSystemPara.isCascade)
+	{
+		//self not jilian 
+		case 0:
+		break;
+
+		//master
+		case ModbusAdd_Master:
+		case ModbusFuncA_Master:
+			localStatus = sendHelpDataDiff(pSdwe);
+		break;
+
+		//slave used com data
+		case ModbusAdd_Slave_1:
+		case ModbusFuncA_Slave:
+			//doing nothing cause pHelp data from COM
+		break;
+
+		//default
+		default:
+		break;
+	}
+
+	//check if need send
+	for(i=0;i<DIFF_TO_DIWEN_DATA_LEN;i++)
+	{
+		if(pSdwe->screenCycle.pHelpPre[i] != pSdwe->screenCycle.pHelp[i])
+		{
+			pSdwe->screenCycle.pHelpPre[i] = pSdwe->screenCycle.pHelp[i];
+			localStatus = TRUE;
+		}
+	}
+
+	//
+	return localStatus;
+}
+//=============================================================================
+//=============================================================================
+//=============================================================================
+//=============================================================================
+//=============================================================================
+//=============================================================================
+//15.6 larger screen cycle data 
+UINT8 screenLargerTxHandle_CycleData(T5LType *pSdwe)
+{
+	UINT8 chanel_len = T5L_MAX_CHANEL_LEN , ret = 0 ,localStatus = 0;
+	//
+	static enumScreenCycleDataHandleStatusType u8InnerHandleStatus = SCREEN_CYCLE_DATA_HANDLE_JUDGE_WEIGHT_DATA;
+	static UINT32 u16WeightHoldOn = 0 ;//when DMG_DATA_HOLD_TIME data not changed send to screen
+	//
+	switch(u8InnerHandleStatus)
+	{
+		//=======================================================================================================
+		//==weight handle
+		case SCREEN_CYCLE_DATA_HANDLE_JUDGE_WEIGHT_DATA:
+			if(TRUE == preWeightDataAndJudgeIfNeedSend_New(pSdwe,chanel_len))
+			{
+				u16WeightHoldOn = pSdwe->CurTick;
+				u8InnerHandleStatus = SCREEN_CYCLE_DATA_HANDLE_SEND_WEIGHT_DATA;
+			}
+			else
+			{
+				if(pSdwe->CurTick >= (u16WeightHoldOn + DMG_DATA_HOLD_TIME))
+				{
+					u16WeightHoldOn = pSdwe->CurTick;
+					u8InnerHandleStatus = SCREEN_CYCLE_DATA_HANDLE_JUDGE_COLOR_DATA;//if weight not changed then go to color handle
+				}
+			}
+		break;
+		case SCREEN_CYCLE_DATA_HANDLE_SEND_WEIGHT_DATA:
+			if(TRUE ==t5lWriteData(pSdwe,DMG_FUNC_ASK_CHANEL_WEIGHT_ADDRESS,pSdwe->screenCycle.pDataSendToDiWen,(2*chanel_len),0))//2*chanel_len:because each data type was 4 byte
+			{
+				u8InnerHandleStatus = SCREEN_CYCLE_DATA_HANDLE_JUDGE_WEIGHT_DATA;//if send weight data to screen complete back to check it again
+			}
+		break;
+
+
+		//=======================================================================================================
+		//==color handle
+		case SCREEN_CYCLE_DATA_HANDLE_JUDGE_COLOR_DATA:
+			if(TRUE == preColorDataAndJudgeIfNeedSend_New(pSdwe,chanel_len))
+			{
+				u8InnerHandleStatus = SCREEN_CYCLE_DATA_HANDLE_SEND_COLOR_DATA;
+			}
+			else
+			{
+				u8InnerHandleStatus = SCREEN_CYCLE_DATA_HANDLE_JUDGE_HELP_DATA;//if color was not need send to screen , go to help handle
+			}
+		break;
+		case SCREEN_CYCLE_DATA_HANDLE_SEND_COLOR_DATA:
+			if(TRUE ==t5lWriteData(pSdwe,DMG_FUNC_ASK_CHANEL_COLOR_ADDRESS,pSdwe->screenCycle.pColorPre,chanel_len,0))
+			{
+				u8InnerHandleStatus = SCREEN_CYCLE_DATA_HANDLE_JUDGE_HELP_DATA;//if color was send to screen , go to help handle
+			}
+		break;
+
+		/*
+		//cause voice printf need delay so move it
+		//=======================================================================================================
+		//==voice handle
+		case SCREEN_CYCLE_DATA_HANDLE_JUDGE_VOICE_DATA:
+			//if voice was enable
+			if(TRUE == gSystemPara.ScreenVoiceSwitch)
+			{
+				localStatus = screenT5L_VoicePrintfMainfunction(pSdwe);//special:if no voice need printf this func will return TRUE
+				if(TRUE == localStatus)
+				{
+					//if voice was not need handle or allready send to screen , go to help handle
+					u8InnerHandleStatus = SCREEN_CYCLE_DATA_HANDLE_JUDGE_HELP_DATA;
+				}			
+			}
+			else
+			{
+				//if voice was disable , go to help handle
+				u8InnerHandleStatus = SCREEN_CYCLE_DATA_HANDLE_JUDGE_HELP_DATA;
+			}
+		break;
+		*/
+
+		//=======================================================================================================
+		//==help handle
+		case SCREEN_CYCLE_DATA_HANDLE_JUDGE_HELP_DATA:
+			if(TRUE == preHelpDataAndJudgeIfNeedSend_New(pSdwe))
+			{
+				u8InnerHandleStatus = SCREEN_CYCLE_DATA_HANDLE_SEND_HELP_DATA;
+			}
+			else
+			{
+				u8InnerHandleStatus = SCREEN_CYCLE_DATA_HANDLE_DEFAULT;//if help was not need send to screen , go to default handle
+			}
+		break;
+		case SCREEN_CYCLE_DATA_HANDLE_SEND_HELP_DATA:
+			if(TRUE == t5lWriteData(pSdwe,DMG_FUNC_HELP_TO_JUDGE_SET_ADDRESS,pSdwe->screenCycle.pHelpPre,(DIFF_TO_DIWEN_DATA_LEN),0))
+			{
+				u8InnerHandleStatus = SCREEN_CYCLE_DATA_HANDLE_DEFAULT;//if help was send to screen , go to default handle
+			}
+		break;
+
+		//=======================================================================================================
+		//==default handle
+		default:
+			//cycle data of : weight color voice and help data was send to screen , Represent cycle data handle complete 
+			u8InnerHandleStatus = SCREEN_CYCLE_DATA_HANDLE_JUDGE_WEIGHT_DATA;
+			ret = TRUE;
+		break;
+	}
+
+	//=======================================================================================================
+	//==help handle
+	localStatus = screenT5L_VoicePrintfMainfunction(pSdwe);//special:if no voice need printf this func will return TRUE
+	//
+	return ret;
+}
+
+//the Tx handle function group of small screen
 screenRxTxHandleType screenTxHandle[SCREEN_TX_HANDLE_TOTAL_NUM]=
 {
 	//priority index func_add
 	{0,	0, &screenTxHandle_ScreenInit},//==send initial data to DIWEN to display
 	{0,	1, &screenTxHandle_JumpToHomePage},//==M1 event arrive:jump to HOME Page 
-	{0,	2, &screenTxHandle_JumpToBanlingPage},//==M2 event arrive:jump to BALANCING Page 物理按键触发
+	{0,	2, &screenTxHandle_JumpToBanlingPage},//==M2 event arrive:jump to BALANCING Page , Physical keying trigger
 	{0,	3, &screenTxHandle_JumpToCalibrationPage},//==M3 event arrive:jump to CALITRATION Page
 	{0,	4, &screenTxHandle_JumpToActivePage},//==M4 event arrive:jump to ACTIVE Page
 	{0,	5, &screenTxHandle_JumpToSysParaPage},//==M5 event arrive:jump to SYSPARA Page
 	{0,	6, &screenTxHandle_FreshScreenLight},//==M6 event arrive:fresh sreen light
 	{0,	7, &screenTxHandle_ChangeDisplayPosition},//==M7 event arrive:修改小数点
-	{0,	8, &screenTxHandle_JmmpToBalancingPage},//==M2-1 event arrive: jump to BALANCING Page 触摸屏触发
+	{0,	8, &screenTxHandle_JmmpToBalancingPage},//==M2-1 event arrive: jump to BALANCING Page , screen touch trigger
 	{0,	9, &screenTxHandle_JumpToBalancingCleanPage},//==M2-2 event arrive:jump to BALANCING (clean)page
 	{0,	10, &screenTxHandle_JumpToBalancingHomePage},//==M2-3 event arrive:jump to BALANCING (home)page
 	{0,	11, &screenTxHandle_ChanelChangedTrigerDeal},	//==C1 event arrive:At Calibration Page , chanel changed trigerd
@@ -3768,17 +4107,17 @@ screenRxTxHandleType screenTxHandle[SCREEN_TX_HANDLE_TOTAL_NUM]=
 	{0,	14, &screenTxHandle_RemoveWeightTrigerHandle},//==B1 event arrive:At Balancing Page , remove weight trigerd
 	{0,	15, &screenTxHandle_ScreenWeightAndColorAndVoiceHandle},//normaly weight color voice handle
 };
-
-//准备发送给大屏幕的数据处理
+ 
+//the Tx handle function group of larger screen
 screenRxTxHandleType screenLargerTxHandle[SCREEN_LARGER_TX_HANDLE_TOTAL_NUM]=
 {
 	//priority index func_add
 	{0,	0, &screenLargerTxHandle_ScreenInit},//==send initial data to DIWEN to display
 	{0,	1, &screenLargerTxHandle_CycleData},//==send initial data to DIWEN to display
-
+ 
 };
-
-//发送给屏幕的数据处理
+ 
+//the Tx handle  of all screen
 void screenT5L_TxFunction(ScreenHandleType  *screenHandlePtr)
 {
 	UINT8 i = 0;
@@ -3791,8 +4130,8 @@ void screenT5L_TxFunction(ScreenHandleType  *screenHandlePtr)
 		}
 	}	
 }
-
-//接收到屏幕的数据处理
+ 
+//the Rx handle of all screen
 void screenT5L_RxFunction(ScreenHandleType  *screenHandlePtr)
 {
 	UINT8 needStore = FALSE ;
@@ -3866,7 +4205,7 @@ void screenT5L_RxFunction(ScreenHandleType  *screenHandlePtr)
 					break;
 				}
 			}
-
+ 
 			//store in flash
 			if(t5lCtx->CurTick > 5000)
 			{
@@ -3886,13 +4225,14 @@ void screenT5L_RxFunction(ScreenHandleType  *screenHandlePtr)
 		t5lCtx->RxFinishFlag = FALSE;
 	}
 }
-
-//屏幕的统一处理
+ 
+//all screen MainFunction
 void sreenT5L_MainFunction(void)
 {
+	//update self CurTick
 	g_ScreenHandle[ScreenIndex_Smaller].Ctx->CurTick++;
 	g_ScreenHandle[ScreenIndex_Larger].Ctx->CurTick++;
-
+ 
 	//handle rx data from SDWE
 	screenT5L_RxFunction(&g_ScreenHandle[ScreenIndex_Smaller]);
 	screenT5L_RxFunction(&g_ScreenHandle[ScreenIndex_Larger]);
@@ -3900,7 +4240,7 @@ void sreenT5L_MainFunction(void)
 	//prepare data and send to SDWE
 	screenT5L_TxFunction(&g_ScreenHandle[ScreenIndex_Smaller]);
 	screenT5L_TxFunction(&g_ScreenHandle[ScreenIndex_Larger]);
-
+ 
 	//slave data valid
 	setModbusDataValid(SLAVE_DATA_VALID);
 }
