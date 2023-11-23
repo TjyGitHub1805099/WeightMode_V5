@@ -96,6 +96,9 @@
 #define DMG_SYS_CUR_PAGE_GET_ADD			(0X0014)
 #define DMG_SYS_VERSION_GET_ADD				(0X000E)
 
+#define SYS_SOFTWARE_RESET_ADD				(0x6666)
+#define SYS_SOFTWARE_RESET_VLU				(0xA55A)
+
 //at BALANCING Page , auto to judge the remaining chanel weight minus
 //to help user to caculate
 //1.find out the remaining chanel
@@ -487,7 +490,7 @@ typedef struct structScreenHandleType
 	screenRxTxHandleType *sendScreenHadlleCtx;
 }ScreenHandleType;
 
-#define SCREEN_RX_HANDLE_TOTAL_NUM	(14)	/**< 屏幕RX数据处理事件数量 */
+#define SCREEN_RX_HANDLE_TOTAL_NUM	(15)	/**< 屏幕RX数据处理事件数量 */
 #define SCREEN_TX_HANDLE_TOTAL_NUM	(16)	/**< 屏幕TX数据处理事件数量 */
 extern screenRxTxHandleType screenRxHandle[SCREEN_RX_HANDLE_TOTAL_NUM];
 extern screenRxTxHandleType screenTxHandle[SCREEN_TX_HANDLE_TOTAL_NUM];
@@ -519,6 +522,8 @@ extern screenRxTxHandleType screenLargerTxHandle[SCREEN_LARGER_TX_HANDLE_TOTAL_N
 #define T5L_MAX_CHANEL_LEN			(2*HX711_CHANEL_NUM)
 #define T5L_CHANEL_WEIGHT_NOT_EQUAL	(0XFF)
 #define T5L_L_HELP_TOTAL_NUM		(6)	
+#define DESCRIBLE_POINT_HELP_NUM	(4)//4组帮助信息
+
 //================================================================================================
 extern T5LType g_T5LCtx[ScreenIndex_Max];
 extern ScreenHandleType g_ScreenHandle[ScreenIndex_Max];

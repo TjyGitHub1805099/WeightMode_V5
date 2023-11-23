@@ -207,32 +207,42 @@
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>g_i16HelpDataBuffPreLarger,0x0A</ItemText>
+          <ItemText>gSystemPara</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>g_i16HelpDataBuffLarger</ItemText>
+          <ItemText>gSystemPara.xiaoShuXianShi</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>g_i16HelpDataBuff</ItemText>
+          <ItemText>int16_ChangeDisplayPosition_switch</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>g_i16HelpDataBuffPre</ItemText>
+          <ItemText>describlePoint_data</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>localStatus</ItemText>
+          <ItemText>describlePointVluWuXiaoShu</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>pSdwe</ItemText>
+          <ItemText>describlePointVluXiaoShu</ItemText>
+        </Ww>
+        <Ww>
+          <count>6</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>handle_i</ItemText>
+        </Ww>
+        <Ww>
+          <count>7</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>total_handle</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>
@@ -1073,6 +1083,19 @@
       <bDave2>0</bDave2>
       <PathWithFileName>..\WeightMode_app\Src\app_i2c.c</PathWithFileName>
       <FilenameWithoutPath>app_i2c.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>6</GroupNumber>
+      <FileNumber>57</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\WeightMode_app\Src\app_t5l_cfg.c</PathWithFileName>
+      <FilenameWithoutPath>app_t5l_cfg.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

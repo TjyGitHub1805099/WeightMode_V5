@@ -862,6 +862,11 @@
               <FileType>1</FileType>
               <FilePath>..\WeightMode_app\Src\app_i2c.c</FilePath>
             </File>
+            <File>
+              <FileName>app_t5l_cfg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\WeightMode_app\Src\app_t5l_cfg.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
