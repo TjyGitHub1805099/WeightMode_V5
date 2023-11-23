@@ -45,6 +45,28 @@ INT16 g_i16HelpDataBuffPre[DIFF_TO_DIWEN_DATA_LEN]={0};
 float g_i16HelpDataSort[T5L_MAX_CHANEL_LEN]={0};
 INT16 g_i16HelpDataChnSort[T5L_MAX_CHANEL_LEN]={0};
 
+
+//=====================================================================================================================
+//data send to DIWEN
+INT32 g_i32DataBuffLarger[T5L_MAX_CHANEL_LEN]={0};
+INT32 g_i32DataBuffPreLarger[T5L_MAX_CHANEL_LEN]={0};
+INT16 g_i32_i16DataBuffLarger[2*T5L_MAX_CHANEL_LEN]={0};//cause STM32 was little mode : low address store low data but screen was not
+//color send to DIWEN
+INT16 g_i16ColorBuffLarger[T5L_MAX_CHANEL_LEN]={0};
+INT16 g_i16ColorBuffPreLarger[T5L_MAX_CHANEL_LEN]={0};
+INT16 g_i16ColorOtherChanelLarger[T5L_MAX_CHANEL_LEN]={0};//T5L_WEIGHT_CHANEL_INVALID:invalid
+//
+float g_fDataBuffCaculateLarger[T5L_MAX_CHANEL_LEN]={0};
+INT16 g_i16OtherChanelCaculateLarger[T5L_MAX_CHANEL_LEN]={0};//other chanel need +1 , chanel = 1~x
+//help data send to DIWEN
+INT16 g_i16HelpDataBuffLarger[DIFF_TO_DIWEN_DATA_LEN]={0};
+INT16 g_i16HelpDataBuffPreLarger[DIFF_TO_DIWEN_DATA_LEN]={0};
+
+float g_i16HelpDataSortLarger[T5L_MAX_CHANEL_LEN]={0};
+INT16 g_i16HelpDataChnSortLarger[T5L_MAX_CHANEL_LEN]={0};
+//=====================================================================================================================
+
+
 UINT8 g_u8Read00A1_Data = 0XFF;
 
 //=====================================================================================================================
@@ -222,6 +244,218 @@ static INT16 describlePointWeightColor_Larger[T5L_MAX_CHANEL_LEN][2]=
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=========================================================================================
+//=========================================================================================
+//=========================================================================================
+//===================================[15.6寸 8头]==========================================
+//=========================================================================================
+//=========================================================================================
+//=========================================================================================
+//=========================================================================================
+//=============================================15.6寸屏的【托盘重量】描述指针=============================================
+//大屏幕的描述指针：显示托盘的重量控件
+//单元格大小150*210
+static INT16 describlePointWeightVluAdd_Larger_8[HX711_CHANEL_NUM]={0x9411,0x9421,0x9431,0x9441,0x9451,0x9461,0x9471,0x9481};
+//托盘的重量显示：不带小数点显示
+//                              左边框 单个宽度   单个间距	  (8+8)分块间距
+#define L8_WEIGHT_VLU_DIS_X(I) 	(45  + I*(325) + I/1*12     +(I/4)*0)//X position
+#define L8_WEIGHT_VLU_DIS_Y(I) 	(185 + I*(180) + (I/1)*12   + 0)//Y position
+#define L8_WEIGHT_VLU_DIS_COLOR	(0x041F)//color
+#define L8_WEIGHT_VLU_DIS_SIZE	(0x0040)//字库(00:0号字库)+字体大小(20:32大小)
+#define L8_WEIGHT_VLU_DIS_DQZWS	(0x0204)//对齐(00:左对齐，01:右对齐，02:居中) + 整数位数(04:4位整数)
+#define L8_WEIGHT_VLU_DIS_XWSLX	(0x0001)//小数位数(00:无小数，01:1位小数)+变量类型(01:长整型4字节)
+static INT16 describlePointWeightVluWuXiaoShu_Larger_8[HX711_CHANEL_NUM][6]=
+{
+//  x    					y      					颜色      				字库+字体大小			 对齐+整数位数    			   小数位数 变量类型
+	{L8_WEIGHT_VLU_DIS_X(0),	L8_WEIGHT_VLU_DIS_Y(0),	L8_WEIGHT_VLU_DIS_COLOR,	L8_WEIGHT_VLU_DIS_SIZE,	L8_WEIGHT_VLU_DIS_DQZWS,		L8_WEIGHT_VLU_DIS_XWSLX},
+	{L8_WEIGHT_VLU_DIS_X(0),	L8_WEIGHT_VLU_DIS_Y(1),	L8_WEIGHT_VLU_DIS_COLOR,	L8_WEIGHT_VLU_DIS_SIZE,	L8_WEIGHT_VLU_DIS_DQZWS,		L8_WEIGHT_VLU_DIS_XWSLX},
+	{L8_WEIGHT_VLU_DIS_X(1),	L8_WEIGHT_VLU_DIS_Y(0),	L8_WEIGHT_VLU_DIS_COLOR,	L8_WEIGHT_VLU_DIS_SIZE,	L8_WEIGHT_VLU_DIS_DQZWS,		L8_WEIGHT_VLU_DIS_XWSLX},
+	{L8_WEIGHT_VLU_DIS_X(1),	L8_WEIGHT_VLU_DIS_Y(1),	L8_WEIGHT_VLU_DIS_COLOR,	L8_WEIGHT_VLU_DIS_SIZE,	L8_WEIGHT_VLU_DIS_DQZWS,		L8_WEIGHT_VLU_DIS_XWSLX},
+	{L8_WEIGHT_VLU_DIS_X(2),	L8_WEIGHT_VLU_DIS_Y(0),	L8_WEIGHT_VLU_DIS_COLOR,	L8_WEIGHT_VLU_DIS_SIZE,	L8_WEIGHT_VLU_DIS_DQZWS,		L8_WEIGHT_VLU_DIS_XWSLX},
+	{L8_WEIGHT_VLU_DIS_X(2),	L8_WEIGHT_VLU_DIS_Y(1),	L8_WEIGHT_VLU_DIS_COLOR,	L8_WEIGHT_VLU_DIS_SIZE,	L8_WEIGHT_VLU_DIS_DQZWS,		L8_WEIGHT_VLU_DIS_XWSLX},
+	{L8_WEIGHT_VLU_DIS_X(3),	L8_WEIGHT_VLU_DIS_Y(0),	L8_WEIGHT_VLU_DIS_COLOR,	L8_WEIGHT_VLU_DIS_SIZE,	L8_WEIGHT_VLU_DIS_DQZWS,		L8_WEIGHT_VLU_DIS_XWSLX},
+	{L8_WEIGHT_VLU_DIS_X(3),	L8_WEIGHT_VLU_DIS_Y(1),	L8_WEIGHT_VLU_DIS_COLOR,	L8_WEIGHT_VLU_DIS_SIZE,	L8_WEIGHT_VLU_DIS_DQZWS,		L8_WEIGHT_VLU_DIS_XWSLX},
+};
+
+//托盘的重量显示：带小数点显示
+//单元格大小150*200
+//									左边框  	单个间距
+#define L8_WEIGHT_VLU_DIS_XS_X(I) 	(28		+	I*(325+18))//X
+#define L8_WEIGHT_VLU_DIS_XS_Y(I) 	(115 	+	I*(180+18))//Y
+#define L8_WEIGHT_VLU_DIS_XS_COLOR	(0x6474)//颜色
+#define L8_WEIGHT_VLU_DIS_XS_SIZE	(0x0032)//字库+字体大小
+#define L8_WEIGHT_VLU_DIS_XS_DQZWS	(0x0204)//对齐+整数位数
+#define L8_WEIGHT_VLU_DIS_XS_XWSLX	(0x0101)//小数位数+变量类型
+static INT16 describlePointWeightVluYouXiaoShu_Larger_8[HX711_CHANEL_NUM][6]=
+{
+//  x    					y      						颜色      				  字库+字体大小				 对齐+整数位数    			  小数位数 变量类型
+	{L8_WEIGHT_VLU_DIS_XS_X(0),L8_WEIGHT_VLU_DIS_XS_Y(0),	L8_WEIGHT_VLU_DIS_XS_COLOR,L8_WEIGHT_VLU_DIS_XS_SIZE,	L8_WEIGHT_VLU_DIS_XS_DQZWS,	L8_WEIGHT_VLU_DIS_XS_XWSLX},
+	{L8_WEIGHT_VLU_DIS_XS_X(0),L8_WEIGHT_VLU_DIS_XS_Y(1),	L8_WEIGHT_VLU_DIS_XS_COLOR,L8_WEIGHT_VLU_DIS_XS_SIZE,	L8_WEIGHT_VLU_DIS_XS_DQZWS,	L8_WEIGHT_VLU_DIS_XS_XWSLX},
+	{L8_WEIGHT_VLU_DIS_XS_X(1),L8_WEIGHT_VLU_DIS_XS_Y(0),	L8_WEIGHT_VLU_DIS_XS_COLOR,L8_WEIGHT_VLU_DIS_XS_SIZE,	L8_WEIGHT_VLU_DIS_XS_DQZWS,	L8_WEIGHT_VLU_DIS_XS_XWSLX},
+	{L8_WEIGHT_VLU_DIS_XS_X(1),L8_WEIGHT_VLU_DIS_XS_Y(1),	L8_WEIGHT_VLU_DIS_XS_COLOR,L8_WEIGHT_VLU_DIS_XS_SIZE,	L8_WEIGHT_VLU_DIS_XS_DQZWS,	L8_WEIGHT_VLU_DIS_XS_XWSLX},
+	{L8_WEIGHT_VLU_DIS_XS_X(2),L8_WEIGHT_VLU_DIS_XS_Y(0),	L8_WEIGHT_VLU_DIS_XS_COLOR,L8_WEIGHT_VLU_DIS_XS_SIZE,	L8_WEIGHT_VLU_DIS_XS_DQZWS,	L8_WEIGHT_VLU_DIS_XS_XWSLX},
+	{L8_WEIGHT_VLU_DIS_XS_X(2),L8_WEIGHT_VLU_DIS_XS_Y(1),	L8_WEIGHT_VLU_DIS_XS_COLOR,L8_WEIGHT_VLU_DIS_XS_SIZE,	L8_WEIGHT_VLU_DIS_XS_DQZWS,	L8_WEIGHT_VLU_DIS_XS_XWSLX},
+	{L8_WEIGHT_VLU_DIS_XS_X(3),L8_WEIGHT_VLU_DIS_XS_Y(0),	L8_WEIGHT_VLU_DIS_XS_COLOR,L8_WEIGHT_VLU_DIS_XS_SIZE,	L8_WEIGHT_VLU_DIS_XS_DQZWS,	L8_WEIGHT_VLU_DIS_XS_XWSLX},
+	{L8_WEIGHT_VLU_DIS_XS_X(3),L8_WEIGHT_VLU_DIS_XS_Y(1),	L8_WEIGHT_VLU_DIS_XS_COLOR,L8_WEIGHT_VLU_DIS_XS_SIZE,	L8_WEIGHT_VLU_DIS_XS_DQZWS,	L8_WEIGHT_VLU_DIS_XS_XWSLX},
+};
+
+//=============================================15.6寸屏的【托盘序号】描述指针=============================================
+//托盘的序号显示
+//单元格大小150*210
+//                              		左边框 单个宽度   单个间距	  (8+8)分块间距
+#define L8_WEIGHT_VLU_INDEX_DIS_X(I) 	(148  + I*(325) + I/1*12     +(I/4)*0)//X
+#define L8_WEIGHT_VLU_INDEX_DIS_Y(I) 	(143 + I*(180) + (I/1)*12   + 0)//Y
+#define L8_WEIGHT_VLU_INDEX_DIS_COLOR	(0x0000)//颜色0x6494
+#define L8_WEIGHT_VLU_INDEX_DIS_SIZE	(0x001A)//字库+字体大小
+#define L8_WEIGHT_VLU_INDEX_DIS_DQZWS	(0x0202)//对齐+整数位数
+#define L8_WEIGHT_VLU_INDEX_DIS_XWSLX	(0x0000)//小数位数+变量类型
+static INT16 describlePointWeightIndexAdd_Larger_8[HX711_CHANEL_NUM]={0x9611,0x9621,0x9631,0x9641,0x9651,0x9661,0x9671,0x9681};
+static INT16 describlePointWeightIndex_Larger_8[HX711_CHANEL_NUM][6]=
+{
+//  x    							y      							颜色      						字库+字体大小					 对齐+整数位数    				  小数位数 变量类型(00:整数2字节，01:长整数4字节)
+	{L8_WEIGHT_VLU_INDEX_DIS_X(0),	L8_WEIGHT_VLU_INDEX_DIS_Y(0),	L8_WEIGHT_VLU_INDEX_DIS_COLOR,	L8_WEIGHT_VLU_INDEX_DIS_SIZE,	L8_WEIGHT_VLU_INDEX_DIS_DQZWS,	L8_WEIGHT_VLU_INDEX_DIS_XWSLX},
+	{L8_WEIGHT_VLU_INDEX_DIS_X(0),	L8_WEIGHT_VLU_INDEX_DIS_Y(1),	L8_WEIGHT_VLU_INDEX_DIS_COLOR,	L8_WEIGHT_VLU_INDEX_DIS_SIZE,	L8_WEIGHT_VLU_INDEX_DIS_DQZWS,	L8_WEIGHT_VLU_INDEX_DIS_XWSLX},
+	{L8_WEIGHT_VLU_INDEX_DIS_X(1),	L8_WEIGHT_VLU_INDEX_DIS_Y(0),	L8_WEIGHT_VLU_INDEX_DIS_COLOR,	L8_WEIGHT_VLU_INDEX_DIS_SIZE,	L8_WEIGHT_VLU_INDEX_DIS_DQZWS,	L8_WEIGHT_VLU_INDEX_DIS_XWSLX},
+	{L8_WEIGHT_VLU_INDEX_DIS_X(1),	L8_WEIGHT_VLU_INDEX_DIS_Y(1),	L8_WEIGHT_VLU_INDEX_DIS_COLOR,	L8_WEIGHT_VLU_INDEX_DIS_SIZE,	L8_WEIGHT_VLU_INDEX_DIS_DQZWS,	L8_WEIGHT_VLU_INDEX_DIS_XWSLX},
+	{L8_WEIGHT_VLU_INDEX_DIS_X(2),	L8_WEIGHT_VLU_INDEX_DIS_Y(0),	L8_WEIGHT_VLU_INDEX_DIS_COLOR,	L8_WEIGHT_VLU_INDEX_DIS_SIZE,	L8_WEIGHT_VLU_INDEX_DIS_DQZWS,	L8_WEIGHT_VLU_INDEX_DIS_XWSLX},
+	{L8_WEIGHT_VLU_INDEX_DIS_X(2),	L8_WEIGHT_VLU_INDEX_DIS_Y(1),	L8_WEIGHT_VLU_INDEX_DIS_COLOR,	L8_WEIGHT_VLU_INDEX_DIS_SIZE,	L8_WEIGHT_VLU_INDEX_DIS_DQZWS,	L8_WEIGHT_VLU_INDEX_DIS_XWSLX},
+	{L8_WEIGHT_VLU_INDEX_DIS_X(3),	L8_WEIGHT_VLU_INDEX_DIS_Y(0),	L8_WEIGHT_VLU_INDEX_DIS_COLOR,	L8_WEIGHT_VLU_INDEX_DIS_SIZE,	L8_WEIGHT_VLU_INDEX_DIS_DQZWS,	L8_WEIGHT_VLU_INDEX_DIS_XWSLX},
+	{L8_WEIGHT_VLU_INDEX_DIS_X(3),	L8_WEIGHT_VLU_INDEX_DIS_Y(1),	L8_WEIGHT_VLU_INDEX_DIS_COLOR,	L8_WEIGHT_VLU_INDEX_DIS_SIZE,	L8_WEIGHT_VLU_INDEX_DIS_DQZWS,	L8_WEIGHT_VLU_INDEX_DIS_XWSLX},
+};
+//=============================================15.6寸屏的【帮助差值】描述指针=============================================
+//帮助差值显示
+//单元格大小(430-12)*(637-571)
+//                              左边框 	单个宽度   	   单个间距	  	  (8+8)分块间距
+#define L8_HELP_VLU_DIS_X(I) 	(10  + (I%3)*(110) 	+ (I%3)/2*60    +(I/3)*450)//X
+#define L8_HELP_VLU_DIS_Y(I) 	(550 + I*(85) + (I/1)*(15)   	+ 0)//Y
+#define L8_HELP_VLU_DIS_COLOR	(0xF810)//差值颜色
+#define L8_HELP_VLU_DIS_COLOR_S	(0x0000)//被减数序号颜色
+#define L8_HELP_VLU_DIS_COLOR_S2 (0x041F)//减数序号颜色
+#define L8_HELP_VLU_DIS_SIZE	(0x0022)//字库+字体大小
+#define L8_HELP_VLU_DIS_DQZWS	(0x0204)//对齐+整数位数
+#define L8_HELP_VLU_DIS_XWSLX	(0x0000)//小数位数+变量类型
+static INT16 describlePointHelpVluAdd_Larger_8[DIFF_TO_DIWEN_DATA_LEN]={0xA011,0xA021,0xA031,0xA041,0xA051,0xA061,0xA071,0xA081,0xA091,0xA0A1,0xA0B1,0xA0C1};
+static INT16 describlePointHelpVluWuXiaoShu_Larger_8[DIFF_TO_DIWEN_DATA_LEN][6]=
+{
+//  x    					y      					颜色      				字库+字体大小			  对齐+整数位数    		  小数位数 变量类型
+	{L8_HELP_VLU_DIS_X(0),	L8_HELP_VLU_DIS_Y(0),	L8_HELP_VLU_DIS_COLOR_S,	L8_HELP_VLU_DIS_SIZE,	L8_HELP_VLU_DIS_DQZWS,	L8_HELP_VLU_DIS_XWSLX},
+	{L8_HELP_VLU_DIS_X(1),	L8_HELP_VLU_DIS_Y(0),	L8_HELP_VLU_DIS_COLOR_S2,	L8_HELP_VLU_DIS_SIZE,	L8_HELP_VLU_DIS_DQZWS,	L8_HELP_VLU_DIS_XWSLX},
+	{L8_HELP_VLU_DIS_X(2),	L8_HELP_VLU_DIS_Y(0),	L8_HELP_VLU_DIS_COLOR,	L8_HELP_VLU_DIS_SIZE,	L8_HELP_VLU_DIS_DQZWS,	L8_HELP_VLU_DIS_XWSLX},
+	{L8_HELP_VLU_DIS_X(0),	L8_HELP_VLU_DIS_Y(1),	L8_HELP_VLU_DIS_COLOR_S,	L8_HELP_VLU_DIS_SIZE,	L8_HELP_VLU_DIS_DQZWS,	L8_HELP_VLU_DIS_XWSLX},
+	{L8_HELP_VLU_DIS_X(1),	L8_HELP_VLU_DIS_Y(1),	L8_HELP_VLU_DIS_COLOR_S2,	L8_HELP_VLU_DIS_SIZE,	L8_HELP_VLU_DIS_DQZWS,	L8_HELP_VLU_DIS_XWSLX},
+	{L8_HELP_VLU_DIS_X(2),	L8_HELP_VLU_DIS_Y(1),	L8_HELP_VLU_DIS_COLOR,	L8_HELP_VLU_DIS_SIZE,	L8_HELP_VLU_DIS_DQZWS,	L8_HELP_VLU_DIS_XWSLX},
+	{L8_HELP_VLU_DIS_X(3),	L8_HELP_VLU_DIS_Y(0),	L8_HELP_VLU_DIS_COLOR_S,	L8_HELP_VLU_DIS_SIZE,	L8_HELP_VLU_DIS_DQZWS,	L8_HELP_VLU_DIS_XWSLX},
+	{L8_HELP_VLU_DIS_X(4),	L8_HELP_VLU_DIS_Y(0),	L8_HELP_VLU_DIS_COLOR_S2,	L8_HELP_VLU_DIS_SIZE,	L8_HELP_VLU_DIS_DQZWS,	L8_HELP_VLU_DIS_XWSLX},
+	{L8_HELP_VLU_DIS_X(5),	L8_HELP_VLU_DIS_Y(0),	L8_HELP_VLU_DIS_COLOR,	L8_HELP_VLU_DIS_SIZE,	L8_HELP_VLU_DIS_DQZWS,	L8_HELP_VLU_DIS_XWSLX},
+	{L8_HELP_VLU_DIS_X(3),	L8_HELP_VLU_DIS_Y(1),	L8_HELP_VLU_DIS_COLOR_S,	L8_HELP_VLU_DIS_SIZE,	L8_HELP_VLU_DIS_DQZWS,	L8_HELP_VLU_DIS_XWSLX},
+	{L8_HELP_VLU_DIS_X(4),	L8_HELP_VLU_DIS_Y(1),	L8_HELP_VLU_DIS_COLOR_S2,	L8_HELP_VLU_DIS_SIZE,	L8_HELP_VLU_DIS_DQZWS,	L8_HELP_VLU_DIS_XWSLX},
+	{L8_HELP_VLU_DIS_X(5),	L8_HELP_VLU_DIS_Y(1),	L8_HELP_VLU_DIS_COLOR,	L8_HELP_VLU_DIS_SIZE,	L8_HELP_VLU_DIS_DQZWS,	L8_HELP_VLU_DIS_XWSLX},
+};
+//帮助差值显示
+//单元格大小150*200
+#define L8_HELP_VLU_DIS_XS_X(I) 	(I*(450+18)+28)//X
+#define L8_HELP_VLU_DIS_XS_Y(I) 	(I*(500+18)+115)//Y
+#define L8_HELP_VLU_DIS_XS_COLOR	(0x6474)//颜色
+#define L8_HELP_VLU_DIS_XS_SIZE		(0x0010)//字库+字体大小
+#define L8_HELP_VLU_DIS_XS_DQZWS	(0x0202)//对齐+整数位数
+#define L8_HELP_VLU_DIS_XS_XWSLX	(0x0002)//小数位数+变量类型
+static INT16 describlePointHelpVluYouXiaoShu_Larger_8[DIFF_TO_DIWEN_DATA_LEN][6]=
+{
+//  x    					y      					颜色      				字库+字体大小			  对齐+整数位数    		  小数位数 变量类型
+	{L8_HELP_VLU_DIS_X(0),	L8_HELP_VLU_DIS_Y(0),	L8_HELP_VLU_DIS_COLOR,	L8_HELP_VLU_DIS_SIZE,	L8_HELP_VLU_DIS_DQZWS,	L8_HELP_VLU_DIS_XWSLX},
+	{L8_HELP_VLU_DIS_X(1),	L8_HELP_VLU_DIS_Y(0),	L8_HELP_VLU_DIS_COLOR,	L8_HELP_VLU_DIS_SIZE,	L8_HELP_VLU_DIS_DQZWS,	L8_HELP_VLU_DIS_XWSLX},
+	{L8_HELP_VLU_DIS_X(2),	L8_HELP_VLU_DIS_Y(0),	L8_HELP_VLU_DIS_COLOR,	L8_HELP_VLU_DIS_SIZE,	L8_HELP_VLU_DIS_DQZWS,	L8_HELP_VLU_DIS_XWSLX},
+	{L8_HELP_VLU_DIS_X(0),	L8_HELP_VLU_DIS_Y(1),	L8_HELP_VLU_DIS_COLOR,	L8_HELP_VLU_DIS_SIZE,	L8_HELP_VLU_DIS_DQZWS,	L8_HELP_VLU_DIS_XWSLX},
+	{L8_HELP_VLU_DIS_X(1),	L8_HELP_VLU_DIS_Y(1),	L8_HELP_VLU_DIS_COLOR,	L8_HELP_VLU_DIS_SIZE,	L8_HELP_VLU_DIS_DQZWS,	L8_HELP_VLU_DIS_XWSLX},
+	{L8_HELP_VLU_DIS_X(2),	L8_HELP_VLU_DIS_Y(1),	L8_HELP_VLU_DIS_COLOR,	L8_HELP_VLU_DIS_SIZE,	L8_HELP_VLU_DIS_DQZWS,	L8_HELP_VLU_DIS_XWSLX},
+	{L8_HELP_VLU_DIS_X(3),	L8_HELP_VLU_DIS_Y(0),	L8_HELP_VLU_DIS_COLOR,	L8_HELP_VLU_DIS_SIZE,	L8_HELP_VLU_DIS_DQZWS,	L8_HELP_VLU_DIS_XWSLX},
+	{L8_HELP_VLU_DIS_X(4),	L8_HELP_VLU_DIS_Y(0),	L8_HELP_VLU_DIS_COLOR,	L8_HELP_VLU_DIS_SIZE,	L8_HELP_VLU_DIS_DQZWS,	L8_HELP_VLU_DIS_XWSLX},
+	{L8_HELP_VLU_DIS_X(5),	L8_HELP_VLU_DIS_Y(0),	L8_HELP_VLU_DIS_COLOR,	L8_HELP_VLU_DIS_SIZE,	L8_HELP_VLU_DIS_DQZWS,	L8_HELP_VLU_DIS_XWSLX},
+	{L8_HELP_VLU_DIS_X(3),	L8_HELP_VLU_DIS_Y(1),	L8_HELP_VLU_DIS_COLOR,	L8_HELP_VLU_DIS_SIZE,	L8_HELP_VLU_DIS_DQZWS,	L8_HELP_VLU_DIS_XWSLX},
+	{L8_HELP_VLU_DIS_X(4),	L8_HELP_VLU_DIS_Y(1),	L8_HELP_VLU_DIS_COLOR,	L8_HELP_VLU_DIS_SIZE,	L8_HELP_VLU_DIS_DQZWS,	L8_HELP_VLU_DIS_XWSLX},
+	{L8_HELP_VLU_DIS_X(5),	L8_HELP_VLU_DIS_Y(1),	L8_HELP_VLU_DIS_COLOR,	L8_HELP_VLU_DIS_SIZE,	L8_HELP_VLU_DIS_DQZWS,	L8_HELP_VLU_DIS_XWSLX},
+};
+
+//=============================================15.6寸屏的【托盘的背景色】描述指针=============================================
+//托盘的背景色显示
+//单元格大小150*210
+//                              	左边框 单个宽度   单个间距	  (8+8)分块间距
+#define L8_WEIGHT_COLOR_DIS_X(I) 	(16 + I*(325) + I/1*12 	 +(I/4)*0)//X
+#define L8_WEIGHT_COLOR_DIS_Y(I) 	(126 + I*(180) + (I/1)*12 + 0)//Y
+static INT16 describlePointWeightColorAdd_Larger_8[HX711_CHANEL_NUM]={0x9711,0x9721,0x9731,0x9741,0x9751,0x9761,0x9771,0x9781};
+static INT16 describlePointWeightColor_Larger_8[HX711_CHANEL_NUM][2]=
+{
+//  x    						y      					   	
+	{L8_WEIGHT_COLOR_DIS_X(0),	L8_WEIGHT_COLOR_DIS_Y(0)},
+	{L8_WEIGHT_COLOR_DIS_X(0),	L8_WEIGHT_COLOR_DIS_Y(1)},
+	{L8_WEIGHT_COLOR_DIS_X(1),	L8_WEIGHT_COLOR_DIS_Y(0)},
+	{L8_WEIGHT_COLOR_DIS_X(1),	L8_WEIGHT_COLOR_DIS_Y(1)},
+	{L8_WEIGHT_COLOR_DIS_X(2),	L8_WEIGHT_COLOR_DIS_Y(0)},
+	{L8_WEIGHT_COLOR_DIS_X(2),	L8_WEIGHT_COLOR_DIS_Y(1)},
+	{L8_WEIGHT_COLOR_DIS_X(3),	L8_WEIGHT_COLOR_DIS_Y(0)},
+	{L8_WEIGHT_COLOR_DIS_X(3),	L8_WEIGHT_COLOR_DIS_Y(1)},
+};
+
+//=========================================================================================
+//=========================================================================================
+//=========================================================================================
+//===================================[15.6寸 8头]==========================================
+//=========================================================================================
+//=========================================================================================
+//=========================================================================================
+//=========================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //=============================================8.8寸屏的【托盘的重量】描述指针=============================================
 //屏幕的描述指针：显示托盘的重量控件
 static INT16 int16_ChangeDisplayPosition = 0 ,int16_ChangeDisplayPosition_i = 0 ,int16_ChangeDisplayPosition_switch =0;
@@ -317,19 +551,45 @@ static void screenT5L_Init(T5LType *t5lCtx)
 	UINT8 i = 0 ;
 	//
 	t5lCtx->readSdweInit = FALSE;
-	//data handle send to screen
-	t5lCtx->screenCycle.pData = &g_i32DataBuff[0];
-	t5lCtx->screenCycle.pDataPre = &g_i32DataBuffPre[0];
-	t5lCtx->screenCycle.pDataSendToDiWen = &g_i32_i16DataBuff[0];
-	//color handle send to screen
-	t5lCtx->screenCycle.pColor = &g_i16ColorBuff[0];
-	t5lCtx->screenCycle.pColorPre = &g_i16ColorBuffPre[0];
-	t5lCtx->screenCycle.pColorOtherCh = &g_i16ColorOtherChanel[0];
-	//help handle send to screen
-	t5lCtx->screenCycle.pSortWeight = &g_fDataBuffCaculate[0];
-	t5lCtx->screenCycle.pSortArry = &g_i16OtherChanelCaculate[0];
-	t5lCtx->screenCycle.pHelp = &g_i16HelpDataBuff[0];
-	t5lCtx->screenCycle.pHelpPre = &g_i16HelpDataBuffPre[0];
+
+
+	if(t5lCtx == &g_T5LCtx[ScreenIndex_Larger])
+	{
+		//data handle send to screen
+		t5lCtx->screenCycle.pData = &g_i32DataBuffLarger[0];
+		t5lCtx->screenCycle.pDataPre = &g_i32DataBuffPreLarger[0];
+		t5lCtx->screenCycle.pDataSendToDiWen = &g_i32_i16DataBuffLarger[0];
+		//color handle send to screen
+		t5lCtx->screenCycle.pColor = &g_i16ColorBuffLarger[0];
+		t5lCtx->screenCycle.pColorPre = &g_i16ColorBuffPreLarger[0];
+		t5lCtx->screenCycle.pColorOtherCh = &g_i16ColorOtherChanelLarger[0];
+		//help handle send to screen
+		t5lCtx->screenCycle.pSortWeight = &g_fDataBuffCaculateLarger[0];
+		t5lCtx->screenCycle.pSortArry = &g_i16OtherChanelCaculateLarger[0];
+		t5lCtx->screenCycle.pHelp = &g_i16HelpDataBuffLarger[0];
+		t5lCtx->screenCycle.pHelpPre = &g_i16HelpDataBuffPreLarger[0];
+	}
+	else
+	{
+		//data handle send to screen
+		t5lCtx->screenCycle.pData = &g_i32DataBuff[0];
+		t5lCtx->screenCycle.pDataPre = &g_i32DataBuffPre[0];
+		t5lCtx->screenCycle.pDataSendToDiWen = &g_i32_i16DataBuff[0];
+		//color handle send to screen
+		t5lCtx->screenCycle.pColor = &g_i16ColorBuff[0];
+		t5lCtx->screenCycle.pColorPre = &g_i16ColorBuffPre[0];
+		t5lCtx->screenCycle.pColorOtherCh = &g_i16ColorOtherChanel[0];
+		//help handle send to screen
+		t5lCtx->screenCycle.pSortWeight = &g_fDataBuffCaculate[0];
+		t5lCtx->screenCycle.pSortArry = &g_i16OtherChanelCaculate[0];
+		t5lCtx->screenCycle.pHelp = &g_i16HelpDataBuff[0];
+		t5lCtx->screenCycle.pHelpPre = &g_i16HelpDataBuffPre[0];
+	}
+
+
+
+
+
 	//t5lCtx->pUartDevice = &g_UartDevice[t5lCtx->uartIndex];
 	t5lCtx->version = 0;//SDWE version
 	//
@@ -1050,12 +1310,14 @@ UINT8 screenRxHandle_JumpToSysParaPage(T5LType *pSdwe)
 UINT8 screenRxHandle_RemoveWeightTriger(T5LType *pSdwe)
 {
 	UINT8 matched = FALSE;
+	T5LType *pSdweSmaller = &g_T5LCtx[ScreenIndex_Smaller];
 	if(DMG_FUNC_REMOVE_WEIGHT_ADDRESS == pSdwe->SetAdd)
 	{
 		matched = TRUE;
 		if(DMG_FUNC_REMOVE_WEIGHT_VAL == (UINT16)pSdwe->SetData)
 		{
 			pSdwe->sdweRemoveWeightTriger = TRUE;
+			pSdweSmaller->sdweRemoveWeightTriger = TRUE;
 			//
 			setModbusSelfRemoveFlag(TRUE);
 		}
@@ -1172,6 +1434,7 @@ screenRxTxHandleType screenLargerRxHandle[SCREEN_LARGER_RX_HANDLE_TOTAL_NUM]=
 {
 	//priority index func_add
 	{0,	0, &screenRxHandle_Version},//开机时MCU获取到屏幕版本时，代表屏幕可以正常通讯
+	{0,	1, &screenRxHandle_RemoveWeightTriger},//去皮事件触发
 };
 
 //接收到屏幕的数据变量的处理
@@ -2714,28 +2977,56 @@ UINT8 screenLarger_ChangeDisplayPosition(T5LType *pSdwe)
 	//
 	if(0 == int16_ChangeDisplayPosition)//改变数据显示的窗口
 	{
-		if(0 == int16_ChangeDisplayPosition_switch)//正常显示
+		if(0 == gSystemPara.isCascade)
 		{
-			describlePoint_add = describlePointWeightVluAdd_Larger[int16_ChangeDisplayPosition_i%T5L_MAX_CHANEL_LEN]+add_offset;
-			describlePoint_data = &describlePointWeightVluWuXiaoShu_Larger[int16_ChangeDisplayPosition_i%T5L_MAX_CHANEL_LEN][0]+data_offset;
-			describlePoint_len = 6+len_offset;
-		}
+			if(0 == int16_ChangeDisplayPosition_switch)//正常显示
+			{
+				describlePoint_add = describlePointWeightVluAdd_Larger_8[int16_ChangeDisplayPosition_i%T5L_MAX_CHANEL_LEN]+add_offset;
+				describlePoint_data = &describlePointWeightVluWuXiaoShu_Larger_8[int16_ChangeDisplayPosition_i%T5L_MAX_CHANEL_LEN][0]+data_offset;
+				describlePoint_len = 6+len_offset;
+			}
+			else
+			{
+				describlePoint_add = describlePointWeightVluAdd_Larger_8[int16_ChangeDisplayPosition_i%T5L_MAX_CHANEL_LEN]+add_offset;
+				describlePoint_data = &describlePointWeightVluYouXiaoShu_Larger_8[int16_ChangeDisplayPosition_i%T5L_MAX_CHANEL_LEN][0]+data_offset;
+				describlePoint_len = 6+len_offset;
+			}
+			if(TRUE == t5lWriteData(pSdwe,describlePoint_add,describlePoint_data,describlePoint_len,0))
+			{
+				int16_ChangeDisplayPosition_i++;
+			}
+
+			if(int16_ChangeDisplayPosition_i >= HX711_CHANEL_NUM)
+			{
+				int16_ChangeDisplayPosition_i = 0 ;
+				int16_ChangeDisplayPosition = 1;
+				ret = TRUE;
+			}		}
 		else
 		{
-			describlePoint_add = describlePointWeightVluAdd_Larger[int16_ChangeDisplayPosition_i%T5L_MAX_CHANEL_LEN]+add_offset;
-			describlePoint_data = &describlePointWeightVluYouXiaoShu_Larger[int16_ChangeDisplayPosition_i%T5L_MAX_CHANEL_LEN][0]+data_offset;
-			describlePoint_len = 6+len_offset;
-		}
-		if(TRUE == t5lWriteData(pSdwe,describlePoint_add,describlePoint_data,describlePoint_len,0))
-		{
-			int16_ChangeDisplayPosition_i++;
-		}
+			if(0 == int16_ChangeDisplayPosition_switch)//正常显示
+			{
+				describlePoint_add = describlePointWeightVluAdd_Larger[int16_ChangeDisplayPosition_i%T5L_MAX_CHANEL_LEN]+add_offset;
+				describlePoint_data = &describlePointWeightVluWuXiaoShu_Larger[int16_ChangeDisplayPosition_i%T5L_MAX_CHANEL_LEN][0]+data_offset;
+				describlePoint_len = 6+len_offset;
+			}
+			else
+			{
+				describlePoint_add = describlePointWeightVluAdd_Larger[int16_ChangeDisplayPosition_i%T5L_MAX_CHANEL_LEN]+add_offset;
+				describlePoint_data = &describlePointWeightVluYouXiaoShu_Larger[int16_ChangeDisplayPosition_i%T5L_MAX_CHANEL_LEN][0]+data_offset;
+				describlePoint_len = 6+len_offset;
+			}
+			if(TRUE == t5lWriteData(pSdwe,describlePoint_add,describlePoint_data,describlePoint_len,0))
+			{
+				int16_ChangeDisplayPosition_i++;
+			}
 
-		if(int16_ChangeDisplayPosition_i >= T5L_MAX_CHANEL_LEN)
-		{
-			int16_ChangeDisplayPosition_i = 0 ;
-			int16_ChangeDisplayPosition = 1;
-			ret = TRUE;
+			if(int16_ChangeDisplayPosition_i >= T5L_MAX_CHANEL_LEN)
+			{
+				int16_ChangeDisplayPosition_i = 0 ;
+				int16_ChangeDisplayPosition = 1;
+				ret = TRUE;
+			}
 		}
 	}
 	else
@@ -2754,22 +3045,44 @@ UINT8 screenLarger_ChangeWeightIndexDisplayPosition(T5LType *pSdwe)
 	static INT16 add_offset = 0,data_offset = 0,len_offset = 0;
 	UINT8 ret = FALSE;
 	int16_ChangeDisplayPosition_switch = gSystemPara.xiaoShuXianShi;
-	//
-	describlePoint_add = describlePointWeightIndexAdd_Larger[int16_ChangeDisplayPosition_i%T5L_MAX_CHANEL_LEN]+add_offset;
-	describlePoint_data = &describlePointWeightIndex_Larger[int16_ChangeDisplayPosition_i%T5L_MAX_CHANEL_LEN][0]+data_offset;
-	describlePoint_len = 6+len_offset;
-	if(TRUE == t5lWriteData(pSdwe,describlePoint_add,describlePoint_data,describlePoint_len,0))
-	{
-		int16_ChangeDisplayPosition_i++;
-	}
 
-	if(int16_ChangeDisplayPosition_i >= T5L_MAX_CHANEL_LEN)
-	{
-		int16_ChangeDisplayPosition_i = 0 ;
-		int16_ChangeDisplayPosition = 1;
-		ret = TRUE;
-	}
 
+	if(0 == gSystemPara.isCascade)
+	{
+		//
+		describlePoint_add = describlePointWeightIndexAdd_Larger_8[int16_ChangeDisplayPosition_i%T5L_MAX_CHANEL_LEN]+add_offset;
+		describlePoint_data = &describlePointWeightIndex_Larger_8[int16_ChangeDisplayPosition_i%T5L_MAX_CHANEL_LEN][0]+data_offset;
+		describlePoint_len = 6+len_offset;
+		if(TRUE == t5lWriteData(pSdwe,describlePoint_add,describlePoint_data,describlePoint_len,0))
+		{
+			int16_ChangeDisplayPosition_i++;
+		}
+
+		if(int16_ChangeDisplayPosition_i >= HX711_CHANEL_NUM)
+		{
+			int16_ChangeDisplayPosition_i = 0 ;
+			int16_ChangeDisplayPosition = 1;
+			ret = TRUE;
+		}
+	}
+	else
+	{
+		//
+		describlePoint_add = describlePointWeightIndexAdd_Larger[int16_ChangeDisplayPosition_i%T5L_MAX_CHANEL_LEN]+add_offset;
+		describlePoint_data = &describlePointWeightIndex_Larger[int16_ChangeDisplayPosition_i%T5L_MAX_CHANEL_LEN][0]+data_offset;
+		describlePoint_len = 6+len_offset;
+		if(TRUE == t5lWriteData(pSdwe,describlePoint_add,describlePoint_data,describlePoint_len,0))
+		{
+			int16_ChangeDisplayPosition_i++;
+		}
+
+		if(int16_ChangeDisplayPosition_i >= T5L_MAX_CHANEL_LEN)
+		{
+			int16_ChangeDisplayPosition_i = 0 ;
+			int16_ChangeDisplayPosition = 1;
+			ret = TRUE;
+		}
+	}
 	return ret;
 }
 
@@ -2778,20 +3091,41 @@ UINT8 screenLarger_ChangeWeightColorDisplayPosition(T5LType *pSdwe)
 	static INT16 add_offset = 0,data_offset = 0,len_offset = 0;
 	UINT8 ret = FALSE;
 	int16_ChangeDisplayPosition_switch = gSystemPara.xiaoShuXianShi;
-	//
-	describlePoint_add = describlePointWeightColorAdd_Larger[int16_ChangeDisplayPosition_i%T5L_MAX_CHANEL_LEN]+add_offset;
-	describlePoint_data = &describlePointWeightColor_Larger[int16_ChangeDisplayPosition_i%T5L_MAX_CHANEL_LEN][0]+data_offset;
-	describlePoint_len = 2+len_offset;
-	if(TRUE == t5lWriteData(pSdwe,describlePoint_add,describlePoint_data,describlePoint_len,0))
+	if(0 == gSystemPara.isCascade)
 	{
-		int16_ChangeDisplayPosition_i++;
-	}
+		//
+		describlePoint_add = describlePointWeightColorAdd_Larger_8[int16_ChangeDisplayPosition_i%T5L_MAX_CHANEL_LEN]+add_offset;
+		describlePoint_data = &describlePointWeightColor_Larger_8[int16_ChangeDisplayPosition_i%T5L_MAX_CHANEL_LEN][0]+data_offset;
+		describlePoint_len = 2+len_offset;
+		if(TRUE == t5lWriteData(pSdwe,describlePoint_add,describlePoint_data,describlePoint_len,0))
+		{
+			int16_ChangeDisplayPosition_i++;
+		}
 
-	if(int16_ChangeDisplayPosition_i >= T5L_MAX_CHANEL_LEN)
+		if(int16_ChangeDisplayPosition_i >= HX711_CHANEL_NUM)
+		{
+			int16_ChangeDisplayPosition_i = 0 ;
+			int16_ChangeDisplayPosition = 1;
+			ret = TRUE;
+		}
+	}
+	else
 	{
-		int16_ChangeDisplayPosition_i = 0 ;
-		int16_ChangeDisplayPosition = 1;
-		ret = TRUE;
+		//
+		describlePoint_add = describlePointWeightColorAdd_Larger[int16_ChangeDisplayPosition_i%T5L_MAX_CHANEL_LEN]+add_offset;
+		describlePoint_data = &describlePointWeightColor_Larger[int16_ChangeDisplayPosition_i%T5L_MAX_CHANEL_LEN][0]+data_offset;
+		describlePoint_len = 2+len_offset;
+		if(TRUE == t5lWriteData(pSdwe,describlePoint_add,describlePoint_data,describlePoint_len,0))
+		{
+			int16_ChangeDisplayPosition_i++;
+		}
+
+		if(int16_ChangeDisplayPosition_i >= T5L_MAX_CHANEL_LEN)
+		{
+			int16_ChangeDisplayPosition_i = 0 ;
+			int16_ChangeDisplayPosition = 1;
+			ret = TRUE;
+		}	
 	}
 
 	return ret;
@@ -2803,20 +3137,41 @@ UINT8 screenLarger_ChangeHelpVluDisplayPosition(T5LType *pSdwe)
 	static INT16 add_offset = 0,data_offset = 0,len_offset = 0;
 	UINT8 ret = FALSE;
 	int16_ChangeDisplayPosition_switch = gSystemPara.xiaoShuXianShi;
-	//
-	describlePoint_add = describlePointHelpVluAdd_Larger[int16_ChangeDisplayPosition_i%T5L_MAX_CHANEL_LEN]+add_offset;
-	describlePoint_data = &describlePointHelpVluWuXiaoShu_Larger[int16_ChangeDisplayPosition_i%T5L_MAX_CHANEL_LEN][0]+data_offset;
-	describlePoint_len = 6+len_offset;
-	if(TRUE == t5lWriteData(pSdwe,describlePoint_add,describlePoint_data,describlePoint_len,0))
+	if(0 == gSystemPara.isCascade)
 	{
-		int16_ChangeDisplayPosition_i++;
-	}
+		//
+		describlePoint_add = describlePointHelpVluAdd_Larger_8[int16_ChangeDisplayPosition_i%DIFF_TO_DIWEN_DATA_LEN]+add_offset;
+		describlePoint_data = &describlePointHelpVluWuXiaoShu_Larger_8[int16_ChangeDisplayPosition_i%DIFF_TO_DIWEN_DATA_LEN][0]+data_offset;
+		describlePoint_len = 6+len_offset;
+		if(TRUE == t5lWriteData(pSdwe,describlePoint_add,describlePoint_data,describlePoint_len,0))
+		{
+			int16_ChangeDisplayPosition_i++;
+		}
 
-	if(int16_ChangeDisplayPosition_i >= T5L_MAX_CHANEL_LEN)
+		if(int16_ChangeDisplayPosition_i >= DIFF_TO_DIWEN_DATA_LEN)
+		{
+			int16_ChangeDisplayPosition_i = 0 ;
+			int16_ChangeDisplayPosition = 1;
+			ret = TRUE;
+		}
+	}
+	else
 	{
-		int16_ChangeDisplayPosition_i = 0 ;
-		int16_ChangeDisplayPosition = 1;
-		ret = TRUE;
+		//
+		describlePoint_add = describlePointHelpVluAdd_Larger[int16_ChangeDisplayPosition_i%DIFF_TO_DIWEN_DATA_LEN]+add_offset;
+		describlePoint_data = &describlePointHelpVluWuXiaoShu_Larger[int16_ChangeDisplayPosition_i%DIFF_TO_DIWEN_DATA_LEN][0]+data_offset;
+		describlePoint_len = 6+len_offset;
+		if(TRUE == t5lWriteData(pSdwe,describlePoint_add,describlePoint_data,describlePoint_len,0))
+		{
+			int16_ChangeDisplayPosition_i++;
+		}
+
+		if(int16_ChangeDisplayPosition_i >= DIFF_TO_DIWEN_DATA_LEN)
+		{
+			int16_ChangeDisplayPosition_i = 0 ;
+			int16_ChangeDisplayPosition = 1;
+			ret = TRUE;
+		}
 	}
 
 	return ret;
@@ -2893,6 +3248,7 @@ UINT8 sendBalancingWeightAndColorAndHelpDataToScreen(T5LType *pSdwe)
 UINT8 largerScreen_Init(T5LType *pSdwe)
 {
 	UINT8 result = FALSE ;
+	INT16 sendData[64],len=0,i;
 	switch(pSdwe->sendSysParaDataToDiwenIndex)
 	{
 		case 0x80://获取系统版本 若获取回则代表 屏已上电
@@ -2948,6 +3304,120 @@ UINT8 largerScreen_Init(T5LType *pSdwe)
 				}
 			}
 		break;
+		case 0x85:
+			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			{	
+				len = T5L_MAX_CHANEL_LEN;
+				for(i=0;i<len;i++)
+				{
+					sendData[i]=i+1;
+				}	
+				t5lWriteVarible(pSdwe,(0x3901),sendData,len,0);
+				pSdwe->sendSysParaDataToDiwenIndex = 0;
+			}
+		break;
+
+		case 0://send screen light
+			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			{
+				len=0;
+				sendScreenLight(pSdwe);
+				pSdwe->sendSysParaDataToDiwenIndex++;
+			}
+		break;
+		case 1://send weight data to DW
+			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			{
+				len=0;
+				for(len=0;len<(2*T5L_MAX_CHANEL_LEN);len++)//每个通道是4字节变量
+				{
+					sendData[len] = 0;
+				}
+				t5lWriteVarible(pSdwe,DMG_FUNC_ASK_CHANEL_WEIGHT_ADDRESS,sendData,len,0);/**< 通道重量 */
+				pSdwe->sendSysParaDataToDiwenIndex++;
+			}
+		break;
+		case 2://send back color to DW
+			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			{
+				len=0;
+				for(len=0;len<T5L_MAX_CHANEL_LEN;len++)
+				{
+					sendData[len] = 0;
+				}
+				t5lWriteVarible(pSdwe,DMG_FUNC_ASK_CHANEL_COLOR_ADDRESS,sendData,len,0);/**< 通道背景色 */  //3100
+				pSdwe->sendSysParaDataToDiwenIndex++;
+			}
+		break;
+		case 3://send help data to DW
+			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			{
+				len=0;
+				for(len=0;len<DIFF_TO_DIWEN_DATA_LEN;len++)
+				{
+					sendData[len] = 0;
+				}
+				t5lWriteVarible(pSdwe,DMG_FUNC_HELP_TO_JUDGE_SET_ADDRESS,sendData,len,0);/**< 通道差值，帮助信息 */  //1201
+				pSdwe->sendSysParaDataToDiwenIndex = 7;
+			}
+		break;
+
+
+		case 7://send 0x1000 单位
+			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			{
+				len=0;
+				sendData[len++] = gSystemPara.uint;
+				t5lWriteVarible(pSdwe,(0x1000),sendData,len,0);		/**< 单位：ml/g */ 				//1000
+				pSdwe->sendSysParaDataToDiwenIndex++;
+			}
+		break;
+		case 8://send 0X100A~0X101E 系统参数
+			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			{
+				len = 0 ;
+				sendData[len++] = gSystemPara.minWeight;		/**< 最小量程 */ 				//100A
+				sendData[len++] = gSystemPara.maxWeight;		/**< 最大量程 */ 				//100B
+				sendData[len++] = gSystemPara.errRange;			/**< 误差范围 */ 				//100C
+				sendData[len++] = gSystemPara.isCascade;		/**< 是否级联 */ 				//100D
+				sendData[len++] = gSystemPara.isLedIndicate;  	/**< 是否LED指示 */ 			//100E
+				sendData[len++] = gSystemPara.userColorSet[0];	/**< 配平色1 */ 				//100F
+				sendData[len++] = gSystemPara.userColorSet[1];	/**< 配平色2 */ 				//1010
+				sendData[len++] = gSystemPara.userColorSet[2];	/**< 配平色3 */ 				//1011
+				sendData[len++] = gSystemPara.userColorSet[3];	/**< 配平色4 */ 				//1012
+				sendData[len++] = gSystemPara.zeroRange;		/**< 零点范围 */ 				//1013
+				sendData[len++] = gSystemPara.ScreenLight;		/**< 正常亮度 */ 				//1014
+#if 0				
+				sendData[len++] = 25;							/**< 待机亮度 */ 				//1015
+				sendData[len++] = 300;							/**< 待机时间 */ 				//1016
+#else
+				sendData[len++] = gSystemPara.VoiceNumTouch;	/**< 音量大小 触控*/ 			//1015
+				sendData[len++] = gSystemPara.VoiceNum;			/**< 音量大小 */ 			    //1016
+#endif				
+				sendData[len++] = gSystemPara.ScreenVoiceSwitch;/**< HX711	语音开关 */ 		//1017
+				sendData[len++] = gSystemPara.ScreenCastMode;	/**< HX711	级联显示模式 */ 	//1018
+				sendData[len++] = gSystemPara.FlashEraseTimes;	/**< HX711	FLASH 擦写次数 */ 	//1019
+				sendData[len++] = MCU_VERSION;					/**< MCU 版本 */ 				//101A
+				sendData[len++] = DIWEN_VERSION;				/**< DIVEN 版本 */ 				//101B
+				
+				sendData[len++] = gSystemPara.xiaoShuXianShi;	/**< 小数显示 0x101c*/			//101C
+				sendData[len++] = gSystemPara.mlYugBiLv;		/**< ml与g比率 0x101d*/			//101D
+				sendData[len++] = gSystemPara.daPinXianShi;		/**< 大屏显示 0x101e*/			//101E
+
+				t5lWriteVarible(pSdwe,(0x100A),sendData,len,0);
+				pSdwe->sendSysParaDataToDiwenIndex++;
+			}
+		break;
+
+
+
 
 		default:
 			if(TRUE == pSdwe->sdweHX711FirstSampleCoplt)
@@ -3899,7 +4369,8 @@ UINT8 judgeWeightColorIfNotNeedSend_New(T5LType *pSdwe,UINT8 chanel_len)
 UINT8 preColorDataAndJudgeIfNeedSend_New(T5LType *pSdwe,UINT8 chanel_len)
 //(INT32 *pData,INT16 *pColor,INT16 *pColorPre,INT16 *pColorOtherCh,UINT8 chanel_len)
 {
-	UINT8 ret = FALSE ;
+	UINT8 ret = FALSE , offset = 0;
+	T5LType *pSdweSmaller = &g_T5LCtx[ScreenIndex_Smaller];
 	//
 	if(chanel_len <= T5L_MAX_CHANEL_LEN)
 	{
@@ -3907,7 +4378,11 @@ UINT8 preColorDataAndJudgeIfNeedSend_New(T5LType *pSdwe,UINT8 chanel_len)
 		{
 			case 0:
 			case ModbusAdd_Master:
-				preColorData_New(pSdwe,chanel_len);
+				//preColorData_New(pSdwe,chanel_len);
+				for(offset = 0 ; offset < chanel_len ; offset++)
+				{
+					pSdwe->screenCycle.pColor[offset] = pSdweSmaller->screenCycle.pColor[offset];
+				}
 			break;
  
 			case ModbusAdd_Slave_1:
@@ -3927,21 +4402,125 @@ UINT8 preColorDataAndJudgeIfNeedSend_New(T5LType *pSdwe,UINT8 chanel_len)
 //=============================================================================
 //=============================================================================
 //=============================================================================
-UINT8 preHelpDataAndJudgeIfNeedSend_New(T5LType *pSdwe)
+
+UINT8 preHelpData_New(T5LType *pSdwe)
+{
+	static UINT8 needSend = FALSE;
+	UINT8 i = 0 , localStatus = 0;
+
+	INT32 *pData = pSdwe->screenCycle.pDataPre;//&g_i32DataBuff[0];
+	INT16 *pColorOtherCh = pSdwe->screenCycle.pColorOtherCh;//&g_i16ColorOtherChanel[0];
+	//
+	float *sortWeight = &g_i16HelpDataSortLarger[0];
+	INT16 *sortArry = &g_i16HelpDataChnSort[0];
+	INT16 i16Minus = 0 , minPos_i = 0xff ,minPos_j=0xff;
+	UINT8 help_i = 0;
+	//
+	INT16 *pOutData = pSdwe->screenCycle.pHelp;//&g_i16HelpDataBuffLarger[0];
+	//
+	UINT8 sortArry_num = 0 ,chn_i = 0 , chn_j = 0;
+
+	//2.use pColor ==  LED_COLOR_NONE , to triger need judge weight
+	sortArry_num = 0 ;
+	for(chn_i=0;chn_i<HX711_CHANEL_NUM;chn_i++)
+	{
+		if(T5L_CHANEL_WEIGHT_NOT_EQUAL == pColorOtherCh[chn_i])
+		{
+			sortWeight[sortArry_num] = pData[chn_i];
+			sortArry[sortArry_num] = chn_i;
+			sortArry_num++;
+		}
+	}
+	//==sort weight : from min to max
+	if(sortArry_num > 1)
+	{	
+		BubbleSort((float *)sortWeight,sortArry,sortArry_num);
+	}
+	//
+	for(help_i=0;help_i < DIFF_JUDGE_GROUP_NUM_SLAVE1;)
+	{
+		i16Minus = 0x7FFF ;
+		minPos_i = 0xff;
+		minPos_j = 0xff;
+		//find chn_i
+		for(chn_i=0;chn_i<sortArry_num;chn_i++)
+		{
+			if((sortWeight[chn_i] >= gSystemPara.zeroRange) || 
+				(sortWeight[chn_i] <= -gSystemPara.zeroRange) )
+			{
+				//find chn_j
+				for(chn_j=(chn_i+1);chn_j<sortArry_num;chn_j++)
+				{
+					//if chn_j larger than zero
+					if((sortWeight[chn_j] >= gSystemPara.zeroRange) || 
+						(sortWeight[chn_j] <= -gSystemPara.zeroRange) )
+					{
+						break;
+					}
+				}
+				//==out the least value of diff 
+				if((chn_i < sortArry_num) && (chn_j < sortArry_num))
+				{
+					if((sortWeight[chn_j] - sortWeight[chn_i]) < i16Minus)
+					{
+						i16Minus = sortWeight[chn_j] - sortWeight[chn_i];
+						minPos_j = chn_j;
+						minPos_i = chn_i;
+					}
+				}
+			}	
+		}
+		//==qunene the least value of diff
+		if((i16Minus != 0x7FFF) && (0xff != minPos_i) && (0xff != minPos_j))
+		{
+			if(help_i < DIFF_JUDGE_GROUP_NUM_SLAVE1)
+			{
+				pOutData[DIFF_JUDGE_DATA_NUM_SLAVE1 * help_i + 0] = sortArry[minPos_j]+1;
+				pOutData[DIFF_JUDGE_DATA_NUM_SLAVE1 * help_i + 1] = sortArry[minPos_i]+1;
+				pOutData[DIFF_JUDGE_DATA_NUM_SLAVE1 * help_i + 2] = i16Minus;
+				help_i++;
+			}
+			sortWeight[minPos_j] = 0 ;
+			sortWeight[minPos_i] = 0 ;
+		}
+		else
+		{
+			break;
+		}
+	}
+	//==the remain help data set to 0
+	for(;help_i<(DIFF_JUDGE_GROUP_NUM_SLAVE1);help_i++)
+	{
+		pOutData[DIFF_JUDGE_DATA_NUM_SLAVE1 * help_i + 0] = 0;
+		pOutData[DIFF_JUDGE_DATA_NUM_SLAVE1 * help_i + 1] = 0;
+		pOutData[DIFF_JUDGE_DATA_NUM_SLAVE1 * help_i + 2] = 0;
+	}
+	
+	return localStatus;
+}
+
+
+
+
+UINT8 preHelpDataAndJudgeIfNeedSend_New(T5LType *pSdwe,UINT8 chanel_len)
 {
 	UINT8 localStatus = FALSE;
+	UINT8 ret = FALSE , offset = 0;
+	T5LType *pSdweSmaller = &g_T5LCtx[ScreenIndex_Smaller];
+
 	UINT8 i = 0;
 	//pre help data
 	switch(gSystemPara.isCascade)
 	{
 		//self not jilian 
 		case 0:
+
 		break;
 
 		//master
 		case ModbusAdd_Master:
 		case ModbusFuncA_Master:
-			localStatus = sendHelpDataDiff(pSdwe);
+			//localStatus = sendHelpDataDiff(pSdwe);
 		break;
 
 		//slave used com data
@@ -3953,6 +4532,10 @@ UINT8 preHelpDataAndJudgeIfNeedSend_New(T5LType *pSdwe)
 		//default
 		default:
 		break;
+	}
+	for(offset = 0 ; offset < DIFF_TO_DIWEN_DATA_LEN ; offset++)
+	{
+		pSdwe->screenCycle.pHelp[offset] = g_i16HelpDataBuff[offset];
 	}
 
 	//check if need send
@@ -4054,7 +4637,7 @@ UINT8 screenLargerTxHandle_CycleData(T5LType *pSdwe)
 		//=======================================================================================================
 		//==help handle
 		case SCREEN_CYCLE_DATA_HANDLE_JUDGE_HELP_DATA:
-			if(TRUE == preHelpDataAndJudgeIfNeedSend_New(pSdwe))
+			if(TRUE == preHelpDataAndJudgeIfNeedSend_New(pSdwe,chanel_len))
 			{
 				u8InnerHandleStatus = SCREEN_CYCLE_DATA_HANDLE_SEND_HELP_DATA;
 			}
@@ -4081,7 +4664,7 @@ UINT8 screenLargerTxHandle_CycleData(T5LType *pSdwe)
 
 	//=======================================================================================================
 	//==help handle
-	localStatus = screenT5L_VoicePrintfMainfunction(pSdwe);//special:if no voice need printf this func will return TRUE
+	//localStatus = screenT5L_VoicePrintfMainfunction(pSdwe);//special:if no voice need printf this func will return TRUE
 	//
 	return ret;
 }

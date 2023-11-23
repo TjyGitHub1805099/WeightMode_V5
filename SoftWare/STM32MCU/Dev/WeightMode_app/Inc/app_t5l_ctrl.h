@@ -492,7 +492,7 @@ typedef struct structScreenHandleType
 extern screenRxTxHandleType screenRxHandle[SCREEN_RX_HANDLE_TOTAL_NUM];
 extern screenRxTxHandleType screenTxHandle[SCREEN_TX_HANDLE_TOTAL_NUM];
 
-#define SCREEN_LARGER_RX_HANDLE_TOTAL_NUM	(1)	/**< 屏幕RX数据处理事件数量 */
+#define SCREEN_LARGER_RX_HANDLE_TOTAL_NUM	(2)	/**< 屏幕RX数据处理事件数量 */
 #define SCREEN_LARGER_TX_HANDLE_TOTAL_NUM	(2)	/**< 屏幕TX数据处理事件数量 */
 extern screenRxTxHandleType screenLargerRxHandle[SCREEN_LARGER_RX_HANDLE_TOTAL_NUM];
 extern screenRxTxHandleType screenLargerTxHandle[SCREEN_LARGER_TX_HANDLE_TOTAL_NUM];
