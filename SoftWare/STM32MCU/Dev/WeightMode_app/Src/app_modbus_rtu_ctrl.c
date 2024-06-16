@@ -125,6 +125,9 @@ void ModbusRtu_MasterCycleReadWeightScan(ModbusRtuType *pContex)
 			default:
 			break;
 		}
+		//prepare handle data
+		pContex->masterTxDiffTick = 0 ;
+		pContex->masterState = MasterState_Idle;	
 	}
 }
 
@@ -225,10 +228,12 @@ void ModbusRtu_MasterTxMainFunction(ModbusRtuType *pContex)
 			if(TRUE == pContex->RxFinishFlag)
 			{
 				pContex->masterState = MasterState_Idle;
+				pContex->masterTxDiffTick = 0 ;
 			}
 		break;
 		default :
 			pContex->masterState = MasterState_Idle;
+			pContex->masterTxDiffTick = 0 ;
 		break;
 	}
 }
@@ -416,6 +421,10 @@ void ModbusRtu_SlaveTxMainFunction(ModbusRtuType *pContex)
 //==master main function
 void ModbusRtu_MasterMainFunction(ModbusRtuType *pContex)
 {
+	/* 1st hand TxMainFunction
+	*  1.because RxFinishFlag was used for jump IDLE at TxMainFunction
+	*  2.RxFinishFlag was clear at RxMainFunction
+	*/
 	ModbusRtu_MasterTxMainFunction(pContex);
 	if(TRUE == ModbusRtu_RxMainFunction(pContex))
 	{
@@ -443,22 +452,19 @@ void ModbusRtu_MainFunction(void)
 	//
 	pContex->sysTick++;
 	//
-	if(0 != gSystemPara.isCascade)//not cascade , only one
+	switch(gSystemPara.isCascade)
 	{
-		switch(gSystemPara.isCascade)
-		{
-			//master
-			case ModbusAdd_Master:
-			case ModbusFuncA_Master:
-				ModbusRtu_MasterMainFunction(pContex);
-			break;
-			//slave
-			case ModbusAdd_Slave_1:
-			case ModbusFuncA_Slave:
-				ModbusRtu_SlaveMainFunction(pContex);
-			break;
-			default:
-			break;
-		}
+		//master
+		case ModbusAdd_Master:
+		case ModbusFuncA_Master:
+			ModbusRtu_MasterMainFunction(pContex);
+		break;
+		//slave
+		case ModbusAdd_Slave_1:
+		case ModbusFuncA_Slave:
+			ModbusRtu_SlaveMainFunction(pContex);
+		break;
+		default:
+		break;
 	}
 }

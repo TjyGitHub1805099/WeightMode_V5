@@ -248,6 +248,8 @@ void readSysDataFromFlash_3030(void)
 		gSystemPara.xiaoShuXianShi= readflashDataBuf[start_i++].i_value;/**< 小数显示 0x101c*/
 		gSystemPara.mlYugBiLv = readflashDataBuf[start_i++].i_value;/**< ml与g比率 0x101d*/
 		gSystemPara.daPinXianShi = readflashDataBuf[start_i++].i_value;/**< 大屏显示 0x101e*/
+
+		gSystemPara.weightNum = readflashDataBuf[start_i++].f_value;/**< 单台数量 */
 	}
 }
 
@@ -423,6 +425,14 @@ void storeSysDataToFlash_3030(void)
 	start_i = end_i ;
 	end_i = start_i+1;
 	pInt32 = (INT32 *)&(gSystemPara.daPinXianShi);/**< 大屏显示 0x101e */
+	for(;start_i<end_i;start_i++)
+	{
+		pWordInt32Float[start_i].i_value = *pInt32++;
+	}
+	//23
+	start_i = end_i ;
+	end_i = start_i+1;
+	pInt32 = (INT32 *)&(gSystemPara.weightNum);/**< 单台数量 */
 	for(;start_i<end_i;start_i++)
 	{
 		pWordInt32Float[start_i].i_value = *pInt32++;

@@ -35,6 +35,7 @@ typedef enum HX711SystemParaType
 	HX711SystemPara_xiaoShuXianShi = 19,/**< 小数显示 0x101c*/
 	HX711SystemPara_mlYugBiLv = 20,/**< ml与g比率 0x101d*/
 	HX711SystemPara_daPinXianShi = 21,/**< 大屏显示 0x101e*/
+	HX711SystemPara_weightNum = 22,/**< 单台数量 0x101f*/
 	HX711SystemPara_NUM  			/**< HX711  系统设置-最大长度 */
 }enumHX711SystemParaType;
 
@@ -125,6 +126,7 @@ typedef struct SystemParaType
 	INT32 	xiaoShuXianShi;/**< 小数显示 0x101c*/
 	INT32 	mlYugBiLv;/**< ml与g比率 0x101d*/
 	INT32 	daPinXianShi;/**< 大屏显示 0x101e*/
+	INT32	weightNum;/**< 单台总数量 0x101f*/
 	//sys used flag
 	UINT16	userColorUsed[SYS_COLOR_GROUP_NUM];/**< chanel_a<<8 + chanel_b*/
 } gSystemParaType;
@@ -149,6 +151,7 @@ TRUE, \
 0,\
 1050,\
 0,\
+8,\
 {FALSE, FALSE, FALSE, FALSE },\
 }
 //

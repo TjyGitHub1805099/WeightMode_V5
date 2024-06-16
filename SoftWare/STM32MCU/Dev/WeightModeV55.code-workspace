@@ -30,7 +30,10 @@
 			"stm32f4xx_it.h": "c",
 			"string.h": "c",
 			"app_modbus_rtu_ctrl.h": "c",
-			"app_sdwe_ctrl.h": "c"
+			"app_sdwe_ctrl.h": "c",
+			"app_t5l_cfg.h": "c",
+			"app_innerscreen_cfg.h": "c",
+			"app_externalscreen_cfg.h": "c"
 		}
 	}
 }

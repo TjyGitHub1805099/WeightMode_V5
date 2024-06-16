@@ -867,6 +867,36 @@
               <FileType>1</FileType>
               <FilePath>..\WeightMode_app\Src\app_t5l_cfg.c</FilePath>
             </File>
+            <File>
+              <FileName>app_ExternalScreen_Cfg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\WeightMode_app\Src\app_ExternalScreen_Cfg.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_ExternalScreenRxHandle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\WeightMode_app\Src\app_ExternalScreenRxHandle.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_ExternalScreenTxHandle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\WeightMode_app\Src\app_ExternalScreenTxHandle.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_InnerScreen_Cfg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\WeightMode_app\Src\app_InnerScreen_Cfg.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_InnerScreenRxHandle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\WeightMode_app\Src\app_InnerScreenRxHandle.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_InnerScreenTxHandle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\WeightMode_app\Src\app_InnerScreenTxHandle.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

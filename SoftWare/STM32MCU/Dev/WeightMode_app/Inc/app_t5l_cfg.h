@@ -13,88 +13,64 @@
 
 //=====================================================================================================================
 //屏幕的描述指针地址范围：
-//0x9010~0x9100：重量显示控件
-//0x9110~0x9160：帮助信息的差值显示控件
-//0x9210~0x9300：托盘序号显示控件
-//0x9310~0x9400：托盘背景色显示控件
+//0x9010~0x9100：重量显
+//0x9110~0x9160：帮助信息的差值
+//0x9210~0x9300：托盘序号
+//0x9310~0x9400：托盘背景色
 //=====================================================================================================================
 
-//=========================================================================================
-//=========================================================================================
-//=========================================================================================
-//===================================[15.6寸 16头]==========================================
-//=========================================================================================
-//=========================================================================================
-//=========================================================================================
-//=========================================================================================
-//=============================================15.6寸屏的【托盘重量】描述指针=============================================
-//大屏幕的描述指针：显示托盘的重量控件
-extern INT16 describlePointWeightVluAdd_Larger[T5L_MAX_CHANEL_LEN];
-extern INT16 describlePointWeightVluWuXiaoShu_Larger[T5L_MAX_CHANEL_LEN][6];
-extern INT16 describlePointWeightVluYouXiaoShu_Larger[T5L_MAX_CHANEL_LEN][6];
-//=============================================15.6寸屏的【托盘序号】描述指针=============================================
-//托盘的序号显示
-extern INT16 describlePointWeightIndexAdd_Larger[T5L_MAX_CHANEL_LEN];
-extern INT16 describlePointWeightIndex_Larger[T5L_MAX_CHANEL_LEN][6];
-//=============================================15.6寸屏的【帮助差值】描述指针=============================================
-extern INT16 describlePointHelpVluAdd_Larger[T5L_L_HELP_TOTAL_NUM];
-extern INT16 describlePointHelpVluWuXiaoShu_Larger[T5L_L_HELP_TOTAL_NUM][6];
-extern INT16 describlePointHelpVluYouXiaoShu_Larger[T5L_L_HELP_TOTAL_NUM][6];
-//=============================================15.6寸屏的【托盘的背景色】描述指针=============================================
-extern INT16 describlePointWeightColorAdd_Larger[T5L_MAX_CHANEL_LEN];
-extern INT16 describlePointWeightColor_Larger[T5L_MAX_CHANEL_LEN][2];
+typedef struct app_Screen_DpCfg
+{
+    //  x坐标    	y坐标  		 颜色      	字库/字体大小	 对齐 位数    小数位数 变量类型
+    INT16 positionX;
+    INT16 positionY;
+    INT16 color;
+    INT16 size;
+    INT16 dnum;
+    INT16 fnum;
+}appScreenDpCfg_Type;
 
+typedef struct app_Screen_DpColorCfg
+{
+    //  x坐标    	y坐标
+    INT16 positionX;
+    INT16 positionY;
+}appScreenDpColorCfg_Type;
 
-//=========================================================================================
-//=========================================================================================
-//=========================================================================================
-//===================================[15.6寸 8头]==========================================
-//=========================================================================================
-//=========================================================================================
-//=========================================================================================
-//=========================================================================================
-//=============================================15.6寸屏的【托盘重量】描述指针=============================================
-//大屏幕的描述指针：显示托盘的重量控件
-extern INT16 describlePointWeightVluAdd_Larger_8[T5L_MAX_CHANEL_LEN];
-extern INT16 describlePointWeightVluWuXiaoShu_Larger_8[T5L_MAX_CHANEL_LEN][6];
-extern INT16 describlePointWeightVluYouXiaoShu_Larger_8[T5L_MAX_CHANEL_LEN][6];
-//=============================================15.6寸屏的【托盘序号】描述指针=============================================
-//托盘的序号显示
-extern INT16 describlePointWeightIndexAdd_Larger_8[T5L_MAX_CHANEL_LEN];
-extern INT16 describlePointWeightIndex_Larger_8[T5L_MAX_CHANEL_LEN][6];
-//=============================================15.6寸屏的【帮助差值】描述指针=============================================
-extern INT16 describlePointHelpVluAdd_Larger_8[T5L_L_HELP_TOTAL_NUM];
-extern INT16 describlePointHelpVluWuXiaoShu_Larger_8[T5L_L_HELP_TOTAL_NUM][6];
-extern INT16 describlePointHelpVluYouXiaoShu_Larger_8[T5L_L_HELP_TOTAL_NUM][6];
-//=============================================15.6寸屏的【托盘的背景色】描述指针=============================================
-extern INT16 describlePointWeightColorAdd_Larger_8[T5L_MAX_CHANEL_LEN];
-extern INT16 describlePointWeightColor_Larger_8[T5L_MAX_CHANEL_LEN][2];
+typedef struct app_Screen_Cfg
+{
+    //托盘重量描述指针
+    UINT16 weightVluNum;
+    INT16 *dpParaAdd_WeightVlu;
+    appScreenDpCfg_Type *dpParaVlu_WeightVlu_WXS;//无小数
+    appScreenDpCfg_Type *dpParaVlu_WeightVlu_YXS;//小数
 
+    //托盘重量描述指针
+    UINT16 helpVluNum;
+    INT16 *dpParaAdd_HelpVlu;
+    appScreenDpCfg_Type *dpParaVlu_HelpVlu_WXS;//无小数
+    appScreenDpCfg_Type *dpParaVlu_HelpVlu_YXS;//小数
 
+    //托盘序号描述指针
+    UINT16 weightIndexNum;
+    INT16 *dpParaAdd_WeightIndex;
+    appScreenDpCfg_Type *dpParaVlu_WeightIndex;
 
+    //托盘颜色描述指针olor
+    UINT16 weightColorNum;
+    INT16 *dpParaAdd_WeightColor;
+    appScreenDpColorCfg_Type *dpParaVlu_WeightColor;
+}appScreenCfg_Type;
 
+typedef enum app_Screen_enum
+{
+    APPSCREEN_WEIGHT_NUM_6=0,
+    APPSCREEN_WEIGHT_NUM_8,
+    APPSCREEN_WEIGHT_NUM_12,
+    APPSCREEN_WEIGHT_NUM_16,
+    APPSCREEN_WEIGHT_NUM_MAX,
+}appScreenCfg_Enum;
 
-
-
-//=============================================8.8寸屏的【托盘的重量】描述指针=============================================
-//屏幕的描述指针：显示托盘的重量控件
-extern INT16 describlePointAdd[HX711_CHANEL_NUM];
-//托盘的重量显示：不带小数点显示
-extern INT16 describlePointVluWuXiaoShu[HX711_CHANEL_NUM][6];
-//托盘的重量显示：带小数点显示
-extern INT16 describlePointVluXiaoShu[HX711_CHANEL_NUM][6];
-
-//================================================================================================
-//屏幕的描述指针：托盘序号控件
-extern INT16 describleIndexPointAdd[HX711_CHANEL_NUM];
-extern INT16 describleIndexPointData[HX711_CHANEL_NUM][6];
-
-//================================================================================================
-//屏幕的描述指针：帮助信息控件
-//帮助信息：不带小数显示
-extern INT16 describlePointAdd_help[DESCRIBLE_POINT_HELP_NUM];
-extern INT16 describlePointVluWuXiaoShu_help[DESCRIBLE_POINT_HELP_NUM][6];
-//帮助信息：带小数显示
-extern INT16 describlePointVluXiaoShu_help[DESCRIBLE_POINT_HELP_NUM][6];
+extern UINT8 appScreenCfgIndexGet(void);
 
 #endif

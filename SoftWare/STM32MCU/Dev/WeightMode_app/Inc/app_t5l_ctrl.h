@@ -1,10 +1,11 @@
-#ifndef __APP_T5L_CTRL_H__
-#define __APP_T5L_CTRL_H__
+#ifndef _APP_T5L_CTRL_H_
+#define _APP_T5L_CTRL_H_
+
 #include "app_sdwe_ctrl.h"
-
-
 #include "hal_uart.h"
 #include "app_hx711_ctrl.h"
+#include "app_InnerScreen_Cfg.h"
+#include "app_ExternalScreen_Cfg.h"
 
 #define T5L_DMG_UART_TX_USE_DMA	(1)
 
@@ -32,8 +33,8 @@
 #define DMG_FUNC_JUNPTO_ACTIVE_VAL				(1202)
 
 //==(update:20211119):address of syspara entry
-#define DMG_FUNC_JUNPTO_SYSPAR_ADDRESS		(0X2104)
-#define DMG_FUNC_JUNPTO_SYSPAR_VAL			(1010)
+#define DMG_FUNC_JUNPTO_SYSPAR_ADDRESS			(0X2104)
+#define DMG_FUNC_JUNPTO_SYSPAR_VAL				(1010)
 
 //==(update:20210328):address of set point(weight value) of chanel : (0~9)-> point of chanel set (:g)
 #define DMG_FUNC_SET_CHANEL_POINT_ADDRESS		(0X2200)//0x2200~0x2209
@@ -77,10 +78,11 @@
 #define DMG_FUNC_DIWEN_XIAOSHU_ADDRESS			(0X101C)//0X101C 小数使能
 #define DMG_FUNC_DIWEN_BILV_ADDRESS				(0X101D)//0X101D ml/g比率
 #define DMG_FUNC_DIWEN_DAPING_ADDRESS			(0X101E)//0X101E 大屏显示
+#define DMG_FUNC_DIWEN_WEIGHTNUM_ADDRESS		(0X101F)//0X101F 单台数量
 
-#define DMG_FUNC_MCUID_ADDRESS				(0X1500)//0x1500
+#define DMG_FUNC_MCUID_ADDRESS					(0X1500)//0x1500
 
-#define DMG_FUNC_PASSORD_SET_ADDRESS		(0X1510)//0x1510
+#define DMG_FUNC_PASSORD_SET_ADDRESS			(0X1510)//0x1510
 
 #define DMG_FUNC_Balancing_SET_ADDRESS				(0X1101)//0x1101
 #define DMG_FUNC_Balancing_SET_VALUE				(0X1101)//0x1101
@@ -134,7 +136,8 @@ typedef enum DMGPageType
 	DMG_FUNC_Balancing_6_HOME_PAGE = 57,
 	DMG_FUNC_Balancing_12_PAGE = 55,
 	DMG_FUNC_Balancing_12_HOME_PAGE =58,
-	DMG_FUNC_Help_PAGE =59
+	DMG_FUNC_Help_PAGE =59,
+	INNER_SCREEN_Balancing_6_HOME_PAGE = 49,
 }enumDMGPageType;
 
 //语音队列：深度
@@ -298,6 +301,7 @@ typedef struct structSdweType
 	enumSDWEStatusType status;				/**< status ：sdwe 状态 */
 
 	ScreenCycleType screenCycle;
+	appScreenCfg_Type *screenCfg;
 
 	UINT8 	sendSdweInit;					/**< sendSdweInit ：初始化屏幕完成状态*/
 	UINT8 	readSdweInit;					/**< readSdweInit ：状态 */
@@ -343,6 +347,14 @@ typedef struct structSdweType
 	UINT16  sdweHX711FirstSampleCoplt;	/**< sdweHX711FirstSampleCoplt：(事件)HX711数据采集完成 */
 	UINT8 	needStore;					/**< needStore：(事件)是否需要保存*/
 	UINT8 	sendSysParaDataToDiwenIndex;/**< sendSysParaDataToDiwenIndex：(事件)初始化屏幕时的序号*/
+	//
+	UINT16  screenHomePageNum;/**< 屏幕 主页 页面序号*/
+	UINT16  screenBanlingPageNum;/**< 屏幕 配平 页面序号*/
+	UINT16 	screenCalibrationPage;/**< 屏幕 计算 页面序号*/
+	UINT16 	screenActivePage;/**< 屏幕 激活 页面序号*/
+	UINT16  screenSysParaPage;/**< 屏幕 系统参数 页面序号*/
+	UINT16  screenBalancingCleanPage;/**< 屏幕 配平清爽 页面序号*/
+	UINT16  screenBalancingHomePage;/**< 屏幕 配平主页 页面序号*/
 }T5LType;
 
 #define ScreenCycleTypeDefault   { \
@@ -364,14 +376,11 @@ typedef struct structSdweType
 }
 
 
-
-
-
-
 /** ModbusRtu设备默认配置 */
 #define T5LDataDefault   { \
 	SCREEN_STATUS_GET_VERSION,/*status ：sdwe 状态*/\
 	ScreenCycleTypeDefault,\
+	innerScreenCfg,\
 	0,/**/\
 	0,/**/\
 	\
@@ -416,12 +425,20 @@ typedef struct structSdweType
 	0,/**/\
 	0,/**/\
 	0x80,/**< sendSysParaDataToDiwenIndex：(事件)初始化屏幕时的序号*/\
-	}
+	INNER_SCREEN_Balancing_6_HOME_PAGE,\
+	INNER_SCREEN_Balancing_6_HOME_PAGE,\
+	INNER_SCREEN_Balancing_6_HOME_PAGE,\
+	INNER_SCREEN_Balancing_6_HOME_PAGE,\
+	INNER_SCREEN_Balancing_6_HOME_PAGE,\
+	INNER_SCREEN_Balancing_6_HOME_PAGE,\
+	INNER_SCREEN_Balancing_6_HOME_PAGE,\
+}
 
 /** ModbusRtu设备默认配置 */
 #define T5LDataDefault2   { \
 	SCREEN_STATUS_GET_VERSION,/*status ：sdwe 状态*/\
 	ScreenCycleTypeDefault,\
+	externalScreenCfg,\
 	0,/**/\
 	0,/**/\
 	\
@@ -466,6 +483,13 @@ typedef struct structSdweType
 	0,/**/\
 	0,/**/\
 	0x80,/**< sendSysParaDataToDiwenIndex：(事件)初始化屏幕时的序号*/\
+	INNER_SCREEN_Balancing_6_HOME_PAGE,\
+	INNER_SCREEN_Balancing_6_HOME_PAGE,\
+	INNER_SCREEN_Balancing_6_HOME_PAGE,\
+	INNER_SCREEN_Balancing_6_HOME_PAGE,\
+	INNER_SCREEN_Balancing_6_HOME_PAGE,\
+	INNER_SCREEN_Balancing_6_HOME_PAGE,\
+	INNER_SCREEN_Balancing_6_HOME_PAGE,\
 	}
 //================================================================================================
 
@@ -492,29 +516,30 @@ typedef struct structScreenHandleType
 
 #define SCREEN_RX_HANDLE_TOTAL_NUM	(15)	/**< 屏幕RX数据处理事件数量 */
 #define SCREEN_TX_HANDLE_TOTAL_NUM	(16)	/**< 屏幕TX数据处理事件数量 */
-extern screenRxTxHandleType screenRxHandle[SCREEN_RX_HANDLE_TOTAL_NUM];
-extern screenRxTxHandleType screenTxHandle[SCREEN_TX_HANDLE_TOTAL_NUM];
+extern screenRxTxHandleType innerScreenRxHandle[SCREEN_RX_HANDLE_TOTAL_NUM];
+extern screenRxTxHandleType innerScreenTxHandle[SCREEN_TX_HANDLE_TOTAL_NUM];
 
 #define SCREEN_LARGER_RX_HANDLE_TOTAL_NUM	(2)	/**< 屏幕RX数据处理事件数量 */
-#define SCREEN_LARGER_TX_HANDLE_TOTAL_NUM	(2)	/**< 屏幕TX数据处理事件数量 */
-extern screenRxTxHandleType screenLargerRxHandle[SCREEN_LARGER_RX_HANDLE_TOTAL_NUM];
-extern screenRxTxHandleType screenLargerTxHandle[SCREEN_LARGER_TX_HANDLE_TOTAL_NUM];
+#define SCREEN_LARGER_TX_HANDLE_TOTAL_NUM	(3)	/**< 屏幕TX数据处理事件数量 */
+
+extern screenRxTxHandleType externalScreenRxHandle[SCREEN_LARGER_RX_HANDLE_TOTAL_NUM];
+extern screenRxTxHandleType externalScreenTxHandle[SCREEN_LARGER_TX_HANDLE_TOTAL_NUM];
 
 #define ScreenHandleDefault_Smaller   { \
 	ScreenIndex_Smaller,\
 	&g_T5LCtx[ScreenIndex_Smaller],\
 	SCREEN_RX_HANDLE_TOTAL_NUM,\
-	&screenRxHandle[0],\
+	&innerScreenRxHandle[0],\
 	SCREEN_TX_HANDLE_TOTAL_NUM,\
-	&screenTxHandle[0],\
+	&innerScreenTxHandle[0],\
 }
 #define ScreenHandleDefault_Larger   { \
 	ScreenIndex_Larger,\
 	&g_T5LCtx[ScreenIndex_Larger],\
 	SCREEN_LARGER_RX_HANDLE_TOTAL_NUM,\
-	&screenLargerRxHandle[0],\
+	&externalScreenRxHandle[0],\
 	SCREEN_LARGER_TX_HANDLE_TOTAL_NUM,\
-	&screenLargerTxHandle[0],\
+	&externalScreenTxHandle[0],\
 }
 
 //================================================================================================
@@ -524,6 +549,8 @@ extern screenRxTxHandleType screenLargerTxHandle[SCREEN_LARGER_TX_HANDLE_TOTAL_N
 #define T5L_L_HELP_TOTAL_NUM		(6)	
 #define DESCRIBLE_POINT_HELP_NUM	(4)//4组帮助信息
 
+#define SCREEN_DESCRIBLE_POINT_NUM	(2*8)//向下兼容 2台8头  2台6头 1台8头 1台6头
+
 //================================================================================================
 extern T5LType g_T5LCtx[ScreenIndex_Max];
 extern ScreenHandleType g_ScreenHandle[ScreenIndex_Max];
@@ -531,11 +558,10 @@ extern INT16 g_i16ColorOtherChanel[T5L_MAX_CHANEL_LEN];//T5L_CHANEL_WEIGHT_NOT_E
 
 //================================================================================================
 extern void color_clearAllColor(void);
-extern void allScreenCtx_Init(void);
+extern void screenPublic_Init(void);
 extern void pointSampleTrigerDataSet(UINT8 localChanel , UINT8 point , INT16 value);
 extern void pointWeightTrigerDataSet(UINT8 localChanel , UINT8 point , INT16 value);
 extern void sdwe_VoicePrintfPush(tT5LVoinceType u8Voice1 ,tT5LVoinceType u8Voice2);
-extern void pointWeightTrigerDataSet(UINT8 localChanel , UINT8 point , INT16 value);
 extern void sreenT5L_MainFunction(void);
 extern void writeHelpDataFromCom(UINT8 *pHelpData,UINT8 len);
 extern void readHelpDataFromSys(UINT8 *pHelpData,UINT8 len);
@@ -545,5 +571,33 @@ extern void readColorDataFromSys(UINT8 *pColorData,UINT8 len);
 extern void writeWeightDataFromCom(UINT8 *pWeightData,UINT8 len);
 extern void writeColorDataFromCom(UINT8 *pColorData,UINT8 len);
 extern UINT8 screenT5L_OutputVoice(T5LType *pSdwe,UINT8 voiceId);
+
+
+
+//公共函数
+extern void t5lWriteVarible(T5LType *t5lCtx,UINT16 varAdd, INT16 *pData ,UINT16 varlen ,UINT8 crcEn);
+extern void t5lReadVarible(T5LType *t5lCtx,UINT16 varAdd,UINT16 varlen ,UINT8 crcEn);
+
+extern UINT8 t5lWriteDataColor(T5LType *t5lCtx,UINT16 varAdd, UINT16 ColorOrder1,UINT16 ColorOrder2,INT16 *pData_X_Y_X_Y_Color);
+extern UINT8 t5lWriteData(T5LType *t5lCtx,UINT16 varAdd, INT16 *pData ,UINT16 varlen ,UINT8 crcEn);
+
+extern void screenPublic_ScreenVersionGet(T5LType *pSdwe);
+extern UINT8 screenPublic_PageJump(T5LType *pSdwe,INT16 pageNum);
+extern UINT8 screenPublic_ScreenLight(T5LType *pSdwe);
+extern UINT8 screenPublic_FreshDisplayPosition_Of_WeightVlu(T5LType *pSdwe);
+extern UINT8 screenPublic_FreshDisplayPosition_Of_HelpVlu(T5LType *pSdwe);
+extern UINT8 screenPublic_FreshDisplayPosition_Of_WeightIndex(T5LType *pSdwe);
+extern UINT8 screenPublic_FreshDisplayPosition_Of_WeightColor(T5LType *pSdwe);
+extern UINT8 screenPublic_ChanelChangedTrigerHandle(T5LType *pSdwe);
+extern UINT8 screenPublic_ResetCalibrationTrigerHandle(T5LType *pSdwe);
+extern UINT8 screenPublic_PointTrigerHandle(T5LType *pSdwe);
+extern UINT8 screenPublic_RemoveWeightTrigerHandle(T5LType *pSdwe);
+extern UINT16 screenPublic_sendBalancingWeightAndColor(T5LType *pSdwe);
+extern UINT8 screenPublic_HelpDataMainFunction(T5LType *pSdwe);
+extern UINT8 screenPublic_VoicePrintfMainfunction(T5LType *pSdwe);
+
+extern void clearLocalCalibrationRecordData(UINT8 sreen_chanel);
+extern void clearLocalCalibrationKAndBAndSample(UINT8 sreen_chanel);
+extern void pointTrigerDataSet(UINT8 localChanel , UINT8 point , UINT8 value ,INT16 avgSampleValue);
 
 #endif

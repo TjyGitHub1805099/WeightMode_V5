@@ -144,7 +144,7 @@ int main(void)
 	key_init();
 	led_init();
 	hx711_init();
-	allScreenCtx_Init();
+	screenPublic_Init();
 	ModbusRtu_init();
 	readSysDataFromFlash();
 	readSysDataFromFlash_3030();
