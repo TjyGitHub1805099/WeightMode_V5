@@ -376,7 +376,7 @@ static void screenPrivate_Init(T5LType *t5lCtx)
 		t5lCtx->screenCycle.pHelpPre = &g_i16HelpDataBuffPreLarger[0];
 
 
-		t5lCtx->sdweJumpBalancing = TRUE;
+		t5lCtx->sdweJumpBalancingMainPage = TRUE;
 	}
 	else
 	{

@@ -268,7 +268,7 @@ UINT8 innerScreenTxHandle_JumpToHomePage(T5LType *pSdwe)
 	return matched;
 }
 
-//2 6
+//2
 UINT8 innerScreenTxHandle_JumpToBanlingPage(T5LType *pSdwe)
 {
 	UINT8 matched = FALSE;
@@ -290,7 +290,7 @@ UINT8 innerScreenTxHandle_JumpToCalibrationPage(T5LType *pSdwe)
 	if(TRUE == pSdwe->sdweJumpToCalitrationPage)
 	{
 		matched = TRUE;
-		if(0 != screenPublic_PageJump(pSdwe,pSdwe->screenBanlingPageNum))
+		if(0 != screenPublic_PageJump(pSdwe,pSdwe->screenCalibrationPage))
 		{
 			pSdwe->sdweJumpToCalitrationPage = FALSE;
 		}
@@ -302,12 +302,12 @@ UINT8 innerScreenTxHandle_JumpToCalibrationPage(T5LType *pSdwe)
 UINT8 innerScreenTxHandle_JumpToActivePage(T5LType *pSdwe)
 {
 	UINT8 matched = FALSE;
-	if(TRUE == pSdwe->sdweJumpToCalitrationPage)
+	if(TRUE == pSdwe->sdweJumpActivePage)
 	{
 		matched = TRUE;
 		if(0 != screenPublic_PageJump(pSdwe,pSdwe->screenActivePage))
 		{
-			pSdwe->sdweJumpToCalitrationPage = FALSE;
+			pSdwe->sdweJumpActivePage = FALSE;
 		}
 	}
 	return matched;
@@ -317,17 +317,31 @@ UINT8 innerScreenTxHandle_JumpToActivePage(T5LType *pSdwe)
 UINT8 innerScreenTxHandle_JumpToSysParaPage(T5LType *pSdwe)
 {
 	UINT8 matched = FALSE;
-	if(TRUE == pSdwe->sdweJumpToCalitrationPage)
+	if(TRUE == pSdwe->sdweJumpToSysParaPage)
 	{
 		matched = TRUE;
 		if(0 != screenPublic_PageJump(pSdwe,pSdwe->screenSysParaPage))
 		{
-			pSdwe->sdweJumpToCalitrationPage = FALSE;
+			pSdwe->sdweJumpToSysParaPage = FALSE;
 		}
 	}
 	return matched;
 }
 
+//6
+UINT8 innerScreenTxHandle_JumpToBanlingMainPage(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	if(TRUE == pSdwe->sdweJumpBalancingMainPage)
+	{
+		matched = TRUE;
+		if(0 != screenPublic_PageJump(pSdwe,pSdwe->screenBalancingMainPage))
+		{
+			pSdwe->sdweJumpBalancingMainPage = FALSE;
+		}
+	}
+	return matched;
+}
 //7
 UINT8 innerScreenTxHandle_JumpToBalancingCleanPage(T5LType *pSdwe)
 {
@@ -350,7 +364,7 @@ UINT8 innerScreenTxHandle_JumpToBalancingHomePage(T5LType *pSdwe)
 	if(TRUE == pSdwe->sdweJumpBalancing_home)
 	{
 		matched = TRUE;
-		if(0 != screenPublic_PageJump(pSdwe,pSdwe->screenBalancingHomePage))
+		if(0 != screenPublic_PageJump(pSdwe,pSdwe->screenBalancingMainPage))
 		{
 			pSdwe->sdweJumpBalancing_home = FALSE;
 		}
@@ -429,7 +443,7 @@ screenRxTxHandleType innerScreenTxHandle[SCREEN_TX_HANDLE_TOTAL_NUM]=
 	{0,	3, &innerScreenTxHandle_JumpToCalibrationPage},//==M3 event arrive:jump to CALITRATION Page
 	{0,	4, &innerScreenTxHandle_JumpToActivePage},//==M4 event arrive:jump to ACTIVE Page
 	{0,	5, &innerScreenTxHandle_JumpToSysParaPage},//==M5 event arrive:jump to SYSPARA Page
-	{0,	6, &innerScreenTxHandle_JumpToBanlingPage},//==M2-1 event arrive: jump to BALANCING Page , screen touch trigger
+	{0,	6, &innerScreenTxHandle_JumpToBanlingMainPage},//==配平模式的主要界面
 	{0,	7, &innerScreenTxHandle_JumpToBalancingCleanPage},//==M2-2 event arrive:jump to BALANCING (clean)page
 	{0,	8, &innerScreenTxHandle_JumpToBalancingHomePage},//==M2-3 event arrive:jump to BALANCING (home)page
 	{0,	9, &innerScreenTxHandle_FreshScreenLight},//==M6 event arrive:fresh sreen light

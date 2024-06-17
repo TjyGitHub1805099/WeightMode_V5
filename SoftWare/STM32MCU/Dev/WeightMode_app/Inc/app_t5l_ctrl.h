@@ -85,7 +85,7 @@
 #define DMG_FUNC_PASSORD_SET_ADDRESS			(0X1510)//0x1510
 
 #define DMG_FUNC_Balancing_SET_ADDRESS				(0X1101)//0x1101
-#define DMG_FUNC_Balancing_SET_VALUE				(0X1101)//0x1101
+#define DMG_FUNC_Balancing_SET_VALUE				(0X1101)//0x1101 main page
 #define DMG_FUNC_Balancing_HOME_SET_ADDRESS			(0X1102)//0x1102
 #define DMG_FUNC_Balancing_HOME_SET_VALUE			(0X1102)//0x1102
 #define DMG_FUNC_Balancing_CLEARPAGE_SET_ADDRESS	(0X1103)//0x1103
@@ -133,10 +133,20 @@ typedef enum
 typedef enum DMGPageType
 {
 	DMG_FUNC_Balancing_6_PAGE = 49,
-	DMG_FUNC_Balancing_6_HOME_PAGE = 57,
 	DMG_FUNC_Balancing_12_PAGE = 55,
 	DMG_FUNC_Balancing_12_HOME_PAGE =58,
 	DMG_FUNC_Help_PAGE =59,
+	DMG_FUNC_CalibrationPage = 53,
+	DMG_FUNC_HomePage = 54,
+	DMG_FUNC_ActivePage = 56,
+	DMG_FUNC_SysParaPage = 52,
+	DMG_FUNC_BalancingCleanPage = 49,
+
+
+
+	DMG_FUNC_BalancingMainPage = 49,//带帮助信息
+	DMG_FUNC_BalancingMainPageNoHelp = 57,//无帮助信息
+
 	INNER_SCREEN_Balancing_6_HOME_PAGE = 49,
 }enumDMGPageType;
 
@@ -337,7 +347,7 @@ typedef struct structSdweType
 	UINT16	sdweJumpToHomePage;			/**< sdweJumpToHomePage：(事件)跳转至主页面 */
 	UINT16	sdweJumpToBanlingPage;		/**< sdweJumpToBanlingPage：(事件)跳转至配平页面 */
 	UINT16 	sdweJumpActivePage;			/**< sdweJumpActivePage：(事件)跳转至激活页面 */
-	UINT16 	sdweJumpBalancing;			/**< sdweJumpBalancing：(事件)跳转至配平页面 */
+	UINT16 	sdweJumpBalancingMainPage;	/**< sdweJumpBalancing：(事件)跳转至配平页面 */
 	UINT16 	sdweJumpBalancing_home;		/**< sdweJumpBalancing_home：(事件)跳转至配平页面可去皮 */
 	UINT16 	sdweJumpBalancing_cleanpagee;/**< sdweJumpBalancing_cleanpagee：(事件)跳转至配平清爽页面 */
 	UINT16 	sdweJumpToSysParaPage;		/**< sdweJumpToSysParaPage：(事件)跳转至参数页面 */
@@ -354,7 +364,8 @@ typedef struct structSdweType
 	UINT16 	screenActivePage;/**< 屏幕 激活 页面序号*/
 	UINT16  screenSysParaPage;/**< 屏幕 系统参数 页面序号*/
 	UINT16  screenBalancingCleanPage;/**< 屏幕 配平清爽 页面序号*/
-	UINT16  screenBalancingHomePage;/**< 屏幕 配平主页 页面序号*/
+	UINT16  screenBalancingMainPage;/**< 屏幕 配平主页 页面序号*/
+	
 }T5LType;
 
 #define ScreenCycleTypeDefault   { \
@@ -425,13 +436,13 @@ typedef struct structSdweType
 	0,/**/\
 	0,/**/\
 	0x80,/**< sendSysParaDataToDiwenIndex：(事件)初始化屏幕时的序号*/\
+	DMG_FUNC_HomePage,\
 	INNER_SCREEN_Balancing_6_HOME_PAGE,\
-	INNER_SCREEN_Balancing_6_HOME_PAGE,\
-	INNER_SCREEN_Balancing_6_HOME_PAGE,\
-	INNER_SCREEN_Balancing_6_HOME_PAGE,\
-	INNER_SCREEN_Balancing_6_HOME_PAGE,\
-	INNER_SCREEN_Balancing_6_HOME_PAGE,\
-	INNER_SCREEN_Balancing_6_HOME_PAGE,\
+	DMG_FUNC_CalibrationPage,\
+	DMG_FUNC_ActivePage,\
+	DMG_FUNC_SysParaPage,\
+	DMG_FUNC_BalancingCleanPage,\
+	DMG_FUNC_BalancingMainPage,\
 }
 
 /** ModbusRtu设备默认配置 */
@@ -483,13 +494,13 @@ typedef struct structSdweType
 	0,/**/\
 	0,/**/\
 	0x80,/**< sendSysParaDataToDiwenIndex：(事件)初始化屏幕时的序号*/\
+	DMG_FUNC_HomePage,\
 	INNER_SCREEN_Balancing_6_HOME_PAGE,\
-	INNER_SCREEN_Balancing_6_HOME_PAGE,\
-	INNER_SCREEN_Balancing_6_HOME_PAGE,\
-	INNER_SCREEN_Balancing_6_HOME_PAGE,\
-	INNER_SCREEN_Balancing_6_HOME_PAGE,\
-	INNER_SCREEN_Balancing_6_HOME_PAGE,\
-	INNER_SCREEN_Balancing_6_HOME_PAGE,\
+	DMG_FUNC_CalibrationPage,\
+	DMG_FUNC_ActivePage,\
+	DMG_FUNC_SysParaPage,\
+	DMG_FUNC_BalancingCleanPage,\
+	DMG_FUNC_BalancingMainPage,\
 	}
 //================================================================================================
 
