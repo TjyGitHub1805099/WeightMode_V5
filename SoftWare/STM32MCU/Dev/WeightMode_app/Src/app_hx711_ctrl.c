@@ -348,7 +348,7 @@ INT32 hx711_getAvgSample(enumHX711ChanelType chanel)
 	return ret;
 }
 
-#define WEIGHT_TEST_DATA FALSE
+#define WEIGHT_TEST_DATA TRUE
 #if(TRUE == WEIGHT_TEST_DATA) 
 float weightTestData[HX711_CHANEL_NUM];
 #endif

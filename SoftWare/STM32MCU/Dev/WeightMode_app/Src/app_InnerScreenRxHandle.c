@@ -94,6 +94,7 @@ UINT8 innerScreenRxHandle_SysPara(T5LType *pSdwe)
 			case DMG_FUNC_DIWEN_XIAOSHU_ADDRESS:/**< 小数显示 0x101C*/
 				gSystemPara.xiaoShuXianShi = pSdwe->SetData;
 				pSdwe->sdweChangeDescriblePoint = TRUE;
+				g_T5LCtx[ScreenIndex_Larger].sdweChangeDescriblePoint = TRUE;
 			break;
 			case DMG_FUNC_DIWEN_BILV_ADDRESS:	/**< ml与g比率 0x101D*/
 				gSystemPara.mlYugBiLv = pSdwe->SetData;

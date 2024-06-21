@@ -148,6 +148,8 @@ typedef enum DMGPageType
 	DMG_FUNC_BalancingMainPageNoHelp = 57,//无帮助信息
 
 	INNER_SCREEN_Balancing_6_HOME_PAGE = 49,
+	EXTERNAL_SCREEN_Balancing_6_HOME_PAGE = 0,
+
 }enumDMGPageType;
 
 //语音队列：深度
@@ -304,6 +306,12 @@ typedef struct structScreenCycleType
 	INT16 *pSortArry;
 	INT16 *pHelp;
 	INT16 *pHelpPre;
+	//weight and color send to screen
+	INT16 *handleStatus;
+	INT16 *weightHoldOn;
+	INT16 *needSendHelp;
+	INT16 *handle_i;//发送描述指针给屏幕
+	INT16 *rmTrigerInnerSts;//去皮按钮按下时处理
 }ScreenCycleType;
 /** 定义从机串口设备类型 */
 typedef struct structSdweType
@@ -365,6 +373,7 @@ typedef struct structSdweType
 	UINT16  screenSysParaPage;/**< 屏幕 系统参数 页面序号*/
 	UINT16  screenBalancingCleanPage;/**< 屏幕 配平清爽 页面序号*/
 	UINT16  screenBalancingMainPage;/**< 屏幕 配平主页 页面序号*/
+	UINT16 	freshDP;/**< 刷新描述指针*/
 	
 }T5LType;
 
@@ -383,6 +392,14 @@ typedef struct structSdweType
 	0,\
 	0,\
 	0,\
+	0,\
+	/*weight and color send to screen*/\
+	0,\
+	0,\
+	0,\
+	/*发送描述指针给屏幕*/\
+	0,\
+	/*去皮按钮按下时处理*/\
 	0,\
 }
 
@@ -443,6 +460,7 @@ typedef struct structSdweType
 	DMG_FUNC_SysParaPage,\
 	DMG_FUNC_BalancingCleanPage,\
 	DMG_FUNC_BalancingMainPage,\
+	.freshDP=0,\
 }
 
 /** ModbusRtu设备默认配置 */
@@ -495,12 +513,13 @@ typedef struct structSdweType
 	0,/**/\
 	0x80,/**< sendSysParaDataToDiwenIndex：(事件)初始化屏幕时的序号*/\
 	DMG_FUNC_HomePage,\
-	INNER_SCREEN_Balancing_6_HOME_PAGE,\
+	EXTERNAL_SCREEN_Balancing_6_HOME_PAGE,\
 	DMG_FUNC_CalibrationPage,\
 	DMG_FUNC_ActivePage,\
 	DMG_FUNC_SysParaPage,\
 	DMG_FUNC_BalancingCleanPage,\
 	DMG_FUNC_BalancingMainPage,\
+	.freshDP=0,\
 	}
 //================================================================================================
 
@@ -531,7 +550,7 @@ extern screenRxTxHandleType innerScreenRxHandle[SCREEN_RX_HANDLE_TOTAL_NUM];
 extern screenRxTxHandleType innerScreenTxHandle[SCREEN_TX_HANDLE_TOTAL_NUM];
 
 #define SCREEN_LARGER_RX_HANDLE_TOTAL_NUM	(2)	/**< 屏幕RX数据处理事件数量 */
-#define SCREEN_LARGER_TX_HANDLE_TOTAL_NUM	(3)	/**< 屏幕TX数据处理事件数量 */
+#define SCREEN_LARGER_TX_HANDLE_TOTAL_NUM	(5)	/**< 屏幕TX数据处理事件数量 */
 
 extern screenRxTxHandleType externalScreenRxHandle[SCREEN_LARGER_RX_HANDLE_TOTAL_NUM];
 extern screenRxTxHandleType externalScreenTxHandle[SCREEN_LARGER_TX_HANDLE_TOTAL_NUM];

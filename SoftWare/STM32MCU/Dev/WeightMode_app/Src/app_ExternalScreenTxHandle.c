@@ -188,6 +188,7 @@ UINT8 externalScreenTxHandle_Init(T5LType *pSdwe)
 		default:
 			if(TRUE == pSdwe->sdweHX711FirstSampleCoplt)
 			{
+				pSdwe->sdweJumpToBanlingPage = TRUE;//触发跳转至配平界面
 				result = TRUE;
 			}
 		break;
@@ -217,6 +218,10 @@ UINT8 externalScreenTxHandle_JumpToBanlingPage(T5LType *pSdwe)
 	if(TRUE == pSdwe->sdweJumpToBanlingPage)
 	{
 		matched = TRUE;
+		if(0 != gSystemPara.isCascade)
+		{
+			pSdwe->screenBanlingPageNum = 1;
+		}
 		if(0 != screenPublic_PageJump(pSdwe,pSdwe->screenBanlingPageNum))
 		{
 			pSdwe->sdweJumpToBanlingPage = FALSE;
@@ -226,6 +231,76 @@ UINT8 externalScreenTxHandle_JumpToBanlingPage(T5LType *pSdwe)
 }
 
 //2
+UINT8 externalScreenTxHandle_ChangeDisplayPosition(T5LType *pSdwe)
+{
+	#if 0
+	UINT8 matched = FALSE;
+	static UINT8 changeHelpInfoDisp = FALSE;
+
+	//
+	if(TRUE == pSdwe->sdweChangeDescriblePoint)
+	{
+		matched = TRUE;
+		if(FALSE == changeHelpInfoDisp)//先修改重量单元的描述指针
+		{
+			if(0 != screenPublic_FreshDisplayPosition_Of_WeightVlu(pSdwe))
+			{
+				changeHelpInfoDisp = TRUE;
+			}
+		}
+		else//在修改帮助信息的描述指针
+		{
+			if(0 != screenPublic_FreshDisplayPosition_Of_HelpVlu(pSdwe))
+			{
+				changeHelpInfoDisp = FALSE;
+				//
+				pSdwe->sdweChangeDescriblePoint = FALSE;
+				matched = FALSE;
+			}
+		}
+	}
+	return matched;
+	#endif
+		UINT8 matched = FALSE;
+	//
+	if(TRUE == pSdwe->sdweChangeDescriblePoint)
+	{
+		matched = TRUE;
+		if(0 == pSdwe->freshDP)//先修改重量单元的描述指针
+		{
+			if(0 != screenPublic_FreshDisplayPosition_Of_WeightVlu(pSdwe))
+			{
+				pSdwe->freshDP = 1;
+			}
+		}
+		else if(1 == pSdwe->freshDP)//其次修改帮助信息的描述指针
+		{
+			if(0 != screenPublic_FreshDisplayPosition_Of_HelpVlu(pSdwe))
+			{
+				pSdwe->freshDP = 2;
+			}
+			
+		}
+		else if(2 == pSdwe->freshDP)//其次修改帮助信息的描述指针
+		{
+			if(0 != screenPublic_FreshDisplayPosition_Of_WeightIndex(pSdwe))
+			{
+				pSdwe->freshDP = 0;
+				//
+				pSdwe->sdweChangeDescriblePoint = FALSE;
+				matched = FALSE;
+			}
+		}
+		else
+		{
+			/*nothing*/
+			pSdwe->freshDP = 0 ;
+		}
+	}
+	return matched;
+}
+
+//3
 UINT8 externalScreenTxHandle_ScreenWeightAndColorAndHelpHandle(T5LType *pSdwe)
 {
 	UINT8 matched = FALSE;
@@ -247,7 +322,9 @@ screenRxTxHandleType externalScreenTxHandle[SCREEN_LARGER_TX_HANDLE_TOTAL_NUM]=
 	//priority index func_add
 	{0,	0, &externalScreenTxHandle_ScreenInit},//==send initial data to DIWEN to display
 	{0,	1, &externalScreenTxHandle_JumpToBanlingPage},//==send initial data to DIWEN to display
-	{0,	2, &externalScreenTxHandle_ScreenWeightAndColorAndHelpHandle},//==send initial data to DIWEN to display
+	{0,	2, &externalScreenTxHandle_ChangeDisplayPosition},//==send initial data to DIWEN to display
+	{0,	3, &screenPublic_RemoveWeightTrigerHandle},//==B1 event arrive:At Balancing Page , remove weight trigerd
+	{0,	4, &externalScreenTxHandle_ScreenWeightAndColorAndHelpHandle},//==send initial data to DIWEN to display
 };
 
 #endif// end of _APP_EXTERNAL_SCREEN_TX_HANDLE_C_

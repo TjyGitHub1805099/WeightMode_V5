@@ -67,14 +67,22 @@ INT16 g_i16HelpDataBuffPreLarger[DIFF_TO_DIWEN_DATA_LEN]={0};
 
 float g_i16HelpDataSortLarger[T5L_MAX_CHANEL_LEN]={0};
 INT16 g_i16HelpDataChnSortLarger[T5L_MAX_CHANEL_LEN]={0};
+
+
 //=====================================================================================================================
+
+INT16 g_handleStatus[ScreenIndex_Max]={0};//发送重量和颜色给屏幕用的状态机
+INT16 g_u16WeightHoldOn[ScreenIndex_Max]={0};//发送重量给屏幕后数据保持多久不表时再发送颜色
+INT16 g_needSendHelp[ScreenIndex_Max]={0};
+INT16 g_handle_i[ScreenIndex_Max]={0};
+INT16 g_rmTrigerInnerSts[ScreenIndex_Max]={0};
 
 
 
 //=============================================15.6寸屏的=============================================
 //=============================================8.8寸屏的=============================================
 //屏幕的描述指针：显示托盘的重量控件
-static INT16 describlePoint_add = 0x9000,*describlePoint_data,describlePoint_len = 1;
+//static INT16 describlePoint_add = 0x9000,*describlePoint_data,describlePoint_len = 1;
 
 
 /*******************************************************************************
@@ -354,11 +362,10 @@ UINT8 t5lWriteData(T5LType *t5lCtx,UINT16 varAdd, INT16 *pData ,UINT16 varlen ,U
 //屏幕相关变量初始化
 static void screenPrivate_Init(T5LType *t5lCtx)
 {
-	UINT8 i = 0 ;
+	UINT8 i = 0;
 	//
 	t5lCtx->readSdweInit = FALSE;
-
-
+	//externnal screen
 	if(t5lCtx == &g_T5LCtx[ScreenIndex_Larger])
 	{
 		//data handle send to screen
@@ -375,8 +382,16 @@ static void screenPrivate_Init(T5LType *t5lCtx)
 		t5lCtx->screenCycle.pHelp = &g_i16HelpDataBuffLarger[0];
 		t5lCtx->screenCycle.pHelpPre = &g_i16HelpDataBuffPreLarger[0];
 
+		t5lCtx->screenCycle.handleStatus = &g_handleStatus[ScreenIndex_Larger];
+		t5lCtx->screenCycle.weightHoldOn = &g_u16WeightHoldOn[ScreenIndex_Larger];
+		t5lCtx->screenCycle.needSendHelp = &g_needSendHelp[ScreenIndex_Larger];
+		t5lCtx->screenCycle.handle_i  = &g_handle_i[ScreenIndex_Larger];
+		t5lCtx->screenCycle.rmTrigerInnerSts = &g_rmTrigerInnerSts[ScreenIndex_Larger];
+
+
 
 		t5lCtx->sdweJumpBalancingMainPage = TRUE;
+		t5lCtx->sdweChangeDescriblePoint = TRUE;
 	}
 	else
 	{
@@ -393,6 +408,17 @@ static void screenPrivate_Init(T5LType *t5lCtx)
 		t5lCtx->screenCycle.pSortArry = &g_i16OtherChanelCaculate[0];
 		t5lCtx->screenCycle.pHelp = &g_i16HelpDataBuff[0];
 		t5lCtx->screenCycle.pHelpPre = &g_i16HelpDataBuffPre[0];
+
+		t5lCtx->screenCycle.handleStatus = &g_handleStatus[ScreenIndex_Smaller];
+		t5lCtx->screenCycle.weightHoldOn = &g_u16WeightHoldOn[ScreenIndex_Smaller];
+		t5lCtx->screenCycle.needSendHelp = &g_needSendHelp[ScreenIndex_Smaller];
+		t5lCtx->screenCycle.handle_i  = &g_handle_i[ScreenIndex_Smaller];
+		t5lCtx->screenCycle.rmTrigerInnerSts = &g_rmTrigerInnerSts[ScreenIndex_Smaller];
+
+
+		t5lCtx->sdweJumpBalancingMainPage = TRUE;
+		t5lCtx->sdweChangeDescriblePoint = TRUE;
+
 	}
 
 	//t5lCtx->pUartDevice = &g_UartDevice[t5lCtx->uartIndex];
@@ -483,28 +509,29 @@ UINT8 screenPublic_PageJump(T5LType *pSdwe,INT16 pageNum)
 //公共函数：修改‘托盘重量’的描述指针
 UINT8 screenPublic_FreshDisplayPosition_Of_WeightVlu(T5LType *pSdwe)
 {
-	static INT16 handle_i = 0,total_handle = 0;
+	INT16 total_handle = 0;
 	UINT8 ret = FALSE;
 	UINT8 index;
+	INT16 describlePoint_add = 0x9000,*describlePoint_data,describlePoint_len = 1;
 	//
 	index=appScreenCfgIndexGet();
 	total_handle = pSdwe->screenCfg[index].weightVluNum;
-	describlePoint_add = pSdwe->screenCfg[index].dpParaAdd_WeightVlu[handle_i%total_handle];
+	describlePoint_add = pSdwe->screenCfg[index].dpParaAdd_WeightVlu[(*pSdwe->screenCycle.handle_i)%total_handle];
 	describlePoint_len = 6;
-	describlePoint_data = &pSdwe->screenCfg[index].dpParaVlu_WeightVlu_WXS[handle_i%total_handle].positionX;
+	describlePoint_data = &pSdwe->screenCfg[index].dpParaVlu_WeightVlu_WXS[(*pSdwe->screenCycle.handle_i)%total_handle].positionX;
 	if(0 != gSystemPara.xiaoShuXianShi)//带小数
 	{
-		describlePoint_data = &pSdwe->screenCfg[index].dpParaVlu_WeightVlu_YXS[handle_i%total_handle].positionX;
+		describlePoint_data = &pSdwe->screenCfg[index].dpParaVlu_WeightVlu_YXS[(*pSdwe->screenCycle.handle_i)%total_handle].positionX;
 	}
 	//发送数据给屏幕
 	if(TRUE == t5lWriteData(pSdwe,describlePoint_add,describlePoint_data,describlePoint_len,0))
 	{
-		handle_i++;
+		(*pSdwe->screenCycle.handle_i)++;
 	}
 	//操作数量达到总数量 清零 并处理成功
-	if(handle_i >= total_handle)
+	if((*pSdwe->screenCycle.handle_i) >= total_handle)
 	{
-		handle_i = 0 ;
+		(*pSdwe->screenCycle.handle_i) = 0 ;
 		ret = TRUE;
 	}		
 	//返回结果
@@ -514,28 +541,29 @@ UINT8 screenPublic_FreshDisplayPosition_Of_WeightVlu(T5LType *pSdwe)
 //公共函数：修改‘帮组信息’的描述指针
 UINT8 screenPublic_FreshDisplayPosition_Of_HelpVlu(T5LType *pSdwe)
 {
-	static INT16 handle_i = 0,total_handle = 0;
+	INT16 total_handle = 0;
 	UINT8 ret = FALSE;
 	UINT8 index;
+	INT16 describlePoint_add = 0x9000,*describlePoint_data,describlePoint_len = 1;
 	//
 	index=appScreenCfgIndexGet();
 	total_handle = pSdwe->screenCfg[index].helpVluNum;
-	describlePoint_add = pSdwe->screenCfg[index].dpParaAdd_HelpVlu[handle_i%total_handle];
+	describlePoint_add = pSdwe->screenCfg[index].dpParaAdd_HelpVlu[(*pSdwe->screenCycle.handle_i)%total_handle];
 	describlePoint_len = 6;//这里发送：X Y ....等的6个属性
-	describlePoint_data = &pSdwe->screenCfg[index].dpParaVlu_HelpVlu_WXS[handle_i%total_handle].positionX;
+	describlePoint_data = &pSdwe->screenCfg[index].dpParaVlu_HelpVlu_WXS[(*pSdwe->screenCycle.handle_i)%total_handle].positionX;
 	if(0 != gSystemPara.xiaoShuXianShi)//带小数
 	{
-		describlePoint_data = &pSdwe->screenCfg[index].dpParaVlu_HelpVlu_YXS[handle_i%total_handle].positionX;
+		describlePoint_data = &pSdwe->screenCfg[index].dpParaVlu_HelpVlu_YXS[(*pSdwe->screenCycle.handle_i)%total_handle].positionX;
 	}
 	//发送数据给屏幕
 	if(TRUE == t5lWriteData(pSdwe,describlePoint_add,describlePoint_data,describlePoint_len,0))
 	{
-		handle_i++;
+		(*pSdwe->screenCycle.handle_i)++;
 	}
 	//操作数量达到总数量 清零 并处理成功
-	if(handle_i >= total_handle)
+	if((*pSdwe->screenCycle.handle_i) >= total_handle)
 	{
-		handle_i = 0 ;
+		(*pSdwe->screenCycle.handle_i) = 0 ;
 		ret = TRUE;
 	}		
 	//返回结果
@@ -545,24 +573,25 @@ UINT8 screenPublic_FreshDisplayPosition_Of_HelpVlu(T5LType *pSdwe)
 //公共函数：显示托盘序号（当是否显示小数参数修改时和上电初始化时执行）
 UINT8 screenPublic_FreshDisplayPosition_Of_WeightIndex(T5LType *pSdwe)
 {
-	static INT16 handle_i = 0,total_handle = 0;
+	INT16 total_handle = 0;
 	UINT8 ret = FALSE;
 	UINT8 index;
+	INT16 describlePoint_add = 0x9000,*describlePoint_data,describlePoint_len = 1;
 	//
 	index=appScreenCfgIndexGet();
 	total_handle = pSdwe->screenCfg[index].weightIndexNum;
-	describlePoint_add = pSdwe->screenCfg[index].dpParaAdd_WeightIndex[handle_i%total_handle];
-	describlePoint_len = 2;//这里发送：X Y 的 2个属性
-	describlePoint_data = &pSdwe->screenCfg[index].dpParaVlu_WeightIndex[handle_i%total_handle].positionX;
+	describlePoint_add = pSdwe->screenCfg[index].dpParaAdd_WeightIndex[(*pSdwe->screenCycle.handle_i)%total_handle];
+	describlePoint_len = 6;
+	describlePoint_data = &pSdwe->screenCfg[index].dpParaVlu_WeightIndex[(*pSdwe->screenCycle.handle_i)%total_handle].positionX;
 	//发送数据给屏幕
 	if(TRUE == t5lWriteData(pSdwe,describlePoint_add,describlePoint_data,describlePoint_len,0))
 	{
-		handle_i++;
+		(*pSdwe->screenCycle.handle_i)++;
 	}
 	//操作数量达到总数量 清零 并处理成功
-	if(handle_i >= total_handle)
+	if((*pSdwe->screenCycle.handle_i) >= total_handle)
 	{
-		handle_i = 0 ;
+		(*pSdwe->screenCycle.handle_i) = 0 ;
 		ret = TRUE;
 	}		
 	//返回结果
@@ -572,24 +601,25 @@ UINT8 screenPublic_FreshDisplayPosition_Of_WeightIndex(T5LType *pSdwe)
 //公共函数：修改‘托盘背景色’的描述指针
 UINT8 screenPublic_FreshDisplayPosition_Of_WeightColor(T5LType *pSdwe)
 {
-	static INT16 handle_i = 0,total_handle = 0;
+	INT16 total_handle = 0;
 	UINT8 ret = FALSE;
 	UINT8 index;
+	INT16 describlePoint_add = 0x9000,*describlePoint_data,describlePoint_len = 1;
 	//
 	index=appScreenCfgIndexGet();
 	total_handle = pSdwe->screenCfg[index].weightColorNum;
-	describlePoint_add = pSdwe->screenCfg[index].dpParaAdd_WeightColor[handle_i%total_handle];
+	describlePoint_add = pSdwe->screenCfg[index].dpParaAdd_WeightColor[(*pSdwe->screenCycle.handle_i)%total_handle];
 	describlePoint_len = 2;//这里发送：X Y 的 2个属性
-	describlePoint_data = &pSdwe->screenCfg[index].dpParaVlu_WeightColor[handle_i%total_handle].positionX;
+	describlePoint_data = &pSdwe->screenCfg[index].dpParaVlu_WeightColor[(*pSdwe->screenCycle.handle_i)%total_handle].positionX;
 	//发送数据给屏幕
 	if(TRUE == t5lWriteData(pSdwe,describlePoint_add,describlePoint_data,describlePoint_len,0))
 	{
-		handle_i++;
+		(*pSdwe->screenCycle.handle_i)++;
 	}
 	//操作数量达到总数量 清零 并处理成功
-	if(handle_i >= total_handle)
+	if((*pSdwe->screenCycle.handle_i) >= total_handle)
 	{
-		handle_i = 0 ;
+		(*pSdwe->screenCycle.handle_i) = 0 ;
 		ret = TRUE;
 	}		
 	//返回结果
@@ -857,9 +887,8 @@ UINT8 screenPrivate_RemoveWeightTrigerHandle(T5LType *pSdwe)
 	INT16 *pDataSendToDiWen = &g_i32_i16DataBuff[0];
 
 	UINT8 result = 0 ;
-	static UINT8 inerStatus = 0 ; 
 
-	switch(inerStatus)
+	switch((*pSdwe->screenCycle.rmTrigerInnerSts))
 	{
 		case 0://==send weight vlu to Screen
 			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
@@ -868,7 +897,7 @@ UINT8 screenPrivate_RemoveWeightTrigerHandle(T5LType *pSdwe)
 				pDataSendToDiWen = &g_i32_i16DataBuff[0];
 				t5lWriteVarible(pSdwe,DMG_FUNC_ASK_CHANEL_WEIGHT_ADDRESS,pDataSendToDiWen,(2*T5L_MAX_CHANEL_LEN),0);
 				//
-				inerStatus=1;
+				(*pSdwe->screenCycle.rmTrigerInnerSts)=1;
 			}
 		break;
 		case 1://==send color vlu to Screen
@@ -878,11 +907,11 @@ UINT8 screenPrivate_RemoveWeightTrigerHandle(T5LType *pSdwe)
 				pSendData = &g_i16ColorBuff[0];
 				t5lWriteVarible(pSdwe,DMG_FUNC_ASK_CHANEL_COLOR_ADDRESS,pSendData,T5L_MAX_CHANEL_LEN,0);
 				//
-				inerStatus=2;
+				(*pSdwe->screenCycle.rmTrigerInnerSts)=2;
 			}
 		break;
 		default:
-			inerStatus = 0 ;
+			(*pSdwe->screenCycle.rmTrigerInnerSts) = 0 ;
 			result = TRUE;
 		break;
 	}
@@ -911,34 +940,46 @@ UINT8 screenPublic_RemoveWeightTrigerHandle(T5LType *pSdwe)
 //私有函数：准备 重量 判断是否需要发送给屏幕
 UINT8 screenPrivate_preWeightDataAndJudgeIfNeedSend(INT32 *pData,INT16 *pDataInt16, INT32 *pDataPre,UINT8 chanel_len)
 {
-	UINT8 ret = FALSE;
+	UINT8 ret = FALSE,i=0;
 	//
 	if(chanel_len <= T5L_MAX_CHANEL_LEN)
 	{
-		switch(gSystemPara.isCascade)
+		//external screen use inner screen : weight data
+		if(pData == &g_i32DataBuffLarger[0])
 		{
-			//单台，不级联，直接获取hx711采样值并计算
-			case 0:
-				//master local data
-				preCurrentDeviceWeightData(pData,pDataInt16);
-			break;
-
-			//多台，级联，主机端：先获取本机hx711采样值，在获取从机发过来的hx711采样值
-			case ModbusAdd_Master:
-				//ModbusAdd_Slave_1 recv data
-				preCurrentDeviceWeightData(pData,pDataInt16);
-				preOtherDeviceWeightData(pData,pDataInt16,ModbusAdd_Slave_1);
-			break;
-
-			//多台，级联，从机端：直接从主机发过来的数据截取
-			case ModbusAdd_Slave_1:
-				//直接使用总线的数据，这里不需要更新，他的更新在总线侧
-			break;
-
-			default :
-			break;
+			for(i=0;i<T5L_MAX_CHANEL_LEN;i++)
+			{
+				pData[i] = g_i32DataBuff[i];
+				pDataInt16[2*i+0] = g_i32_i16DataBuff[2*i+0];
+				pDataInt16[2*i+1] = g_i32_i16DataBuff[2*i+1];
+			}
 		}
+		else
+		{
+			switch(gSystemPara.isCascade)
+			{
+				//单台，不级联，直接获取hx711采样值并计算
+				case 0:
+					//master local data
+					preCurrentDeviceWeightData(pData,pDataInt16);
+				break;
 
+				//多台，级联，主机端：先获取本机hx711采样值，在获取从机发过来的hx711采样值
+				case ModbusAdd_Master:
+					//ModbusAdd_Slave_1 recv data
+					preCurrentDeviceWeightData(pData,pDataInt16);
+					preOtherDeviceWeightData(pData,pDataInt16,ModbusAdd_Slave_1);
+				break;
+
+				//多台，级联，从机端：直接从主机发过来的数据截取
+				case ModbusAdd_Slave_1:
+					//直接使用总线的数据，这里不需要更新，他的更新在总线侧
+				break;
+
+				default :
+				break;
+			}
+		}
 		//judge if not need send
 		ret = judgeWeightDataIfNotNeedSend(pData,pDataPre,chanel_len);			
 	}
@@ -949,27 +990,37 @@ UINT8 screenPrivate_preWeightDataAndJudgeIfNeedSend(INT32 *pData,INT16 *pDataInt
 //私有函数：准备 颜色 判断是否需要发送给屏幕
 UINT8 screenPrivate_preColorDataAndJudgeIfNeedSend(INT32 *pData,INT16 *pColor,INT16 *pColorPre,INT16 *pColorOtherCh,UINT8 chanel_len)
 {
-	UINT8 ret = FALSE ;
+	UINT8 ret = FALSE ,i=0;
 	//
 	if(chanel_len <= T5L_MAX_CHANEL_LEN)
 	{
-		//1.更新颜色数据
-		switch(gSystemPara.isCascade)
+		if(pColor == g_i16ColorBuffLarger)
 		{
-			//单台，不级联，直接拿hx711采样值来计算颜色
-			case 0:
-			//多台，级联，主机端：数据在之前的步骤已经完成，这里只需要计算即可
-			case ModbusAdd_Master:
-				preColorData(pData,pColor,pColorPre,pColorOtherCh,chanel_len);
-			break;
+			for(i=0;i<T5L_MAX_CHANEL_LEN;i++)
+			{
+				pColor[i] = g_i16ColorBuff[i];
+			}
+		}
+		else
+		{
+			//1.更新颜色数据
+			switch(gSystemPara.isCascade)
+			{
+				//单台，不级联，直接拿hx711采样值来计算颜色
+				case 0:
+				//多台，级联，主机端：数据在之前的步骤已经完成，这里只需要计算即可
+				case ModbusAdd_Master:
+					preColorData(pData,pColor,pColorPre,pColorOtherCh,chanel_len);
+				break;
 
-			//多台，级联，从机端：直接从主机发过来的数据截取
-			case ModbusAdd_Slave_1:
-				//直接使用总线的color数据，这里不需要更新，他的更新在总线侧
-			break;
+				//多台，级联，从机端：直接从主机发过来的数据截取
+				case ModbusAdd_Slave_1:
+					//直接使用总线的color数据，这里不需要更新，他的更新在总线侧
+				break;
 
-			default :
-			break;
+				default :
+				break;
+			}
 		}
 		//2.updata pColorPre from pColor
 		ret = judgeWeightColorIfNotNeedSend(pColor,pColorPre,chanel_len);
@@ -982,10 +1033,8 @@ UINT16 screenPrivate_preBalancingWeightAndColorThenSendToSreen(T5LType *pSdwe,IN
 INT16 *pColor , INT16 *pColorPre , INT16 *pColorOtherCh , UINT8 chanel_len)
 {
 	UINT16 ret = FALSE ;
-	static UINT16 handleStatus = 0 ;
-	static UINT16 u16WeightHoldOn = 0 ;//when DMG_DATA_HOLD_TIME data not changed send to screen
 	//
-	switch(handleStatus)
+	switch((*pSdwe->screenCycle.handleStatus))
 	{
 		//judge if weight need send to screen
 		//if weight was hold on some time then go to send color 
@@ -995,17 +1044,17 @@ INT16 *pColor , INT16 *pColorPre , INT16 *pColorOtherCh , UINT8 chanel_len)
 			{
 				if(TRUE ==t5lWriteData(pSdwe,DMG_FUNC_ASK_CHANEL_WEIGHT_ADDRESS,pDataSendToDiWen,(2*chanel_len),0))//2*chanel_len:because each data type was 4 byte
 				{
-					u16WeightHoldOn = 0 ;
+					(*pSdwe->screenCycle.weightHoldOn) = 0 ;
 					handleWeightDataWasSend(pData,pDataPre,chanel_len);
 				}
 			}
 			else
 			{
-				u16WeightHoldOn++;
-				if(u16WeightHoldOn >= DMG_DATA_HOLD_TIME)//if weight not changed then check if color need send
+				(*pSdwe->screenCycle.weightHoldOn)++;
+				if((*pSdwe->screenCycle.weightHoldOn) >= DMG_DATA_HOLD_TIME)//if weight not changed then check if color need send
 				{
-					u16WeightHoldOn = 0;
-					handleStatus = 0x10;//if weight was send to screen go to send color
+					(*pSdwe->screenCycle.weightHoldOn) = 0;
+					(*pSdwe->screenCycle.handleStatus) = 0x10;//if weight was send to screen go to send color
 				}
 			}
 		break;
@@ -1018,17 +1067,18 @@ INT16 *pColor , INT16 *pColorPre , INT16 *pColorOtherCh , UINT8 chanel_len)
 				if(TRUE ==t5lWriteData(pSdwe,DMG_FUNC_ASK_CHANEL_COLOR_ADDRESS,pColor,chanel_len,0))
 				{
 					handleWeightColorWasSend(pColor,pColorPre,chanel_len);
-					handleStatus = 0x20;//if color was send to screen go to default
+					(*pSdwe->screenCycle.handleStatus) = 0x20;//if color was send to screen go to default
 				}
 			}
 			else
 			{
-				handleStatus = 0x20;//if color was send to screen go to default
+				(*pSdwe->screenCycle.handleStatus) = 0x20;//if color was send to screen go to default
 			}
 		break;
 
 		default :
-			handleStatus = 0;//go to check weigth if not need send
+			(*pSdwe->screenCycle.handleStatus) = 0;//go to check weigth if not need send
+			(*pSdwe->screenCycle.weightHoldOn) = 0;
 			ret = TRUE;//this cycle was handle done
 		break;
 	}
@@ -1047,6 +1097,15 @@ UINT16 screenPublic_sendBalancingWeightAndColor(T5LType *pSdwe)
 	INT16 *pColorOtherCh = &g_i16ColorOtherChanel[0];
 	//
 	UINT8 chanel_len = 0 , ret = 0;
+#if 1
+	pData = pSdwe->screenCycle.pData;
+	pDataPre = pSdwe->screenCycle.pDataPre;
+	pDataSendToDiWen = pSdwe->screenCycle.pDataSendToDiWen;
+
+	pColor = pSdwe->screenCycle.pColor;
+	pColorPre = pSdwe->screenCycle.pColorPre;
+	pColorOtherCh = pSdwe->screenCycle.pColorOtherCh;
+#endif
 	//
 	if(0 == gSystemPara.isCascade)
 	{
@@ -1091,26 +1150,50 @@ void sendHelpDataDiff_AtSlave1Device(T5LType *pSdwe)
 UINT8 screenPublic_HelpDataMainFunction(T5LType *pSdwe)
 {
 	ModbusRtuType *pContex = &g_ModbusRtu;
-	UINT8 localStatus = FALSE;
-
-	if(0 == gSystemPara.isCascade)
+	UINT8 localStatus = FALSE,i=0;
+	
+	//external data use inner screen data : color
+	if(&g_T5LCtx[ScreenIndex_Larger] == pSdwe)
 	{
-		localStatus = sendHelpDataDiff(pSdwe);
-	}else if(gSystemPara.isCascade == ModbusAdd_Slave_1)//cascade : slave Device
+		for(i = 0 ;i< DIFF_TO_DIWEN_DATA_LEN;i++)
+		{
+			g_i16HelpDataBuffLarger[i] = g_i16HelpDataBuff[i];
+			if(g_i16HelpDataBuffLarger[i] != g_i16HelpDataBuffPreLarger[i])
+			{
+				*pSdwe->screenCycle.needSendHelp = TRUE;
+			}
+		}
+	}
+	else
 	{
-		sendHelpDataDiff_AtSlave1Device(pSdwe);
-	}else if(gSystemPara.isCascade == ModbusAdd_Master)//cascade : master Device
-	{
-		masterCaculateHelpData(pContex,T5L_MAX_CHANEL_LEN);	
-		sendHelpDataDiff_AtSlave1Device(pSdwe);
-	}else if(gSystemPara.isCascade == ModbusFuncA_Slave)//cascade : slave Device
-	{
-		sendHelpDataDiff_AtSlave1Device(pSdwe);
-	}else if(gSystemPara.isCascade == ModbusFuncA_Master)//cascade : master Device
-	{
-		masterCaculateHelpData(pContex,T5L_MAX_CHANEL_LEN); 
-		sendHelpDataDiff_AtSlave1Device(pSdwe);
-	}	
+		if(0 == gSystemPara.isCascade)
+		{
+			localStatus = sendHelpDataDiff(pSdwe);
+		}else if(gSystemPara.isCascade == ModbusAdd_Slave_1)//cascade : slave Device
+		{
+			sendHelpDataDiff_AtSlave1Device(pSdwe);
+		}else if(gSystemPara.isCascade == ModbusAdd_Master)//cascade : master Device
+		{
+			masterCaculateHelpData(pContex,T5L_MAX_CHANEL_LEN);	
+			sendHelpDataDiff_AtSlave1Device(pSdwe);
+		}else if(gSystemPara.isCascade == ModbusFuncA_Slave)//cascade : slave Device
+		{
+			sendHelpDataDiff_AtSlave1Device(pSdwe);
+		}else if(gSystemPara.isCascade == ModbusFuncA_Master)//cascade : master Device
+		{
+			masterCaculateHelpData(pContex,T5L_MAX_CHANEL_LEN); 
+			sendHelpDataDiff_AtSlave1Device(pSdwe);
+		}	
+	}
+	//如果需要发送
+	if(TRUE == *pSdwe->screenCycle.needSendHelp)
+	{	
+		if(TRUE == t5lWriteData(pSdwe,DMG_FUNC_HELP_TO_JUDGE_SET_ADDRESS,&g_i16HelpDataBuff[0],(DIFF_TO_DIWEN_DATA_LEN),0))
+		{
+			*pSdwe->screenCycle.needSendHelp = FALSE;
+			localStatus = TRUE;
+		}
+	}
 	return localStatus;
 }
 
@@ -1402,7 +1485,6 @@ UINT8 sdweAskRegData(ScreenHandleType  *screenHandlePtr,UINT8 regAdd, UINT8 regD
 //发送帮组信息
 UINT8 sendHelpDataDiff(T5LType *pSdwe)
 {
-	static UINT8 needSend = FALSE;
 	UINT8 i = 0 , localStatus = 0;
 
 	INT32 *pData = &g_i32DataBuff[0];
@@ -1498,9 +1580,10 @@ UINT8 sendHelpDataDiff(T5LType *pSdwe)
 		if(g_i16HelpDataBuffPre[i] != g_i16HelpDataBuff[i])
 		{
 			g_i16HelpDataBuffPre[i] = g_i16HelpDataBuff[i];
-			needSend = TRUE;
+			*pSdwe->screenCycle.needSendHelp = TRUE;
 		}
 	}
+#if 0
 	if(TRUE == needSend)
 	{	
 		if(TRUE == t5lWriteData(pSdwe,DMG_FUNC_HELP_TO_JUDGE_SET_ADDRESS,&g_i16HelpDataBuff[0],(DIFF_TO_DIWEN_DATA_LEN),0))
@@ -1513,6 +1596,7 @@ UINT8 sendHelpDataDiff(T5LType *pSdwe)
 	{
 		localStatus = TRUE;//如果不需要更新帮助信息
 	}
+#endif
 	return localStatus;
 }
 

@@ -391,27 +391,39 @@ UINT8 innerScreenTxHandle_FreshScreenLight(T5LType *pSdwe)
 UINT8 innerScreenTxHandle_ChangeDisplayPosition(T5LType *pSdwe)
 {
 	UINT8 matched = FALSE;
-	static UINT8 changeHelpInfoDisp = FALSE;
 	//
 	if(TRUE == pSdwe->sdweChangeDescriblePoint)
 	{
 		matched = TRUE;
-		if(FALSE == changeHelpInfoDisp)//先修改重量单元的描述指针
+		if(0 == pSdwe->freshDP)//先修改重量单元的描述指针
 		{
 			if(0 != screenPublic_FreshDisplayPosition_Of_WeightVlu(pSdwe))
 			{
-				changeHelpInfoDisp = TRUE;
+				pSdwe->freshDP = 1;
 			}
 		}
-		else//在修改帮助信息的描述指针
+		else if(1 == pSdwe->freshDP)//其次修改帮助信息的描述指针
 		{
 			if(0 != screenPublic_FreshDisplayPosition_Of_HelpVlu(pSdwe))
 			{
-				changeHelpInfoDisp = FALSE;
+				pSdwe->freshDP = 2;
+			}
+			
+		}
+		else if(2 == pSdwe->freshDP)//其次修改帮助信息的描述指针
+		{
+			if(0 != screenPublic_FreshDisplayPosition_Of_WeightIndex(pSdwe))
+			{
+				pSdwe->freshDP = 0;
 				//
 				pSdwe->sdweChangeDescriblePoint = FALSE;
 				matched = FALSE;
 			}
+		}
+		else
+		{
+			/*nothing*/
+			pSdwe->freshDP = 0 ;
 		}
 	}
 	return matched;
