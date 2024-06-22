@@ -63,33 +63,39 @@ INT16 IS_6H_WeightVlu_DP_Add[16]  ={0x9001,0x9011,0x9021,0x9031,0x9041,0x9051,0x
 INT16 IS_6H_HelpVlu_DP_Add[16]    ={0x9101,0x9111,0x9121,0x9131,0x9141,0x9151,0x9161,0x9171,0x9181,0x9191,0x91A1,0x91B1,0x91C1,0x91D1,0x91E1,0x91F1};
 INT16 IS_6H_WeightIndex_DP_Add[16]={0x9201,0x9211,0x9221,0x9231,0x9241,0x9251,0x9261,0x9271,0x9281,0x9291,0x92A1,0x92B1,0x92C1,0x92D1,0x92E1,0x92F1};
 INT16 IS_6H_WeightColor_DP_Add[16]={0x9301,0x9311,0x9321,0x9331,0x9341,0x9351,0x9361,0x9371,0x9381,0x9391,0x93A1,0x93B1,0x93C1,0x93D1,0x93E1,0x93F1};
+INT16 IS_6H_Misc_Add[2]  	  ={0xB001,0xB011};
 
 INT16 IS_8H_WeightVlu_DP_Add[16]  ={0x9401,0x9411,0x9421,0x9431,0x9441,0x9451,0x9461,0x9471,0x9481,0x9491,0x94A1,0x94B1,0x94C1,0x94D1,0x94E1,0x94F1};
 INT16 IS_8H_HelpVlu_DP_Add[16]    ={0x9501,0x9511,0x9521,0x9531,0x9541,0x9551,0x9561,0x9571,0x9581,0x9591,0x95A1,0x95B1,0x95C1,0x95D1,0x95E1,0x95F1};
 INT16 IS_8H_WeightIndex_DP_Add[16]={0x9601,0x9611,0x9621,0x9631,0x9641,0x9651,0x9661,0x9671,0x9681,0x9691,0x96A1,0x96B1,0x96C1,0x96D1,0x96E1,0x96F1};
 INT16 IS_8H_WeightColor_DP_Add[16]={0x9701,0x9711,0x9721,0x9731,0x9741,0x9751,0x9761,0x9771,0x9781,0x9791,0x97A1,0x97B1,0x97C1,0x97D1,0x97E1,0x97F1};
+INT16 IS_8H_Misc_Add[2]  	  ={0xB101,0xB111};
 
 INT16 IS_12H_WeightVlu_DP_Add[16]  ={0x9801,0x9811,0x9821,0x9831,0x9841,0x9851,0x9861,0x9871,0x9881,0x9891,0x98A1,0x98B1,0x98C1,0x98D1,0x98E1,0x98F1};
 INT16 IS_12H_HelpVlu_DP_Add[16]    ={0x9901,0x9911,0x9921,0x9931,0x9941,0x9951,0x9961,0x9971,0x9981,0x9991,0x99A1,0x99B1,0x99C1,0x99D1,0x99E1,0x99F1};
 INT16 IS_12H_WeightIndex_DP_Add[16]={0x9A01,0x9A11,0x9A21,0x9A31,0x9A41,0x9A51,0x9A61,0x9A71,0x9A81,0x9A91,0x9AA1,0x9AB1,0x9AC1,0x9AD1,0x9AE1,0x9AF1};
 INT16 IS_12H_WeightColor_DP_Add[16]={0x9B01,0x9B11,0x9B21,0x9B31,0x9B41,0x9B51,0x9B61,0x9B71,0x9B81,0x9B91,0x9BA1,0x9BB1,0x9BC1,0x9BD1,0x9BE1,0x9BF1};
+INT16 IS_12H_Misc_Add[2]  	   ={0xB201,0xB211};
+
 #if 0
 INT16 IS_16H_WeightVlu_DP_Add[16]  ={0x9C01,0x9C11,0x9C21,0x9C31,0x9C41,0x9C51,0x9C61,0x9C71,0x9C81,0x9C91,0x9CA1,0x9CB1,0x9CC1,0x9CD1,0x9CE1,0x9CF1};
 INT16 IS_16H_HelpVlu_DP_Add[16]    ={0x9D01,0x9D11,0x9D21,0x9D31,0x9D41,0x9D51,0x9D61,0x9D71,0x9D81,0x9D91,0x9DA1,0x9DB1,0x9DC1,0x9DD1,0x9DE1,0x9DF1};
 INT16 IS_16H_WeightIndex_DP_Add[16]={0x9E01,0x9E11,0x9E21,0x9E31,0x9E41,0x9E51,0x9E61,0x9E71,0x9E81,0x9E91,0x9EA1,0x9EB1,0x9EC1,0x9ED1,0x9EE1,0x9EF1};
 INT16 IS_16H_WeightColor_DP_Add[16]={0x9F01,0x9F11,0x9F21,0x9F31,0x9F41,0x9F51,0x9F61,0x9F71,0x9F81,0x9F91,0x9FA1,0x9FB1,0x9FC1,0x9FD1,0x9FE1,0x9FF1};
+INT16 IS_16H_Misc_Add[2]  	  ={0xB301,0xB311};
 #endif
 //小屏中公用8头显示 
 INT16 IS_16H_WeightVlu_DP_Add[16]  ={0x9401,0x9411,0x9421,0x9431,0x9441,0x9451,0x9461,0x9471,0x9481,0x9491,0x94A1,0x94B1,0x94C1,0x94D1,0x94E1,0x94F1};
 INT16 IS_16H_HelpVlu_DP_Add[16]    ={0x9501,0x9511,0x9521,0x9531,0x9541,0x9551,0x9561,0x9571,0x9581,0x9591,0x95A1,0x95B1,0x95C1,0x95D1,0x95E1,0x95F1};
 INT16 IS_16H_WeightIndex_DP_Add[16]={0x9601,0x9611,0x9621,0x9631,0x9641,0x9651,0x9661,0x9671,0x9681,0x9691,0x96A1,0x96B1,0x96C1,0x96D1,0x96E1,0x96F1};
 INT16 IS_16H_WeightColor_DP_Add[16]={0x9701,0x9711,0x9721,0x9731,0x9741,0x9751,0x9761,0x9771,0x9781,0x9791,0x97A1,0x97B1,0x97C1,0x97D1,0x97E1,0x97F1};
+INT16 IS_16H_Misc_Add[2]  	  ={0xB101,0xB111};
 
 //=====================================================================================================================
 //=================================================[1.托盘重量的描述指针]================================================
 //=====================================================================================================================
 //托盘的重量显示：不带小数点显示
-appScreenDpCfg_Type IS_8H_WeightVlue_DP_Vlu_WuXiaoShu[8]=
+appScreenDpCfg_Type IS_8H_WeightVlue_DP_Vlu_WuXiaoShu[8]=//已调试[2024-06-21]
 {
 //  x坐标    	y坐标  		 颜色      	字库+字体大小	  对齐+位数       小数位数+变量类型
 	{0x0056, 	0x0060, 	0x6474,		0x003C,			0x0204,			0x0001},//1
@@ -102,7 +108,7 @@ appScreenDpCfg_Type IS_8H_WeightVlue_DP_Vlu_WuXiaoShu[8]=
 	{0x04E8, 	0x0149, 	0x6474,		0x003C,			0x0204,			0x0001},//8
 };
 //托盘的重量显示：带小数点显示
-appScreenDpCfg_Type IS_8H_WeightVlue_DP_Vlu_YouXiaoShu[8]=
+appScreenDpCfg_Type IS_8H_WeightVlue_DP_Vlu_YouXiaoShu[8]=//已调试[2024-06-21]
 {
 //  x坐标    	y坐标  		 颜色      	字库/字体大小	 对齐 位数    小数位数 变量类型
 	{0x0056, 	0x0077, 	0x6474,		0x0028,			0x0204,			0x0101},//1
@@ -123,7 +129,7 @@ appScreenDpCfg_Type IS_8H_WeightVlue_DP_Vlu_YouXiaoShu[8]=
 #define DESCRIBLE_POINT_HELP_WU_XIAOSHU		(0X001A)//0号字库 字体大小26
 #define DESCRIBLE_POINT_HELP_YOU_XIAOSHU	(0X0014)//0号字库 字体大小20
 //帮助信息：不带小数显示
-appScreenDpCfg_Type IS_8H_HelpVlue_DP_Vlu_WuXiaoShu[12]=
+appScreenDpCfg_Type IS_8H_HelpVlue_DP_Vlu_WuXiaoShu[12]=//已调试[2024-06-21]
 {
 //       x    	y      		颜色      	字库/字体大小	 对齐 整数位数    小数位数 变量类型
 	{DESCRIBLE_POINT_HELP_X_POS(0)-10, 	97, 	DESCRIBLE_POINT_HELP_COLOR,		DESCRIBLE_POINT_HELP_WU_XIAOSHU,			0x0204,			0x0000},
@@ -140,7 +146,7 @@ appScreenDpCfg_Type IS_8H_HelpVlue_DP_Vlu_WuXiaoShu[12]=
 	{DESCRIBLE_POINT_HELP_X_POS(2), 	303, 	DESCRIBLE_POINT_HELP_COLOR,		DESCRIBLE_POINT_HELP_WU_XIAOSHU,			0x0204,			0x0000},
 };
 //帮助信息：带小数显示
-appScreenDpCfg_Type IS_8H_HelpVlue_DP_Vlu_YouXiaoShu[12]=
+appScreenDpCfg_Type IS_8H_HelpVlue_DP_Vlu_YouXiaoShu[12]=//已调试[2024-06-21]
 {
 //       x    	y      		颜色      	字库/字体大小	 对齐 整数位数    小数位数 变量类型
 	{DESCRIBLE_POINT_HELP_X_POS(0), 	105, 	DESCRIBLE_POINT_HELP_COLOR,		DESCRIBLE_POINT_HELP_YOU_XIAOSHU,			0x0204,			0x0000},
@@ -160,7 +166,7 @@ appScreenDpCfg_Type IS_8H_HelpVlue_DP_Vlu_YouXiaoShu[12]=
 //=====================================================================================================================
 //=================================================[3.托盘序号的描述指针][2024-06-21]===================================
 //=====================================================================================================================
-appScreenDpCfg_Type IS_8H_WeightIndex_DP_Vlu[8]=
+appScreenDpCfg_Type IS_8H_WeightIndex_DP_Vlu[8]=//已调试[2024-06-21]
 {
 //  x坐标   y坐标  	颜色      	字库/字体大小	对齐 位数    小数位数 变量类型
 	{140, 	20, 	0x6474,		0x0020,			0x0204,			0x0000},
@@ -171,6 +177,34 @@ appScreenDpCfg_Type IS_8H_WeightIndex_DP_Vlu[8]=
 	{920, 	262, 	0x6474,		0x0020,			0x0204,			0x0000},
 	{1310, 	20,  	0x6474,		0x0020,			0x0204,			0x0000},
 	{1310, 	262, 	0x6474,		0x0020,			0x0204,			0x0000},
+};
+
+//=====================================================================================================================
+//========================================[16头]===[5其他的描述指针][2024-06-21]========================================
+//=====================================================================================================================
+appScreenDpMiscCfg_Type IS_6H_Misc_DP_Vlu[2]=
+{
+//  x坐标   y坐标   背景颜色
+	{62,	115,	0x6494},//1 单位
+	{62,	356,	0x6494},//2 精度
+};
+appScreenDpMiscCfg_Type IS_8H_Misc_DP_Vlu[2]=//已调试[2024-06-21]
+{
+//  x坐标   y坐标   背景颜色
+	{1847,	30,		0x6494},//1 单位
+	{62,	356,	0x6494},//2 精度
+};
+appScreenDpMiscCfg_Type IS_12H_Misc_DP_Vlu[2]=
+{
+//  x坐标   y坐标   背景颜色
+	{62,	115,	0x6494},//1 单位
+	{62,	356,	0x6494},//2 精度
+};
+appScreenDpMiscCfg_Type IS_16H_Misc_DP_Vlu[2]=//已调试[2024-06-21]
+{
+//  x坐标   y坐标   背景颜色
+	{1847,	30,		0x6494},//1 单位
+	{62,	356,	0x6494},//2 精度
 };
 
 //
@@ -194,9 +228,13 @@ appScreenCfg_Type innerScreenCfg[APPSCREEN_WEIGHT_NUM_MAX]={
 		0,//小屏目前没有对背景色添加描述指针
 		0,
 		0,
+		\
+		1,
+		IS_6H_Misc_Add,
+		IS_6H_Misc_DP_Vlu,
 	},
 
-	//APPSCREEN_WEIGHT_NUM_8
+	//APPSCREEN_WEIGHT_NUM_8	//已调试[2024-06-21]
 	{
 		8,
 		IS_8H_WeightVlu_DP_Add,
@@ -215,6 +253,10 @@ appScreenCfg_Type innerScreenCfg[APPSCREEN_WEIGHT_NUM_MAX]={
 		0,
 		0,
 		0,
+		\
+		1,
+		IS_8H_Misc_Add,
+		IS_8H_Misc_DP_Vlu,
 	},
 
 	//APPSCREEN_WEIGHT_NUM_12   未调试
@@ -236,6 +278,10 @@ appScreenCfg_Type innerScreenCfg[APPSCREEN_WEIGHT_NUM_MAX]={
 		0,
 		0,
 		0,
+		\
+		1,
+		IS_12H_Misc_Add,
+		IS_12H_Misc_DP_Vlu,
 	},
 
 	//APPSCREEN_WEIGHT_NUM_16   未调试
@@ -257,5 +303,9 @@ appScreenCfg_Type innerScreenCfg[APPSCREEN_WEIGHT_NUM_MAX]={
 		0,
 		0,
 		0,
+		\
+		1,
+		IS_16H_Misc_Add,
+		IS_16H_Misc_DP_Vlu,
 	},
 };

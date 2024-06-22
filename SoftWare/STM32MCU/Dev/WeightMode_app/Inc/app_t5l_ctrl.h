@@ -374,6 +374,8 @@ typedef struct structSdweType
 	UINT16  screenBalancingCleanPage;/**< 屏幕 配平清爽 页面序号*/
 	UINT16  screenBalancingMainPage;/**< 屏幕 配平主页 页面序号*/
 	UINT16 	freshDP;/**< 刷新描述指针*/
+	UINT16  isCascadTrigger;/**< 级联触发*/
+	UINT16  isWriteWeightIndexTrigger;/**< 写序号触发*/
 	
 }T5LType;
 
@@ -461,6 +463,8 @@ typedef struct structSdweType
 	DMG_FUNC_BalancingCleanPage,\
 	DMG_FUNC_BalancingMainPage,\
 	.freshDP=0,\
+	.isCascadTrigger=0,\
+	.isWriteWeightIndexTrigger=0,\
 }
 
 /** ModbusRtu设备默认配置 */
@@ -520,6 +524,8 @@ typedef struct structSdweType
 	DMG_FUNC_BalancingCleanPage,\
 	DMG_FUNC_BalancingMainPage,\
 	.freshDP=0,\
+	.isCascadTrigger=0,\
+	.isWriteWeightIndexTrigger=0,\
 	}
 //================================================================================================
 
@@ -545,7 +551,7 @@ typedef struct structScreenHandleType
 }ScreenHandleType;
 
 #define SCREEN_RX_HANDLE_TOTAL_NUM	(15)	/**< 屏幕RX数据处理事件数量 */
-#define SCREEN_TX_HANDLE_TOTAL_NUM	(16)	/**< 屏幕TX数据处理事件数量 */
+#define SCREEN_TX_HANDLE_TOTAL_NUM	(17)	/**< 屏幕TX数据处理事件数量 */
 extern screenRxTxHandleType innerScreenRxHandle[SCREEN_RX_HANDLE_TOTAL_NUM];
 extern screenRxTxHandleType innerScreenTxHandle[SCREEN_TX_HANDLE_TOTAL_NUM];
 
@@ -618,6 +624,7 @@ extern UINT8 screenPublic_FreshDisplayPosition_Of_WeightVlu(T5LType *pSdwe);
 extern UINT8 screenPublic_FreshDisplayPosition_Of_HelpVlu(T5LType *pSdwe);
 extern UINT8 screenPublic_FreshDisplayPosition_Of_WeightIndex(T5LType *pSdwe);
 extern UINT8 screenPublic_FreshDisplayPosition_Of_WeightColor(T5LType *pSdwe);
+extern UINT8 screenPublic_FreshDisplayPosition_Of_OtherMisc(T5LType *pSdwe);
 extern UINT8 screenPublic_ChanelChangedTrigerHandle(T5LType *pSdwe);
 extern UINT8 screenPublic_ResetCalibrationTrigerHandle(T5LType *pSdwe);
 extern UINT8 screenPublic_PointTrigerHandle(T5LType *pSdwe);
@@ -629,5 +636,7 @@ extern UINT8 screenPublic_VoicePrintfMainfunction(T5LType *pSdwe);
 extern void clearLocalCalibrationRecordData(UINT8 sreen_chanel);
 extern void clearLocalCalibrationKAndBAndSample(UINT8 sreen_chanel);
 extern void pointTrigerDataSet(UINT8 localChanel , UINT8 point , UINT8 value ,INT16 avgSampleValue);
+extern UINT8 screenPublic_IsCascadTriggerHandle(T5LType *pSdwe);
+extern UINT8 screenPublic_WriteIndexHandle(T5LType *pSdwe);
 
 #endif

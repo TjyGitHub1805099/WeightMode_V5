@@ -37,6 +37,14 @@ typedef struct app_Screen_DpColorCfg
     INT16 positionY;
 }appScreenDpColorCfg_Type;
 
+typedef struct appScreenDpMiscCfg
+{
+    //  x坐标    	y坐标  		 颜色
+    INT16 positionX;//x坐标 2byte
+    INT16 positionY;//y坐标 2byte
+    INT16 color;//颜色 2byte
+}appScreenDpMiscCfg_Type;
+
 typedef struct app_Screen_Cfg
 {
     //托盘重量描述指针
@@ -60,6 +68,11 @@ typedef struct app_Screen_Cfg
     UINT16 weightColorNum;
     INT16 *dpParaAdd_WeightColor;
     appScreenDpColorCfg_Type *dpParaVlu_WeightColor;
+
+    //其他描述指针：X Y 颜色
+    UINT16 miscNum;
+    INT16 *dpParaAdd_Misc;
+    appScreenDpMiscCfg_Type *dpParaVlu_Misc;
 }appScreenCfg_Type;
 
 typedef enum app_Screen_enum

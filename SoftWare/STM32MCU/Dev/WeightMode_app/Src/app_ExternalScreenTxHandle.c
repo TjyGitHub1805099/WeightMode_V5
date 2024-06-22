@@ -285,6 +285,13 @@ UINT8 externalScreenTxHandle_ChangeDisplayPosition(T5LType *pSdwe)
 		{
 			if(0 != screenPublic_FreshDisplayPosition_Of_WeightIndex(pSdwe))
 			{
+				pSdwe->freshDP = 3;
+			}
+		}
+		else if(3 == pSdwe->freshDP)//修改文本信息： 单位 精度
+		{
+			if(0 != screenPublic_FreshDisplayPosition_Of_OtherMisc(pSdwe))
+			{
 				pSdwe->freshDP = 0;
 				//
 				pSdwe->sdweChangeDescriblePoint = FALSE;

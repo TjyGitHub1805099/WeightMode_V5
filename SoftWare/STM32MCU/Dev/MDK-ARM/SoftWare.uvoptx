@@ -222,22 +222,27 @@
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>weightTestData</ItemText>
+          <ItemText>g_T5LCtx[0].sdweChangeDescriblePoint</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>ES_16H_WeightIndex_DP_Vlu,0x0A</ItemText>
+          <ItemText>weightTestData,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>g_T5LCtx[0].sdweChangeDescriblePoint</ItemText>
+          <ItemText>ES_8H_Misc_DP_Vlu,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>6</count>
           <WinNumber>1</WinNumber>
-          <ItemText>IS_8H_WeightIndex_DP_Vlu,0x0A</ItemText>
+          <ItemText>innerScreenCfg</ItemText>
+        </Ww>
+        <Ww>
+          <count>7</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>IS_8H_Misc_DP_Vlu,0x0A</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>

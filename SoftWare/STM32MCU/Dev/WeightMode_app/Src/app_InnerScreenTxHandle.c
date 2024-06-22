@@ -131,7 +131,8 @@ UINT8 innerScreenTxHandle_Init(T5LType *pSdwe)
 			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
 				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{
-				if(gSystemPara.isCascade == ModbusFuncA_Slave)//only FuncA Module and Slave , need change block num to 9~16
+				//if(gSystemPara.isCascade == ModbusFuncA_Slave)//only FuncA Module and Slave , need change block num to 9~16
+				if(gSystemPara.isCascade == ModbusAdd_Slave_1)//only FuncA Module and Slave , need change block num to 9~16
 				{
 					for(len = 0 ; len < HX711_CHANEL_NUM ; len++)
 					{
@@ -414,6 +415,13 @@ UINT8 innerScreenTxHandle_ChangeDisplayPosition(T5LType *pSdwe)
 		{
 			if(0 != screenPublic_FreshDisplayPosition_Of_WeightIndex(pSdwe))
 			{
+				pSdwe->freshDP = 3;
+			}
+		}
+		else if(3 == pSdwe->freshDP)//修改文本信息： 单位 精度
+		{
+			if(0 != screenPublic_FreshDisplayPosition_Of_OtherMisc(pSdwe))
+			{
 				pSdwe->freshDP = 0;
 				//
 				pSdwe->sdweChangeDescriblePoint = FALSE;
@@ -424,6 +432,27 @@ UINT8 innerScreenTxHandle_ChangeDisplayPosition(T5LType *pSdwe)
 		{
 			/*nothing*/
 			pSdwe->freshDP = 0 ;
+		}
+	}
+	return matched;
+}
+
+//公共函数：校准时 单点触发 处理
+UINT8 innerScreenTxHandle_IsCascadTriggerHandle(T5LType *pSdwe)
+{
+	UINT8 matched = FALSE;
+	static UINT8 stepIndex = 0;
+
+	if(TRUE == pSdwe->isCascadTrigger)
+	{
+		matched = TRUE;
+		if(0 == stepIndex)
+		{
+			if(0 != screenPublic_WriteIndexHandle(pSdwe))
+			{
+				stepIndex = 0 ;
+				pSdwe->isCascadTrigger = FALSE;
+			}
 		}
 	}
 	return matched;
@@ -464,7 +493,8 @@ screenRxTxHandleType innerScreenTxHandle[SCREEN_TX_HANDLE_TOTAL_NUM]=
 	{0,	12, &screenPublic_ResetCalibrationTrigerHandle},//==C2 event arrive:At Calibration Page , calibration reset trigerd 
 	{0,	13, &screenPublic_PointTrigerHandle},//==C3 event arrive:At Calibration Page , point trigerd
 	{0,	14, &screenPublic_RemoveWeightTrigerHandle},//==B1 event arrive:At Balancing Page , remove weight trigerd
-	{0,	15, &innerScreenTxHandle_ScreenWeightAndColorAndHelpAndVoiceHandle},//normaly weight color voice handle
+	{0,	15, &innerScreenTxHandle_IsCascadTriggerHandle},//级联触发按钮
+	{0,	16, &innerScreenTxHandle_ScreenWeightAndColorAndHelpAndVoiceHandle},//normaly weight color voice handle
 };
 
 #endif// end of _APP_INNER_SCREEN_TX_HANDLE_C_

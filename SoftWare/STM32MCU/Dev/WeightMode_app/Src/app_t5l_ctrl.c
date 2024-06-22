@@ -626,6 +626,35 @@ UINT8 screenPublic_FreshDisplayPosition_Of_WeightColor(T5LType *pSdwe)
 	return ret;
 }
 
+//公共函数：修改‘托盘背景色’的描述指针
+UINT8 screenPublic_FreshDisplayPosition_Of_OtherMisc(T5LType *pSdwe)
+{
+	INT16 total_handle = 0;
+	UINT8 ret = FALSE;
+	UINT8 index;
+	INT16 describlePoint_add = 0x9000,*describlePoint_data,describlePoint_len = 1;
+	//
+	index=appScreenCfgIndexGet();
+	total_handle = pSdwe->screenCfg[index].miscNum;
+	describlePoint_add = pSdwe->screenCfg[index].dpParaAdd_Misc[(*pSdwe->screenCycle.handle_i)%total_handle];
+	describlePoint_len = 2;//这里发送：X Y 的 2个属性
+	describlePoint_data = &pSdwe->screenCfg[index].dpParaVlu_Misc[(*pSdwe->screenCycle.handle_i)%total_handle].positionX;
+	//发送数据给屏幕
+	if(TRUE == t5lWriteData(pSdwe,describlePoint_add,describlePoint_data,describlePoint_len,0))
+	{
+		(*pSdwe->screenCycle.handle_i)++;
+	}
+	//操作数量达到总数量 清零 并处理成功
+	if((*pSdwe->screenCycle.handle_i) >= total_handle)
+	{
+		(*pSdwe->screenCycle.handle_i) = 0 ;
+		ret = TRUE;
+	}		
+	//返回结果
+	return ret;
+}
+
+
 //私有函数：校准时 通道号 改变后的处理
 UINT8 screenPrivate_ChanelChangedTrigerHandle(T5LType *pSdwe)
 {
@@ -935,6 +964,39 @@ UINT8 screenPublic_RemoveWeightTrigerHandle(T5LType *pSdwe)
 		}
 	}
 	return matched;
+}
+
+//公共函数：写序号事件触发
+UINT8 screenPublic_WriteIndexHandle(T5LType *pSdwe)
+{
+	UINT8 ret = 0 ;
+	INT16 sendData[64],len=0;
+	//
+	switch(gSystemPara.isCascade)
+	{
+		case 0:
+		case ModbusAdd_Master:
+			for(len = 0 ; len < 2*HX711_CHANEL_NUM ; len++)
+			{
+				sendData[len] = len;
+			}					
+		break;
+		case ModbusAdd_Slave_1:
+			for(len = 0 ; len < HX711_CHANEL_NUM ; len++)
+			{
+				sendData[len] = HX711_CHANEL_NUM + len;
+			}
+		break;
+		default:
+			for(len = 0 ; len < HX711_CHANEL_NUM ; len++)
+			{
+				sendData[len] = len;
+			}
+		break;
+	}
+	//
+	ret = t5lWriteData(pSdwe,(0x3901),sendData,len,0);
+	return ret;
 }
 
 //私有函数：准备 重量 判断是否需要发送给屏幕
