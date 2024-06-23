@@ -897,6 +897,11 @@
               <FileType>1</FileType>
               <FilePath>..\WeightMode_app\Src\app_InnerScreenTxHandle.c</FilePath>
             </File>
+            <File>
+              <FileName>app_BalancingDataHandle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\WeightMode_app\Src\app_BalancingDataHandle.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

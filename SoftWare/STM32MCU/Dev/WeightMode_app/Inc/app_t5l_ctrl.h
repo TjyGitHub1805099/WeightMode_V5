@@ -6,6 +6,15 @@
 #include "app_hx711_ctrl.h"
 #include "app_InnerScreen_Cfg.h"
 #include "app_ExternalScreen_Cfg.h"
+#include "app_modbus_rtu_ctrl.h"
+
+
+
+
+#define SCREEN_BALANCINGDATA_HANDLE_MODE	(1)//0：之前的方式 1：新方式20240623
+
+
+
 
 #define T5L_DMG_UART_TX_USE_DMA	(1)
 
@@ -15,6 +24,7 @@
 //==(update:20210328):DIWEN reserve (uodate to v3:2021.03.26)
 #define DMG_MIN_DIFF_OF_TWO_SEND_ORDER			(20)//20ms 
 #define DMG_DATA_HOLD_TIME						(250)//250ms
+#define DMG_WAIT_COLOR_HELP_SEND_TIME			(1000)//当重量信息发给屏幕后颜色信息最长这个时间段内要发送给屏幕
 
 //==(update:20210328):address of set chanel number : 0->all chanel set  ; (1~8)->single chanel set
 #define DMG_FUNC_SET_CHANEL_NUM					(0X2100)
@@ -318,6 +328,15 @@ typedef struct structSdweType
 {
 	enumSDWEStatusType status;				/**< status ：sdwe 状态 */
 
+	UINT8 screenWeightHandleStatus;			/*给屏幕发送重量数据的状态机*/
+	UINT16 screenWeightHandleHoldOn;		/*给屏幕发送重量数据的最短保持时间*/
+
+	UINT8 screenColorHandleStatus;			/*给屏幕发送背景色数据的状态机*/
+	UINT8 screenHelpHandleStatus;			/*给屏幕发送帮助数据的状态机*/
+
+//
+
+
 	ScreenCycleType screenCycle;
 	appScreenCfg_Type *screenCfg;
 
@@ -409,6 +428,10 @@ typedef struct structSdweType
 /** ModbusRtu设备默认配置 */
 #define T5LDataDefault   { \
 	SCREEN_STATUS_GET_VERSION,/*status ：sdwe 状态*/\
+	0,\
+	0,\
+	0,\
+	0,\
 	ScreenCycleTypeDefault,\
 	innerScreenCfg,\
 	0,/**/\
@@ -470,6 +493,10 @@ typedef struct structSdweType
 /** ModbusRtu设备默认配置 */
 #define T5LDataDefault2   { \
 	SCREEN_STATUS_GET_VERSION,/*status ：sdwe 状态*/\
+	0,\
+	0,\
+	0,\
+	0,\
 	ScreenCycleTypeDefault,\
 	externalScreenCfg,\
 	0,/**/\
@@ -638,5 +665,13 @@ extern void clearLocalCalibrationKAndBAndSample(UINT8 sreen_chanel);
 extern void pointTrigerDataSet(UINT8 localChanel , UINT8 point , UINT8 value ,INT16 avgSampleValue);
 extern UINT8 screenPublic_IsCascadTriggerHandle(T5LType *pSdwe);
 extern UINT8 screenPublic_WriteIndexHandle(T5LType *pSdwe);
+
+
+
+extern void screenPublic_CurrentDevice_WeightDataPrepare(INT32 *pData,INT16 *pDataInt16);
+extern void screenPublic_OtherDevice_WeightDataPrepare(INT32 *pData,INT16 *pDataInt16 ,enumModbusAddType modbusSlaveId);
+extern enumLedColorType getSysColorWhichUsable(void);
+extern void releaseSysColor(enumLedColorType color);
+extern void releaseSysColor(enumLedColorType color);
 
 #endif

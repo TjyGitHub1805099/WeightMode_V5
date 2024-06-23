@@ -232,17 +232,17 @@
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>ES_8H_Misc_DP_Vlu,0x0A</ItemText>
+          <ItemText>g_i16ColorBuffLarger</ItemText>
         </Ww>
         <Ww>
           <count>6</count>
           <WinNumber>1</WinNumber>
-          <ItemText>innerScreenCfg</ItemText>
+          <ItemText>g_i16ColorBuff</ItemText>
         </Ww>
         <Ww>
           <count>7</count>
           <WinNumber>1</WinNumber>
-          <ItemText>IS_8H_Misc_DP_Vlu,0x0A</ItemText>
+          <ItemText>g_ModbusRtu</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>
@@ -1174,6 +1174,19 @@
       <bDave2>0</bDave2>
       <PathWithFileName>..\WeightMode_app\Src\app_InnerScreenTxHandle.c</PathWithFileName>
       <FilenameWithoutPath>app_InnerScreenTxHandle.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>6</GroupNumber>
+      <FileNumber>64</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\WeightMode_app\Src\app_BalancingDataHandle.c</PathWithFileName>
+      <FilenameWithoutPath>app_BalancingDataHandle.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

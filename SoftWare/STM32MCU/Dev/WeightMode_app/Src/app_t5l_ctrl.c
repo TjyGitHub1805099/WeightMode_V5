@@ -101,8 +101,8 @@ void handleWeightDataWasSend(INT32 *pData , INT32 *pDataPre ,UINT8 chanel_len);
 UINT8 judgeWeightDataIfNotNeedSend(INT32 *pData , INT32 *pDataPre ,UINT8 chanel_len);
 void preColorData(INT32 *pData,INT16 *pColor,INT16 *pColorPre,INT16 *pColorOtherCh,UINT8 chanel_len);
 UINT8 sdwe_VoicePrintfPop(tT5LVoinceType *u8Voice1 , tT5LVoinceType *u8Voice2 , tT5LVoinceType *u8Voice3);
-void preCurrentDeviceWeightData(INT32 *pData,INT16 *pDataInt16);
-void preOtherDeviceWeightData(INT32 *pData,INT16 *pDataInt16 ,enumModbusAddType modbusSlaveId);
+void screenPublic_CurrentDevice_WeightDataPrepare(INT32 *pData,INT16 *pDataInt16);
+void screenPublic_OtherDevice_WeightDataPrepare(INT32 *pData,INT16 *pDataInt16 ,enumModbusAddType modbusSlaveId);
 void masterCaculateHelpData(ModbusRtuType *pContex,UINT8 chanel_len);
 UINT8 sendHelpDataDiff(T5LType *pSdwe);
 
@@ -1023,14 +1023,14 @@ UINT8 screenPrivate_preWeightDataAndJudgeIfNeedSend(INT32 *pData,INT16 *pDataInt
 				//单台，不级联，直接获取hx711采样值并计算
 				case 0:
 					//master local data
-					preCurrentDeviceWeightData(pData,pDataInt16);
+					screenPublic_CurrentDevice_WeightDataPrepare(pData,pDataInt16);
 				break;
 
 				//多台，级联，主机端：先获取本机hx711采样值，在获取从机发过来的hx711采样值
 				case ModbusAdd_Master:
 					//ModbusAdd_Slave_1 recv data
-					preCurrentDeviceWeightData(pData,pDataInt16);
-					preOtherDeviceWeightData(pData,pDataInt16,ModbusAdd_Slave_1);
+					screenPublic_CurrentDevice_WeightDataPrepare(pData,pDataInt16);
+					screenPublic_OtherDevice_WeightDataPrepare(pData,pDataInt16,ModbusAdd_Slave_1);
 				break;
 
 				//多台，级联，从机端：直接从主机发过来的数据截取
@@ -1821,7 +1821,7 @@ float GetFloatBalancingModelData(enumModbusAddType slaveId,enumHX711ChanelType c
 	float weight = 0.0;
 	ModbusRtuType *pContex = &g_ModbusRtu;
 	if((chanel < HX711_CHANEL_NUM ) 
-		&& ( slaveId >= ModbusAdd_Slave_1 )
+		&& ( slaveId >= ModbusAdd_Master )
 		&& ( slaveId < ModbusAdd_Slave_Max ))
 	{
 		weight = pContex->MultWeightData[slaveId-ModbusAdd_Master][chanel].f_value;
@@ -1845,7 +1845,7 @@ float GetFloatBalancingModelData(enumModbusAddType slaveId,enumHX711ChanelType c
 }
 
 //主机：从MODBUS中读取从机的 重量信息
-void preOtherDeviceWeightData(INT32 *pData,INT16 *pDataInt16 ,enumModbusAddType modbusSlaveId)
+void screenPublic_OtherDevice_WeightDataPrepare(INT32 *pData,INT16 *pDataInt16 ,enumModbusAddType modbusSlaveId)
 {
 	UINT8 offset = 0;
 	enumHX711ChanelType chanel = HX711Chanel_1;
@@ -1864,7 +1864,7 @@ void preOtherDeviceWeightData(INT32 *pData,INT16 *pDataInt16 ,enumModbusAddType 
 }
 
 //主机/从机：从HX711读取 重量信息
-void preCurrentDeviceWeightData(INT32 *pData,INT16 *pDataInt16)
+void screenPublic_CurrentDevice_WeightDataPrepare(INT32 *pData,INT16 *pDataInt16)
 {
 	float weight;
 	enumHX711ChanelType chanel = HX711Chanel_1;
@@ -2290,16 +2290,16 @@ UINT8 preWeightDataAndJudgeIfNeedSend_Master(INT32 *pData,INT16 *pDataInt16, INT
 		if(0 == gSystemPara.isCascade)
 		{
 			//master local data
-			preCurrentDeviceWeightData(pData,pDataInt16);
+			screenPublic_CurrentDevice_WeightDataPrepare(pData,pDataInt16);
 			//judge if not need send
 			ret = judgeWeightDataIfNotNeedSend(pData,pDataPre,chanel_len);
 		}
 		else if(ModbusAdd_Master == gSystemPara.isCascade)
 		{
 			//master local data
-			preCurrentDeviceWeightData(pData,pDataInt16);
+			screenPublic_CurrentDevice_WeightDataPrepare(pData,pDataInt16);
 			//ModbusAdd_Slave_1 recv data
-			preOtherDeviceWeightData(pData,pDataInt16,ModbusAdd_Slave_1);
+			screenPublic_OtherDevice_WeightDataPrepare(pData,pDataInt16,ModbusAdd_Slave_1);
 			//judge if not need send
 			ret = judgeWeightDataIfNotNeedSend(pData,pDataPre,chanel_len);			
 		}
@@ -2314,9 +2314,9 @@ UINT8 preWeightDataAndJudgeIfNeedSend_FuncA_Master(T5LType *pSdwe,INT32 *pData,I
 	if(chanel_len <= T5L_MAX_CHANEL_LEN)
 	{
 		//master local data
-		preCurrentDeviceWeightData(pData,pDataInt16);
+		screenPublic_CurrentDevice_WeightDataPrepare(pData,pDataInt16);
 		//ModbusAdd_Slave_1 recv data
-		preOtherDeviceWeightData(pData,pDataInt16,ModbusAdd_Slave_1);
+		screenPublic_OtherDevice_WeightDataPrepare(pData,pDataInt16,ModbusAdd_Slave_1);
 		//judge if not need send
 		ret = judgeWeightDataIfNotNeedSend(pData,pDataPre,chanel_len);			
 	}

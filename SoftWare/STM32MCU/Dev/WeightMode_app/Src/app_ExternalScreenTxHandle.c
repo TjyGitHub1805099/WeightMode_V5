@@ -14,6 +14,7 @@
 #include "app_t5l_ctrl.h"
 #include "app_password.h"
 #include "app_t5l_cfg.h"
+#include "app_BalancingDataHandle.h"
 
 //外屏初始化
 UINT8 externalScreenTxHandle_Init(T5LType *pSdwe)
@@ -314,9 +315,16 @@ UINT8 externalScreenTxHandle_ScreenWeightAndColorAndHelpHandle(T5LType *pSdwe)
 	if(g_sysLocked == STM32MCU_UNLOCKED)
 	{
 		matched = TRUE;
-		screenPublic_sendBalancingWeightAndColor(pSdwe);
-		screenPublic_HelpDataMainFunction(pSdwe);
-		//screenPublic_VoicePrintfMainfunction(pSdwe);
+		#if (0 == SCREEN_BALANCINGDATA_HANDLE_MODE)
+			screenPublic_sendBalancingWeightAndColor(pSdwe);
+			screenPublic_HelpDataMainFunction(pSdwe);
+			//screenPublic_VoicePrintfMainfunction(pSdwe);
+		#else
+			BalancingData_WeightData_Handle_PrepareAndJudgeAndSendToScreen(pSdwe);
+			BalancingData_ColorData_Handle_PrepareAndJudgeAndSendToScreen(pSdwe);
+			BalancingData_HelpData_Handle_PrepareAndJudgeAndSendToScreen(pSdwe);
+			//screenPublic_VoicePrintfMainfunction(pSdwe);
+		#endif
 	}	
 	return matched;
 }

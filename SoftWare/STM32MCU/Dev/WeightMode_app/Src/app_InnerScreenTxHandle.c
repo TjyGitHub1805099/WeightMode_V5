@@ -14,10 +14,7 @@
 #include "app_t5l_ctrl.h"
 #include "app_password.h"
 #include "app_t5l_cfg.h"
-
-
-
-
+#include "app_BalancingDataHandle.h"
 
 //0.0内屏初始化
 UINT8 innerScreenTxHandle_Init(T5LType *pSdwe)
@@ -131,15 +128,33 @@ UINT8 innerScreenTxHandle_Init(T5LType *pSdwe)
 			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
 				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{
-				//if(gSystemPara.isCascade == ModbusFuncA_Slave)//only FuncA Module and Slave , need change block num to 9~16
-				if(gSystemPara.isCascade == ModbusAdd_Slave_1)//only FuncA Module and Slave , need change block num to 9~16
+				switch(gSystemPara.isCascade)
 				{
-					for(len = 0 ; len < HX711_CHANEL_NUM ; len++)
-					{
-						sendData[len] = HX711_CHANEL_NUM + len;
-					}					
-					t5lWriteVarible(pSdwe,(0x3901),sendData,len,0);
-				}			
+					case 0:
+						for(len = 0 ; len < 2*HX711_CHANEL_NUM ; len++)
+						{
+							sendData[len] = len + 1;
+						}						
+					break;
+
+					case ModbusAdd_Master:
+						for(len = 0 ; len < 2*HX711_CHANEL_NUM ; len++)
+						{
+							sendData[len] = len + 1;
+						}						
+					break;
+
+					case ModbusAdd_Slave_1:
+						for(len = 0 ; len < 2*HX711_CHANEL_NUM ; len++)
+						{
+							sendData[len] = HX711_CHANEL_NUM + len + 1;
+						}						
+					break;
+					default:
+					break;
+				}
+				//
+				t5lWriteVarible(pSdwe,(0x3901),sendData,len,0);						
 				pSdwe->sendSysParaDataToDiwenIndex++;
 			}
 		break;
@@ -465,9 +480,16 @@ UINT8 innerScreenTxHandle_ScreenWeightAndColorAndHelpAndVoiceHandle(T5LType *pSd
 	if(g_sysLocked == STM32MCU_UNLOCKED)
 	{
 		matched = TRUE;
-		screenPublic_sendBalancingWeightAndColor(pSdwe);
-		screenPublic_HelpDataMainFunction(pSdwe);
-		screenPublic_VoicePrintfMainfunction(pSdwe);
+		#if (0 == SCREEN_BALANCINGDATA_HANDLE_MODE)
+			screenPublic_sendBalancingWeightAndColor(pSdwe);
+			screenPublic_HelpDataMainFunction(pSdwe);
+			screenPublic_VoicePrintfMainfunction(pSdwe);
+		#else
+			BalancingData_WeightData_Handle_PrepareAndJudgeAndSendToScreen(pSdwe);
+			BalancingData_ColorData_Handle_PrepareAndJudgeAndSendToScreen(pSdwe);
+			BalancingData_HelpData_Handle_PrepareAndJudgeAndSendToScreen(pSdwe);
+			screenPublic_VoicePrintfMainfunction(pSdwe);
+		#endif
 	}	
 	return matched;
 }
