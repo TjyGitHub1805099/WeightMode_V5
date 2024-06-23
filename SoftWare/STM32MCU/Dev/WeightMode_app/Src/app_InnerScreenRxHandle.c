@@ -157,7 +157,7 @@ UINT8 innerScreenRxHandle_JumpToBalancingPage(T5LType *pSdwe)
 		matched = TRUE;
 		if(DMG_FUNC_Balancing_SET_VALUE == (UINT16)pSdwe->SetData)
 		{
-			pSdwe->sdweJumpBalancingMainPage = TRUE;
+			pSdwe->sdweJumpToBanlingPage = TRUE;
 		}
 	}
 	return matched;

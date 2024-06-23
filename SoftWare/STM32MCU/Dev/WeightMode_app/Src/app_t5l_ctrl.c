@@ -15,6 +15,8 @@
 #include "app_InnerScreen_Cfg.h"
 #include "app_ExternalScreen_Cfg.h"
 
+extern UINT8 appScreenCfgIndexGet(T5LType *pSdwe,UINT8 weight_help_index_color_orther);
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -390,7 +392,7 @@ static void screenPrivate_Init(T5LType *t5lCtx)
 
 
 
-		t5lCtx->sdweJumpBalancingMainPage = TRUE;
+		//t5lCtx->sdweJumpBalancingMainPage = TRUE;
 		t5lCtx->sdweChangeDescriblePoint = TRUE;
 	}
 	else
@@ -416,7 +418,7 @@ static void screenPrivate_Init(T5LType *t5lCtx)
 		t5lCtx->screenCycle.rmTrigerInnerSts = &g_rmTrigerInnerSts[ScreenIndex_Smaller];
 
 
-		t5lCtx->sdweJumpBalancingMainPage = TRUE;
+		//t5lCtx->sdweJumpBalancingMainPage = TRUE;
 		t5lCtx->sdweChangeDescriblePoint = TRUE;
 
 	}
@@ -514,7 +516,7 @@ UINT8 screenPublic_FreshDisplayPosition_Of_WeightVlu(T5LType *pSdwe)
 	UINT8 index;
 	INT16 describlePoint_add = 0x9000,*describlePoint_data,describlePoint_len = 1;
 	//
-	index=appScreenCfgIndexGet();
+	index=appScreenCfgIndexGet(pSdwe,0);
 	total_handle = pSdwe->screenCfg[index].weightVluNum;
 	describlePoint_add = pSdwe->screenCfg[index].dpParaAdd_WeightVlu[(*pSdwe->screenCycle.handle_i)%total_handle];
 	describlePoint_len = 6;
@@ -546,7 +548,7 @@ UINT8 screenPublic_FreshDisplayPosition_Of_HelpVlu(T5LType *pSdwe)
 	UINT8 index;
 	INT16 describlePoint_add = 0x9000,*describlePoint_data,describlePoint_len = 1;
 	//
-	index=appScreenCfgIndexGet();
+	index=appScreenCfgIndexGet(pSdwe,1);
 	total_handle = pSdwe->screenCfg[index].helpVluNum;
 	describlePoint_add = pSdwe->screenCfg[index].dpParaAdd_HelpVlu[(*pSdwe->screenCycle.handle_i)%total_handle];
 	describlePoint_len = 6;//这里发送：X Y ....等的6个属性
@@ -578,7 +580,7 @@ UINT8 screenPublic_FreshDisplayPosition_Of_WeightIndex(T5LType *pSdwe)
 	UINT8 index;
 	INT16 describlePoint_add = 0x9000,*describlePoint_data,describlePoint_len = 1;
 	//
-	index=appScreenCfgIndexGet();
+	index=appScreenCfgIndexGet(pSdwe,2);
 	total_handle = pSdwe->screenCfg[index].weightIndexNum;
 	describlePoint_add = pSdwe->screenCfg[index].dpParaAdd_WeightIndex[(*pSdwe->screenCycle.handle_i)%total_handle];
 	describlePoint_len = 6;
@@ -606,7 +608,7 @@ UINT8 screenPublic_FreshDisplayPosition_Of_WeightColor(T5LType *pSdwe)
 	UINT8 index;
 	INT16 describlePoint_add = 0x9000,*describlePoint_data,describlePoint_len = 1;
 	//
-	index=appScreenCfgIndexGet();
+	index=appScreenCfgIndexGet(pSdwe,3);
 	total_handle = pSdwe->screenCfg[index].weightColorNum;
 	describlePoint_add = pSdwe->screenCfg[index].dpParaAdd_WeightColor[(*pSdwe->screenCycle.handle_i)%total_handle];
 	describlePoint_len = 2;//这里发送：X Y 的 2个属性
@@ -634,7 +636,7 @@ UINT8 screenPublic_FreshDisplayPosition_Of_OtherMisc(T5LType *pSdwe)
 	UINT8 index;
 	INT16 describlePoint_add = 0x9000,*describlePoint_data,describlePoint_len = 1;
 	//
-	index=appScreenCfgIndexGet();
+	index=appScreenCfgIndexGet(pSdwe,4);
 	total_handle = pSdwe->screenCfg[index].miscNum;
 	describlePoint_add = pSdwe->screenCfg[index].dpParaAdd_Misc[(*pSdwe->screenCycle.handle_i)%total_handle];
 	describlePoint_len = 2;//这里发送：X Y 的 2个属性

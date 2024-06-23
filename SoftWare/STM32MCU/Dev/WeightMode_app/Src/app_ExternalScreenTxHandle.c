@@ -336,8 +336,8 @@ screenRxTxHandleType externalScreenTxHandle[SCREEN_LARGER_TX_HANDLE_TOTAL_NUM]=
 {
 	//priority index func_add
 	{0,	0, &externalScreenTxHandle_ScreenInit},//==send initial data to DIWEN to display
-	{0,	1, &externalScreenTxHandle_JumpToBanlingPage},//==send initial data to DIWEN to display
-	{0,	2, &externalScreenTxHandle_ChangeDisplayPosition},//==send initial data to DIWEN to display
+	{0,	1, &externalScreenTxHandle_ChangeDisplayPosition},//==send initial data to DIWEN to display
+	{0,	2, &externalScreenTxHandle_JumpToBanlingPage},//==send initial data to DIWEN to display
 	{0,	3, &screenPublic_RemoveWeightTrigerHandle},//==B1 event arrive:At Balancing Page , remove weight trigerd
 	{0,	4, &externalScreenTxHandle_ScreenWeightAndColorAndHelpHandle},//==send initial data to DIWEN to display
 };

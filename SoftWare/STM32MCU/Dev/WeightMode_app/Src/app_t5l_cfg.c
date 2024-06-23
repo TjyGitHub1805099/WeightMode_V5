@@ -21,7 +21,7 @@
 
 
 //通过设置单台数量 及是否级联 来决定描述指针
-UINT8 appScreenCfgIndexGet(void)
+UINT8 appScreenCfgIndexGet(T5LType *pSdwe,UINT8 weight_help_index_color_orther)
 {
 	appScreenCfg_Enum index = APPSCREEN_WEIGHT_NUM_6;
 	switch(gSystemPara.weightNum)
@@ -38,7 +38,14 @@ UINT8 appScreenCfgIndexGet(void)
 			if(0 != gSystemPara.isCascade)
 			{
 				index = APPSCREEN_WEIGHT_NUM_16;
-			}		
+				//
+				if((ModbusAdd_Master == gSystemPara.isCascade) 
+					&& ( &g_T5LCtx[ScreenIndex_Smaller] == pSdwe)
+					&& (0 == weight_help_index_color_orther))
+				{
+					index = APPSCREEN_WEIGHT_NUM_8;
+				}
+			}	
 		break;
 		default :
 			index = APPSCREEN_WEIGHT_NUM_6;

@@ -64,7 +64,7 @@ typedef struct app_Screen_Cfg
     INT16 *dpParaAdd_WeightIndex;
     appScreenDpCfg_Type *dpParaVlu_WeightIndex;
 
-    //托盘颜色描述指针olor
+    //托盘颜色描述指针color
     UINT16 weightColorNum;
     INT16 *dpParaAdd_WeightColor;
     appScreenDpColorCfg_Type *dpParaVlu_WeightColor;
@@ -84,6 +84,5 @@ typedef enum app_Screen_enum
     APPSCREEN_WEIGHT_NUM_MAX,
 }appScreenCfg_Enum;
 
-extern UINT8 appScreenCfgIndexGet(void);
 
 #endif

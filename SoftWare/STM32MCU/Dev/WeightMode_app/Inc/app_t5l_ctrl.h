@@ -158,6 +158,8 @@ typedef enum DMGPageType
 	DMG_FUNC_BalancingMainPageNoHelp = 57,//无帮助信息
 
 	INNER_SCREEN_Balancing_6_HOME_PAGE = 49,
+	INNER_SCREEN_Balancing_16HS8_HOME_PAGE = 62,//级联模式下 从机跳转界面
+
 	EXTERNAL_SCREEN_Balancing_6_HOME_PAGE = 0,
 
 }enumDMGPageType;
@@ -372,11 +374,11 @@ typedef struct structSdweType
 	
 	UINT16 	sdweJumpToCalitrationPage;	/**< sdweJumpToCalitrationPage：(事件)跳转至校准页面 */
 	UINT16	sdweJumpToHomePage;			/**< sdweJumpToHomePage：(事件)跳转至主页面 */
-	UINT16	sdweJumpToBanlingPage;		/**< sdweJumpToBanlingPage：(事件)跳转至配平页面 */
+	UINT16	sdweJumpToBanlingPage;		/**< 目前使用 */
 	UINT16 	sdweJumpActivePage;			/**< sdweJumpActivePage：(事件)跳转至激活页面 */
-	UINT16 	sdweJumpBalancingMainPage;	/**< sdweJumpBalancing：(事件)跳转至配平页面 */
-	UINT16 	sdweJumpBalancing_home;		/**< sdweJumpBalancing_home：(事件)跳转至配平页面可去皮 */
-	UINT16 	sdweJumpBalancing_cleanpagee;/**< sdweJumpBalancing_cleanpagee：(事件)跳转至配平清爽页面 */
+	UINT16 	sdweJumpBalancingMainPage;	/**< 暂未使用 */
+	UINT16 	sdweJumpBalancing_home;		/**< 暂未使用 */
+	UINT16 	sdweJumpBalancing_cleanpagee;/**< 暂未使用 */
 	UINT16 	sdweJumpToSysParaPage;		/**< sdweJumpToSysParaPage：(事件)跳转至参数页面 */
 	UINT16 	sdweFreshScreenLight;		/**< sdweFreshScreenLight：(事件)刷新背光亮度 */
 	UINT16  sdweChangeDescriblePoint;	/**< sdweChangeDescriblePoint：(事件)修改小数显示 */
@@ -390,8 +392,8 @@ typedef struct structSdweType
 	UINT16 	screenCalibrationPage;/**< 屏幕 计算 页面序号*/
 	UINT16 	screenActivePage;/**< 屏幕 激活 页面序号*/
 	UINT16  screenSysParaPage;/**< 屏幕 系统参数 页面序号*/
-	UINT16  screenBalancingCleanPage;/**< 屏幕 配平清爽 页面序号*/
-	UINT16  screenBalancingMainPage;/**< 屏幕 配平主页 页面序号*/
+	UINT16  screenBalancingCleanPage;/**< 暂未使用 屏幕 配平清爽 页面序号*/
+	UINT16  screenBalancingMainPage;/**< 暂未使用 屏幕 配平主页 页面序号*/
 	UINT16 	freshDP;/**< 刷新描述指针*/
 	UINT16  isCascadTrigger;/**< 级联触发*/
 	UINT16  isWriteWeightIndexTrigger;/**< 写序号触发*/

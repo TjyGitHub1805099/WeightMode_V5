@@ -120,6 +120,16 @@ UINT8 innerScreenTxHandle_Init(T5LType *pSdwe)
 			{		
 				if(0 != screenPublic_FreshDisplayPosition_Of_HelpVlu(pSdwe))//根据小数是否打开 发送相关数据
 				{
+					pSdwe->sendSysParaDataToDiwenIndex = 42;
+				}
+			}
+		break;
+		case 42://背景色
+			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			{		
+				if(0 != screenPublic_FreshDisplayPosition_Of_WeightColor(pSdwe))
+				{
 					pSdwe->sendSysParaDataToDiwenIndex = 5;
 				}
 			}
@@ -128,33 +138,43 @@ UINT8 innerScreenTxHandle_Init(T5LType *pSdwe)
 			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
 				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{
+				#if 0
 				switch(gSystemPara.isCascade)
 				{
-					case 0:
-						for(len = 0 ; len < 2*HX711_CHANEL_NUM ; len++)
+					case 0://1-8
+						for(len = 0 ; len < HX711_CHANEL_NUM ; len++)
 						{
 							sendData[len] = len + 1;
-						}						
+						}	
+						t5lWriteVarible(pSdwe,(0x3901),sendData,len,0);						
 					break;
 
-					case ModbusAdd_Master:
-						for(len = 0 ; len < 2*HX711_CHANEL_NUM ; len++)
+					case ModbusAdd_Master://1-8
+						for(len = 0 ; len < HX711_CHANEL_NUM ; len++)
 						{
 							sendData[len] = len + 1;
-						}						
+						}	
+						t5lWriteVarible(pSdwe,(0x3901),sendData,len,0);						
 					break;
 
-					case ModbusAdd_Slave_1:
-						for(len = 0 ; len < 2*HX711_CHANEL_NUM ; len++)
+					case ModbusAdd_Slave_1://9-16
+						for(len = 0 ; len < HX711_CHANEL_NUM ; len++)
 						{
 							sendData[len] = HX711_CHANEL_NUM + len + 1;
-						}						
+						}		
+						t5lWriteVarible(pSdwe,(0x3909),sendData,len,0);						
 					break;
 					default:
 					break;
 				}
+				#else
+					for(len = 0 ; len < 2*HX711_CHANEL_NUM ; len++)
+					{
+						sendData[len] = len + 1;
+					}		
+					t5lWriteVarible(pSdwe,(0x3901),sendData,len,0);						
+				#endif
 				//
-				t5lWriteVarible(pSdwe,(0x3901),sendData,len,0);						
 				pSdwe->sendSysParaDataToDiwenIndex++;
 			}
 		break;
@@ -247,6 +267,7 @@ UINT8 innerScreenTxHandle_Init(T5LType *pSdwe)
 		default:
 			if(TRUE == pSdwe->sdweHX711FirstSampleCoplt)
 			{
+				pSdwe->sdweJumpToBanlingPage = TRUE;//触发跳转至配平界面
 				result = TRUE;
 			}
 		break;
@@ -501,16 +522,16 @@ screenRxTxHandleType innerScreenTxHandle[SCREEN_TX_HANDLE_TOTAL_NUM]=
 {
 	//priority index func_add
 	{0,	0, &innerScreenTxHandle_ScreenInit},//==send initial data to DIWEN to display
-	{0,	1, &innerScreenTxHandle_JumpToHomePage},//==M1 event arrive:jump to HOME Page 
-	{0,	2, &innerScreenTxHandle_JumpToBanlingPage},//==M2 event arrive:jump to BALANCING Page , Physical keying trigger
-	{0,	3, &innerScreenTxHandle_JumpToCalibrationPage},//==M3 event arrive:jump to CALITRATION Page
-	{0,	4, &innerScreenTxHandle_JumpToActivePage},//==M4 event arrive:jump to ACTIVE Page
-	{0,	5, &innerScreenTxHandle_JumpToSysParaPage},//==M5 event arrive:jump to SYSPARA Page
-	{0,	6, &innerScreenTxHandle_JumpToBanlingMainPage},//==配平模式的主要界面
-	{0,	7, &innerScreenTxHandle_JumpToBalancingCleanPage},//==M2-2 event arrive:jump to BALANCING (clean)page
-	{0,	8, &innerScreenTxHandle_JumpToBalancingHomePage},//==M2-3 event arrive:jump to BALANCING (home)page
-	{0,	9, &innerScreenTxHandle_FreshScreenLight},//==M6 event arrive:fresh sreen light
-	{0,	10, &innerScreenTxHandle_ChangeDisplayPosition},//==M7 event arrive:修改小数点
+	{0,	1, &innerScreenTxHandle_ChangeDisplayPosition},//==M7 event arrive:修改小数点
+	{0,	2, &innerScreenTxHandle_JumpToHomePage},//==M1 event arrive:jump to HOME Page 
+	{0,	3, &innerScreenTxHandle_JumpToBanlingPage},//==M2 event arrive:jump to BALANCING Page , Physical keying trigger
+	{0,	4, &innerScreenTxHandle_JumpToCalibrationPage},//==M3 event arrive:jump to CALITRATION Page
+	{0,	5, &innerScreenTxHandle_JumpToActivePage},//==M4 event arrive:jump to ACTIVE Page
+	{0,	6, &innerScreenTxHandle_JumpToSysParaPage},//==M5 event arrive:jump to SYSPARA Page
+	{0,	7, &innerScreenTxHandle_JumpToBanlingMainPage},//==配平模式的主要界面
+	{0,	8, &innerScreenTxHandle_JumpToBalancingCleanPage},//==M2-2 event arrive:jump to BALANCING (clean)page
+	{0,	9, &innerScreenTxHandle_JumpToBalancingHomePage},//==M2-3 event arrive:jump to BALANCING (home)page
+	{0,	10, &innerScreenTxHandle_FreshScreenLight},//==M6 event arrive:fresh sreen light
 	{0,	11, &screenPublic_ChanelChangedTrigerHandle},	//==C1 event arrive:At Calibration Page , chanel changed trigerd
 	{0,	12, &screenPublic_ResetCalibrationTrigerHandle},//==C2 event arrive:At Calibration Page , calibration reset trigerd 
 	{0,	13, &screenPublic_PointTrigerHandle},//==C3 event arrive:At Calibration Page , point trigerd

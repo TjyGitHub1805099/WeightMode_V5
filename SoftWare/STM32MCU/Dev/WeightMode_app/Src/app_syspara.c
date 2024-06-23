@@ -250,6 +250,18 @@ void readSysDataFromFlash_3030(void)
 		gSystemPara.daPinXianShi = readflashDataBuf[start_i++].i_value;/**< 大屏显示 0x101e*/
 
 		gSystemPara.weightNum = readflashDataBuf[start_i++].i_value;/**< 单台数量 */
+
+
+
+
+
+		//参数再次处理：开始
+		if(ModbusAdd_Slave_1 == gSystemPara.isCascade)
+		{
+			g_T5LCtx[ScreenIndex_Smaller].screenBanlingPageNum = INNER_SCREEN_Balancing_16HS8_HOME_PAGE;
+		}
+		//参数再次处理：结束
+
 	}
 }
 

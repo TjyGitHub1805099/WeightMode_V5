@@ -77,8 +77,8 @@ void BalancingData_Data16_WasSend(INT16 *p16Data , INT16 *p16DataPre ,UINT16 u16
 UINT16 BalancingData_WeightData_Handle_PrepareAndJudgeIfNotNeedSend(T5LType *pSdwe)
 {
 	UINT16 ret = FALSE , i;
-	INT32 tempData32;
-	INT16 tempData16;
+	//INT32 tempData32;
+	//INT16 tempData16;
 	T5LType *pSdweOther;
 	switch(gSystemPara.isCascade)
 	{
