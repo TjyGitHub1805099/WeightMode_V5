@@ -33,7 +33,8 @@
 			"app_sdwe_ctrl.h": "c",
 			"app_t5l_cfg.h": "c",
 			"app_innerscreen_cfg.h": "c",
-			"app_externalscreen_cfg.h": "c"
+			"app_externalscreen_cfg.h": "c",
+			"app_balancingdatahandle.h": "c"
 		}
 	}
 }

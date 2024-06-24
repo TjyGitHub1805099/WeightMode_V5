@@ -427,6 +427,10 @@ UINT16 BalancingData_ColorData_Handle_PrepareAndJudgeIfNotNeedSend(T5LType *pSdw
 			if((&g_T5LCtx[ScreenIndex_Smaller] == pSdwe))//小屏 依据重量信息计算背景色
 			{
 				//小屏 背景色 直接从MODBUS获取	
+				for(i=0;i<HX711_CHANEL_NUM;i++)
+				{
+					LedDataSet((enumLedSeqType)i, (enumLedColorType)g_i16ColorBuff[HX711_CHANEL_NUM+i]);//LED : display
+				}
 			}
 			else if((&g_T5LCtx[ScreenIndex_Larger] == pSdwe))//大屏 从小屏获取背景色
 			{

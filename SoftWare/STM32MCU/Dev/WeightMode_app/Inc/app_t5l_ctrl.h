@@ -160,7 +160,8 @@ typedef enum DMGPageType
 	INNER_SCREEN_Balancing_6_HOME_PAGE = 49,
 	INNER_SCREEN_Balancing_16HS8_HOME_PAGE = 62,//级联模式下 从机跳转界面
 
-	EXTERNAL_SCREEN_Balancing_6_HOME_PAGE = 0,
+	EXTERNAL_SCREEN_Balancing_8_HOME_PAGE = 1,
+	EXTERNAL_SCREEN_Balancing_16_HOME_PAGE = 2,
 
 }enumDMGPageType;
 
@@ -546,7 +547,7 @@ typedef struct structSdweType
 	0,/**/\
 	0x80,/**< sendSysParaDataToDiwenIndex：(事件)初始化屏幕时的序号*/\
 	DMG_FUNC_HomePage,\
-	EXTERNAL_SCREEN_Balancing_6_HOME_PAGE,\
+	EXTERNAL_SCREEN_Balancing_8_HOME_PAGE,\
 	DMG_FUNC_CalibrationPage,\
 	DMG_FUNC_ActivePage,\
 	DMG_FUNC_SysParaPage,\
@@ -675,5 +676,6 @@ extern void screenPublic_OtherDevice_WeightDataPrepare(INT32 *pData,INT16 *pData
 extern enumLedColorType getSysColorWhichUsable(void);
 extern void releaseSysColor(enumLedColorType color);
 extern void releaseSysColor(enumLedColorType color);
+extern INT16 g_i16ColorBuff[T5L_MAX_CHANEL_LEN];//从机指示灯颜色需要设置
 
 #endif

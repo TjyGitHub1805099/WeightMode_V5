@@ -76,7 +76,17 @@ UINT8 externalScreenTxHandle_Init(T5LType *pSdwe)
 				}
 			}
 		break;
-		case 0x85:
+		case 0x85://发送【MISC】到屏幕
+			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
+				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
+			{		
+				if(0 != screenPublic_FreshDisplayPosition_Of_OtherMisc(pSdwe))
+				{
+					pSdwe->sendSysParaDataToDiwenIndex++;
+				}
+			}
+		break;		
+		case 0x86:
 			if(((pSdwe->LastSendTick > pSdwe->CurTick)&&((pSdwe->LastSendTick-pSdwe->CurTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER))||
 				((pSdwe->LastSendTick < pSdwe->CurTick)&&((pSdwe->CurTick - pSdwe->LastSendTick) >= 2*DMG_MIN_DIFF_OF_TWO_SEND_ORDER)))
 			{	
@@ -221,7 +231,7 @@ UINT8 externalScreenTxHandle_JumpToBanlingPage(T5LType *pSdwe)
 		matched = TRUE;
 		if(0 != gSystemPara.isCascade)
 		{
-			pSdwe->screenBanlingPageNum = 1;
+			pSdwe->screenBanlingPageNum = 2;
 		}
 		if(0 != screenPublic_PageJump(pSdwe,pSdwe->screenBanlingPageNum))
 		{
