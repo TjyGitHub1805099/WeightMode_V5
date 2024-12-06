@@ -1,0 +1,326 @@
+/**
+ *******************************************************************
+ * @file    hal_uart.h
+ * @author  MKdriver
+ * @version V1.0.0
+ * @date    9-Oct-2015
+ * @brief   STM32F303 UART HAL层程序H文件
+ *******************************************************************
+ * @attention
+ *
+ *
+ *
+ * <h2><center>&copy; COPYRIGHT 2015 MKdriver</center></h2>
+ *******************************************************************
+ */
+ 
+#ifndef __HAL_UART_H__
+#define __HAL_UART_H__
+#include "typedefine.h"
+#include "stm32f4xx.h"
+
+/* 硬件端口资源定义 */
+// UART1 接485总线 , 实际是 STM32F303 UASRT3 , 带DMA功能
+#define UART1_PORT							USART3
+#define UART1_PORT_IRQn						USART3_IRQn
+#define UART1_PORT_GPIO_AF					GPIO_AF7_USART3
+
+#define UART1_TX_GPIO_PORT					GPIOB
+#define UART1_TX_GPIO_PIN					GPIO_PIN_10
+#define UART1_TX_PIN_SOURCE					GPIO_PINSOURCE10
+
+#define UART1_RX_GPIO_PORT					GPIOB
+#define UART1_RX_GPIO_PIN					GPIO_PIN_11
+#define UART1_RX_PIN_SOURCE					GPIO_PINSOURCE11
+
+#define UART1_TX_DMA						DMA1
+#define UART1_TX_DMA_CHANNEL            	DMA1_Channel2
+#define UART1_TX_DMA_IRQn              	 	DMA1_Channel2_IRQn
+#define UART1_TX_DMA_IT_TCIF				DMA1_IT_TC2
+
+#define UART1_RX_DMA						DMA1
+#define UART1_RX_DMA_CHANNEL            	DMA1_Channel3
+
+/** RS485总线使能口线定义 */
+#define UART1_DEA_GPIO_PORT					GPIOA
+#define UART1_DEA_GPIO_PIN					GPIO_PIN_10
+
+
+// UART2 接DIWEN显示屏 , 实际是 STM32F303 UASRT1 , 带DMA功能
+#define UART2_PORT							USART1
+#define UART2_PORT_IRQn						USART1_IRQn
+#define UART2_PORT_GPIO_AF					GPIO_AF7_USART1
+
+#define UART2_TX_GPIO_PORT					GPIOC
+#define UART2_TX_GPIO_PIN					GPIO_PIN_4
+#define UART2_TX_PIN_SOURCE					GPIO_PINSOURCE4
+
+#define UART2_RX_GPIO_PORT					GPIOC
+#define UART2_RX_GPIO_PIN					GPIO_PIN_5
+#define UART2_RX_PIN_SOURCE					GPIO_PINSOURCE5
+
+#define UART2_TX_DMA						DMA1
+#define UART2_TX_DMA_CHANNEL            	DMA1_Channel4
+#define UART2_TX_DMA_IRQn              	 	DMA1_Channel4_IRQn
+#define UART2_TX_DMA_IT_TCIF				DMA1_IT_TC4
+
+#define UART2_RX_DMA						DMA1
+#define UART2_RX_DMA_CHANNEL            	DMA1_Channel5
+
+/** RS485总线使能口线定义 */
+#define UART2_DEA_GPIO_PORT					(0)//GPIOB
+#define UART2_DEA_GPIO_PIN					(0)//GPIO_PIN_10
+
+#if 0//因为采用DMA+IDLE接收，处理在UART中断中处理 
+/** 重新定义中断 */
+//#define uart_com_isr						USART3_IRQHandler
+//#define uart_com_tx_dma_isr				DMA1_Channel2_IRQHandler
+
+/** 重新定义中断 ：接触摸屏的串口*/
+/** RX中断 和 DMA TX中断 */
+//#define uart_TouchSreen_isr				USART1_IRQHandler
+//#define uart_TouchSreen_tx_dma_isr		DMA1_Channel4_IRQHandler
+#endif
+
+/** UART硬件端口定义 */
+typedef enum UartPortType
+{
+	UART_COM = 0,//RS485的串口通信 UART3
+	UART_EXTERN,//显示屏的串口通信 UART1
+	UART_EXTERN2,//显示屏的串口通信 UART2
+	UART_NUMBER
+}enumUartPortType;
+
+/** 串口波特率值定义 */
+typedef enum UartBaudType
+{
+	UART_BAUD_4800 = 0,            /**< 波特率 4800 */
+	UART_BAUD_9600,                /**< 波特率 9600 */
+	UART_BAUD_19200,               /**< 波特率 19200 */
+	UART_BAUD_38400,               /**< 波特率 38400 */
+	UART_BAUD_57600,               /**< 波特率 57600 */
+	UART_BAUD_115200,              /**< 波特率 115200 */
+	UART_BAUD_1M,                  /**< 波特率 1M */
+	UART_BAUD_2M,                  /**< 波特率 2M */
+	UART_BAUD_3M,                  /**< 波特率 3M */
+	UART_BAUD_4M,                  /**< 波特率 4M */
+	UART_BAUD_END
+}enumUartBaudType;
+
+/** 串口通信方式定义 */	
+typedef enum UartLinkType
+{
+	UART_LINK_RX_ONLY = 0,          /**< 只能接收 */
+	UART_LINK_RX_ONLY_ENABE,        /**< 只能接收，带使能控制 */
+	UART_LINK_TX_ONLY,              /**< 只能发送 */
+	UART_LINK_TX_ONLY_ENABE,        /**< 只能发送，带使能控制 */
+	UART_LINK_RX_TX_HALF,           /**< 接收和发送半双工 */
+	UART_LINK_RX_TX_HALF_ENABE,     /**< 接收和发送半双工，带使能控制 */
+	UART_LINK_RX_TX_FULL,           /**< 接收和发送全双工 */
+	UART_LINK_RX_TX_FULL_ENABE,     /**< 接收和发送全双工，带使能控制 */
+}enumUartLinkType;
+
+/** 串口发送方式定义 */
+typedef enum UartRxTxModeType
+{
+	UART_RX_TX_MODE_POLL = 0,       /**< 查询方式发送 */
+	UART_RX_TX_MODE_INTERRUPT,      /**< 中断方式发送 */
+	UART_RX_TX_MODE_DMA             /**< DMA方式发送 */
+}enumUartRxTxModeType;
+/** 串口数据位定义 */
+typedef enum UartDataBitType
+{
+	UART_DATABIT_8 = 0,                             /**< 八个数据位 */
+	UART_DATABIT_9,                                 /**< 九个数据位 */
+	UART_DATABIT_7									/**< 七个数据位 */
+}enumUartDataBitType;
+
+/** 串口停止位定义 */
+typedef enum UartStopBitType
+{
+	UART_STOPBIT_1 = 0,								/**< 一个停止位 */
+	UART_STOPBIT_0_5,								/**< 零点五个停止位 */
+	UART_STOPBIT_2,                             	/**< 两个停止位 */
+	UART_STOPBIT_1_5,								/**< 一点五停止位 */
+}enumUartStopBitType;
+
+/** 定义从机串口设备类型 */
+typedef struct structUartDeviceType
+{
+    enumUartPortType        Port;						/**< 串口数据位 */
+	enumUartLinkType		LinkType;					/**< 链路层类型 */
+	enumUartBaudType		Baudrate;					/**< 串口比特率 */
+	enumUartDataBitType		DataBit;					/**< 串口数据位 */
+	enumUartStopBitType		StopBit;					/**< 串口停止位 */
+	uint32_t	Parity;						/**< 串口奇偶校验 */
+	enumUartRxTxModeType	RxTxMode;					/**< 串口接收发送方式 */
+	UINT8                   TxBusyFlag;					/**< 发送忙标志 */
+	UINT16                  TxLength;					/**< 发送字节数 */
+	UINT16                  TxCounter;					/**< 发送字节数计数器 */
+	UINT16                  *pRxLength;					/**< 接收字节数 */
+	UINT8                   *pRxFinishFlag;				/**< 接收完成标志 */
+	UINT8                   *pTxBuffer;					/**< 发送缓冲区 */
+	UINT8                   *pRxBuffer;					/**< 接收缓冲区 */
+	UINT16					RxBytesMax;					/**< 最多接收字节数，用在DMA接收模式下计算实际接收字节数量 */
+	void( *init )( struct structUartDeviceType *pUartDevice );
+	void( *set_braudrate )( struct structUartDeviceType *pUartDevice, enumUartBaudType Baudrate );
+	void( *set_timeout )( struct structUartDeviceType *pUartDevice );
+	UINT8( *tx_bytes )( struct structUartDeviceType *pUartDevice, UINT8 *pTxData, UINT16 TxLength );
+	void( *irq_enable )( struct structUartDeviceType *pUartDevice );
+	void( *irq_disable )( struct structUartDeviceType *pUartDevice );
+}UartDeviceType;
+
+#define UartDevice1Default { \
+    UART_COM, \
+	UART_LINK_RX_TX_HALF_ENABE, \
+	UART_BAUD_115200, \
+	UART_DATABIT_8, \
+	UART_STOPBIT_1, \
+	UART_PARITY_NONE, \
+	UART_RX_TX_MODE_DMA, \
+	0, \
+	0, \
+	0, \
+	0, \
+	0, \
+	0, \
+	0, \
+	4096, \
+	hal_uart_port_init, \
+	hal_uart_set_braudrate, \
+	hal_uart_set_timeout, \
+	hal_uart_tx_bytes, \
+	hal_uart_rx_irq_enable, \
+	hal_uart_rx_irq_disable \
+}
+
+#define UartDevice2Default { \
+    UART_EXTERN, \
+	UART_LINK_RX_TX_FULL, \
+	UART_BAUD_115200, \
+	UART_DATABIT_8, \
+	UART_STOPBIT_1, \
+	UART_PARITY_NONE, \
+	UART_RX_TX_MODE_DMA, \
+	0, \
+	0, \
+	0, \
+	0, \
+	0, \
+	0, \
+	0, \
+	4096, \
+	hal_uart_port_init, \
+	hal_uart_set_braudrate, \
+	hal_uart_set_timeout, \
+	hal_uart_tx_bytes, \
+	hal_uart_rx_irq_enable, \
+	hal_uart_rx_irq_disable \
+}
+#define UartDevice3Default { \
+    UART_EXTERN2, \
+	UART_LINK_RX_TX_FULL, \
+	UART_BAUD_115200, \
+	UART_DATABIT_8, \
+	UART_STOPBIT_1, \
+	UART_PARITY_NONE, \
+	UART_RX_TX_MODE_DMA, \
+	0, \
+	0, \
+	0, \
+	0, \
+	0, \
+	0, \
+	0, \
+	4096, \
+	hal_uart_port_init, \
+	hal_uart_set_braudrate, \
+	hal_uart_set_timeout, \
+	hal_uart_tx_bytes, \
+	hal_uart_rx_irq_enable, \
+	hal_uart_rx_irq_disable \
+}
+extern USART_TypeDef* UART_PORT[];
+extern GPIO_TypeDef* UART_DEA_GPIO_PORT[];
+extern const UINT16 UART_DEA_GPIO_PIN[];
+//extern GPIO_TypeDef* UART_REA_GPIO_PORT[];
+//extern const UINT16 UART_REA_GPIO_PIN[];
+
+/**
+* @brief  设置串口为发送模式
+* @param  UartPort: UART设备端口号
+* @retval 无
+*/
+void __INLINE hal_uart_set_tx_mode( UartDeviceType *pUartDevice )
+{
+	#if 0
+	//drv_gpio_set_pins_high( UART_REA_GPIO_PORT[ pUartDevice->Port ], UART_REA_GPIO_PIN[ pUartDevice->Port ] );
+	drv_gpio_set_pins_high( UART_DEA_GPIO_PORT[ pUartDevice->Port ], UART_DEA_GPIO_PIN[ pUartDevice->Port ] );
+	#endif
+}
+
+/**
+* @brief  设置串口为接收模式
+* @param  UartPort: UART设备端口号
+* @retval 无
+*/
+void __INLINE hal_uart_set_rx_mode( UartDeviceType *pUartDevice )
+{
+	#if 0
+	//drv_gpio_set_pins_low( UART_REA_GPIO_PORT[ pUartDevice->Port ], UART_REA_GPIO_PIN[ pUartDevice->Port ] );
+	drv_gpio_set_pins_low( UART_DEA_GPIO_PORT[ pUartDevice->Port ], UART_DEA_GPIO_PIN[ pUartDevice->Port ] );
+	#endif
+}
+
+/**
+* @brief  设置串口为同时接收和发送模式
+* @param  UartPort: UART设备端口号
+* @retval 无
+*/
+void __INLINE hal_uart_set_rx_tx_mode( UartDeviceType *pUartDevice )
+{
+	#if 0
+	//drv_gpio_set_pins_low( UART_REA_GPIO_PORT[ pUartDevice->Port ], UART_REA_GPIO_PIN[ pUartDevice->Port ] );
+	drv_gpio_set_pins_high( UART_DEA_GPIO_PORT[ pUartDevice->Port ], UART_DEA_GPIO_PIN[ pUartDevice->Port ] );
+	#endif
+}
+
+/**
+* @brief  串口接收使能
+* @param  pUartDevice: 要操作的串口设备
+* @retval 无
+*/
+__INLINE void hal_uart_rx_enable( UartDeviceType *pUartDevice )
+{
+	#if 0
+    drv_uart_rx_enable( UART_PORT[pUartDevice->Port] );
+	#endif
+}
+
+/**
+* @brief  串口接收禁止
+* @param  pUartDevice: 要操作的串口设备
+* @retval 无
+*/
+__INLINE void hal_uart_rx_disable( UartDeviceType *pUartDevice )
+{	
+	#if 0
+    drv_uart_rx_disable( UART_PORT[pUartDevice->Port] );
+	#endif
+}
+
+
+extern UartDeviceType	g_UartDevice[];
+
+extern void hal_uart_init( void );
+extern void hal_uart_port_init( UartDeviceType *pUartDevice );
+extern void hal_uart_set_braudrate( UartDeviceType *pUartDevice, enumUartBaudType Baudrate );
+extern UINT8 hal_uart_tx_bytes( UartDeviceType *pUartDevice, UINT8 *pTxData, UINT16 TxLength );
+extern void hal_uart_dma_rx_start( UartDeviceType *pUartDevice, UINT8 *pRxData, UINT16 RxLength );
+//extern void hal_uart_dma_rx_restart( UartDeviceType *pUartDevice );
+extern void hal_uart_rx_irq_enable(UartDeviceType *pUartDevice);
+extern void hal_uart_rx_irq_disable(UartDeviceType *pUartDevice);
+extern UINT8 hal_uart_get_byte_with_timeout(UartDeviceType *pUartDevice, UINT8 *pDat, UINT32 TimeOut);
+extern void hal_uart_set_timeout( UartDeviceType *pUartDevice );
+
+#endif
