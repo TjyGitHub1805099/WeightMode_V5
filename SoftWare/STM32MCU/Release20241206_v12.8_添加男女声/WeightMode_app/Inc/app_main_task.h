@@ -6,8 +6,8 @@
 #include "stm32f4xx_it.h"
 
 #define SYS_HX711_ONLINE_CHECK_TIME	(2000)//when power on 2000ms start check HX711  , total 3 times
-#define MCU_VERSION			        (1208)//2024.12.08
-#define DIWEN_VERSION		        (1208)//2024.12.08
+#define MCU_VERSION			        (1210)//2024.12.10
+#define DIWEN_VERSION		        (1210)//2024.12.10
 
 extern UINT32 get_SysTick_ByTimer(void);
 extern void app_main_task(void);
@@ -41,7 +41,10 @@ B1、修改屏幕程序，在系统参数2添加"等重配平"
 
 //mcu version : 12.8  , diwen version :12.8
 A1、修改主板程序，在系统参数2添加"男声女声"
-
 B1、修改屏幕程序，在系统参数2添加"男声女声"
+
+//mcu version : 12.10  , diwen version :12.10
+A1、修改主板程序，修改显示位置
+B1、修改屏幕程序，-
 */
 #endif

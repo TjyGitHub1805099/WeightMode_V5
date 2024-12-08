@@ -103,7 +103,7 @@ UINT8 innerScreenRxHandle_SysPara(T5LType *pSdwe)
 				gSystemPara.daPinXianShi = pSdwe->SetData;
 			break;
 			case DMG_FUNC_DIWEN_WEIGHTNUM_ADDRESS:/**< 单台数量 0x101F*/
-				if(pSdwe->SetData <= HX711_CHANEL_NUM)
+				if((pSdwe->SetData == 6) || (pSdwe->SetData == 8))
 				{
 					gSystemPara.weightNum = pSdwe->SetData;
 				}

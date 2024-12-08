@@ -416,7 +416,7 @@ UINT16 BalancingData_ColorData_Handle_PrepareAndJudgeIfNotNeedSend(T5LType *pSdw
 		case 0://非级联 单台设备
 			if((&g_T5LCtx[ScreenIndex_Smaller] == pSdwe))//小屏 依据重量信息计算背景色
 			{
-				BalancingData_ColorData_Handle_Prepare(pSdwe,ONLINE_CHANNEL_NUM%HX711_CHANEL_NUM);
+				BalancingData_ColorData_Handle_Prepare(pSdwe,(ONLINE_CHANNEL_NUM%(HX711_CHANEL_NUM+1)));
 				for(chnl_i = 0 ; chnl_i < ONLINE_CHANNEL_NUM ; chnl_i++)
 				{
 					LedDataSet((enumLedSeqType)chnl_i, (enumLedColorType)pColor[chnl_i]);

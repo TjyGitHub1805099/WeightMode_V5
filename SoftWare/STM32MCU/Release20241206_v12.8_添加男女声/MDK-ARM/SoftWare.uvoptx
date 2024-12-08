@@ -208,7 +208,7 @@
           <Type>0</Type>
           <LineNumber>225</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134232616</Address>
+          <Address>134232608</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -235,6 +235,11 @@
           <count>2</count>
           <WinNumber>1</WinNumber>
           <ItemText>IS_6H_HelpVlue_DP_Vlu_WuXiaoShu,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>3</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>IS_8H_HelpVlue_DP_Vlu_WuXiaoShu,0x0A</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>
