@@ -288,6 +288,10 @@ UINT8 innerScreenTxHandle_JumpToBanlingPage(T5LType *pSdwe)
 	if(TRUE == pSdwe->sdweJumpToBanlingPage)
 	{
 		matched = TRUE;
+		if(2 == gSystemPara.isCascade)
+		{
+			pSdwe->screenBanlingPageNum = 63;
+		}
 		if(0 != screenPublic_PageJump(pSdwe,pSdwe->screenBanlingPageNum))
 		{
 			pSdwe->sdweJumpToBanlingPage = FALSE;

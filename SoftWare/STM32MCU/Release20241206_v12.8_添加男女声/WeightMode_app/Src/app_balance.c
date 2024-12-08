@@ -337,7 +337,7 @@ void BalanceRemainChannelToEmptyGroup(tScaleInfoStruct *pContex)
     //clear not used sort arry
     for(srt_i = pContex->scl_SortNum ; srt_i<pContex->scl_TotalChnlNum; srt_i++)
     {
-        pContex->pscl_SortWeight[srt_i] = SCALE_INVALID_VLU;
+        pContex->pscl_SortWeight[srt_i] = 0;
         pContex->pscl_SortChnnel[srt_i] = SCALE_INVALID_VLU;
     }
     //get useable group
@@ -384,7 +384,7 @@ void BalanceRemainChannelToEmptyGroup(tScaleInfoStruct *pContex)
                         //upgrate pChnInfo : chnl_Color
                         for(i = 0 ; i < grp_l_MenbNum ; i++)
                         {
-                            chnl_i = pContex->pscl_SortChnnel[i];//reget channel index use sortChannel
+                            chnl_i = pContex->pscl_SortChnnel[srt_i+i];//reget channel index use sortChannel
                             pGrpInfo->grp_MenbArry[i] = chnl_i ;
                             pChnInfo = &pContex->pscl_ChnInfo[chnl_i];
                             pChnInfo->chnl_Color = pGrpInfo->grp_Color;

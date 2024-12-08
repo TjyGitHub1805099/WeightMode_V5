@@ -850,11 +850,11 @@ ARM Macro Assembler    Page 14
 
 
  -I../Core/Inc -ID:\WorkSpace\GitWorkSpace\00_WeightMode_Folder\WeightMode_V5_U
-8\WeightMode_V5\SoftWare\STM32MCU\Dev\MDK-ARM\RTE -IC:\Keil_v5\ARM\PACK\ARM\CMS
-IS\4.3.0\CMSIS\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\1.0.8\Device\In
-clude --predefine="__UVISION_VERSION SETA 516" --predefine="_RTE_ SETA 1" --pre
-define="STM32F40_41xxx SETA 1" --list=startup_stm32f407xx.lst startup_stm32f407
-xx.s
+8\WeightMode_V5\SoftWare\STM32MCU\Release20241206_v12.3_æﬂ±∏”Ô“Ù≤•±®\MDK-ARM\RT
+E -IC:\Keil_v5\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\Include -IC:\Keil_v5\ARM\PACK\Kei
+l\STM32F4xx_DFP\1.0.8\Device\Include --predefine="__UVISION_VERSION SETA 516" -
+-predefine="_RTE_ SETA 1" --predefine="STM32F40_41xxx SETA 1" --list=startup_st
+m32f407xx.lst startup_stm32f407xx.s
 
 
 

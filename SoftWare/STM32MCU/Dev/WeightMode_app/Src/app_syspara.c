@@ -253,11 +253,50 @@ void readSysDataFromFlash_3030(void)
 		gSystemPara.EqualBanance = readflashDataBuf[start_i++].i_value;/**< 等重配平 */
 		gSystemPara.MenWomen = readflashDataBuf[start_i++].i_value;/**< 男声女声 */
 
-
 		if(gSystemPara.weightNum  > HX711_CHANEL_NUM)
 		{
 			gSystemPara.weightNum = HX711_CHANEL_NUM;
 		}
+
+
+		switch(gSystemPara.weightNum)
+		{
+			case 6:
+				switch(gSystemPara.isCascade)
+				{
+					case 0:
+						g_T5LCtx[ScreenIndex_Smaller].screenBanlingPageNum = INNER_SCREEN_Balancing_6_6_HOME_PAGE;
+					break;
+					case 1:
+						g_T5LCtx[ScreenIndex_Smaller].screenBanlingPageNum = INNER_SCREEN_Balancing_6_6_HOME_PAGE;
+					break;
+					case 2:
+						g_T5LCtx[ScreenIndex_Smaller].screenBanlingPageNum = INNER_SCREEN_Balancing_12HS6_HOME_PAGE;
+					break;
+					default:
+					break;
+				}
+			break;
+			case 8:
+				switch(gSystemPara.isCascade)
+				{
+					case 0:
+						g_T5LCtx[ScreenIndex_Smaller].screenBanlingPageNum = INNER_SCREEN_Balancing_H8_HOME_PAGE;
+					break;
+					case 1:
+						g_T5LCtx[ScreenIndex_Smaller].screenBanlingPageNum = INNER_SCREEN_Balancing_H8_HOME_PAGE;
+					break;
+					case 2:
+						g_T5LCtx[ScreenIndex_Smaller].screenBanlingPageNum = INNER_SCREEN_Balancing_16HS8_HOME_PAGE;
+					break;
+					default:
+					break;
+				}			
+			break;
+			default:
+			break;
+		}
+
 
 
 

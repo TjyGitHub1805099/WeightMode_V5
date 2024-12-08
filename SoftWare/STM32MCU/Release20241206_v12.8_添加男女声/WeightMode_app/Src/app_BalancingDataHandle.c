@@ -506,7 +506,7 @@ void BalancingData_ColorData_Handle_PrepareAndJudgeAndSendToScreen(T5LType *pSdw
 			{
 				pSdwe->screenWeightHandleStatus = 0xFE;//【重量】：等待
 				pSdwe->screenColorHandleStatus = 0xFE;//【背景色】：判断->等待
-				pSdwe->screenHelpHandleStatus = 0;//【帮助信息】：等待->判断
+				pSdwe->screenHelpHandleStatus = 0x00;//【帮助信息】：等待->判断
 			}
 		break;
 
@@ -515,8 +515,8 @@ void BalancingData_ColorData_Handle_PrepareAndJudgeAndSendToScreen(T5LType *pSdw
 			{
 				BalancingData_Data16_WasSend(pSdwe->screenCycle.pColor,pSdwe->screenCycle.pColorPre,(2*ONLINE_CHANNEL_NUM));
 				pSdwe->screenWeightHandleStatus = 0xFE;//【重量】：等待
-				pSdwe->screenColorHandleStatus = 0;//【背景色】：发送->判断
-				pSdwe->screenHelpHandleStatus = 0xFE;//【帮助信息】：等待
+				pSdwe->screenColorHandleStatus = 0xFE;//【背景色】：发送->判断
+				pSdwe->screenHelpHandleStatus = 0x00;//【帮助信息】：等待
 			}		
 		break;
 
@@ -526,8 +526,8 @@ void BalancingData_ColorData_Handle_PrepareAndJudgeAndSendToScreen(T5LType *pSdw
 		break;
 
 		default:
-				pSdwe->screenWeightHandleStatus = 0xFE;//【重量】：等待
-				pSdwe->screenColorHandleStatus = 0;//【背景色】：xx->判断
+				pSdwe->screenWeightHandleStatus = 0;//【重量】：等待
+				pSdwe->screenColorHandleStatus = 0xFE;//【背景色】：xx->判断
 				pSdwe->screenHelpHandleStatus = 0xFE;//【帮助信息】：等待
 		break;
 	}
@@ -722,9 +722,9 @@ void BalancingData_HelpData_Handle_PrepareAndJudgeAndSendToScreen(T5LType *pSdwe
 			if(TRUE == t5lWriteData(pSdwe,DMG_FUNC_HELP_TO_JUDGE_SET_ADDRESS,pSdwe->screenCycle.pHelp,(DIFF_TO_DIWEN_DATA_LEN),0))
 			{
 				BalancingData_Data16_WasSend(pSdwe->screenCycle.pHelp,pSdwe->screenCycle.pHelpPre,DIFF_TO_DIWEN_DATA_LEN);
-				pSdwe->screenWeightHandleStatus = 0xFE;//【重量】：等待->判断
+				pSdwe->screenWeightHandleStatus = 0x00;//【重量】：等待->判断
 				pSdwe->screenColorHandleStatus = 0xFE;//【背景色】：xx->等待
-				pSdwe->screenHelpHandleStatus = 0;//【帮助信息】：发送->判断
+				pSdwe->screenHelpHandleStatus = 0xFE;//【帮助信息】：发送->判断
 			}
 		break;
 
@@ -734,9 +734,9 @@ void BalancingData_HelpData_Handle_PrepareAndJudgeAndSendToScreen(T5LType *pSdwe
 		break;
 
 		default:
-				pSdwe->screenWeightHandleStatus = 0xFE;//【重量】：等待->判断
+				pSdwe->screenWeightHandleStatus = 0x00;//【重量】：等待->判断
 				pSdwe->screenColorHandleStatus = 0xFE;//【背景色】：xx->等待
-				pSdwe->screenHelpHandleStatus = 0;//【帮助信息】：发送->判断
+				pSdwe->screenHelpHandleStatus = 0xFE;//【帮助信息】：发送->判断
 		break;
 	}
 }

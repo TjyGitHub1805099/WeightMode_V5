@@ -164,7 +164,6 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGUARM</Key>
-          <Name></Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -217,7 +216,7 @@
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>gSystemPara.ScreenVoiceSwitch</ItemText>
+          <ItemText>g_ScreenHandle[0].Ctx-&gt;CurTick,0x0A</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>

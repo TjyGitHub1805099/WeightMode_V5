@@ -337,7 +337,7 @@ void BalanceRemainChannelToEmptyGroup(tScaleInfoStruct *pContex)
     //clear not used sort arry
     for(srt_i = pContex->scl_SortNum ; srt_i<pContex->scl_TotalChnlNum; srt_i++)
     {
-        pContex->pscl_SortWeight[srt_i] = SCALE_INVALID_VLU;
+        pContex->pscl_SortWeight[srt_i] = 0;
         pContex->pscl_SortChnnel[srt_i] = SCALE_INVALID_VLU;
     }
     //get useable group
@@ -475,7 +475,7 @@ void PushWeightIn_ScaleBalance(tScaleInfoStruct *pContex , T5LType *pSdwe,UINT8 
 {
     uint8 chnl_i = 0;
     tChannelInfoStruct *pChnInfo;
-    INT32 *pData = pSdwe->screenCycle.pDataPre;
+    INT32 *pData = pSdwe->screenCycle.pData;
     if(chanel_len <= pContex->scl_TotalChnlNum)
     {
         pContex->scl_TotalChnlNum = chanel_len;

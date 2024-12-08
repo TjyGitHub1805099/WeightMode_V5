@@ -163,12 +163,16 @@ void screenPublic_VoiceScan(T5LType *pSdwe)
 			}
 			grp_mem_add += grp_mem[mem_i];
 		}
+		if((4 == grp_mem_add) || (8 == grp_mem_add))
+		{
+			s_Voice.voice[6] = 1;
+		}
 		if((grp_mem_add != (MAX_GROUP_MEM_NUM*INVALID_GROUP_MEM_INDEX)) && 
 		   (1 == pComtex->needPushed[grp_i]) && 
 		   (num >= 2))
 		{
 			pComtex->grp_FilterDelay[grp_i]++;
-			if(pComtex->grp_FilterDelay[grp_i] >= 500)
+			if(pComtex->grp_FilterDelay[grp_i] >= 250)
 			{
 				pComtex->grp_FilterDelay[grp_i] = 0 ;
 				sdwe_VoicePrintfPush(&s_Voice,num);

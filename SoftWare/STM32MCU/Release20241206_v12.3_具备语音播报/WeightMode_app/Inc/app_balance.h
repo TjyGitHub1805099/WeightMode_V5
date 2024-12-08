@@ -37,8 +37,8 @@ typedef struct sScaleInfoStruct
     uint8 scl_SortNum;
     uint16 scl_MinVlu;
     uint16 scl_MaxVlu;
-    uint16 scl_RangeVlu;//error range
-    uint16 scl_ZeroRangeVlu;//zero point
+    int32 scl_RangeVlu;//error range
+    int32 scl_ZeroRangeVlu;//zero point
     //
 } tScaleInfoStruct;
 

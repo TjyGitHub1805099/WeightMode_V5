@@ -24,7 +24,7 @@
 //==(update:20210328):DIWEN reserve (uodate to v3:2021.03.26)
 #define DMG_MIN_DIFF_OF_TWO_SEND_ORDER			(20)//20ms 
 #define DMG_DATA_HOLD_TIME						(250)//250ms
-#define DMG_WAIT_COLOR_HELP_SEND_TIME			(5000)//当重量信息发给屏幕后颜色信息最长这个时间段内要发送给屏幕
+#define DMG_WAIT_COLOR_HELP_SEND_TIME			(2000)//当重量信息发给屏幕后颜色信息最长这个时间段内要发送给屏幕
 
 //==(update:20210328):address of set chanel number : 0->all chanel set  ; (1~8)->single chanel set
 #define DMG_FUNC_SET_CHANEL_NUM					(0X2100)
@@ -160,7 +160,8 @@ typedef enum DMGPageType
 	DMG_FUNC_BalancingMainPageNoHelp = 57,//无帮助信息
 
 	INNER_SCREEN_Balancing_6_6_HOME_PAGE = 48,
-	INNER_SCREEN_Balancing_6_HOME_PAGE = 49,
+	INNER_SCREEN_Balancing_12HS6_HOME_PAGE = 63,//6头级联 从机 序号连续
+	INNER_SCREEN_Balancing_H8_HOME_PAGE = 49,//8头主机
 	INNER_SCREEN_Balancing_16HS8_HOME_PAGE = 62,//级联模式下 从机跳转界面
 
 	EXTERNAL_SCREEN_Balancing_8_HOME_PAGE = 1,
@@ -459,7 +460,7 @@ typedef struct structSdweType
 	0,/**/\
 	0x80,/**< sendSysParaDataToDiwenIndex：(事件)初始化屏幕时的序号*/\
 	DMG_FUNC_HomePage,\
-	INNER_SCREEN_Balancing_6_HOME_PAGE,\
+	INNER_SCREEN_Balancing_H8_HOME_PAGE,\
 	DMG_FUNC_CalibrationPage,\
 	DMG_FUNC_ActivePage,\
 	DMG_FUNC_SysParaPage,\

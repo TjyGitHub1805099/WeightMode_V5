@@ -78,6 +78,10 @@ void GroupInfoPutInOrder(tScaleInfoStruct *pContex)
 uint8 ExistGroupDilatation(tScaleInfoStruct *pContex , tGroupInfoStruct *pGrpInfo , tChannelInfoStruct *pChnInfo)
 {
     uint8 dilatation = FALSE;
+    if(pChnInfo->chnl_Weight < 0)
+    {
+
+    }
     //if weight at min~max
     if( (pChnInfo->chnl_Weight >= pGrpInfo->grp_Min) && (pChnInfo->chnl_Weight <= pGrpInfo->grp_Max))
     {
@@ -304,7 +308,7 @@ void BalanceRemainChannelToEmptyGroup(tScaleInfoStruct *pContex)
     uint8 l_continue = FALSE;
     //uint8 l_matched = FALSE;
     uint8 l_emptGroupId = SCALE_INVALID_VLU;
-    uint8 srt_i = 0 ,srt_j = 0;
+    static uint8 srt_i = 0 ,srt_j = 0;
     uint8 grp_l_MenbNum = 0;
     //1.remain channel upgrate pscl_SortWeight and pscl_SortChnnel
     pContex->scl_SortNum = 0 ;
@@ -329,9 +333,9 @@ void BalanceRemainChannelToEmptyGroup(tScaleInfoStruct *pContex)
         }
     }
     //clear not used sort arry
-    for(srt_i = pContex->scl_SortNum ; srt_i<pContex->scl_TotalChnlNum; srt_i++)
+    for(srt_i = pContex->scl_SortNum ; srt_i< pContex->scl_TotalChnlNum; srt_i++)
     {
-        pContex->pscl_SortWeight[srt_i] = SCALE_INVALID_VLU;
+        pContex->pscl_SortWeight[srt_i] = 0;
         pContex->pscl_SortChnnel[srt_i] = SCALE_INVALID_VLU;
     }
     //get useable group
@@ -348,21 +352,26 @@ void BalanceRemainChannelToEmptyGroup(tScaleInfoStruct *pContex)
             grp_l_MenbNum = 1 ;
             if(pContex->pscl_SortWeight[srt_i] >= pContex->scl_ZeroRangeVlu)//larger than zero range
             {
-                for(srt_j = (srt_i+1); srt_j < pContex->scl_SortNum ; srt_j++)//to srt_j
+                srt_j = srt_i+1;
+                if(srt_j < pContex->scl_SortNum)
                 {
-                    if(pContex->pscl_SortWeight[srt_j] - pContex->pscl_SortWeight[srt_i] <= pContex->scl_RangeVlu)//at error range
+                    for(; srt_j < pContex->scl_SortNum ; srt_j++)//to srt_j
                     {
-                        grp_l_MenbNum++;
+                        if(pContex->pscl_SortWeight[srt_j] - pContex->pscl_SortWeight[srt_i] <= pContex->scl_RangeVlu)//at error range
+                        {
+                            grp_l_MenbNum++;
+                        }
+                        else//outof error range , break
+                        {
+                            break;
+                        }
                         if(grp_l_MenbNum >= pContex->scl_EqlNum)//if grp_MenbNum larger than set mum scl_EqlNum , break
                         {
                             break;
                         }
-                    }
-                    else//outof error range , break
-                    {
-                        break;
-                    }
+                    }                    
                 }
+
                 //findout num larger than 2
                 if(grp_l_MenbNum >= 2)
                 {
@@ -378,7 +387,7 @@ void BalanceRemainChannelToEmptyGroup(tScaleInfoStruct *pContex)
                         //upgrate pChnInfo : chnl_Color
                         for(i = 0 ; i < grp_l_MenbNum ; i++)
                         {
-                            chnl_i = pContex->pscl_SortChnnel[i];//reget channel index use sortChannel
+                            chnl_i = pContex->pscl_SortChnnel[srt_i+i];//reget channel index use sortChannel
                             pGrpInfo->grp_MenbArry[i] = chnl_i ;
                             pChnInfo = &pContex->pscl_ChnInfo[chnl_i];
                             pChnInfo->chnl_Color = pGrpInfo->grp_Color;
@@ -422,7 +431,7 @@ void BalanceInit(void)
     //
     pContex->scl_TotalChnlNum = SCALE_TOTAL_CHANNEL_NUM;
     pContex->scl_TotalGrpNum = SCALE_TOTAL_GROUP_NUM;
-    pContex->scl_EqlNum = gSystemPara.weightNum;//SCALE_MAX_EQUAL_NUM;
+    pContex->scl_EqlNum = 2;//SCALE_MAX_EQUAL_NUM;
 
     pContex->pscl_ChnInfo = &gChannelInfo[0];
     pContex->pscl_GrpInfo = &gGroupInfo[0];
