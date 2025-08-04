@@ -215,7 +215,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>D:\WorkSpace\GitWorkSpace\00_WeightMode_Folder\WeightMode_V5_U8\WeightMode_V5\SoftWare\STM32MCU\WeightMode_app\Src\app_modbus_rtu_ctrl.c</Filename>
+          <Filename>..\WeightMode_app\Src\app_modbus_rtu_ctrl.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\SoftWareMcu\../WeightMode_app/Src/app_modbus_rtu_ctrl.c\225</Expression>
         </Bp>

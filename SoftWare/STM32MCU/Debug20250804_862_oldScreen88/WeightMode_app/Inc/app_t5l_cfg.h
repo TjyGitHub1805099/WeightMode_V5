@@ -43,6 +43,9 @@ typedef struct appScreenDpMiscCfg
     INT16 positionX;//x坐标 2byte
     INT16 positionY;//y坐标 2byte
     INT16 color;//颜色 2byte
+    INT16 size;
+    INT16 dnum;
+    INT16 fnum;
 }appScreenDpMiscCfg_Type;
 
 typedef struct app_Screen_Cfg

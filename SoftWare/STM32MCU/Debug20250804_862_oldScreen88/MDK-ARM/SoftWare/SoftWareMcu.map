@@ -3342,113 +3342,113 @@ Image Symbol Table
     .data                                    0x200012b0   Section      216  app_externalscreen_cfg.o(.data)
     .data                                    0x20001388   Section      192  app_externalscreen_cfg.o(.data)
     .data                                    0x20001448   Section       64  app_externalscreen_cfg.o(.data)
-    .data                                    0x20001488   Section       12  app_externalscreen_cfg.o(.data)
-    .data                                    0x20001494   Section       12  app_externalscreen_cfg.o(.data)
-    .data                                    0x200014a0   Section       12  app_externalscreen_cfg.o(.data)
-    .data                                    0x200014ac   Section       12  app_externalscreen_cfg.o(.data)
-    .data                                    0x200014b8   Section      340  app_externalscreen_cfg.o(.data)
-    .data                                    0x2000160c   Section       16  app_externalscreenrxhandle.o(.data)
-    .data                                    0x2000161c   Section       40  app_externalscreentxhandle.o(.data)
-    .data                                    0x20001644   Section       16  app_innerscreen_cfg.o(.data)
-    .data                                    0x20001654   Section       24  app_innerscreen_cfg.o(.data)
-    .data                                    0x2000166c   Section       16  app_innerscreen_cfg.o(.data)
-    .data                                    0x2000167c   Section       16  app_innerscreen_cfg.o(.data)
-    .data                                    0x2000168c   Section        4  app_innerscreen_cfg.o(.data)
-    .data                                    0x20001690   Section       96  app_innerscreen_cfg.o(.data)
-    .data                                    0x200016f0   Section       96  app_innerscreen_cfg.o(.data)
-    .data                                    0x20001750   Section      144  app_innerscreen_cfg.o(.data)
-    .data                                    0x200017e0   Section      144  app_innerscreen_cfg.o(.data)
-    .data                                    0x20001870   Section       96  app_innerscreen_cfg.o(.data)
-    .data                                    0x200018d0   Section       12  app_innerscreen_cfg.o(.data)
-    .data                                    0x200018dc   Section       32  app_innerscreen_cfg.o(.data)
-    .data                                    0x200018fc   Section      340  app_innerscreen_cfg.o(.data)
-    .data                                    0x20001a50   Section        1  app_innerscreenrxhandle.o(.data)
-    .data                                    0x20001a54   Section      120  app_innerscreenrxhandle.o(.data)
-    .data                                    0x20001acc   Section      136  app_innerscreentxhandle.o(.data)
-    .data                                    0x20001b54   Section        6  app_innerscreentxhandle.o(.data)
-    stepIndex                                0x20001b54   Data           1  app_innerscreentxhandle.o(.data)
-    curPage                                  0x20001b56   Data           2  app_innerscreentxhandle.o(.data)
-    curPageDelay_offset                      0x20001b58   Data           2  app_innerscreentxhandle.o(.data)
-    .data                                    0x20001b5c   Section        8  app_balancingdatahandle.o(.data)
-    lastSendCnt                              0x20001b5c   Data           4  app_balancingdatahandle.o(.data)
-    diff_time                                0x20001b60   Data           4  app_balancingdatahandle.o(.data)
-    .data                                    0x20001b64   Section       32  app_innerscreen_cfg_6.o(.data)
-    .data                                    0x20001b84   Section       32  app_innerscreen_cfg_6.o(.data)
-    .data                                    0x20001ba4   Section       32  app_innerscreen_cfg_6.o(.data)
-    .data                                    0x20001bc4   Section       32  app_innerscreen_cfg_6.o(.data)
-    .data                                    0x20001be4   Section        4  app_innerscreen_cfg_6.o(.data)
-    .data                                    0x20001be8   Section       72  app_innerscreen_cfg_6.o(.data)
-    .data                                    0x20001c30   Section       72  app_innerscreen_cfg_6.o(.data)
-    .data                                    0x20001c78   Section      108  app_innerscreen_cfg_6.o(.data)
-    .data                                    0x20001ce4   Section      108  app_innerscreen_cfg_6.o(.data)
-    .data                                    0x20001d50   Section       72  app_innerscreen_cfg_6.o(.data)
-    .data                                    0x20001d98   Section       12  app_innerscreen_cfg_6.o(.data)
-    .data                                    0x20001da4   Section       24  app_innerscreen_cfg_6.o(.data)
-    .data                                    0x20001dbc   Section       32  app_innerscreen_cfg_12.o(.data)
-    .data                                    0x20001ddc   Section       32  app_innerscreen_cfg_12.o(.data)
-    .data                                    0x20001dfc   Section       32  app_innerscreen_cfg_12.o(.data)
-    .data                                    0x20001e1c   Section       32  app_innerscreen_cfg_12.o(.data)
-    .data                                    0x20001e3c   Section        4  app_innerscreen_cfg_12.o(.data)
-    .data                                    0x20001e40   Section       72  app_innerscreen_cfg_12.o(.data)
-    .data                                    0x20001e88   Section       12  app_innerscreen_cfg_12.o(.data)
-    .data                                    0x20001e94   Section       16  app_innerscreen_cfg_16.o(.data)
-    .data                                    0x20001ea4   Section       24  app_innerscreen_cfg_16.o(.data)
-    .data                                    0x20001ebc   Section       16  app_innerscreen_cfg_16.o(.data)
-    .data                                    0x20001ecc   Section       16  app_innerscreen_cfg_16.o(.data)
-    .data                                    0x20001edc   Section        4  app_innerscreen_cfg_16.o(.data)
-    .data                                    0x20001ee0   Section       96  app_innerscreen_cfg_16.o(.data)
-    .data                                    0x20001f40   Section       12  app_innerscreen_cfg_16.o(.data)
-    .data                                    0x20001f4c   Section       12  app_voiceprintf.o(.data)
-    u8Vstatus                                0x20001f4c   Data           1  app_voiceprintf.o(.data)
-    voice_i                                  0x20001f4d   Data           1  app_voiceprintf.o(.data)
-    u32Ticks                                 0x20001f50   Data           4  app_voiceprintf.o(.data)
-    tickOffset                               0x20001f54   Data           4  app_voiceprintf.o(.data)
-    .data                                    0x20001f58   Section       32  app_innerscreen_cfg_2.o(.data)
-    .data                                    0x20001f78   Section       32  app_innerscreen_cfg_2.o(.data)
-    .data                                    0x20001f98   Section       32  app_innerscreen_cfg_2.o(.data)
-    .data                                    0x20001fb8   Section       32  app_innerscreen_cfg_2.o(.data)
-    .data                                    0x20001fd8   Section        4  app_innerscreen_cfg_2.o(.data)
-    .data                                    0x20001fdc   Section       24  app_innerscreen_cfg_2.o(.data)
-    .data                                    0x20001ff4   Section       24  app_innerscreen_cfg_2.o(.data)
-    .data                                    0x2000200c   Section       36  app_innerscreen_cfg_2.o(.data)
-    .data                                    0x20002030   Section       36  app_innerscreen_cfg_2.o(.data)
-    .data                                    0x20002054   Section       24  app_innerscreen_cfg_2.o(.data)
-    .data                                    0x2000206c   Section       12  app_innerscreen_cfg_2.o(.data)
-    .data                                    0x20002078   Section        8  app_innerscreen_cfg_2.o(.data)
-    .bss                                     0x20002080   Section      596  freertos.o(.bss)
-    xIdleTaskTCBBuffer                       0x20002080   Data          84  freertos.o(.bss)
-    xIdleStack                               0x200020d4   Data         512  freertos.o(.bss)
-    .bss                                     0x200022d4   Section       84  i2c.o(.bss)
-    .bss                                     0x20002328   Section       72  tim.o(.bss)
-    .bss                                     0x20002370   Section     2120  usart.o(.bss)
-    .bss                                     0x20002bb8   Section       72  stm32f4xx_hal_timebase_tim.o(.bss)
-    .bss                                     0x20002c00   Section      240  tasks.o(.bss)
-    pxReadyTasksLists                        0x20002c00   Data         140  tasks.o(.bss)
-    xDelayedTaskList1                        0x20002c8c   Data          20  tasks.o(.bss)
-    xDelayedTaskList2                        0x20002ca0   Data          20  tasks.o(.bss)
-    xPendingReadyList                        0x20002cb4   Data          20  tasks.o(.bss)
-    xTasksWaitingTermination                 0x20002cc8   Data          20  tasks.o(.bss)
-    xSuspendedTaskList                       0x20002cdc   Data          20  tasks.o(.bss)
-    .bss                                     0x20002cf0   Section    15360  heap_4.o(.bss)
-    ucHeap                                   0x20002cf0   Data       15360  heap_4.o(.bss)
-    .bss                                     0x200068f0   Section     1928  app_hx711_ctrl.o(.bss)
-    u32OnLineNormalCnt                       0x200068f0   Data          16  app_hx711_ctrl.o(.bss)
-    u8HX711CheckPassStatus                   0x20006900   Data          24  app_hx711_ctrl.o(.bss)
-    .bss                                     0x20007078   Section       12  app_key_ctrl.o(.bss)
-    .bss                                     0x20007084   Section       12  app_password.o(.bss)
-    .bss                                     0x20007090   Section     1520  app_syspara.o(.bss)
-    .bss                                     0x20007680   Section     1680  app_t5l_ctrl.o(.bss)
-    g_t5l_triger_data                        0x20007a40   Data         720  app_t5l_ctrl.o(.bss)
-    .bss                                     0x20007d10   Section      128  app_i2c.o(.bss)
-    .bss                                     0x20007d90   Section      304  app_balance.o(.bss)
-    .bss                                     0x20007ec0   Section      134  app_voiceprintf.o(.bss)
-    s_Voice                                  0x20007ec0   Data          11  app_voiceprintf.o(.bss)
-    .bss                                     0x20007f48   Section       96  libspace.o(.bss)
-    HEAP                                     0x20007fa8   Section     1024  startup_stm32f407xx.o(HEAP)
-    Heap_Mem                                 0x20007fa8   Data        1024  startup_stm32f407xx.o(HEAP)
-    STACK                                    0x200083a8   Section     1024  startup_stm32f407xx.o(STACK)
-    Stack_Mem                                0x200083a8   Data        1024  startup_stm32f407xx.o(STACK)
-    __initial_sp                             0x200087a8   Data           0  startup_stm32f407xx.o(STACK)
+    .data                                    0x20001488   Section       24  app_externalscreen_cfg.o(.data)
+    .data                                    0x200014a0   Section       24  app_externalscreen_cfg.o(.data)
+    .data                                    0x200014b8   Section       24  app_externalscreen_cfg.o(.data)
+    .data                                    0x200014d0   Section       24  app_externalscreen_cfg.o(.data)
+    .data                                    0x200014e8   Section      340  app_externalscreen_cfg.o(.data)
+    .data                                    0x2000163c   Section       16  app_externalscreenrxhandle.o(.data)
+    .data                                    0x2000164c   Section       40  app_externalscreentxhandle.o(.data)
+    .data                                    0x20001674   Section       16  app_innerscreen_cfg.o(.data)
+    .data                                    0x20001684   Section       24  app_innerscreen_cfg.o(.data)
+    .data                                    0x2000169c   Section       16  app_innerscreen_cfg.o(.data)
+    .data                                    0x200016ac   Section       16  app_innerscreen_cfg.o(.data)
+    .data                                    0x200016bc   Section        4  app_innerscreen_cfg.o(.data)
+    .data                                    0x200016c0   Section       96  app_innerscreen_cfg.o(.data)
+    .data                                    0x20001720   Section       96  app_innerscreen_cfg.o(.data)
+    .data                                    0x20001780   Section      144  app_innerscreen_cfg.o(.data)
+    .data                                    0x20001810   Section      144  app_innerscreen_cfg.o(.data)
+    .data                                    0x200018a0   Section       96  app_innerscreen_cfg.o(.data)
+    .data                                    0x20001900   Section       12  app_innerscreen_cfg.o(.data)
+    .data                                    0x2000190c   Section       32  app_innerscreen_cfg.o(.data)
+    .data                                    0x2000192c   Section      340  app_innerscreen_cfg.o(.data)
+    .data                                    0x20001a80   Section        1  app_innerscreenrxhandle.o(.data)
+    .data                                    0x20001a84   Section      120  app_innerscreenrxhandle.o(.data)
+    .data                                    0x20001afc   Section      136  app_innerscreentxhandle.o(.data)
+    .data                                    0x20001b84   Section        6  app_innerscreentxhandle.o(.data)
+    stepIndex                                0x20001b84   Data           1  app_innerscreentxhandle.o(.data)
+    curPage                                  0x20001b86   Data           2  app_innerscreentxhandle.o(.data)
+    curPageDelay_offset                      0x20001b88   Data           2  app_innerscreentxhandle.o(.data)
+    .data                                    0x20001b8c   Section        8  app_balancingdatahandle.o(.data)
+    lastSendCnt                              0x20001b8c   Data           4  app_balancingdatahandle.o(.data)
+    diff_time                                0x20001b90   Data           4  app_balancingdatahandle.o(.data)
+    .data                                    0x20001b94   Section       32  app_innerscreen_cfg_6.o(.data)
+    .data                                    0x20001bb4   Section       32  app_innerscreen_cfg_6.o(.data)
+    .data                                    0x20001bd4   Section       32  app_innerscreen_cfg_6.o(.data)
+    .data                                    0x20001bf4   Section       32  app_innerscreen_cfg_6.o(.data)
+    .data                                    0x20001c14   Section        4  app_innerscreen_cfg_6.o(.data)
+    .data                                    0x20001c18   Section       72  app_innerscreen_cfg_6.o(.data)
+    .data                                    0x20001c60   Section       72  app_innerscreen_cfg_6.o(.data)
+    .data                                    0x20001ca8   Section      108  app_innerscreen_cfg_6.o(.data)
+    .data                                    0x20001d14   Section      108  app_innerscreen_cfg_6.o(.data)
+    .data                                    0x20001d80   Section       72  app_innerscreen_cfg_6.o(.data)
+    .data                                    0x20001dc8   Section       12  app_innerscreen_cfg_6.o(.data)
+    .data                                    0x20001dd4   Section       24  app_innerscreen_cfg_6.o(.data)
+    .data                                    0x20001dec   Section       32  app_innerscreen_cfg_12.o(.data)
+    .data                                    0x20001e0c   Section       32  app_innerscreen_cfg_12.o(.data)
+    .data                                    0x20001e2c   Section       32  app_innerscreen_cfg_12.o(.data)
+    .data                                    0x20001e4c   Section       32  app_innerscreen_cfg_12.o(.data)
+    .data                                    0x20001e6c   Section        4  app_innerscreen_cfg_12.o(.data)
+    .data                                    0x20001e70   Section       72  app_innerscreen_cfg_12.o(.data)
+    .data                                    0x20001eb8   Section       12  app_innerscreen_cfg_12.o(.data)
+    .data                                    0x20001ec4   Section       16  app_innerscreen_cfg_16.o(.data)
+    .data                                    0x20001ed4   Section       24  app_innerscreen_cfg_16.o(.data)
+    .data                                    0x20001eec   Section       16  app_innerscreen_cfg_16.o(.data)
+    .data                                    0x20001efc   Section       16  app_innerscreen_cfg_16.o(.data)
+    .data                                    0x20001f0c   Section        4  app_innerscreen_cfg_16.o(.data)
+    .data                                    0x20001f10   Section       96  app_innerscreen_cfg_16.o(.data)
+    .data                                    0x20001f70   Section       12  app_innerscreen_cfg_16.o(.data)
+    .data                                    0x20001f7c   Section       12  app_voiceprintf.o(.data)
+    u8Vstatus                                0x20001f7c   Data           1  app_voiceprintf.o(.data)
+    voice_i                                  0x20001f7d   Data           1  app_voiceprintf.o(.data)
+    u32Ticks                                 0x20001f80   Data           4  app_voiceprintf.o(.data)
+    tickOffset                               0x20001f84   Data           4  app_voiceprintf.o(.data)
+    .data                                    0x20001f88   Section       32  app_innerscreen_cfg_2.o(.data)
+    .data                                    0x20001fa8   Section       32  app_innerscreen_cfg_2.o(.data)
+    .data                                    0x20001fc8   Section       32  app_innerscreen_cfg_2.o(.data)
+    .data                                    0x20001fe8   Section       32  app_innerscreen_cfg_2.o(.data)
+    .data                                    0x20002008   Section        4  app_innerscreen_cfg_2.o(.data)
+    .data                                    0x2000200c   Section       24  app_innerscreen_cfg_2.o(.data)
+    .data                                    0x20002024   Section       24  app_innerscreen_cfg_2.o(.data)
+    .data                                    0x2000203c   Section       36  app_innerscreen_cfg_2.o(.data)
+    .data                                    0x20002060   Section       36  app_innerscreen_cfg_2.o(.data)
+    .data                                    0x20002084   Section       24  app_innerscreen_cfg_2.o(.data)
+    .data                                    0x2000209c   Section       12  app_innerscreen_cfg_2.o(.data)
+    .data                                    0x200020a8   Section        8  app_innerscreen_cfg_2.o(.data)
+    .bss                                     0x200020b0   Section      596  freertos.o(.bss)
+    xIdleTaskTCBBuffer                       0x200020b0   Data          84  freertos.o(.bss)
+    xIdleStack                               0x20002104   Data         512  freertos.o(.bss)
+    .bss                                     0x20002304   Section       84  i2c.o(.bss)
+    .bss                                     0x20002358   Section       72  tim.o(.bss)
+    .bss                                     0x200023a0   Section     2120  usart.o(.bss)
+    .bss                                     0x20002be8   Section       72  stm32f4xx_hal_timebase_tim.o(.bss)
+    .bss                                     0x20002c30   Section      240  tasks.o(.bss)
+    pxReadyTasksLists                        0x20002c30   Data         140  tasks.o(.bss)
+    xDelayedTaskList1                        0x20002cbc   Data          20  tasks.o(.bss)
+    xDelayedTaskList2                        0x20002cd0   Data          20  tasks.o(.bss)
+    xPendingReadyList                        0x20002ce4   Data          20  tasks.o(.bss)
+    xTasksWaitingTermination                 0x20002cf8   Data          20  tasks.o(.bss)
+    xSuspendedTaskList                       0x20002d0c   Data          20  tasks.o(.bss)
+    .bss                                     0x20002d20   Section    15360  heap_4.o(.bss)
+    ucHeap                                   0x20002d20   Data       15360  heap_4.o(.bss)
+    .bss                                     0x20006920   Section     1928  app_hx711_ctrl.o(.bss)
+    u32OnLineNormalCnt                       0x20006920   Data          16  app_hx711_ctrl.o(.bss)
+    u8HX711CheckPassStatus                   0x20006930   Data          24  app_hx711_ctrl.o(.bss)
+    .bss                                     0x200070a8   Section       12  app_key_ctrl.o(.bss)
+    .bss                                     0x200070b4   Section       12  app_password.o(.bss)
+    .bss                                     0x200070c0   Section     1520  app_syspara.o(.bss)
+    .bss                                     0x200076b0   Section     1680  app_t5l_ctrl.o(.bss)
+    g_t5l_triger_data                        0x20007a70   Data         720  app_t5l_ctrl.o(.bss)
+    .bss                                     0x20007d40   Section      128  app_i2c.o(.bss)
+    .bss                                     0x20007dc0   Section      304  app_balance.o(.bss)
+    .bss                                     0x20007ef0   Section      134  app_voiceprintf.o(.bss)
+    s_Voice                                  0x20007ef0   Data          11  app_voiceprintf.o(.bss)
+    .bss                                     0x20007f78   Section       96  libspace.o(.bss)
+    HEAP                                     0x20007fd8   Section     1024  startup_stm32f407xx.o(HEAP)
+    Heap_Mem                                 0x20007fd8   Data        1024  startup_stm32f407xx.o(HEAP)
+    STACK                                    0x200083d8   Section     1024  startup_stm32f407xx.o(STACK)
+    Stack_Mem                                0x200083d8   Data        1024  startup_stm32f407xx.o(STACK)
+    __initial_sp                             0x200087d8   Data           0  startup_stm32f407xx.o(STACK)
 
     Global Symbols
 
@@ -4016,121 +4016,121 @@ Image Symbol Table
     ES_16H_HelpVlue_DP_Vlu_YouXiaoShu        0x200012b0   Data         216  app_externalscreen_cfg.o(.data)
     ES_16H_WeightIndex_DP_Vlu                0x20001388   Data         192  app_externalscreen_cfg.o(.data)
     ES_16H_WeightColor_DP_Vlu                0x20001448   Data          64  app_externalscreen_cfg.o(.data)
-    ES_6H_Misc_DP_Vlu                        0x20001488   Data          12  app_externalscreen_cfg.o(.data)
-    ES_8H_Misc_DP_Vlu                        0x20001494   Data          12  app_externalscreen_cfg.o(.data)
-    ES_12H_Misc_DP_Vlu                       0x200014a0   Data          12  app_externalscreen_cfg.o(.data)
-    ES_16H_Misc_DP_Vlu                       0x200014ac   Data          12  app_externalscreen_cfg.o(.data)
-    externalScreenCfg                        0x200014b8   Data         340  app_externalscreen_cfg.o(.data)
-    externalScreenRxHandle                   0x2000160c   Data          16  app_externalscreenrxhandle.o(.data)
-    externalScreenTxHandle                   0x2000161c   Data          40  app_externalscreentxhandle.o(.data)
-    IS_8H_WeightVlu_DP_Add                   0x20001644   Data          16  app_innerscreen_cfg.o(.data)
-    IS_8H_HelpVlu_DP_Add                     0x20001654   Data          24  app_innerscreen_cfg.o(.data)
-    IS_8H_WeightIndex_DP_Add                 0x2000166c   Data          16  app_innerscreen_cfg.o(.data)
-    IS_8H_WeightColor_DP_Add                 0x2000167c   Data          16  app_innerscreen_cfg.o(.data)
-    IS_8H_Misc_Add                           0x2000168c   Data           4  app_innerscreen_cfg.o(.data)
-    IS_8H_WeightVlue_DP_Vlu_WuXiaoShu        0x20001690   Data          96  app_innerscreen_cfg.o(.data)
-    IS_8H_WeightVlue_DP_Vlu_YouXiaoShu       0x200016f0   Data          96  app_innerscreen_cfg.o(.data)
-    IS_8H_HelpVlue_DP_Vlu_WuXiaoShu          0x20001750   Data         144  app_innerscreen_cfg.o(.data)
-    IS_8H_HelpVlue_DP_Vlu_YouXiaoShu         0x200017e0   Data         144  app_innerscreen_cfg.o(.data)
-    IS_8H_WeightIndex_DP_Vlu                 0x20001870   Data          96  app_innerscreen_cfg.o(.data)
-    IS_8H_Misc_DP_Vlu                        0x200018d0   Data          12  app_innerscreen_cfg.o(.data)
-    IS_8H_WeightColor_DP_Vlu                 0x200018dc   Data          32  app_innerscreen_cfg.o(.data)
-    innerScreenCfg                           0x200018fc   Data         340  app_innerscreen_cfg.o(.data)
-    g_u8InnerScreenVoicePrintfStatus         0x20001a50   Data           1  app_innerscreenrxhandle.o(.data)
-    innerScreenRxHandle                      0x20001a54   Data         120  app_innerscreenrxhandle.o(.data)
-    innerScreenTxHandle                      0x20001acc   Data         136  app_innerscreentxhandle.o(.data)
-    IS_6H_WeightVlu_DP_Add                   0x20001b64   Data          32  app_innerscreen_cfg_6.o(.data)
-    IS_6H_HelpVlu_DP_Add                     0x20001b84   Data          32  app_innerscreen_cfg_6.o(.data)
-    IS_6H_WeightIndex_DP_Add                 0x20001ba4   Data          32  app_innerscreen_cfg_6.o(.data)
-    IS_6H_WeightColor_DP_Add                 0x20001bc4   Data          32  app_innerscreen_cfg_6.o(.data)
-    IS_6H_Misc_Add                           0x20001be4   Data           4  app_innerscreen_cfg_6.o(.data)
-    IS_6H_WeightVlue_DP_Vlu_WuXiaoShu        0x20001be8   Data          72  app_innerscreen_cfg_6.o(.data)
-    IS_6H_WeightVlue_DP_Vlu_YouXiaoShu       0x20001c30   Data          72  app_innerscreen_cfg_6.o(.data)
-    IS_6H_HelpVlue_DP_Vlu_WuXiaoShu          0x20001c78   Data         108  app_innerscreen_cfg_6.o(.data)
-    IS_6H_HelpVlue_DP_Vlu_YouXiaoShu         0x20001ce4   Data         108  app_innerscreen_cfg_6.o(.data)
-    IS_6H_WeightIndex_DP_Vlu                 0x20001d50   Data          72  app_innerscreen_cfg_6.o(.data)
-    IS_6H_Misc_DP_Vlu                        0x20001d98   Data          12  app_innerscreen_cfg_6.o(.data)
-    IS_6H_WeightColor_DP_Vlu                 0x20001da4   Data          24  app_innerscreen_cfg_6.o(.data)
-    IS_12H_WeightVlu_DP_Add                  0x20001dbc   Data          32  app_innerscreen_cfg_12.o(.data)
-    IS_12H_HelpVlu_DP_Add                    0x20001ddc   Data          32  app_innerscreen_cfg_12.o(.data)
-    IS_12H_WeightIndex_DP_Add                0x20001dfc   Data          32  app_innerscreen_cfg_12.o(.data)
-    IS_12H_WeightColor_DP_Add                0x20001e1c   Data          32  app_innerscreen_cfg_12.o(.data)
-    IS_12H_Misc_Add                          0x20001e3c   Data           4  app_innerscreen_cfg_12.o(.data)
-    IS_12HS6_WeightIndex_DP_Vlu              0x20001e40   Data          72  app_innerscreen_cfg_12.o(.data)
-    IS_12H_Misc_DP_Vlu                       0x20001e88   Data          12  app_innerscreen_cfg_12.o(.data)
-    IS_16HS8_WeightVlu_DP_Add                0x20001e94   Data          16  app_innerscreen_cfg_16.o(.data)
-    IS_16HS12_HelpVlu_DP_Add                 0x20001ea4   Data          24  app_innerscreen_cfg_16.o(.data)
-    IS_16HS8_WeightIndex_DP_Add              0x20001ebc   Data          16  app_innerscreen_cfg_16.o(.data)
-    IS_16HS8_WeightColor_DP_Add              0x20001ecc   Data          16  app_innerscreen_cfg_16.o(.data)
-    IS_16H_Misc_Add                          0x20001edc   Data           4  app_innerscreen_cfg_16.o(.data)
-    IS_16HS8_WeightIndex_DP_Vlu              0x20001ee0   Data          96  app_innerscreen_cfg_16.o(.data)
-    IS_16H_Misc_DP_Vlu                       0x20001f40   Data          12  app_innerscreen_cfg_16.o(.data)
-    IS_2H_WeightVlu_DP_Add                   0x20001f58   Data          32  app_innerscreen_cfg_2.o(.data)
-    IS_2H_HelpVlu_DP_Add                     0x20001f78   Data          32  app_innerscreen_cfg_2.o(.data)
-    IS_2H_WeightIndex_DP_Add                 0x20001f98   Data          32  app_innerscreen_cfg_2.o(.data)
-    IS_2H_WeightColor_DP_Add                 0x20001fb8   Data          32  app_innerscreen_cfg_2.o(.data)
-    IS_2H_Misc_Add                           0x20001fd8   Data           4  app_innerscreen_cfg_2.o(.data)
-    IS_2H_WeightVlue_DP_Vlu_WuXiaoShu        0x20001fdc   Data          24  app_innerscreen_cfg_2.o(.data)
-    IS_2H_WeightVlue_DP_Vlu_YouXiaoShu       0x20001ff4   Data          24  app_innerscreen_cfg_2.o(.data)
-    IS_2H_HelpVlue_DP_Vlu_WuXiaoShu          0x2000200c   Data          36  app_innerscreen_cfg_2.o(.data)
-    IS_2H_HelpVlue_DP_Vlu_YouXiaoShu         0x20002030   Data          36  app_innerscreen_cfg_2.o(.data)
-    IS_2H_WeightIndex_DP_Vlu                 0x20002054   Data          24  app_innerscreen_cfg_2.o(.data)
-    IS_2H_Misc_DP_Vlu                        0x2000206c   Data          12  app_innerscreen_cfg_2.o(.data)
-    IS_2H_WeightColor_DP_Vlu                 0x20002078   Data           8  app_innerscreen_cfg_2.o(.data)
-    hi2c1                                    0x200022d4   Data          84  i2c.o(.bss)
-    htim7                                    0x20002328   Data          72  tim.o(.bss)
-    Usart1AsScreen1Type                      0x20002370   Data        1028  usart.o(.bss)
-    Rx_buff                                  0x20002774   Data          50  usart.o(.bss)
-    huart1                                   0x200027a8   Data          68  usart.o(.bss)
-    huart2                                   0x200027ec   Data          68  usart.o(.bss)
-    huart3                                   0x20002830   Data          68  usart.o(.bss)
-    huart6                                   0x20002874   Data          68  usart.o(.bss)
-    hdma_usart1_rx                           0x200028b8   Data          96  usart.o(.bss)
-    hdma_usart1_tx                           0x20002918   Data          96  usart.o(.bss)
-    hdma_usart2_rx                           0x20002978   Data          96  usart.o(.bss)
-    hdma_usart2_tx                           0x200029d8   Data          96  usart.o(.bss)
-    hdma_usart3_rx                           0x20002a38   Data          96  usart.o(.bss)
-    hdma_usart3_tx                           0x20002a98   Data          96  usart.o(.bss)
-    hdma_usart6_rx                           0x20002af8   Data          96  usart.o(.bss)
-    hdma_usart6_tx                           0x20002b58   Data          96  usart.o(.bss)
-    htim6                                    0x20002bb8   Data          72  stm32f4xx_hal_timebase_tim.o(.bss)
-    HX711Chanel                              0x20006918   Data        1888  app_hx711_ctrl.o(.bss)
-    SysKey                                   0x20007078   Data          12  app_key_ctrl.o(.bss)
-    STM32McuId                               0x20007084   Data          12  app_password.o(.bss)
-    flashStoreDataBuf                        0x20007090   Data        1412  app_syspara.o(.bss)
-    flashStoreDataBuf_3030                   0x20007614   Data         108  app_syspara.o(.bss)
-    g_i32DataBuff                            0x20007680   Data          64  app_t5l_ctrl.o(.bss)
-    g_i32DataBuffPre                         0x200076c0   Data          64  app_t5l_ctrl.o(.bss)
-    g_i32_i16DataBuff                        0x20007700   Data          64  app_t5l_ctrl.o(.bss)
-    g_i16ColorBuff                           0x20007740   Data          32  app_t5l_ctrl.o(.bss)
-    g_i16ColorBuffPre                        0x20007760   Data          32  app_t5l_ctrl.o(.bss)
-    g_i16ColorOtherChanel                    0x20007780   Data          32  app_t5l_ctrl.o(.bss)
-    g_fDataBuffCaculate                      0x200077a0   Data          64  app_t5l_ctrl.o(.bss)
-    g_i16OtherChanelCaculate                 0x200077e0   Data          32  app_t5l_ctrl.o(.bss)
-    g_i16HelpDataBuff                        0x20007800   Data          24  app_t5l_ctrl.o(.bss)
-    g_i16HelpDataBuffPre                     0x20007818   Data          24  app_t5l_ctrl.o(.bss)
-    g_i16HelpDataSort                        0x20007830   Data          64  app_t5l_ctrl.o(.bss)
-    g_i16HelpDataChnSort                     0x20007870   Data          32  app_t5l_ctrl.o(.bss)
-    g_i32DataBuffLarger                      0x20007890   Data          64  app_t5l_ctrl.o(.bss)
-    g_i32DataBuffPreLarger                   0x200078d0   Data          64  app_t5l_ctrl.o(.bss)
-    g_i32_i16DataBuffLarger                  0x20007910   Data          64  app_t5l_ctrl.o(.bss)
-    g_i16ColorBuffLarger                     0x20007950   Data          32  app_t5l_ctrl.o(.bss)
-    g_i16ColorBuffPreLarger                  0x20007970   Data          32  app_t5l_ctrl.o(.bss)
-    g_i16ColorOtherChanelLarger              0x20007990   Data          32  app_t5l_ctrl.o(.bss)
-    g_fDataBuffCaculateLarger                0x200079b0   Data          64  app_t5l_ctrl.o(.bss)
-    g_i16OtherChanelCaculateLarger           0x200079f0   Data          32  app_t5l_ctrl.o(.bss)
-    g_i16HelpDataBuffLarger                  0x20007a10   Data          24  app_t5l_ctrl.o(.bss)
-    g_i16HelpDataBuffPreLarger               0x20007a28   Data          24  app_t5l_ctrl.o(.bss)
-    app_i2cRxData                            0x20007d10   Data          64  app_i2c.o(.bss)
-    app_i2cTxData                            0x20007d50   Data          64  app_i2c.o(.bss)
-    gChannelInfo                             0x20007d90   Data         128  app_balance.o(.bss)
-    gGroupInfo                               0x20007e10   Data          64  app_balance.o(.bss)
-    gSortWeight                              0x20007e50   Data          64  app_balance.o(.bss)
-    gSortChnnel                              0x20007e90   Data          16  app_balance.o(.bss)
-    gScaleInfo                               0x20007ea0   Data          32  app_balance.o(.bss)
-    g_VoinceInfo                             0x20007ecc   Data         122  app_voiceprintf.o(.bss)
-    __libspace_start                         0x20007f48   Data          96  libspace.o(.bss)
-    __temporary_stack_top$libspace           0x20007fa8   Data           0  libspace.o(.bss)
+    ES_6H_Misc_DP_Vlu                        0x20001488   Data          24  app_externalscreen_cfg.o(.data)
+    ES_8H_Misc_DP_Vlu                        0x200014a0   Data          24  app_externalscreen_cfg.o(.data)
+    ES_12H_Misc_DP_Vlu                       0x200014b8   Data          24  app_externalscreen_cfg.o(.data)
+    ES_16H_Misc_DP_Vlu                       0x200014d0   Data          24  app_externalscreen_cfg.o(.data)
+    externalScreenCfg                        0x200014e8   Data         340  app_externalscreen_cfg.o(.data)
+    externalScreenRxHandle                   0x2000163c   Data          16  app_externalscreenrxhandle.o(.data)
+    externalScreenTxHandle                   0x2000164c   Data          40  app_externalscreentxhandle.o(.data)
+    IS_8H_WeightVlu_DP_Add                   0x20001674   Data          16  app_innerscreen_cfg.o(.data)
+    IS_8H_HelpVlu_DP_Add                     0x20001684   Data          24  app_innerscreen_cfg.o(.data)
+    IS_8H_WeightIndex_DP_Add                 0x2000169c   Data          16  app_innerscreen_cfg.o(.data)
+    IS_8H_WeightColor_DP_Add                 0x200016ac   Data          16  app_innerscreen_cfg.o(.data)
+    IS_8H_Misc_Add                           0x200016bc   Data           4  app_innerscreen_cfg.o(.data)
+    IS_8H_WeightVlue_DP_Vlu_WuXiaoShu        0x200016c0   Data          96  app_innerscreen_cfg.o(.data)
+    IS_8H_WeightVlue_DP_Vlu_YouXiaoShu       0x20001720   Data          96  app_innerscreen_cfg.o(.data)
+    IS_8H_HelpVlue_DP_Vlu_WuXiaoShu          0x20001780   Data         144  app_innerscreen_cfg.o(.data)
+    IS_8H_HelpVlue_DP_Vlu_YouXiaoShu         0x20001810   Data         144  app_innerscreen_cfg.o(.data)
+    IS_8H_WeightIndex_DP_Vlu                 0x200018a0   Data          96  app_innerscreen_cfg.o(.data)
+    IS_8H_Misc_DP_Vlu                        0x20001900   Data          12  app_innerscreen_cfg.o(.data)
+    IS_8H_WeightColor_DP_Vlu                 0x2000190c   Data          32  app_innerscreen_cfg.o(.data)
+    innerScreenCfg                           0x2000192c   Data         340  app_innerscreen_cfg.o(.data)
+    g_u8InnerScreenVoicePrintfStatus         0x20001a80   Data           1  app_innerscreenrxhandle.o(.data)
+    innerScreenRxHandle                      0x20001a84   Data         120  app_innerscreenrxhandle.o(.data)
+    innerScreenTxHandle                      0x20001afc   Data         136  app_innerscreentxhandle.o(.data)
+    IS_6H_WeightVlu_DP_Add                   0x20001b94   Data          32  app_innerscreen_cfg_6.o(.data)
+    IS_6H_HelpVlu_DP_Add                     0x20001bb4   Data          32  app_innerscreen_cfg_6.o(.data)
+    IS_6H_WeightIndex_DP_Add                 0x20001bd4   Data          32  app_innerscreen_cfg_6.o(.data)
+    IS_6H_WeightColor_DP_Add                 0x20001bf4   Data          32  app_innerscreen_cfg_6.o(.data)
+    IS_6H_Misc_Add                           0x20001c14   Data           4  app_innerscreen_cfg_6.o(.data)
+    IS_6H_WeightVlue_DP_Vlu_WuXiaoShu        0x20001c18   Data          72  app_innerscreen_cfg_6.o(.data)
+    IS_6H_WeightVlue_DP_Vlu_YouXiaoShu       0x20001c60   Data          72  app_innerscreen_cfg_6.o(.data)
+    IS_6H_HelpVlue_DP_Vlu_WuXiaoShu          0x20001ca8   Data         108  app_innerscreen_cfg_6.o(.data)
+    IS_6H_HelpVlue_DP_Vlu_YouXiaoShu         0x20001d14   Data         108  app_innerscreen_cfg_6.o(.data)
+    IS_6H_WeightIndex_DP_Vlu                 0x20001d80   Data          72  app_innerscreen_cfg_6.o(.data)
+    IS_6H_Misc_DP_Vlu                        0x20001dc8   Data          12  app_innerscreen_cfg_6.o(.data)
+    IS_6H_WeightColor_DP_Vlu                 0x20001dd4   Data          24  app_innerscreen_cfg_6.o(.data)
+    IS_12H_WeightVlu_DP_Add                  0x20001dec   Data          32  app_innerscreen_cfg_12.o(.data)
+    IS_12H_HelpVlu_DP_Add                    0x20001e0c   Data          32  app_innerscreen_cfg_12.o(.data)
+    IS_12H_WeightIndex_DP_Add                0x20001e2c   Data          32  app_innerscreen_cfg_12.o(.data)
+    IS_12H_WeightColor_DP_Add                0x20001e4c   Data          32  app_innerscreen_cfg_12.o(.data)
+    IS_12H_Misc_Add                          0x20001e6c   Data           4  app_innerscreen_cfg_12.o(.data)
+    IS_12HS6_WeightIndex_DP_Vlu              0x20001e70   Data          72  app_innerscreen_cfg_12.o(.data)
+    IS_12H_Misc_DP_Vlu                       0x20001eb8   Data          12  app_innerscreen_cfg_12.o(.data)
+    IS_16HS8_WeightVlu_DP_Add                0x20001ec4   Data          16  app_innerscreen_cfg_16.o(.data)
+    IS_16HS12_HelpVlu_DP_Add                 0x20001ed4   Data          24  app_innerscreen_cfg_16.o(.data)
+    IS_16HS8_WeightIndex_DP_Add              0x20001eec   Data          16  app_innerscreen_cfg_16.o(.data)
+    IS_16HS8_WeightColor_DP_Add              0x20001efc   Data          16  app_innerscreen_cfg_16.o(.data)
+    IS_16H_Misc_Add                          0x20001f0c   Data           4  app_innerscreen_cfg_16.o(.data)
+    IS_16HS8_WeightIndex_DP_Vlu              0x20001f10   Data          96  app_innerscreen_cfg_16.o(.data)
+    IS_16H_Misc_DP_Vlu                       0x20001f70   Data          12  app_innerscreen_cfg_16.o(.data)
+    IS_2H_WeightVlu_DP_Add                   0x20001f88   Data          32  app_innerscreen_cfg_2.o(.data)
+    IS_2H_HelpVlu_DP_Add                     0x20001fa8   Data          32  app_innerscreen_cfg_2.o(.data)
+    IS_2H_WeightIndex_DP_Add                 0x20001fc8   Data          32  app_innerscreen_cfg_2.o(.data)
+    IS_2H_WeightColor_DP_Add                 0x20001fe8   Data          32  app_innerscreen_cfg_2.o(.data)
+    IS_2H_Misc_Add                           0x20002008   Data           4  app_innerscreen_cfg_2.o(.data)
+    IS_2H_WeightVlue_DP_Vlu_WuXiaoShu        0x2000200c   Data          24  app_innerscreen_cfg_2.o(.data)
+    IS_2H_WeightVlue_DP_Vlu_YouXiaoShu       0x20002024   Data          24  app_innerscreen_cfg_2.o(.data)
+    IS_2H_HelpVlue_DP_Vlu_WuXiaoShu          0x2000203c   Data          36  app_innerscreen_cfg_2.o(.data)
+    IS_2H_HelpVlue_DP_Vlu_YouXiaoShu         0x20002060   Data          36  app_innerscreen_cfg_2.o(.data)
+    IS_2H_WeightIndex_DP_Vlu                 0x20002084   Data          24  app_innerscreen_cfg_2.o(.data)
+    IS_2H_Misc_DP_Vlu                        0x2000209c   Data          12  app_innerscreen_cfg_2.o(.data)
+    IS_2H_WeightColor_DP_Vlu                 0x200020a8   Data           8  app_innerscreen_cfg_2.o(.data)
+    hi2c1                                    0x20002304   Data          84  i2c.o(.bss)
+    htim7                                    0x20002358   Data          72  tim.o(.bss)
+    Usart1AsScreen1Type                      0x200023a0   Data        1028  usart.o(.bss)
+    Rx_buff                                  0x200027a4   Data          50  usart.o(.bss)
+    huart1                                   0x200027d8   Data          68  usart.o(.bss)
+    huart2                                   0x2000281c   Data          68  usart.o(.bss)
+    huart3                                   0x20002860   Data          68  usart.o(.bss)
+    huart6                                   0x200028a4   Data          68  usart.o(.bss)
+    hdma_usart1_rx                           0x200028e8   Data          96  usart.o(.bss)
+    hdma_usart1_tx                           0x20002948   Data          96  usart.o(.bss)
+    hdma_usart2_rx                           0x200029a8   Data          96  usart.o(.bss)
+    hdma_usart2_tx                           0x20002a08   Data          96  usart.o(.bss)
+    hdma_usart3_rx                           0x20002a68   Data          96  usart.o(.bss)
+    hdma_usart3_tx                           0x20002ac8   Data          96  usart.o(.bss)
+    hdma_usart6_rx                           0x20002b28   Data          96  usart.o(.bss)
+    hdma_usart6_tx                           0x20002b88   Data          96  usart.o(.bss)
+    htim6                                    0x20002be8   Data          72  stm32f4xx_hal_timebase_tim.o(.bss)
+    HX711Chanel                              0x20006948   Data        1888  app_hx711_ctrl.o(.bss)
+    SysKey                                   0x200070a8   Data          12  app_key_ctrl.o(.bss)
+    STM32McuId                               0x200070b4   Data          12  app_password.o(.bss)
+    flashStoreDataBuf                        0x200070c0   Data        1412  app_syspara.o(.bss)
+    flashStoreDataBuf_3030                   0x20007644   Data         108  app_syspara.o(.bss)
+    g_i32DataBuff                            0x200076b0   Data          64  app_t5l_ctrl.o(.bss)
+    g_i32DataBuffPre                         0x200076f0   Data          64  app_t5l_ctrl.o(.bss)
+    g_i32_i16DataBuff                        0x20007730   Data          64  app_t5l_ctrl.o(.bss)
+    g_i16ColorBuff                           0x20007770   Data          32  app_t5l_ctrl.o(.bss)
+    g_i16ColorBuffPre                        0x20007790   Data          32  app_t5l_ctrl.o(.bss)
+    g_i16ColorOtherChanel                    0x200077b0   Data          32  app_t5l_ctrl.o(.bss)
+    g_fDataBuffCaculate                      0x200077d0   Data          64  app_t5l_ctrl.o(.bss)
+    g_i16OtherChanelCaculate                 0x20007810   Data          32  app_t5l_ctrl.o(.bss)
+    g_i16HelpDataBuff                        0x20007830   Data          24  app_t5l_ctrl.o(.bss)
+    g_i16HelpDataBuffPre                     0x20007848   Data          24  app_t5l_ctrl.o(.bss)
+    g_i16HelpDataSort                        0x20007860   Data          64  app_t5l_ctrl.o(.bss)
+    g_i16HelpDataChnSort                     0x200078a0   Data          32  app_t5l_ctrl.o(.bss)
+    g_i32DataBuffLarger                      0x200078c0   Data          64  app_t5l_ctrl.o(.bss)
+    g_i32DataBuffPreLarger                   0x20007900   Data          64  app_t5l_ctrl.o(.bss)
+    g_i32_i16DataBuffLarger                  0x20007940   Data          64  app_t5l_ctrl.o(.bss)
+    g_i16ColorBuffLarger                     0x20007980   Data          32  app_t5l_ctrl.o(.bss)
+    g_i16ColorBuffPreLarger                  0x200079a0   Data          32  app_t5l_ctrl.o(.bss)
+    g_i16ColorOtherChanelLarger              0x200079c0   Data          32  app_t5l_ctrl.o(.bss)
+    g_fDataBuffCaculateLarger                0x200079e0   Data          64  app_t5l_ctrl.o(.bss)
+    g_i16OtherChanelCaculateLarger           0x20007a20   Data          32  app_t5l_ctrl.o(.bss)
+    g_i16HelpDataBuffLarger                  0x20007a40   Data          24  app_t5l_ctrl.o(.bss)
+    g_i16HelpDataBuffPreLarger               0x20007a58   Data          24  app_t5l_ctrl.o(.bss)
+    app_i2cRxData                            0x20007d40   Data          64  app_i2c.o(.bss)
+    app_i2cTxData                            0x20007d80   Data          64  app_i2c.o(.bss)
+    gChannelInfo                             0x20007dc0   Data         128  app_balance.o(.bss)
+    gGroupInfo                               0x20007e40   Data          64  app_balance.o(.bss)
+    gSortWeight                              0x20007e80   Data          64  app_balance.o(.bss)
+    gSortChnnel                              0x20007ec0   Data          16  app_balance.o(.bss)
+    gScaleInfo                               0x20007ed0   Data          32  app_balance.o(.bss)
+    g_VoinceInfo                             0x20007efc   Data         122  app_voiceprintf.o(.bss)
+    __libspace_start                         0x20007f78   Data          96  libspace.o(.bss)
+    __temporary_stack_top$libspace           0x20007fd8   Data           0  libspace.o(.bss)
 
 
 
@@ -4140,7 +4140,7 @@ Memory Map of the image
 
   Image Entry point : 0x08000189
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x0000acbc, Max: 0x00080000, ABSOLUTE, COMPRESSED[0x00009750])
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x0000acec, Max: 0x00080000, ABSOLUTE, COMPRESSED[0x00009748])
 
     Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x00008c3c, Max: 0x00080000, ABSOLUTE)
 
@@ -4588,7 +4588,7 @@ Memory Map of the image
     0x08008c1c   0x00000020   Data   RO         7293    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x000087a8, Max: 0x00020000, ABSOLUTE, COMPRESSED[0x00000b14])
+    Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x000087d8, Max: 0x00020000, ABSOLUTE, COMPRESSED[0x00000b0c])
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -4643,91 +4643,91 @@ Memory Map of the image
     0x200012b0   0x000000d8   Data   RW         6313    .data               app_externalscreen_cfg.o
     0x20001388   0x000000c0   Data   RW         6314    .data               app_externalscreen_cfg.o
     0x20001448   0x00000040   Data   RW         6315    .data               app_externalscreen_cfg.o
-    0x20001488   0x0000000c   Data   RW         6316    .data               app_externalscreen_cfg.o
-    0x20001494   0x0000000c   Data   RW         6317    .data               app_externalscreen_cfg.o
-    0x200014a0   0x0000000c   Data   RW         6318    .data               app_externalscreen_cfg.o
-    0x200014ac   0x0000000c   Data   RW         6319    .data               app_externalscreen_cfg.o
-    0x200014b8   0x00000154   Data   RW         6320    .data               app_externalscreen_cfg.o
-    0x2000160c   0x00000010   Data   RW         6347    .data               app_externalscreenrxhandle.o
-    0x2000161c   0x00000028   Data   RW         6387    .data               app_externalscreentxhandle.o
-    0x20001644   0x00000010   Data   RW         6440    .data               app_innerscreen_cfg.o
-    0x20001654   0x00000018   Data   RW         6441    .data               app_innerscreen_cfg.o
-    0x2000166c   0x00000010   Data   RW         6442    .data               app_innerscreen_cfg.o
-    0x2000167c   0x00000010   Data   RW         6443    .data               app_innerscreen_cfg.o
-    0x2000168c   0x00000004   Data   RW         6444    .data               app_innerscreen_cfg.o
-    0x20001690   0x00000060   Data   RW         6445    .data               app_innerscreen_cfg.o
-    0x200016f0   0x00000060   Data   RW         6446    .data               app_innerscreen_cfg.o
-    0x20001750   0x00000090   Data   RW         6447    .data               app_innerscreen_cfg.o
-    0x200017e0   0x00000090   Data   RW         6448    .data               app_innerscreen_cfg.o
-    0x20001870   0x00000060   Data   RW         6449    .data               app_innerscreen_cfg.o
-    0x200018d0   0x0000000c   Data   RW         6450    .data               app_innerscreen_cfg.o
-    0x200018dc   0x00000020   Data   RW         6451    .data               app_innerscreen_cfg.o
-    0x200018fc   0x00000154   Data   RW         6452    .data               app_innerscreen_cfg.o
-    0x20001a50   0x00000001   Data   RW         6492    .data               app_innerscreenrxhandle.o
-    0x20001a51   0x00000003   PAD
-    0x20001a54   0x00000078   Data   RW         6493    .data               app_innerscreenrxhandle.o
-    0x20001acc   0x00000088   Data   RW         6607    .data               app_innerscreentxhandle.o
-    0x20001b54   0x00000006   Data   RW         6608    .data               app_innerscreentxhandle.o
-    0x20001b5a   0x00000002   PAD
-    0x20001b5c   0x00000008   Data   RW         6718    .data               app_balancingdatahandle.o
-    0x20001b64   0x00000020   Data   RW         6793    .data               app_innerscreen_cfg_6.o
-    0x20001b84   0x00000020   Data   RW         6794    .data               app_innerscreen_cfg_6.o
-    0x20001ba4   0x00000020   Data   RW         6795    .data               app_innerscreen_cfg_6.o
-    0x20001bc4   0x00000020   Data   RW         6796    .data               app_innerscreen_cfg_6.o
-    0x20001be4   0x00000004   Data   RW         6797    .data               app_innerscreen_cfg_6.o
-    0x20001be8   0x00000048   Data   RW         6798    .data               app_innerscreen_cfg_6.o
-    0x20001c30   0x00000048   Data   RW         6799    .data               app_innerscreen_cfg_6.o
-    0x20001c78   0x0000006c   Data   RW         6800    .data               app_innerscreen_cfg_6.o
-    0x20001ce4   0x0000006c   Data   RW         6801    .data               app_innerscreen_cfg_6.o
-    0x20001d50   0x00000048   Data   RW         6802    .data               app_innerscreen_cfg_6.o
-    0x20001d98   0x0000000c   Data   RW         6803    .data               app_innerscreen_cfg_6.o
-    0x20001da4   0x00000018   Data   RW         6804    .data               app_innerscreen_cfg_6.o
-    0x20001dbc   0x00000020   Data   RW         6829    .data               app_innerscreen_cfg_12.o
-    0x20001ddc   0x00000020   Data   RW         6830    .data               app_innerscreen_cfg_12.o
-    0x20001dfc   0x00000020   Data   RW         6831    .data               app_innerscreen_cfg_12.o
-    0x20001e1c   0x00000020   Data   RW         6832    .data               app_innerscreen_cfg_12.o
-    0x20001e3c   0x00000004   Data   RW         6833    .data               app_innerscreen_cfg_12.o
-    0x20001e40   0x00000048   Data   RW         6837    .data               app_innerscreen_cfg_12.o
-    0x20001e88   0x0000000c   Data   RW         6838    .data               app_innerscreen_cfg_12.o
-    0x20001e94   0x00000010   Data   RW         6863    .data               app_innerscreen_cfg_16.o
-    0x20001ea4   0x00000018   Data   RW         6864    .data               app_innerscreen_cfg_16.o
-    0x20001ebc   0x00000010   Data   RW         6865    .data               app_innerscreen_cfg_16.o
-    0x20001ecc   0x00000010   Data   RW         6866    .data               app_innerscreen_cfg_16.o
-    0x20001edc   0x00000004   Data   RW         6867    .data               app_innerscreen_cfg_16.o
-    0x20001ee0   0x00000060   Data   RW         6870    .data               app_innerscreen_cfg_16.o
-    0x20001f40   0x0000000c   Data   RW         6871    .data               app_innerscreen_cfg_16.o
-    0x20001f4c   0x0000000c   Data   RW         7010    .data               app_voiceprintf.o
-    0x20001f58   0x00000020   Data   RW         7056    .data               app_innerscreen_cfg_2.o
-    0x20001f78   0x00000020   Data   RW         7057    .data               app_innerscreen_cfg_2.o
-    0x20001f98   0x00000020   Data   RW         7058    .data               app_innerscreen_cfg_2.o
-    0x20001fb8   0x00000020   Data   RW         7059    .data               app_innerscreen_cfg_2.o
-    0x20001fd8   0x00000004   Data   RW         7060    .data               app_innerscreen_cfg_2.o
-    0x20001fdc   0x00000018   Data   RW         7061    .data               app_innerscreen_cfg_2.o
-    0x20001ff4   0x00000018   Data   RW         7062    .data               app_innerscreen_cfg_2.o
-    0x2000200c   0x00000024   Data   RW         7063    .data               app_innerscreen_cfg_2.o
-    0x20002030   0x00000024   Data   RW         7064    .data               app_innerscreen_cfg_2.o
-    0x20002054   0x00000018   Data   RW         7065    .data               app_innerscreen_cfg_2.o
-    0x2000206c   0x0000000c   Data   RW         7066    .data               app_innerscreen_cfg_2.o
-    0x20002078   0x00000008   Data   RW         7067    .data               app_innerscreen_cfg_2.o
-    0x20002080   0x00000254   Zero   RW          312    .bss                freertos.o
-    0x200022d4   0x00000054   Zero   RW          395    .bss                i2c.o
-    0x20002328   0x00000048   Zero   RW          438    .bss                tim.o
-    0x20002370   0x00000848   Zero   RW          494    .bss                usart.o
-    0x20002bb8   0x00000048   Zero   RW          748    .bss                stm32f4xx_hal_timebase_tim.o
-    0x20002c00   0x000000f0   Zero   RW         4248    .bss                tasks.o
-    0x20002cf0   0x00003c00   Zero   RW         4892    .bss                heap_4.o
-    0x200068f0   0x00000788   Zero   RW         5077    .bss                app_hx711_ctrl.o
-    0x20007078   0x0000000c   Zero   RW         5215    .bss                app_key_ctrl.o
-    0x20007084   0x0000000c   Zero   RW         5482    .bss                app_password.o
-    0x20007090   0x000005f0   Zero   RW         5524    .bss                app_syspara.o
-    0x20007680   0x00000690   Zero   RW         5652    .bss                app_t5l_ctrl.o
-    0x20007d10   0x00000080   Zero   RW         6228    .bss                app_i2c.o
-    0x20007d90   0x00000130   Zero   RW         6909    .bss                app_balance.o
-    0x20007ec0   0x00000086   Zero   RW         7008    .bss                app_voiceprintf.o
-    0x20007f46   0x00000002   PAD
-    0x20007f48   0x00000060   Zero   RW         7167    .bss                c_w.l(libspace.o)
-    0x20007fa8   0x00000400   Zero   RW            2    HEAP                startup_stm32f407xx.o
-    0x200083a8   0x00000400   Zero   RW            1    STACK               startup_stm32f407xx.o
+    0x20001488   0x00000018   Data   RW         6316    .data               app_externalscreen_cfg.o
+    0x200014a0   0x00000018   Data   RW         6317    .data               app_externalscreen_cfg.o
+    0x200014b8   0x00000018   Data   RW         6318    .data               app_externalscreen_cfg.o
+    0x200014d0   0x00000018   Data   RW         6319    .data               app_externalscreen_cfg.o
+    0x200014e8   0x00000154   Data   RW         6320    .data               app_externalscreen_cfg.o
+    0x2000163c   0x00000010   Data   RW         6347    .data               app_externalscreenrxhandle.o
+    0x2000164c   0x00000028   Data   RW         6387    .data               app_externalscreentxhandle.o
+    0x20001674   0x00000010   Data   RW         6440    .data               app_innerscreen_cfg.o
+    0x20001684   0x00000018   Data   RW         6441    .data               app_innerscreen_cfg.o
+    0x2000169c   0x00000010   Data   RW         6442    .data               app_innerscreen_cfg.o
+    0x200016ac   0x00000010   Data   RW         6443    .data               app_innerscreen_cfg.o
+    0x200016bc   0x00000004   Data   RW         6444    .data               app_innerscreen_cfg.o
+    0x200016c0   0x00000060   Data   RW         6445    .data               app_innerscreen_cfg.o
+    0x20001720   0x00000060   Data   RW         6446    .data               app_innerscreen_cfg.o
+    0x20001780   0x00000090   Data   RW         6447    .data               app_innerscreen_cfg.o
+    0x20001810   0x00000090   Data   RW         6448    .data               app_innerscreen_cfg.o
+    0x200018a0   0x00000060   Data   RW         6449    .data               app_innerscreen_cfg.o
+    0x20001900   0x0000000c   Data   RW         6450    .data               app_innerscreen_cfg.o
+    0x2000190c   0x00000020   Data   RW         6451    .data               app_innerscreen_cfg.o
+    0x2000192c   0x00000154   Data   RW         6452    .data               app_innerscreen_cfg.o
+    0x20001a80   0x00000001   Data   RW         6492    .data               app_innerscreenrxhandle.o
+    0x20001a81   0x00000003   PAD
+    0x20001a84   0x00000078   Data   RW         6493    .data               app_innerscreenrxhandle.o
+    0x20001afc   0x00000088   Data   RW         6607    .data               app_innerscreentxhandle.o
+    0x20001b84   0x00000006   Data   RW         6608    .data               app_innerscreentxhandle.o
+    0x20001b8a   0x00000002   PAD
+    0x20001b8c   0x00000008   Data   RW         6718    .data               app_balancingdatahandle.o
+    0x20001b94   0x00000020   Data   RW         6793    .data               app_innerscreen_cfg_6.o
+    0x20001bb4   0x00000020   Data   RW         6794    .data               app_innerscreen_cfg_6.o
+    0x20001bd4   0x00000020   Data   RW         6795    .data               app_innerscreen_cfg_6.o
+    0x20001bf4   0x00000020   Data   RW         6796    .data               app_innerscreen_cfg_6.o
+    0x20001c14   0x00000004   Data   RW         6797    .data               app_innerscreen_cfg_6.o
+    0x20001c18   0x00000048   Data   RW         6798    .data               app_innerscreen_cfg_6.o
+    0x20001c60   0x00000048   Data   RW         6799    .data               app_innerscreen_cfg_6.o
+    0x20001ca8   0x0000006c   Data   RW         6800    .data               app_innerscreen_cfg_6.o
+    0x20001d14   0x0000006c   Data   RW         6801    .data               app_innerscreen_cfg_6.o
+    0x20001d80   0x00000048   Data   RW         6802    .data               app_innerscreen_cfg_6.o
+    0x20001dc8   0x0000000c   Data   RW         6803    .data               app_innerscreen_cfg_6.o
+    0x20001dd4   0x00000018   Data   RW         6804    .data               app_innerscreen_cfg_6.o
+    0x20001dec   0x00000020   Data   RW         6829    .data               app_innerscreen_cfg_12.o
+    0x20001e0c   0x00000020   Data   RW         6830    .data               app_innerscreen_cfg_12.o
+    0x20001e2c   0x00000020   Data   RW         6831    .data               app_innerscreen_cfg_12.o
+    0x20001e4c   0x00000020   Data   RW         6832    .data               app_innerscreen_cfg_12.o
+    0x20001e6c   0x00000004   Data   RW         6833    .data               app_innerscreen_cfg_12.o
+    0x20001e70   0x00000048   Data   RW         6837    .data               app_innerscreen_cfg_12.o
+    0x20001eb8   0x0000000c   Data   RW         6838    .data               app_innerscreen_cfg_12.o
+    0x20001ec4   0x00000010   Data   RW         6863    .data               app_innerscreen_cfg_16.o
+    0x20001ed4   0x00000018   Data   RW         6864    .data               app_innerscreen_cfg_16.o
+    0x20001eec   0x00000010   Data   RW         6865    .data               app_innerscreen_cfg_16.o
+    0x20001efc   0x00000010   Data   RW         6866    .data               app_innerscreen_cfg_16.o
+    0x20001f0c   0x00000004   Data   RW         6867    .data               app_innerscreen_cfg_16.o
+    0x20001f10   0x00000060   Data   RW         6870    .data               app_innerscreen_cfg_16.o
+    0x20001f70   0x0000000c   Data   RW         6871    .data               app_innerscreen_cfg_16.o
+    0x20001f7c   0x0000000c   Data   RW         7010    .data               app_voiceprintf.o
+    0x20001f88   0x00000020   Data   RW         7056    .data               app_innerscreen_cfg_2.o
+    0x20001fa8   0x00000020   Data   RW         7057    .data               app_innerscreen_cfg_2.o
+    0x20001fc8   0x00000020   Data   RW         7058    .data               app_innerscreen_cfg_2.o
+    0x20001fe8   0x00000020   Data   RW         7059    .data               app_innerscreen_cfg_2.o
+    0x20002008   0x00000004   Data   RW         7060    .data               app_innerscreen_cfg_2.o
+    0x2000200c   0x00000018   Data   RW         7061    .data               app_innerscreen_cfg_2.o
+    0x20002024   0x00000018   Data   RW         7062    .data               app_innerscreen_cfg_2.o
+    0x2000203c   0x00000024   Data   RW         7063    .data               app_innerscreen_cfg_2.o
+    0x20002060   0x00000024   Data   RW         7064    .data               app_innerscreen_cfg_2.o
+    0x20002084   0x00000018   Data   RW         7065    .data               app_innerscreen_cfg_2.o
+    0x2000209c   0x0000000c   Data   RW         7066    .data               app_innerscreen_cfg_2.o
+    0x200020a8   0x00000008   Data   RW         7067    .data               app_innerscreen_cfg_2.o
+    0x200020b0   0x00000254   Zero   RW          312    .bss                freertos.o
+    0x20002304   0x00000054   Zero   RW          395    .bss                i2c.o
+    0x20002358   0x00000048   Zero   RW          438    .bss                tim.o
+    0x200023a0   0x00000848   Zero   RW          494    .bss                usart.o
+    0x20002be8   0x00000048   Zero   RW          748    .bss                stm32f4xx_hal_timebase_tim.o
+    0x20002c30   0x000000f0   Zero   RW         4248    .bss                tasks.o
+    0x20002d20   0x00003c00   Zero   RW         4892    .bss                heap_4.o
+    0x20006920   0x00000788   Zero   RW         5077    .bss                app_hx711_ctrl.o
+    0x200070a8   0x0000000c   Zero   RW         5215    .bss                app_key_ctrl.o
+    0x200070b4   0x0000000c   Zero   RW         5482    .bss                app_password.o
+    0x200070c0   0x000005f0   Zero   RW         5524    .bss                app_syspara.o
+    0x200076b0   0x00000690   Zero   RW         5652    .bss                app_t5l_ctrl.o
+    0x20007d40   0x00000080   Zero   RW         6228    .bss                app_i2c.o
+    0x20007dc0   0x00000130   Zero   RW         6909    .bss                app_balance.o
+    0x20007ef0   0x00000086   Zero   RW         7008    .bss                app_voiceprintf.o
+    0x20007f76   0x00000002   PAD
+    0x20007f78   0x00000060   Zero   RW         7167    .bss                c_w.l(libspace.o)
+    0x20007fd8   0x00000400   Zero   RW            2    HEAP                startup_stm32f407xx.o
+    0x200083d8   0x00000400   Zero   RW            1    STACK               startup_stm32f407xx.o
 
 
 ==============================================================================
@@ -4737,64 +4737,64 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-      1208         22          0          0        304      13102   app_balance.o
-      1638         52          0          8          0      13215   app_balancingdatahandle.o
-       210          6        512          0          0       3633   app_crc.o
-         0          0          0       2600          0       6002   app_externalscreen_cfg.o
-        84          4          0         16          0      13276   app_externalscreenrxhandle.o
-      1068         32          0         40          0      16966   app_externalscreentxhandle.o
-      1790        134         40         22       1928      16401   app_hx711_ctrl.o
-       316         18          0         28        128       3761   app_i2c.o
-         0          0          0       1036          0       1848   app_innerscreen_cfg.o
-         0          0          0        216          0       1641   app_innerscreen_cfg_12.o
-         0          0          0        184          0       1579   app_innerscreen_cfg_16.o
-         0          0          0        296          0       1797   app_innerscreen_cfg_2.o
-         0          0          0        600          0       1797   app_innerscreen_cfg_6.o
-      1136         50          0        121          0      24529   app_innerscreenrxhandle.o
-      1610         28          0        142          0      27111   app_innerscreentxhandle.o
-       296         20          0          3         12       3988   app_key_ctrl.o
-       430         16          0          8          0       6061   app_led_ctrl.o
-        40          6          0          4          0       1032   app_main_task.o
-      1212         60          0        868          0      16570   app_modbus_rtu_ctrl.o
-        60         10          0         52         12       1846   app_password.o
-      1600         34          0        112       1520      10143   app_syspara.o
-        92          8          0          0          0        951   app_t5l_cfg.o
-      4324        206          8       1516       1680      53364   app_t5l_ctrl.o
-       744         42          4         12        134       5672   app_voiceprintf.o
-       120          0          0          0          0      24409   cmsis_os.o
-       172          4          0          0          0       1114   dma.o
-         0          0          0          0          0      17376   event_groups.o
-       100         12         79          8        596       4036   freertos.o
-       376         26          0          0          0       1375   gpio.o
-        40          0          0          0          0       1842   hal_delay.o
-       116         38         52        104          0       3579   hal_gpio.o
-        78         16          0        192          0       9762   hal_uart.o
-       472         24          0         32      15360       8283   heap_4.o
-       172         28          0          0         84       2173   i2c.o
-       138          0          0          0          0       4290   list.o
-       352         40          0          0          0     766921   main.o
-       702         72          0         12          0      12340   port.o
-        64         26        392          0       2048        952   startup_stm32f407xx.o
-        80         14          0         12          0       8826   stm32f4xx_hal.o
-       194         24          0          0          0      34517   stm32f4xx_hal_cortex.o
-      1084         16          8          0          0       8462   stm32f4xx_hal_dma.o
-       532         46          0          0          0       4116   stm32f4xx_hal_gpio.o
-      2174         52          0          0          0      14446   stm32f4xx_hal_i2c.o
-        56          4          0          0          0       1114   stm32f4xx_hal_msp.o
-      1412         86          0          0          0       6769   stm32f4xx_hal_rcc.o
-       784         72          0          0          0       7921   stm32f4xx_hal_tim.o
-       148         28          0          0          0       2949   stm32f4xx_hal_tim_ex.o
-       152         20          0          0         72       1851   stm32f4xx_hal_timebase_tim.o
-      2152         44          0          0          0      19789   stm32f4xx_hal_uart.o
-       228         88          0          4          0      12412   stm32f4xx_it.o
+      1208         22          0          0        304      12434   app_balance.o
+      1638         52          0          8          0      12635   app_balancingdatahandle.o
+       210          6        512          0          0       3413   app_crc.o
+         0          0          0       2648          0       5914   app_externalscreen_cfg.o
+        84          4          0         16          0      13052   app_externalscreenrxhandle.o
+      1068         32          0         40          0      16614   app_externalscreentxhandle.o
+      1790        134         40         22       1928      15645   app_hx711_ctrl.o
+       316         18          0         28        128       3585   app_i2c.o
+         0          0          0       1036          0       1760   app_innerscreen_cfg.o
+         0          0          0        216          0       1549   app_innerscreen_cfg_12.o
+         0          0          0        184          0       1487   app_innerscreen_cfg_16.o
+         0          0          0        296          0       1705   app_innerscreen_cfg_2.o
+         0          0          0        600          0       1705   app_innerscreen_cfg_6.o
+      1136         50          0        121          0      23733   app_innerscreenrxhandle.o
+      1610         28          0        142          0      26303   app_innerscreentxhandle.o
+       296         20          0          3         12       3716   app_key_ctrl.o
+       430         16          0          8          0       5705   app_led_ctrl.o
+        40          6          0          4          0        940   app_main_task.o
+      1212         60          0        868          0      15710   app_modbus_rtu_ctrl.o
+        60         10          0         52         12       1706   app_password.o
+      1600         34          0        112       1520       9835   app_syspara.o
+        92          8          0          0          0        907   app_t5l_cfg.o
+      4324        206          8       1516       1680      51256   app_t5l_ctrl.o
+       744         42          4         12        134       5360   app_voiceprintf.o
+       120          0          0          0          0      24001   cmsis_os.o
+       172          4          0          0          0       1026   dma.o
+         0          0          0          0          0      17196   event_groups.o
+       100         12         79          8        596       3764   freertos.o
+       376         26          0          0          0       1279   gpio.o
+        40          0          0          0          0       1706   hal_delay.o
+       116         38         52        104          0       3307   hal_gpio.o
+        78         16          0        192          0       9358   hal_uart.o
+       472         24          0         32      15360       7967   heap_4.o
+       172         28          0          0         84       1993   i2c.o
+       138          0          0          0          0       4014   list.o
+       352         40          0          0          0     765345   main.o
+       702         72          0         12          0      11856   port.o
+        64         26        392          0       2048        924   startup_stm32f407xx.o
+        80         14          0         12          0       8554   stm32f4xx_hal.o
+       194         24          0          0          0      34237   stm32f4xx_hal_cortex.o
+      1084         16          8          0          0       8058   stm32f4xx_hal_dma.o
+       532         46          0          0          0       3896   stm32f4xx_hal_gpio.o
+      2174         52          0          0          0      13898   stm32f4xx_hal_i2c.o
+        56          4          0          0          0       1026   stm32f4xx_hal_msp.o
+      1412         86          0          0          0       6453   stm32f4xx_hal_rcc.o
+       784         72          0          0          0       7525   stm32f4xx_hal_tim.o
+       148         28          0          0          0       2769   stm32f4xx_hal_tim_ex.o
+       152         20          0          0         72       1715   stm32f4xx_hal_timebase_tim.o
+      2152         44          0          0          0      18753   stm32f4xx_hal_uart.o
+       228         88          0          4          0      11468   stm32f4xx_it.o
          0          0          0          0          0        380   stream_buffer.o
-        16          4         24          4          0       1499   system_stm32f4xx.o
-      1520        112          0         60        240      21586   tasks.o
-       108         18          0          0         72       2066   tim.o
-      1416        128          0          0       2120      10440   usart.o
+        16          4         24          4          0       1367   system_stm32f4xx.o
+      1520        112          0         60        240      20822   tasks.o
+       108         18          0          0         72       1886   tim.o
+      1416        128          0          0       2120       9840   usart.o
 
     ----------------------------------------------------------------------
-     32878       1790       1152       8320      26312    1263880   Object Totals
+     32878       1790       1152       8368      26312    1243052   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         62          0          1          8          2          0   (incl. Padding)
 
@@ -4859,15 +4859,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     34748       1830       1152       8320      26408    1233624   Grand Totals
-     34748       1830       1152       2836      26408    1233624   ELF Image Totals (compressed)
-     34748       1830       1152       2836          0          0   ROM Totals
+     34748       1830       1152       8368      26408    1212796   Grand Totals
+     34748       1830       1152       2828      26408    1212796   ELF Image Totals (compressed)
+     34748       1830       1152       2828          0          0   ROM Totals
 
 ==============================================================================
 
     Total RO  Size (Code + RO Data)                35900 (  35.06kB)
-    Total RW  Size (RW Data + ZI Data)             34728 (  33.91kB)
-    Total ROM Size (Code + RO Data + RW Data)      38736 (  37.83kB)
+    Total RW  Size (RW Data + ZI Data)             34776 (  33.96kB)
+    Total ROM Size (Code + RO Data + RW Data)      38728 (  37.82kB)
 
 ==============================================================================
 

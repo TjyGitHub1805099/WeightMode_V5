@@ -633,7 +633,7 @@ UINT8 screenPublic_FreshDisplayPosition_Of_OtherMisc(T5LType *pSdwe)
 	index=appScreenCfgIndexGet(pSdwe,4);
 	total_handle = pSdwe->screenCfg[index].miscNum;
 	describlePoint_add = pSdwe->screenCfg[index].dpParaAdd_Misc[(*pSdwe->screenCycle.handle_i)%total_handle];
-	describlePoint_len = 2;//这里发送：X Y 的 2个属性
+	describlePoint_len = 6;//这里发送：X Y 等 6个属性
 	describlePoint_data = &pSdwe->screenCfg[index].dpParaVlu_Misc[(*pSdwe->screenCycle.handle_i)%total_handle].positionX;
 	//发送数据给屏幕
 	if(TRUE == t5lWriteData(pSdwe,describlePoint_add,describlePoint_data,describlePoint_len,0))
