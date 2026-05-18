@@ -6,7 +6,7 @@
 #include "stm32f4xx_it.h"
 
 #define SYS_HX711_ONLINE_CHECK_TIME	(2000)//when power on 2000ms start check HX711  , total 3 times
-#define MCU_VERSION			        (260516)//2026.05.16 
+#define MCU_VERSION			        (260518)//2026.05.18 
 #define DIWEN_VERSION		        (260516)//2026.05.16 不过屏幕版本还是在屏幕上 唯一
 
 extern UINT32 get_SysTick_ByTimer(void);
