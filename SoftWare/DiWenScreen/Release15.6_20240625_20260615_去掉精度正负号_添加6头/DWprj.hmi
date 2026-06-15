@@ -1,0 +1,12 @@
+[INIT]
+PICFIX=1
+VARCount=64
+Version=-1
+ProVersion=646
+SCREENDSIZE=1366X768
+SPADDRESS=5000
+[IMG]
+00=00_开机.jpg
+01=01_8头15.6单台.jpg
+02=02_8头15.6双台.jpg
+03=03_6头15.6单台.png
