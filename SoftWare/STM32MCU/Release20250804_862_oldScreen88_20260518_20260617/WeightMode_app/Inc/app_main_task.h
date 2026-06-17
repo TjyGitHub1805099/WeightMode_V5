@@ -6,7 +6,7 @@
 #include "stm32f4xx_it.h"
 
 #define SYS_HX711_ONLINE_CHECK_TIME	(2000)//when power on 2000ms start check HX711  , total 3 times
-#define MCU_VERSION			        (260615)//2026.06.15 
+#define MCU_VERSION			        (260617)//2026.06.17 
 #define DIWEN_VERSION		        (260613)//2026.05.16 不过屏幕版本还是在屏幕上 唯一
 
 extern UINT32 get_SysTick_ByTimer(void);
@@ -55,7 +55,7 @@ B1、修改屏幕程序，-
 3、8.8寸 迪文老屏 去掉精度的正负号
 4、15.6寸 迪文老屏 去掉精度的正负号
 
-//mcu version : 20260615
+//mcu version : 20260617
 //diwen 8.8 screen version :20260615
 //diwen 15.6 screen version :20260615
 1、主板程序添加对称配平参数

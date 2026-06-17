@@ -231,17 +231,21 @@ void BalanceRemainChannelToExistGroup(tScaleInfoStruct *pContex)
                     //
                     if(TRUE == l_matched)
                     {
-                        for(grp_mem_index_i = 0 ; grp_mem_index_i < MAX_GROUP_MEM_NUM ; grp_mem_index_i++)
+                        // 添加边界检查：确保不会超过数组最大容量
+                        if(pGrpInfo->grp_MenbNum < MAX_GROUP_MEM_NUM)
                         {
-                            if(pGrpInfo->grp_MenbArry[grp_mem_index_i] == INVALID_GROUP_MEM_INDEX)
+                            for(grp_mem_index_i = 0 ; grp_mem_index_i < MAX_GROUP_MEM_NUM ; grp_mem_index_i++)
                             {
-                                pGrpInfo->grp_MenbArry[grp_mem_index_i] = chnl_i ;
-                                break;
-                            }
-                        } 
+                                if(pGrpInfo->grp_MenbArry[grp_mem_index_i] == INVALID_GROUP_MEM_INDEX)
+                                {
+                                    pGrpInfo->grp_MenbArry[grp_mem_index_i] = chnl_i ;
+                                    pGrpInfo->grp_MenbNum = pGrpInfo->grp_MenbNum + 1;
+                                    pChnInfo->chnl_Color = pGrpInfo->grp_Color;
+                                    break;
+                                }
+                            } 
+                        }
                         //pGrpInfo->grp_MenbArry[pGrpInfo->grp_MenbNum] = chnl_i ;
-                        pGrpInfo->grp_MenbNum = pGrpInfo->grp_MenbNum + 1;
-                        pChnInfo->chnl_Color = pGrpInfo->grp_Color;
                         break;
                     }
                 }
